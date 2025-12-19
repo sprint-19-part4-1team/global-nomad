@@ -1,0 +1,8 @@
+echo "🔎 staged 파일에 대한 Lint 검사를 시작합니다..."
+
+pnpm lint-staged || {
+  echo "⚠️ Lint 검사에서 오류가 발생했습니다. 커밋이 중단됩니다."
+  exit 1
+}
+
+echo "✅ Lint 검사가 완료되었습니다. 커밋을 진행합니다."

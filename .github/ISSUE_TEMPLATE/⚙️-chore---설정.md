@@ -3,7 +3,7 @@ name: "⚙️ Chore - 설정"
 about: 프로젝트 설정 관련 이슈를 생성합니다.
 title: "[⚙️ Chore] "
 labels: "⚙️ Setting: 세팅"
-assignees: aahreum
+assignees: ''
 
 ---
 

@@ -3,7 +3,7 @@ name: "\U0001F41B Bug - 버그 리포트"
 about: 버그를 제보할 때 사용하세요
 title: "[\U0001F41B Bug] "
 labels: "\U0001F41B Bug: 버그"
-assignees: aahreum
+assignees: ''
 
 ---
 

@@ -1,0 +1,21 @@
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# 노드 패키지
+node_modules
+
+# 환경 변수 파일
+.env
+.env.*.local
+
+# Git 관련 파일
+.git
+.github
+
+# 기타 자주 제외하는 파일
+*.log
+.vscode

@@ -1,0 +1,40 @@
+{
+  "React Component with Name": {
+    "prefix": "frc",
+    "body": [
+      "export default function $TM_FILENAME_BASE() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$1",
+      "\t\t</div>",
+      "\t);",
+      "}",
+    ],
+    "description": "리액트 함수 선언식 컴포넌트 만들기"
+  }, 
+  "React Component with NoName": {
+    "prefix": "frnc",
+    "body": [
+      "export default function $1() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t",
+      "\t\t</div>",
+      "\t);",
+      "}",
+    ],
+    "description": "리액트 함수 선언식 컴포넌트 만들기"
+  },
+  "Arrow Function": {
+    "prefix": "af",
+    "body": [
+      "const $1 = () => {",
+      "\t",
+      "};",
+      "",
+    ],
+    "description": "화살표 함수 만들기"
+  }
+}
+
+

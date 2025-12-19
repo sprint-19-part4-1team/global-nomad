@@ -3,7 +3,7 @@ name: "♻️ Refactor Request"
 about: 코드 리팩토링을 제안할 때 사용하세요
 title: "[♻️ Refactor] "
 labels: "♻️ Refactor: 개선"
-assignees: aahreum
+assignees: ''
 
 ---
 

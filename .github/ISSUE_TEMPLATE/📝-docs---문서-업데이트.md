@@ -3,7 +3,7 @@ name: "\U0001F4DD Docs - 문서 업데이트"
 about: 문서 업데이트 관련 이슈를 생성합니다.
 title: "[\U0001F4DD Docs] "
 labels: "\U0001F4D1 Docs: 문서"
-assignees: aahreum
+assignees: ''
 
 ---
 

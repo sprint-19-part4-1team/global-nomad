@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.26.1",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",

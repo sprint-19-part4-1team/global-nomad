@@ -1,0 +1,28 @@
+code_review:
+  # 리뷰 난이도 : MEDIUM
+  comment_severity_threshold: MEDIUM
+
+  # 리뷰 최대 코멘트 수 10개로 제한
+  max_review_comments: 10
+
+  # PR 생성 시 자동으로 리뷰 수행
+  auto_review: true
+
+  # PR 요약 기능 활성화
+  summarize:
+    enabled: true
+
+  # 리뷰 제외 대상
+  ignore_patterns:
+    - 'node_modules/**' # 외부 라이브러리 폴더
+    - 'dist/**' # 최종 빌드 결과물 폴더
+    - '.next/**' # Next.js 내부 빌드 및 캐시 폴더
+    - 'build/**' # 일반적인 빌드 출력 폴더
+    - 'public/**' # 이미지, 폰트 등 정적 자산 폴더
+    - 'pnpm-lock.yaml' # pnpm 의존성 고정 파일
+    - '**/*.lock' # 기타 lock 파일
+    - '**/*.svg' # SVG 이미지 파일
+    - '**/*.min.js' # 압축된 JS 파일
+    - '.gemini/**' # 제미나이 설정 파일
+    - 'storybook-static/**' # 스토리북 정적 빌드 결과물
+    - '**/*.stories.{js,jsx,ts,tsx}' # 스토리북 파일

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.3",
+    "@svgr/webpack": "^8.1.0",
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3"

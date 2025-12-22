@@ -1,1 +1,59 @@
 @import 'tailwindcss';
+
+@theme {
+  /* 기본 컬러 */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* gray */
+  --color-gray-25: #f8f8f8;
+  --color-gray-50: #edeef2;
+  --color-gray-100: #e0e0e5;
+  --color-gray-200: #c6c8cf;
+  --color-gray-300: #b3b4bc;
+  --color-gray-400: #9fa0a7;
+  --color-gray-500: #84858c;
+  --color-gray-600: #707177;
+  --color-gray-700: #5d5d61;
+  --color-gray-800: #49494c;
+  --color-gray-900: #323236;
+  --color-gray-950: #1f1f22;
+
+  /* primary */
+  --color-primary-500: #3d9ef2;
+  --color-primary-100: #e5f3ff;
+
+  /* kakao */
+  --color-kakao: #fee500;
+
+  /* red */
+  --color-red-500: #ff2727;
+  --color-red-400: #f96767;
+  --color-red-300: #ff8f8f;
+  --color-red-100: #fcecea;
+
+  /* orange */
+  --color-orange-500: #ffb051;
+  --color-orange-100: #fff8dd;
+
+  /* yellow */
+  --color-yellow-500: #ffc23d;
+
+  /* green */
+  --color-green-500: #2ba90d;
+  --color-green-100: #e9fbe4;
+  
+  /* dark green */
+  --color-dark-green-500: #1790a0;
+  --color-dark-green-100: #ddf9f9;
+
+  /* 그라데이션 배경 */
+  --gradient-bg: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
+
+  /* dimmed 효과 */
+  --dimmed-op-50 : rgba(0, 0, 0, 0.5); /* 전체 영역 */
+  --dimmed-op-85: rgba(0, 0, 0, 0.85); /* 카카오 로그인 버튼 라벨 컬러 */
+
+  /* card shadow */
+  --shadow-card: 0 4px 24px rgba(156, 180, 202, 0.2); 
+}

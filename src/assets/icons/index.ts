@@ -8,11 +8,13 @@ import CaretBottom from './icon_caret_bottom.svg';
 import CaretLeft from './icon_caret_left.svg';
 import CaretRight from './icon_caret_right.svg';
 import CaretTop from './icon_caret_top.svg';
+import Check from './icon_check.svg';
 import ChevronBottom from './icon_chevron_bottom.svg';
 import ChevronLeft from './icon_chevron_left.svg';
 import ChevronRight from './icon_chevron_right.svg';
 import Close from './icon_close.svg';
 import Cloud from './icon_cloud.svg';
+import CompleteEarth from './icon_complete_earth.svg';
 import Copy from './icon_copy.svg';
 import Edit from './icon_edit.svg';
 import Eye from './icon_eye.svg';
@@ -78,4 +80,6 @@ export default {
   CaretLeft,
   ArrowLeft,
   ArrowRight,
+  Check,
+  CompleteEarth,
 };

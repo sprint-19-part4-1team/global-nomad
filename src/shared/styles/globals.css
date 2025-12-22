@@ -51,8 +51,8 @@
   --gradient-bg: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
 
   /* dimmed 효과 */
-  --dimmed-op-50 : rgba(0, 0, 0, 0.5); /* 전체 영역 */
-  --dimmed-op-85: rgba(0, 0, 0, 0.85); /* 카카오 로그인 버튼 라벨 컬러 */
+  --color-dimmed-50 : rgba(0, 0, 0, 0.5); /* 전체 영역 */
+  --color-dimmed-85: rgba(0, 0, 0, 0.85); /* 카카오 로그인 버튼 라벨 컬러 */
 
   /* card shadow */
   --shadow-card: 0 4px 24px rgba(156, 180, 202, 0.2); 

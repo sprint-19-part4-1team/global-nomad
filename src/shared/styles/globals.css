@@ -1,1 +1,4 @@
 @import 'tailwindcss';
+@import './base/colors.css';
+@import './base/font-face.css';
+@import './base/font-utils.css';

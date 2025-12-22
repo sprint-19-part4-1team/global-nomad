@@ -48,7 +48,7 @@
   --color-dark-green-100: #ddf9f9;
 
   /* 그라데이션 배경 */
-  --gradient-bg: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
+  --background-image-gradient-main: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
 
   /* dimmed 효과 */
   --color-dimmed-50 : rgba(0, 0, 0, 0.5); /* 전체 영역 */

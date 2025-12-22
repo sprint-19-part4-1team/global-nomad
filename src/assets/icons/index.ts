@@ -20,7 +20,7 @@ import Edit from './icon_edit.svg';
 import Eye from './icon_eye.svg';
 import EyeOff from './icon_eye_off.svg';
 import Github from './icon_github.svg';
-import KaKao from './icon_kakao.svg';
+import Kakao from './icon_kakao.svg';
 import Location from './icon_location.svg';
 import Minus from './icon_minus.svg';
 import MoreDot from './icon_more_dot.svg';
@@ -55,15 +55,15 @@ export default {
   ChevronBottom,
   ChevronLeft,
   ChevronRight,
-  Cloud,
   Close,
+  Cloud,
   CompleteEarth,
   Copy,
   Edit,
   Eye,
   EyeOff,
   Github,
-  KaKao,
+  Kakao,
   Location,
   Minus,
   MoreDot,

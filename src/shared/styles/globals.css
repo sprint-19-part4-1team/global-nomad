@@ -1,7 +1,48 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Pretendard Bold'),
+    url('@/assets/fonts/woff2/Pretendard-Bold.woff2') format('woff2'),
+    url('@/assets/fonts/woff/Pretendard-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local('Pretendard'),
+    url('@/assets/fonts/woff2/Pretendard-SemiBold.woff2') format('woff2'),
+    url('@/assets/fonts/woff/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Pretendard Medium'),
+    url('@/assets/fonts/woff2/Pretendard-Medium.woff2') format('woff2'),
+    url('@/assets/fonts/woff/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Pretendard Regular'),
+    url('@/assets/fonts/woff2/Pretendard-Regular.woff2') format('woff2'),
+    url('@/assets/fonts/woff/Pretendard-Regular.woff') format('woff');
+}
+
+/* 색상 */
 @theme {
-  /* 기본 컬러 */
+  /* 기본 색상 */
   --color-black: #000000;
   --color-white: #ffffff;
 
@@ -51,9 +92,46 @@
   --background-image-gradient-main: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
 
   /* dimmed 효과 */
-  --color-dimmed-50 : rgba(0, 0, 0, 0.5); /* 전체 영역 */
-  --color-dimmed-85: rgba(0, 0, 0, 0.85); /* 카카오 로그인 버튼 라벨 컬러 */
+  --color-dimmed-50 : oklch(0 0 0 / 50%); /* 전체 영역 */
+  --color-dimmed-85: oklch(0 0 0 / 85%); /* 카카오 로그인 버튼 라벨 컬러 */
 
-  /* card shadow */
-  --shadow-card: 0 4px 24px rgba(156, 180, 202, 0.2); 
+  /* shadow */
+  --shadow-card-20: 0 4px 24px 0 oklch(0.759 0.0413 246.04 / 20%);
+  --shadow-card-5: 0 -8px 20px 0 oklch(0 0 0 / 5%);
+}
+
+/* 폰트 */
+@theme {
+  --font-pretendard: 'Pretendard', sans-serif;
+
+  --heading-size-32: 32px;
+  --heading-size-24: 24px;
+  --heading-size-20: 20px;
+  --heading-size-18: 18px;
+
+  --body-size-18: 18px;
+  --body-size-16: 16px;
+  --body-size-14: 14px;
+  --body-size-13: 13px;
+  --body-size-12: 12px;
+
+  --letter-spacing-heading: -2.5%;
+
+  --line-height-body-18: 26px;
+  --line-height-body-16: 24px;
+  --line-height-body-14: 24px;
+  --line-height-body-13: 22px;
+  --line-height-body-12: 20px;
+}
+
+@utility heading-* {
+  font-family: var(--font-pretendard);
+  font-size: --value(--heading-size-*);
+  letter-spacing: var(--letter-spacing-heading);
+}
+
+@utility body-* {
+  font-family: var(--font-pretendard);
+  font-size: --value(--body-size-*);
+  line-height: --value(--line-height-body-*);
 }

@@ -1,0 +1,35 @@
+/* 폰트 */
+@theme {
+  --font-sans: 'Pretendard', sans-serif;
+
+  --heading-size-32: 32px;
+  --heading-size-24: 24px;
+  --heading-size-20: 20px;
+  --heading-size-18: 18px;
+
+  --body-size-18: 18px;
+  --body-size-16: 16px;
+  --body-size-14: 14px;
+  --body-size-13: 13px;
+  --body-size-12: 12px;
+
+  --letter-spacing-heading: -2.5%;
+
+  --leading-body-18: 26px;
+  --leading-body-16: 24px;
+  --leading-body-14: 24px;
+  --leading-body-13: 22px;
+  --leading-body-12: 20px;
+}
+
+@utility heading-* {
+  font-family: var(--font-sans);
+  font-size: --value(--heading-size-*);
+  letter-spacing: var(--letter-spacing-heading);
+}
+
+@utility body-* {
+  font-family: var(--font-sans);
+  font-size: --value(--body-size-*);
+  line-height: --value(--leading-body-*);
+}

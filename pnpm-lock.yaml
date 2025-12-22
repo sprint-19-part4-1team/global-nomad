@@ -11,9 +11,6 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3.3.3
         version: 3.3.3
-      '@svgr/webpack':
-        specifier: ^8.1.0
-        version: 8.1.0(typescript@5.9.3)
       next:
         specifier: 15.5.9
         version: 15.5.9(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -27,6 +24,9 @@ importers:
       '@commitlint/cli':
         specifier: ^20.2.0
         version: 20.2.0(@types/node@20.19.27)(typescript@5.9.3)
+      '@svgr/webpack':
+        specifier: ^8.1.0
+        version: 8.1.0(typescript@5.9.3)
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.18

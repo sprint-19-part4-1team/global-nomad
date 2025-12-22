@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components",
-    "src/custom.d.ts"
+    "custom.d.ts"
   ],
   "exclude": ["node_modules"]
 }

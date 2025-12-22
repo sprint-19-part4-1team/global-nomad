@@ -15,7 +15,7 @@
   font-weight: 600;
   font-display: swap;
   src:
-    local('Pretendard'),
+    local('Pretendard SemiBold'),
     url('@/assets/fonts/woff2/Pretendard-SemiBold.woff2') format('woff2'),
     url('@/assets/fonts/woff/Pretendard-SemiBold.woff') format('woff');
 }
@@ -42,6 +42,8 @@
 
 /* 색상 */
 @theme {
+   --color-*: initial;
+
   /* 기본 색상 */
   --color-black: #000000;
   --color-white: #ffffff;
@@ -61,7 +63,9 @@
   --color-gray-950: #1f1f22;
 
   /* primary */
+  --color-primary-600: #0d6cd1;
   --color-primary-500: #3d9ef2;
+  --color-primary-200: #daf0ff;
   --color-primary-100: #e5f3ff;
 
   /* kakao */
@@ -91,18 +95,20 @@
   /* 그라데이션 배경 */
   --background-image-gradient-main: linear-gradient(180deg, #bbddff -6.85%, #f7fbff 22.43%, #ffffff 100%);
 
-  /* dimmed 효과 */
-  --color-dimmed-50 : oklch(0 0 0 / 50%); /* 전체 영역 */
-  --color-dimmed-85: oklch(0 0 0 / 85%); /* 카카오 로그인 버튼 라벨 컬러 */
+  /* opacity */
+  --color-op-50 : oklch(0 0 0 / 50%); /* 전체 영역 */
+  --color-op-85: oklch(0 0 0 / 85%); /* 카카오 로그인 버튼 라벨 컬러 */
 
   /* shadow */
-  --shadow-card-20: 0 4px 24px 0 oklch(0.759 0.0413 246.04 / 20%);
-  --shadow-card-5: 0 -8px 20px 0 oklch(0 0 0 / 5%);
+  --shadow-card: 0 4px 24px 0 oklch(0.759 0.0413 246.04 / 20%);
+  --shadow-card-5: 0 4px 16px 0 oklch(0.2313 0.0394 144.17 / 5%);
+  --shadow-card-content: 0 -8px 20px 0 oklch(0 0 0 / 5%);
+  --shadow-input: 0 2px 6px 0 oklch(0 0 0 / 2%);
 }
 
 /* 폰트 */
 @theme {
-  --font-pretendard: 'Pretendard', sans-serif;
+  --font-sans: 'Pretendard', sans-serif;
 
   --heading-size-32: 32px;
   --heading-size-24: 24px;
@@ -117,21 +123,21 @@
 
   --letter-spacing-heading: -2.5%;
 
-  --line-height-body-18: 26px;
-  --line-height-body-16: 24px;
-  --line-height-body-14: 24px;
-  --line-height-body-13: 22px;
-  --line-height-body-12: 20px;
+  --leading-body-18: 26px;
+  --leading-body-16: 24px;
+  --leading-body-14: 24px;
+  --leading-body-13: 22px;
+  --leading-body-12: 20px;
 }
 
 @utility heading-* {
-  font-family: var(--font-pretendard);
+  font-family: var(--font-sans);
   font-size: --value(--heading-size-*);
   letter-spacing: var(--letter-spacing-heading);
 }
 
 @utility body-* {
-  font-family: var(--font-pretendard);
+  font-family: var(--font-sans);
   font-size: --value(--body-size-*);
-  line-height: --value(--line-height-body-*);
+  line-height: --value(--leading-body-*);
 }

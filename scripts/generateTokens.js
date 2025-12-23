@@ -1,26 +1,30 @@
 const fs = require('fs');
+const path = require('path');
 
-/** rem 기본 단위 16 */
+/** rem 기본 단위 16px */
 const REM_DIVIDER = 16;
 
-/** spacing 단위 최대 1920px까지 */
-const SPACING_LIMIT = 1920;
+/** spacing 단위 최대 1200px까지 */
+const SPACING_LIMIT = 1200;
 
-/** border-radius 최대 500px까지 */
-const RADIUS_LIMIT = 500;
+/** border-radius 최대 48px까지 */
+const RADIUS_LIMIT = 48;
 
-let css = `@theme {\n`;
+/** css 파일 저장 위치 */
+const TOKENS_CSS_PATH = path.resolve(__dirname, '../src/shared/styles/base/tokens.css');
+
+const cssLines = ['@theme {'];
 
 // spacing
 for (let i = 0; i <= SPACING_LIMIT; i++) {
-  css += `  --spacing-${i}: ${i / REM_DIVIDER}rem;\n`;
+  cssLines.push(`  --spacing-${i}: ${i / REM_DIVIDER}rem;`);
 }
 
 // radius
 for (let i = 1; i <= RADIUS_LIMIT; i++) {
-  css += `  --radius-${i}: ${i / REM_DIVIDER}rem;\n`;
+  cssLines.push(`  --radius-${i}: ${i / REM_DIVIDER}rem;`);
 }
 
-css += `}\n`;
+cssLines.push('}');
 
-fs.writeFileSync('src/shared/styles/base/tokens.css', css);
+fs.writeFileSync(TOKENS_CSS_PATH, cssLines.join('\n') + '\n');

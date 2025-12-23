@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
-import ToastProvider from '@/shared/components/ToastProvider';
+import ToastProvider from '@/shared/components/toast/ToastProvider';
 
 // TODO: metadata 수정하기
 export const metadata: Metadata = {

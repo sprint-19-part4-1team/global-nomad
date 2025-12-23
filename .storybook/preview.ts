@@ -21,7 +21,7 @@ const preview: Preview = {
     layout: 'centered',
 
     // docs 자동 생성
-    tags: ['autudocs'],
+    tags: ['autodocs'],
   },
 };
 

@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.26.1",
   "scripts": {
-    "generate:tokens": "node scripts/generate-spacing.js",
+    "generate:tokens": "node scripts/generateTokens.js",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

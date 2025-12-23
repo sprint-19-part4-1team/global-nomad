@@ -29,9 +29,6 @@ importers:
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
-      tailwindcss-preset-px-to-rem:
-        specifier: ^1.2.1
-        version: 1.2.1
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.2.0
@@ -2994,9 +2991,6 @@ packages:
 
   tailwind-merge@3.4.0:
     resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
-
-  tailwindcss-preset-px-to-rem@1.2.1:
-    resolution: {integrity: sha512-m3GHwciFiXZviaN7WvOiiMjRBT7razJxgPTY6h2KcOvzvkOTysOV6gN3HkejfXUyL4DKx6YjiPcLCqv6yMeXHw==}
 
   tailwindcss@4.1.18:
     resolution: {integrity: sha512-4+Z+0yiYyEtUVCScyfHCxOYP06L5Ne+JiHhY2IjR2KWMIWhJOYZKLSGZaP5HkZ8+bY0cxfzwDE5uOmzFXyIwxw==}
@@ -6414,8 +6408,6 @@ snapshots:
       picocolors: 1.1.1
 
   tailwind-merge@3.4.0: {}
-
-  tailwindcss-preset-px-to-rem@1.2.1: {}
 
   tailwindcss@4.1.18: {}
 

@@ -5,6 +5,32 @@ const TAG_OPTIONS = ['h1', 'h2', 'h3', 'h4', 'div'] as const;
 const FONT_SIZES = [32, 24, 20, 18] as const;
 const FONT_WEIGHTS = ['bold', 'semibold', 'medium', 'normal'] as const;
 
+type Tag = (typeof TAG_OPTIONS)[number];
+type FontSize = (typeof FONT_SIZES)[number];
+type FontWeight = (typeof FONT_WEIGHTS)[number];
+
+const SIZE_CLASS: Record<FontSize, string> = {
+  32: 'heading-32',
+  24: 'heading-24',
+  20: 'heading-20',
+  18: 'heading-18',
+};
+
+const WEIGHT_CLASS: Record<FontWeight, string> = {
+  bold: 'font-bold',
+  semibold: 'font-semibold',
+  medium: 'font-medium',
+  normal: 'font-normal',
+};
+
+interface TitleProps {
+  as?: Tag;
+  size?: FontSize;
+  weight?: FontWeight;
+  className?: string;
+  children: ReactNode;
+}
+
 /**
  * 프로젝트 공통 Title 컴포넌트
  * @param as - 렌더링할 HTML 태그 (기본값: 'h1')
@@ -18,15 +44,12 @@ export default function Title({
   weight = 'medium',
   className,
   children,
-}: {
-  as?: (typeof TAG_OPTIONS)[number];
-  size?: (typeof FONT_SIZES)[number];
-  weight?: (typeof FONT_WEIGHTS)[number];
-  className?: string;
-  children: ReactNode;
-}) {
+}: TitleProps) {
   const Component = as;
-  const fontSize = `heading-${size}`;
-  const fontWeight = `font-${weight}`;
-  return <Component className={cn(fontSize, fontWeight, className)}>{children}</Component>;
+
+  return (
+    <Component className={cn(SIZE_CLASS[size], WEIGHT_CLASS[weight], className)}>
+      {children}
+    </Component>
+  );
 }

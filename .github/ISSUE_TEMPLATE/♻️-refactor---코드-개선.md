@@ -1,8 +1,8 @@
 ---
-name: "♻️ Refactor Request"
+name: "♻️ Refactor - 코드 개선"
 about: 코드 리팩토링을 제안할 때 사용하세요
 title: "[♻️ Refactor] "
-labels: "♻️ Refactor: 개선"
+labels: "\U0001F4D1 Docs: 문서, ♻️ Refactor: 개선"
 assignees: ''
 
 ---

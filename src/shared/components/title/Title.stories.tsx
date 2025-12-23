@@ -23,9 +23,31 @@ const meta: Meta<typeof Title> = {
   tags: ['autodocs'],
   render: (args) => <Title {...args} />,
   argTypes: {
-    as: { control: 'select', options: ['h1', 'h2', 'h3', 'h4', 'div'] },
-    size: { control: 'select', options: [32, 24, 20, 18] },
-    weight: { control: 'select', options: ['bold', 'semibold', 'medium', 'normal'] },
+    as: {
+      control: 'select',
+      options: ['h1', 'h2', 'h3', 'h4', 'div'],
+      description: '렌더링할 HTML 태그',
+    },
+    size: {
+      control: 'select',
+      options: [32, 24, 20, 18],
+      description: '폰트 크기 (px 단위 타이포그래피 토큰)',
+    },
+    weight: {
+      control: 'select',
+      options: ['bold', 'semibold', 'medium', 'normal'],
+      description: '폰트 두께',
+    },
+    className: {
+      control: 'text',
+      description:
+        '추가 커스텀 스타일 (레이아웃/여백/색상 등). '
+        + '타이포그래피(heading-*)는 size/weight prop이 단일 책임을 가집니다.',
+    },
+    children: {
+      control: 'text',
+      description: '타이틀 텍스트 내용',
+    },
   },
 };
 

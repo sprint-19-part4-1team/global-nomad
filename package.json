@@ -13,8 +13,8 @@
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "prepare": "husky",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "pnpm generate:tokens && storybook dev -p 6006",
+    "build-storybook": "pnpm generate:tokens && storybook build"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

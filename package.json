@@ -38,26 +38,27 @@
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",
     "@eslint/eslintrc": "^3",
+    "@storybook/addon-a11y": "^10.1.10",
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/nextjs": "^10.1.10",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chromatic": "^13.3.4",
     "eslint": "^9",
     "eslint-config-next": "15.5.9",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-storybook": "^10.1.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "tailwindcss": "^4",
-    "typescript": "^5",
     "storybook": "^10.1.10",
-    "@storybook/nextjs": "^10.1.10",
-    "@storybook/addon-a11y": "^10.1.10",
-    "@storybook/addon-docs": "^10.1.10",
-    "eslint-plugin-storybook": "^10.1.10"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

@@ -45,3 +45,12 @@ jobs:
           exitZeroOnChanges: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment PR with Storybook link
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🎨 **스토리북 배포 링크 확인**
+            
+            - 🔗 Storybook: ${{ steps.chromatic.outputs.storybookUrl }}
+            - 🧩 Build: ${{ steps.chromatic.outputs.buildUrl }}

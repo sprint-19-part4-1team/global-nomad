@@ -4,6 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.26.1",
   "scripts": {
+    "generate:tokens": "node scripts/generate-spacing.js",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -29,8 +30,7 @@
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.4.0",
-    "tailwindcss-preset-px-to-rem": "^1.2.1"
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",

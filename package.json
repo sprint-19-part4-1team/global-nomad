@@ -4,8 +4,9 @@
   "private": true,
   "packageManager": "pnpm@10.26.1",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "generate:tokens": "node scripts/generateTokens.js",
+    "dev": "pnpm generate:tokens && next dev --turbopack",
+    "build": "pnpm generate:tokens && next build",
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
@@ -24,10 +25,13 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-toastify": "^11.0.5"
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",

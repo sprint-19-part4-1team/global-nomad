@@ -58,7 +58,7 @@ export const Default: Story = {
   args: {
     as: 'h1',
     size: 32,
-    weight: 'bold',
+    weight: 'medium',
     children: '🔥 인기 체험',
   },
 };

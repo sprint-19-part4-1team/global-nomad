@@ -5,8 +5,8 @@
   "packageManager": "pnpm@10.26.1",
   "scripts": {
     "generate:tokens": "node scripts/generateTokens.js",
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "pnpm generate:tokens && next dev --turbopack",
+    "build": "pnpm generate:tokens && next build",
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",

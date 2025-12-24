@@ -81,7 +81,7 @@ const defaultUser: User = {
   id: 1,
   email: 'test@example.com',
   nickname: '테스트',
-  profileImageUrl: '',
+  profileImageUrl: null,
   createdAt: '2025-12-24T08:50:57.848Z',
   updatedAt: '2025-12-24T08:50:57.848Z',
 };

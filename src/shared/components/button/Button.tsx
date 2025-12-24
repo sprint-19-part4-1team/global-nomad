@@ -10,7 +10,7 @@ const buttonVariants = cva(
   {
     variants: {
       /**
-       * ### position
+       * ### theme
        *
        * @description
        * Button의 스타일을 정의합니다.
@@ -47,7 +47,7 @@ const buttonVariants = cva(
      * ### defaultVariants
      *
      * @description
-     * - 별도 지정이 없으면 `prmairy`, `lg` 적용
+     * - 별도 지정이 없으면 `primary`, `lg` 적용
      */
     defaultVariants: {
       theme: 'primary',

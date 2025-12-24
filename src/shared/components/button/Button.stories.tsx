@@ -76,6 +76,15 @@ const meta: Meta<typeof Button> = {
         type: { summary: '() => void' },
       },
     },
+    disabled: {
+      control: 'boolean',
+      description: 'disabled 여부 (`action` 버튼 전용)',
+      table: {
+        category: 'Action',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
     href: {
       control: 'text',
       description: '이동할 경로 (`navigation` 버튼 전용)',
@@ -175,6 +184,21 @@ export const Navigation: Story = {
       </Button>
     </div>
   ),
+};
+
+export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`disabled` 상태의 action 버튼입니다. 클릭 이벤트가 발생하지 않으며 비활성 스타일이 적용됩니다.',
+      },
+    },
+  },
+  args: {
+    children: '비활성 버튼',
+    disabled: true,
+  },
 };
 
 export const Action: Story = {

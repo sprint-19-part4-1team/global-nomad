@@ -26,8 +26,8 @@ interface AvatarImageProps {
  *
  * @example
  * <Avatar user={user} size="md">
- *   <Avatar.Image loading="lazy" />
- *   <Avatar.Fallback />
+ *   <AvatarImage loading="lazy" />
+ *   <AvatarFallback />
  * </Avatar>
  */
 export default function AvatarImage({ loading = 'eager', className }: AvatarImageProps) {

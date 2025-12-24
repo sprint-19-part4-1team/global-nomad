@@ -1,17 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { AvatarFallback, AvatarImage } from '@/shared/components/avatar';
 import Avatar from '@/shared/components/avatar/Avatar';
 import { User } from '@/shared/types/user';
 
 /**
  * Storybook에서 Avatar 컴포넌트를 제어하기 위한 Props 타입
  *
- * Avatar와 하위 컴포넌트(Avatar.Image, Avatar.Fallback)의 props를 결합한 형태
+ * Avatar와 하위 컴포넌트(AvatarImage, AvatarFallback)의 props를 결합한 형태
  *
  * @property {User} user - 사용자 정보
  * @property {'sm' | 'md' | 'lg'} [size] - 아바타 크기
  * @property {string} [className] - Avatar 컨테이너 추가 스타일
- * @property {string} [imageClassName] - Avatar.Image 추가 스타일
- * @property {string} [fallbackClassName] - Avatar.Fallback 추가 스타일
+ * @property {string} [imageClassName] - AvatarImage 추가 스타일
+ * @property {string} [fallbackClassName] - AvatarFallback 추가 스타일
  */
 interface AvatarStoryProps {
   user: User;
@@ -35,8 +36,8 @@ interface AvatarStoryProps {
  * - `user`: 필수 사용자 정보 (id, nickname, profileImageUrl 등)
  * - `size`: 아바타 크기 ('sm' | 'md' | 'lg')
  * - `className`: Avatar 컨테이너의 추가 스타일 (마진, 테두리 등)
- * - `imageClassName`: Avatar.Image의 추가 스타일 (필터, 투명도 등)
- * - `fallbackClassName`: Avatar.Fallback의 추가 스타일 (색상, 크기 등)
+ * - `imageClassName`: AvatarImage의 추가 스타일 (필터, 투명도 등)
+ * - `fallbackClassName`: AvatarFallback의 추가 스타일 (색상, 크기 등)
  */
 
 const meta: Meta<AvatarStoryProps> = {
@@ -45,8 +46,8 @@ const meta: Meta<AvatarStoryProps> = {
     const { user, size, className, imageClassName, fallbackClassName } = args;
     return (
       <Avatar user={user} size={size} className={className}>
-        <Avatar.Image className={imageClassName} />
-        <Avatar.Fallback className={fallbackClassName} />
+        <AvatarImage className={imageClassName} />
+        <AvatarFallback className={fallbackClassName} />
       </Avatar>
     );
   },
@@ -60,15 +61,15 @@ const meta: Meta<AvatarStoryProps> = {
       control: 'text',
       description: 'Avatar 추가 스타일 (마진, 테두리, 그림자 등)',
     },
-    // Avatar.Image pops
+    // AvatarImage pops
     imageClassName: {
       control: 'text',
-      description: 'Avatar.Image 추가 스타일 (필터, 투명도 등)',
+      description: 'AvatarImage 추가 스타일 (필터, 투명도 등)',
     },
-    // Avatar.Fallback pops
+    // AvatarFallback pops
     fallbackClassName: {
       control: 'text',
-      description: 'Avatar.Fallback 추가 스타일 (필터, 투명도 등)',
+      description: 'AvatarFallback 추가 스타일 (필터, 투명도 등)',
     },
   },
 };
@@ -132,16 +133,16 @@ export const AllSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <Avatar user={defaultUser} size='sm'>
-        <Avatar.Image />
-        <Avatar.Fallback />
+        <AvatarImage />
+        <AvatarFallback />
       </Avatar>
       <Avatar user={defaultUser} size='md'>
-        <Avatar.Image />
-        <Avatar.Fallback />
+        <AvatarImage />
+        <AvatarFallback />
       </Avatar>
       <Avatar user={defaultUser} size='lg'>
-        <Avatar.Image />
-        <Avatar.Fallback />
+        <AvatarImage />
+        <AvatarFallback />
       </Avatar>
     </div>
   ),

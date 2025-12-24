@@ -22,8 +22,8 @@ interface AvatarFallbackProps {
  *
  * @example
  * <Avatar user={user} size="md">
- *   <Avatar.Image />
- *   <Avatar.Fallback />
+ *   <AvatarImage />
+ *   <AvatarFallback />
  * </Avatar>
  */
 export default function AvatarFallback({ className }: AvatarFallbackProps) {

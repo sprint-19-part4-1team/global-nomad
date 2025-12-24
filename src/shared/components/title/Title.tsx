@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-const TAG_OPTIONS = ['h1', 'h2', 'h3', 'h4', 'div'] as const;
+const TAG_OPTIONS = ['h2', 'h3', 'h4', 'h5', 'h6'] as const;
 const FONT_SIZES = [32, 24, 20, 18] as const;
 const FONT_WEIGHTS = ['bold', 'semibold', 'medium', 'normal'] as const;
 
@@ -39,7 +39,7 @@ interface TitleProps {
  * @param className - 추가 커스텀 스타일
  */
 export default function Title({
-  as = 'h1',
+  as = 'h2',
   size = 32,
   weight = 'medium',
   className,

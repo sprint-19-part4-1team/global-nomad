@@ -74,7 +74,7 @@ export default function Avatar({ size, className, children }: AvatarProps) {
  * <Avatar.Image src="/avatar.jpg" name="사용자 이름" />
  *
  * // 이미지가 없을 때 (Fallback 아이콘 표시)
- * <Avatar.Image name="사용자 이름" />
+ * <Avatar.Image />
  * ```
  *
  */

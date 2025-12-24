@@ -8,7 +8,7 @@ import { AvatarContext } from '@/shared/components/avatar/context/avatarContext'
 import { User } from '@/shared/types/user';
 import { cn } from '@/shared/utils/cn';
 
-const avatarVariants = cva('aspect-square rounded-full relative', {
+const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative', {
   variants: {
     size: {
       sm: 'w-30 h-30',

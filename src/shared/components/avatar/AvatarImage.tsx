@@ -43,7 +43,7 @@ export default function AvatarImage({ loading = 'eager', className }: AvatarImag
       alt={`${user.nickname}님의 프로필`}
       fill
       loading={loading}
-      className={cn('rounded-full object-cover', className)}
+      className={cn('object-cover', className)}
       onError={() => setImageError(true)}
     />
   );

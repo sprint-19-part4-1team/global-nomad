@@ -1,64 +1,50 @@
 import Image from 'next/image';
-import Icons from '@/assets/icons';
+import { useAvatarContext } from '@/shared/components/avatar/hooks/useAvatarContext';
 import { cn } from '@/shared/utils/cn';
 
 /**
  * AvatarImage 컴포넌트의 Props
- * @property {string | null} [src] - 아바타 이미지 URL (없을 경우 Fallback 아이콘 표시)
- * @property {string} [name='유저 아바타'] - 이미지 대체 텍스트 및 접근성 레이블
- * @property {'lazy' | 'eager'} [loading='lazy'] - 이미지 로딩 방식 (lazy: 지연 로딩, eager: 즉시 로딩)
+ * @property {'lazy' | 'eager'} [loading='eager'] - 이미지 로딩 방식 (lazy: 지연 로딩, eager: 즉시 로딩)
  * @property {string} [className] - 추가 CSS 클래스명
  */
 interface AvatarImageProps {
-  src?: string | null;
-  name?: string;
   loading?: 'lazy' | 'eager';
   className?: string;
 }
 
 /**
- * Avatar 내부에서 사용되는 이미지 컴포넌트
+ * Avatar 내부에서 사용되는 프로필 이미지 컴포넌트
  *
  * @description
- * - src가 제공되면 Next.js Image 컴포넌트로 이미지를 렌더링합니다
- * - src가 없으면 (null, undefined, "") Fallback 아이콘을 렌더링합니다
+ * - Avatar 컴포넌트 내부에서 사용되며, Context를 통해 사용자 정보를 받아옵니다
+ * - Next.js Image 컴포넌트를 사용하여 최적화된 이미지를 렌더링합니다
+ * - 이미지 로딩 실패 시 자동으로 Fallback으로 전환됩니다
+ * - profileImageUrl이 없으면 null을 반환하여 Fallback이 표시되도록 합니다
  *
  * @param {AvatarImageProps} props - AvatarImage 컴포넌트 props
- * @returns {JSX.Element}
+ * @returns {JSX.Element | null}
  *
  * @example
- * ```tsx
- * // 이미지가 있을 때
- * <Avatar.Image src="/avatar.jpg" name="사용자 이름" />
- *
- * // 이미지가 없을 때 (Fallback 아이콘 표시)
- * <Avatar.Image />
- * ```
- *
+ * <Avatar user={user} size="md">
+ *   <Avatar.Image loading="lazy" />
+ *   <Avatar.Fallback />
+ * </Avatar>
  */
-export default function AvatarImage({
-  src,
-  name = '유저 아바타',
-  loading = 'eager',
-  className,
-}: AvatarImageProps) {
-  // 표시할 아바타 이미지(src)가 존재할 때만 Image 렌더링
-  if (src) {
-    return (
-      <Image
-        src={src}
-        alt={name}
-        fill
-        loading={loading}
-        className={cn('rounded-full object-cover', className)}
-      />
-    );
+export default function AvatarImage({ loading = 'eager', className }: AvatarImageProps) {
+  const { user, setImageError } = useAvatarContext();
+
+  if (!user.profileImageUrl) {
+    return null;
   }
 
-  // 표시할 아바타 이미지(src)가 없을 때 (null, undefined, "") Fallback 아이콘 렌더링
   return (
-    <span role='img' aria-label={name} className={className}>
-      <Icons.Avatar />
-    </span>
+    <Image
+      src={user.profileImageUrl}
+      alt={`${user.nickname}님의 프로필`}
+      fill
+      loading={loading}
+      className={cn('rounded-full object-cover', className)}
+      onError={() => setImageError(true)}
+    />
   );
 }

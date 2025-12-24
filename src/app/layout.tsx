@@ -18,7 +18,6 @@ export default function RootLayout({
       <body>
         {children}
         <ToastProvider />
-        <div id='overlay-root' />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@ import { LAYER } from '@/shared/components/overlay/constants/layer';
 /**
  * ## Backdrop (Dimmed Layer)
  *
- * - Modal / Dialog / BottomSheet 뒤에 깔리는 dimmed 배경
+ * - Dialog / Panel / BottomSheet 뒤에 깔리는 dimmed 배경
  * - 배경 콘텐츠와의 상호작용을 시각적·논리적으로 차단
  *
  * ## ⚠️ 주의:

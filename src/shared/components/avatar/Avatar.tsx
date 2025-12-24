@@ -4,7 +4,7 @@ import { HTMLAttributes, ReactNode } from 'react';
 import Icons from '@/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-const avatarVariants = cva('aspect-square rouned-full relative', {
+const avatarVariants = cva('aspect-square rounded-full relative', {
   variants: {
     size: {
       sm: 'w-30 h-30',
@@ -82,7 +82,7 @@ const AvatarImage = ({ src, name = '유저 아바타', className }: AvatarImageP
   // 표시할 아바타 이미지(src)가 존재할 때만 Image 렌더링
   if (src) {
     return (
-      <Image fill src={src} className={cn('object-cove rounded-full', className)} alt={name} />
+      <Image fill src={src} className={cn('rounded-full object-cover', className)} alt={name} />
     );
   }
 

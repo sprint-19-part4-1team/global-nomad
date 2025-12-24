@@ -34,10 +34,10 @@ interface AvatarStoryProps {
 const meta: Meta<AvatarStoryProps> = {
   title: 'shared/Avatar',
   render: (args) => {
-    const { size, className, src, name } = args;
+    const { size, className, src, name, imageClassName } = args;
     return (
       <Avatar size={size} className={className}>
-        <Avatar.Image src={src} name={name} />
+        <Avatar.Image src={src} name={name} className={imageClassName} />
       </Avatar>
     );
   },

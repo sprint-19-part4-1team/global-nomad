@@ -31,9 +31,9 @@ interface AvatarImageProps {
  * </Avatar>
  */
 export default function AvatarImage({ loading = 'eager', className }: AvatarImageProps) {
-  const { user, setImageError } = useAvatarContext();
+  const { user, imageError, setImageError } = useAvatarContext();
 
-  if (!user.profileImageUrl) {
+  if (!user.profileImageUrl || imageError) {
     return null;
   }
 

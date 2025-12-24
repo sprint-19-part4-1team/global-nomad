@@ -27,7 +27,11 @@ interface AvatarFallbackProps {
  * </Avatar>
  */
 export default function AvatarFallback({ className }: AvatarFallbackProps) {
-  const { user } = useAvatarContext();
+  const { user, imageError } = useAvatarContext();
+
+  if (user.profileImageUrl || imageError) {
+    return null;
+  }
 
   return (
     <span role='img' aria-label={`${user.nickname}님의 프로필`} className={className}>

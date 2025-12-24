@@ -54,29 +54,10 @@ export default function Avatar({ size, className, user, children }: AvatarProps)
   // 이미지 로딩 실패 상태
   const [imageError, setImageError] = useState(false);
 
-  // AvatarImage 태그
-  let image: ReactNode;
-  // AvatarFallback 태그
-  let fallback: ReactNode;
-
-  React.Children.forEach(children, (child) => {
-    if (React.isValidElement(child)) {
-      if (child.type === AvatarImage) {
-        // children 중 AvatarImage 태그
-        image = child;
-      } else if (child.type === AvatarFallback) {
-        // children 중 AvatarFallback 태그
-        fallback = child;
-      }
-    }
-  });
-
   return (
-    <AvatarContext.Provider value={{ user, setImageError }}>
-      <div className={cn(avatarVariants({ size }), className)}>
-        {user.profileImageUrl && !imageError ? image : fallback}
-      </div>
-    </AvatarContext.Provider>
+    <AvatarContext value={{ user, imageError, setImageError }}>
+      <div className={cn(avatarVariants({ size }), className)}>{children}</div>
+    </AvatarContext>
   );
 }
 

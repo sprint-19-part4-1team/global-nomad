@@ -8,6 +8,7 @@ import { User } from '@/shared/types/user';
  */
 interface AvatarContextType {
   user: User;
+  imageError: boolean;
   setImageError: Dispatch<SetStateAction<boolean>>;
 }
 

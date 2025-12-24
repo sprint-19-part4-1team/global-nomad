@@ -1,4 +1,7 @@
 import Link, { LinkProps } from 'next/link';
+import { AnchorHTMLAttributes } from 'react';
+
+type LinkBaseProps = LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 /**
  * ## LinkBase
@@ -11,6 +14,6 @@ import Link, { LinkProps } from 'next/link';
  * @param props
  * - Next.js `Link` 컴포넌트의 모든 기본 props
  */
-export default function LinkBase(props: LinkProps) {
+export default function LinkBase(props: LinkBaseProps) {
   return <Link {...props} />;
 }

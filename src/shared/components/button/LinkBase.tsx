@@ -1,7 +1,7 @@
 import Link, { LinkProps } from 'next/link';
 import { AnchorHTMLAttributes } from 'react';
 
-type LinkBaseProps = LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>;
+type LinkBaseProps = LinkProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 
 /**
  * ## LinkBase

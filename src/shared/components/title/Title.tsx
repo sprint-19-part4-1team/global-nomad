@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-export const TitleVariants = cva('', {
+export const titleVariants = cva('', {
   variants: {
     size: {
       '32': 'heading-32',
@@ -26,7 +26,7 @@ export const TitleVariants = cva('', {
 const TAG_OPTIONS = ['h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
 type Tag = (typeof TAG_OPTIONS)[number];
-type TitleVariantsProps = VariantProps<typeof TitleVariants>;
+type TitleVariantsProps = VariantProps<typeof titleVariants>;
 
 interface TitleProps extends TitleVariantsProps {
   as?: Tag;
@@ -46,6 +46,6 @@ export default function Title({ as = 'h2', size, weight, className, children }: 
   const Component = as;
 
   return (
-    <Component className={cn(TitleVariants({ size, weight }), className)}>{children}</Component>
+    <Component className={cn(titleVariants({ size, weight }), className)}>{children}</Component>
   );
 }

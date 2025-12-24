@@ -15,7 +15,6 @@ import RoundBox from './RoundBox';
 const meta: Meta<typeof RoundBox> = {
   title: 'Shared/RoundBox',
   component: RoundBox,
-  tags: ['autodocs'],
   argTypes: {
     radius: {
       control: 'select',

@@ -20,17 +20,16 @@ import Title from './Title';
 const meta: Meta<typeof Title> = {
   title: 'Shared/Title',
   component: Title,
-  tags: ['autodocs'],
   render: (args) => <Title {...args} />,
   argTypes: {
     as: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'div'],
-      description: '렌더링할 HTML 태그',
+      options: ['h2', 'h3', 'h4', 'h5', 'h6'],
+      description: '렌더링할 HTML 태그(`h2` ~ `h6`)',
     },
     size: {
       control: 'select',
-      options: [32, 24, 20, 18],
+      options: ['32', '24', '20', '18'],
       description: '폰트 크기 (px 단위 타이포그래피 토큰)',
     },
     weight: {
@@ -56,9 +55,7 @@ type Story = StoryObj<typeof Title>;
 
 export const Default: Story = {
   args: {
-    as: 'h1',
-    size: 32,
-    weight: 'medium',
+    as: 'h2',
     children: '🔥 인기 체험',
   },
 };

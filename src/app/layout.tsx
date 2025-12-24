@@ -18,6 +18,7 @@ export default function RootLayout({
       <body>
         {children}
         <ToastProvider />
+        <div id='modal-root' />
       </body>
     </html>
   );

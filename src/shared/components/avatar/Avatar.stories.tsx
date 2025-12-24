@@ -79,3 +79,13 @@ export const Default: Story = {
     imageClassName: '',
   },
 };
+
+export const WithImage: Story = {
+  args: {
+    size: 'md',
+    className: '',
+    src: 'https://github.com/shadcn.png',
+    name: 'Test',
+    imageClassName: '',
+  },
+};

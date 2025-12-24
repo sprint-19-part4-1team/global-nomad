@@ -1,16 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Avatar from '@/shared/components/avatar/Avatar';
+import { User } from '@/shared/types/user';
 
 /**
  * Storybook에서 Avatar 컴포넌트를 제어하기 위한 Props 타입
- * Avatar와 Avatar.Image의 props를 결합한 형태
+ *
+ * Avatar와 하위 컴포넌트(Avatar.Image, Avatar.Fallback)의 props를 결합한 형태
+ *
+ * @property {User} user - 사용자 정보
+ * @property {'sm' | 'md' | 'lg'} [size] - 아바타 크기
+ * @property {string} [className] - Avatar 컨테이너 추가 스타일
+ * @property {string} [imageClassName] - Avatar.Image 추가 스타일
+ * @property {string} [fallbackClassName] - Avatar.Fallback 추가 스타일
  */
 interface AvatarStoryProps {
+  user: User;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
-  src?: string;
-  name?: string;
   imageClassName?: string;
+  fallbackClassName?: string;
 }
 
 /**
@@ -19,25 +27,26 @@ interface AvatarStoryProps {
  * Avatar는 헤더와 마이페이지에서 사용하는 사용자 프로필 이미지 컴포넌트입니다.
  *
  * ### 주요 특징
- * - 3가지 크기 지원 (sm: 30px, md: 70px, lg: 120px)
- * - 이미지 없을 시 자동 Fallback 아이콘 표시
- * - Avatar와 Avatar.Image 각각 독립적인 스타일링 가능
+ * - 3가지 크기 지원 (sm: 30px, md: 70px/120px(반응형), lg: 120px)
+ * - Context API를 통한 상태 관리로 이미지 로딩 실패 시 자동 Fallback 표시
+ * - Avatar와 하위 컴포넌트 각각 독립적인 스타일링 가능
  *
- * ### 사용 규칙
- * - `size` : 'sm' | 'md' | 'lg' 중 하나만 지정 가능
- * - `className` : Avatar 컨테이너의 추가 스타일 (마진, 테두리 등)
- * - `src` : 이미지 URL (없으면 Fallback 아이콘 자동 표시)
- * - `name` : 접근성 레이블 (기본값: '유저 아바타')
- * - `imageClassName` : Avatar.Image의 추가 스타일 (필터, 투명도 등)
+ * ### Props 설명
+ * - `user`: 필수 사용자 정보 (id, nickname, profileImageUrl 등)
+ * - `size`: 아바타 크기 ('sm' | 'md' | 'lg')
+ * - `className`: Avatar 컨테이너의 추가 스타일 (마진, 테두리 등)
+ * - `imageClassName`: Avatar.Image의 추가 스타일 (필터, 투명도 등)
+ * - `fallbackClassName`: Avatar.Fallback의 추가 스타일 (색상, 크기 등)
  */
 
 const meta: Meta<AvatarStoryProps> = {
   title: 'shared/Avatar',
   render: (args) => {
-    const { size, className, src, name, imageClassName } = args;
+    const { user, size, className, imageClassName, fallbackClassName } = args;
     return (
-      <Avatar size={size} className={className}>
-        <Avatar.Image src={src} name={name} className={imageClassName} />
+      <Avatar user={user} size={size} className={className}>
+        <Avatar.Image className={imageClassName} />
+        <Avatar.Fallback className={fallbackClassName} />
       </Avatar>
     );
   },
@@ -52,17 +61,14 @@ const meta: Meta<AvatarStoryProps> = {
       description: 'Avatar 추가 스타일 (마진, 테두리, 그림자 등)',
     },
     // Avatar.Image pops
-    src: {
-      control: 'text',
-      description: 'Avatar 이미지 SRC (비어 있으면 Fallback 아이콘 표시)',
-    },
-    name: {
-      control: 'text',
-      description: "Avatar 이미지 대체 텍스트 (비어 있으면 '유저 아바타' 설정)",
-    },
     imageClassName: {
       control: 'text',
       description: 'Avatar.Image 추가 스타일 (필터, 투명도 등)',
+    },
+    // Avatar.Fallback pops
+    fallbackClassName: {
+      control: 'text',
+      description: 'Avatar.Fallback 추가 스타일 (필터, 투명도 등)',
     },
   },
 };
@@ -70,22 +76,73 @@ const meta: Meta<AvatarStoryProps> = {
 export default meta;
 type Story = StoryObj<AvatarStoryProps>;
 
+// Mock 사용자 데이터 - 프로필 이미지 없음
+const defaultUser: User = {
+  id: 1,
+  email: 'test@example.com',
+  nickname: '테스트',
+  profileImageUrl: '',
+  createdAt: '2025-12-24T08:50:57.848Z',
+  updatedAt: '2025-12-24T08:50:57.848Z',
+};
+
+// Mock 사용자 데이터 - 프로필 이미지 있음
+const withImageUser: User = {
+  id: 1,
+  email: 'test@example.com',
+  nickname: '이미지 테스트',
+  profileImageUrl: 'https://github.com/shadcn.png',
+  createdAt: '2025-12-24T08:50:57.848Z',
+  updatedAt: '2025-12-24T08:50:57.848Z',
+};
+
+/**
+ * 기본 상태 (프로필 이미지 없음)
+ * Fallback 아이콘이 표시됩니다
+ */
 export const Default: Story = {
   args: {
+    user: defaultUser,
     size: 'sm',
     className: '',
-    src: '',
-    name: '유저 아바타',
     imageClassName: '',
+    fallbackClassName: '',
   },
 };
 
+/**
+ * 프로필 이미지가 있는 경우
+ * 사용자의 프로필 이미지가 표시됩니다
+ */
 export const WithImage: Story = {
   args: {
+    user: withImageUser,
     size: 'md',
     className: '',
-    src: 'https://github.com/shadcn.png',
-    name: 'Test',
     imageClassName: '',
+    fallbackClassName: '',
   },
+};
+
+/**
+ * 크기별 비교
+ * sm, md, lg 크기를 한눈에 비교할 수 있습니다
+ */
+export const AllSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <Avatar user={defaultUser} size='sm'>
+        <Avatar.Image />
+        <Avatar.Fallback />
+      </Avatar>
+      <Avatar user={defaultUser} size='md'>
+        <Avatar.Image />
+        <Avatar.Fallback />
+      </Avatar>
+      <Avatar user={defaultUser} size='lg'>
+        <Avatar.Image />
+        <Avatar.Fallback />
+      </Avatar>
+    </div>
+  ),
 };

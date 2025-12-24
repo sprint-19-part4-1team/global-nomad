@@ -31,13 +31,18 @@ export default function OverlayPortal({ children }: { children: ReactNode }) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    const root = document.createElement('div');
-    root.id = OVERLAY_ROOT_ID;
-    document.body.appendChild(root);
-    setContainer(root);
+    let portalContainer = document.getElementById(OVERLAY_ROOT_ID);
+
+    if (!portalContainer) {
+      portalContainer = document.createElement('div');
+      portalContainer.id = OVERLAY_ROOT_ID;
+      document.body.appendChild(portalContainer);
+    }
+
+    setContainer(portalContainer);
 
     return () => {
-      root.remove();
+      portalContainer.remove();
     };
   }, []);
 

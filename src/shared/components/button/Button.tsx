@@ -40,7 +40,6 @@ const buttonVariants = cva(
        */
       full: {
         true: 'w-full',
-        false: '',
       },
     },
 

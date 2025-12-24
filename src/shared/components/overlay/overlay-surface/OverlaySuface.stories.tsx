@@ -116,7 +116,7 @@ export const PanelExample: Story = {
   parameters: {
     docs: {
       description: {
-        story: '우측에 표시되는 표시되는 기본 panel 형태입니다.',
+        story: '우측에 표시되는 기본 panel 형태입니다.',
       },
     },
   },

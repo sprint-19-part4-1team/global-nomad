@@ -1,4 +1,5 @@
 import { LAYER } from '@/shared/components/overlay/constants/layer';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * ## Backdrop (Dimmed Layer)
@@ -11,5 +12,5 @@ import { LAYER } from '@/shared/components/overlay/constants/layer';
  * - 클릭 이벤트, 스크롤 락 등 행동 로직은 상위 컴포넌트에서 제어
  */
 export default function Backdrop() {
-  return <div className={`absolute h-dvh w-dvw bg-op-50 ${LAYER.backdrop}`} />;
+  return <div className={cn('absolute h-dvh w-dvw bg-op-50', LAYER.backdrop)} />;
 }

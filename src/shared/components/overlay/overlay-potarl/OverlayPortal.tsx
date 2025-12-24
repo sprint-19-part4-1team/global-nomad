@@ -1,7 +1,9 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+
+const OVERLAY_ROOT_ID = 'overlay-root';
 
 /**
  * ## OverlayPortal
@@ -26,6 +28,22 @@ import ReactDOM from 'react-dom';
  * ```
  */
 export default function OverlayPortal({ children }: { children: ReactNode }) {
-  const modalRoot = document.getElementById('overlay-root')!;
-  return ReactDOM.createPortal(children, modalRoot);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const root = document.createElement('div');
+    root.id = OVERLAY_ROOT_ID;
+    document.body.appendChild(root);
+    setContainer(root);
+
+    return () => {
+      root.remove();
+    };
+  }, []);
+
+  if (!container) {
+    return null;
+  }
+
+  return ReactDOM.createPortal(children, container);
 }

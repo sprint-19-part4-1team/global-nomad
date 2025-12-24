@@ -91,19 +91,19 @@ interface SurfaceProps extends OverlaySurfaceVariantProps {
  * - 열기/닫기, 포커스 트랩, 접근성(role, aria-modal) 등의 행동 로직은
  *   Dialog / BottomSheet / Panel 같은 상위 컴포넌트에서 제어하는 것을 권장합니다.
  *
- * @param {ReactNode} children
+ * @param - children
  * OverlaySurface 내부에 렌더링될 콘텐츠입니다.
  * 실제 UI 구성은 이 영역에서 이루어집니다.
  *
- * @param {string} [position]
+ * @param - position
  * Surface가 화면에 배치되는 위치입니다.
  * - `'center' | 'bottom' | 'right'`
  *
- * @param {string} [variant]
+ * @param - variant
  * Surface의 기본 형태(크기/레이아웃)입니다.
  * - `'dialog' | 'sheet' | 'panel'`
  *
- * @param {string} [className]
+ * @param - className
  * 추가적인 스타일 확장을 위한 클래스입니다.
  * 레이아웃/여백 조정 용도로만 사용하는 것을 권장합니다.
  *

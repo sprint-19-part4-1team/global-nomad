@@ -116,14 +116,14 @@ export const PanelExample: Story = {
   parameters: {
     docs: {
       description: {
-        story: '우측에 표시되는 표시되는 기본 pannel 형태입니다.',
+        story: '우측에 표시되는 표시되는 기본 panel 형태입니다.',
       },
     },
   },
   render: () => (
     <OverlayPreview>
       <OverlaySurface position='right' variant='panel'>
-        <div className='p-30'>pannel Content</div>
+        <div className='p-30'>panel Content</div>
       </OverlaySurface>
     </OverlayPreview>
   ),

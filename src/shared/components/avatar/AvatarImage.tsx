@@ -39,7 +39,7 @@ interface AvatarImageProps {
 export default function AvatarImage({
   src,
   name = '유저 아바타',
-  loading = 'lazy',
+  loading = 'eager',
   className,
 }: AvatarImageProps) {
   // 표시할 아바타 이미지(src)가 존재할 때만 Image 렌더링

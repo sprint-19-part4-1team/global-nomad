@@ -19,10 +19,10 @@ const preview: Preview = {
 
     // 기본 레이아웃 가운데 정렬
     layout: 'centered',
-
-    // docs 자동 생성
-    tags: ['autodocs'],
   },
+
+  // docs 자동 생성
+  tags: ['autodocs'],
 };
 
 export default preview;

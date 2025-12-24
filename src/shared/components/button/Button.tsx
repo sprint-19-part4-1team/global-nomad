@@ -52,6 +52,7 @@ const buttonVariants = cva(
     defaultVariants: {
       theme: 'primary',
       size: 'lg',
+      full: false,
     },
   }
 );

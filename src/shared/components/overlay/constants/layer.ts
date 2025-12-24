@@ -14,10 +14,10 @@ export const LAYER = {
    * Modal / BottomSheet / Dialog 뒤의 dimmed 배경
    * - 화면의 다른 UI와의 상호작용을 차단하는 역할
    */
-  backdrop: 'z-10',
+  BACKDROP: 'z-10',
   /**
    * Modal / Dialog / BottomSheet의 실제 콘텐츠 영역
    * - Backdrop 위에 위치하는 떠 있는 표면(Surface)
    */
-  overlaySurface: 'z-20',
+  OVERLAY_SURFACE: 'z-20',
 } as const;

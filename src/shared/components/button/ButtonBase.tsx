@@ -12,6 +12,6 @@ import { ComponentProps } from 'react';
  * @param props
  * - HTML `<button>` 요소가 지원하는 모든 기본 props
  */
-export function ButtonBase(props: ComponentProps<'button'>) {
+export default function ButtonBase(props: ComponentProps<'button'>) {
   return <button {...props} />;
 }

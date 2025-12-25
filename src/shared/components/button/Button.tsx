@@ -10,12 +10,12 @@ const buttonVariants = cva(
   {
     variants: {
       /**
-       * ### theme
+       * ### variant
        *
        * @description
        * Button의 스타일을 정의합니다.
        */
-      theme: {
+      variant: {
         primary: 'bg-primary-500 text-white hover:bg-primary-600',
         secondary:
           'bg-white text-gray-800 border border-gray-300 hover:bg-primary-100 hover:border-primary-500 hover:text-primary-500',
@@ -50,7 +50,7 @@ const buttonVariants = cva(
      * - 별도 지정이 없으면 `primary`, `lg` 적용
      */
     defaultVariants: {
-      theme: 'primary',
+      variant: 'primary',
       size: 'lg',
       full: false,
     },
@@ -89,7 +89,7 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
  *   전달되지 않으면 HTML `<button>` 기반의 action 버튼으로 동작합니다.
  *
  * @param props
- * - 공통 스타일 props: `theme`, `size`, `full`
+ * - 공통 스타일 props: `variant`, `size`, `full`
  * - 공통 UI props: `children`, `className`
  * - action 버튼: `<button>`이 지원하는 기본 props (`onClick`, `type`, `disabled` 등)
  * - navigation 버튼: `href` 및 `<a>` 태그가 지원하는 기본 props
@@ -107,12 +107,12 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
  * <Button href="/profile">프로필</Button>
  *
  * // full width button
- * <Button full theme="secondary">전체 버튼</Button>
+ * <Button full variant="secondary">전체 버튼</Button>
  * ```
  */
 export default function Button(props: ButtonProps) {
-  const { theme, size, full, className, children, ...rest } = props;
-  const classes = cn(buttonVariants({ theme, size, full }), className);
+  const { variant, size, full, className, children, ...rest } = props;
+  const classes = cn(buttonVariants({ variant, size, full }), className);
 
   if ('href' in rest && rest.href != null) {
     const { href, ...linkProps } = rest;

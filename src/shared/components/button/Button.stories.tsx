@@ -10,7 +10,7 @@ import Button from '@/shared/components/button/Button';
  * - `href` 유무에 따라 렌더링 요소가 자동으로 분기됩니다.
  *   - `href` 없음 → `<button>` (action)
  *   - `href` 있음 → `<Link>` (navigation)
- * - 스타일은 `cva` 기반으로 관리되며 `theme`, `size`, `full` 조합을 지원합니다.
+ * - 스타일은 `cva` 기반으로 관리되며 `variant`, `size`, `full` 조합을 지원합니다.
  *
  * ### **사용 규칙**
  * - action 버튼에서느 `href`를 사용할 수 없습니다.
@@ -21,10 +21,10 @@ const meta: Meta<typeof Button> = {
   title: 'Shared/Button',
   component: Button,
   argTypes: {
-    theme: {
+    variant: {
       control: 'radio',
       options: ['primary', 'secondary', 'negative'],
-      description: 'Button 스타일 테마',
+      description: 'Button 스타일',
       table: {
         type: {
           summary: `'primary' | 'secondary' | 'negative'`,
@@ -108,7 +108,7 @@ export const Default: Story = {
     },
   },
   args: {
-    theme: 'primary',
+    variant: 'primary',
     size: 'lg',
     full: false,
     children: 'label',
@@ -121,15 +121,15 @@ export const Default: Story = {
 };
 
 /** 스토리 렌더용 */
-const SizePreview = ({ theme }: { theme: 'primary' | 'secondary' | 'negative' }) => (
+const SizePreview = ({ variant }: { variant: 'primary' | 'secondary' | 'negative' }) => (
   <div className='flex items-center gap-16'>
-    <Button theme={theme} size='sm'>
+    <Button variant={variant} size='sm'>
       sm
     </Button>
-    <Button theme={theme} size='md'>
+    <Button variant={variant} size='md'>
       md
     </Button>
-    <Button theme={theme} size='lg'>
+    <Button variant={variant} size='lg'>
       lg
     </Button>
   </div>
@@ -143,7 +143,7 @@ export const Primary: Story = {
       },
     },
   },
-  render: () => <SizePreview theme='primary' />,
+  render: () => <SizePreview variant='primary' />,
 };
 
 export const Secondary: Story = {
@@ -154,7 +154,7 @@ export const Secondary: Story = {
       },
     },
   },
-  render: () => <SizePreview theme='secondary' />,
+  render: () => <SizePreview variant='secondary' />,
 };
 
 export const Negative: Story = {
@@ -165,7 +165,7 @@ export const Negative: Story = {
       },
     },
   },
-  render: () => <SizePreview theme='negative' />,
+  render: () => <SizePreview variant='negative' />,
 };
 
 export const Navigation: Story = {
@@ -179,7 +179,7 @@ export const Navigation: Story = {
   render: () => (
     <div className='flex gap-16'>
       <Button href='/'>메인으로</Button>
-      <Button href='/mypage' theme='secondary'>
+      <Button href='/mypage' variant='secondary'>
         마이페이지로 이동
       </Button>
     </div>

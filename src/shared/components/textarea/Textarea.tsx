@@ -3,6 +3,16 @@
 import { useId, useState } from 'react';
 import { cn } from '@/shared/utils/cn';
 
+/**
+ * Textarea 컴포넌트의 Props
+ *
+ * @property {('activity' | 'review')} variant - 텍스트 영역의 스타일 변형 (activity: 체험 등록/수정용, review: 리뷰 작성용)
+ * @property {string} label - 텍스트 영역의 라벨 텍스트
+ * @property {string} name - form 제출 시 사용될 textarea name
+ * @property {string} placeholder - 입력 필드의 placeholder 텍스트
+ * @property {number} maxLength - 최대 입력 가능한 글자 수
+ * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지
+ */
 interface TextareaProps {
   variant: 'activity' | 'review';
   label: string;
@@ -12,6 +22,11 @@ interface TextareaProps {
   errorMessage?: string;
 }
 
+/**
+ * variant별 스타일 설정 객체
+ * - activity: 활동 등록 페이지용 스타일
+ * - review: 리뷰 작성 페이지용 스타일
+ */
 const TEXTAREA_VARIANTS = {
   activity: {
     container: 'gap-6 sm:gap-8',
@@ -27,6 +42,28 @@ const TEXTAREA_VARIANTS = {
   },
 } as const;
 
+/**
+ * Textarea 컴포넌트
+ *
+ * 최대 글자 수 제한과 글자 수 카운터가 포함된 텍스트 입력 영역 컴포넌트입니다.
+ * variant prop에 따라 'activity'와 'review' 두 가지 스타일을 제공합니다.
+ *
+ * @param {TextareaProps} props - 컴포넌트 props
+ * @returns {JSX.Element} Textarea 컴포넌트
+ *
+ * @example
+ * ```tsx
+ * <Textarea
+ *   variant='activity'
+ *   label='설명'
+ *   name='content'
+ *   placeholder='체험에 대한 설명을 입력해 주세요.'
+ *   maxLength={1000}
+ *   errorMessage='설명을 입력해 주세요.'
+ * />
+ * ```
+ *
+ */
 export default function Textarea({
   variant,
   label,
@@ -35,17 +72,29 @@ export default function Textarea({
   maxLength,
   errorMessage,
 }: TextareaProps) {
+  // 접근성을 위한 고유 ID 생성
   const textareaId = useId();
+
+  // 입력된 텍스트 상태 관리
   const [text, setText] = useState('');
 
+  // 현재 variant에 해당하는 스타일 추출
   const { container, labelStyle, textareaBox, textCountStyle } = TEXTAREA_VARIANTS[variant];
 
+  /**
+   * 텍스트 입력 변경 핸들러
+   *
+   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - 변경 이벤트
+   */
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setText(e.target.value);
   };
 
+  // 현재 입력된 글자 수
   const textCount = text.length;
+
+  // 최대 글자 수 초과 여부
   const isOverMax = textCount > maxLength;
 
   return (

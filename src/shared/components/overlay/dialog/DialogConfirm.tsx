@@ -4,7 +4,7 @@ import Button from '@/shared/components/button/Button';
 
 export interface DialogConfirmProps {
   message: ReactNode;
-  cancelLabel: string;
+  cancelLabel?: string;
   onCancel: () => void;
   confirmLabel: string;
   onConfirm: () => void | Promise<void>;

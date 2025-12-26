@@ -7,7 +7,7 @@ interface DialogConfirmProps {
   cancelLabel: string;
   onCancel: () => void;
   confirmLabel: string;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
 }
 
 /**

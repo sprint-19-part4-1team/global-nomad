@@ -1,8 +1,12 @@
 'use client';
 
-import { mockNotifications } from '@/shared/components/notification-modal/__mocks__/notifications';
-import NotificationItem from '@/shared/components/notification-modal/NotificationItem';
+import NotificationItem, {
+  Notification,
+} from '@/shared/components/notification-modal/NotificationItem';
 
+interface NotificationModalProps {
+  notifications: Notification[];
+}
 /**
  * 알림 리스트를 표시하는 모달 컴포넌트
  *
@@ -11,9 +15,7 @@ import NotificationItem from '@/shared/components/notification-modal/Notificatio
  * - 알림 리스트 스크롤 영역 제공
  * - 모바일은 양쪽 마진 24px 적용
  */
-export default function NotificationModal() {
-  const notifications = mockNotifications;
-
+export default function NotificationModal({ notifications }: NotificationModalProps) {
   /**
    * 전체 알림 삭제 함수 (추후 API 연동 예정)
    */

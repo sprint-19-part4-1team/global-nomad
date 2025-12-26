@@ -13,7 +13,7 @@ import Button from '@/shared/components/button/Button';
  * - 스타일은 `cva` 기반으로 관리되며 `variant`, `size`, `full` 조합을 지원합니다.
  *
  * ### **사용 규칙**
- * - action 버튼에서느 `href`를 사용할 수 없습니다.
+ * - action 버튼에서는 `href`를 사용할 수 없습니다.
  * - navigation 버튼에서는 `type`, `disabled`, `onClick`을 사용할 수 없습니다.
  * - 버튼의 의미(action / navigation)는 **타입 레벨에서 강제**됩니다.
  */
@@ -79,6 +79,15 @@ const meta: Meta<typeof Button> = {
     disabled: {
       control: 'boolean',
       description: 'disabled 여부 (`action` 버튼 전용)',
+      table: {
+        category: 'Action',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    isLoading: {
+      control: 'boolean',
+      description: '로딩 상태 여부 (`action` 버튼 전용)',
       table: {
         category: 'Action',
         type: { summary: 'boolean' },
@@ -198,6 +207,20 @@ export const Disabled: Story = {
   args: {
     children: '비활성 버튼',
     disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`isLoading` 상태의 action 버튼입니다. 버튼이 비활성화되고 스피너가 표시됩니다.',
+      },
+    },
+  },
+  args: {
+    children: '버튼',
+    isLoading: true,
   },
 };
 

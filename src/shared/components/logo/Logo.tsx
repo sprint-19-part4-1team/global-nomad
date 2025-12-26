@@ -32,20 +32,29 @@ interface LogoProps {
  * ```
  */
 
+const LOGO_VARIANTS = {
+  login: {
+    DesktopComponent: Logos.LogoLogin,
+    desktopClassName: 'hidden w-255 sm:block',
+    MobileComponent: Logos.Logo,
+    mobileClassName: 'block w-144 sm:hidden',
+  },
+  header: {
+    DesktopComponent: Logos.LogoNav,
+    desktopClassName: 'hidden w-174 sm:block',
+    MobileComponent: Logos.Logo,
+    mobileClassName: 'block w-28 sm:hidden',
+  },
+};
+
 export default function Logo({ variant = 'header' }: LogoProps) {
+  const { DesktopComponent, desktopClassName, MobileComponent, mobileClassName } =
+    LOGO_VARIANTS[variant];
+
   return (
-    <Link href='/' title='홈으로 이동' className='inline-block'>
-      {variant === 'login' ? (
-        <>
-          <Logos.LogoLogin className='hidden w-255 sm:block' />
-          <Logos.Logo className='block w-144 sm:hidden' />
-        </>
-      ) : (
-        <>
-          <Logos.LogoNav className='hidden w-174 sm:block' />
-          <Logos.Logo className='block w-28 sm:hidden' />
-        </>
-      )}
+    <Link href='/' title='홈으로 이동'>
+      <DesktopComponent className={desktopClassName} />
+      <MobileComponent className={mobileClassName} />
     </Link>
   );
 }

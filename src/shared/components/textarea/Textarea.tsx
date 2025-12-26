@@ -7,10 +7,10 @@ import { cn } from '@/shared/utils/cn';
  * Textarea 컴포넌트의 Props
  *
  * @property {('activity' | 'review')} variant - 텍스트 영역의 스타일 변형 (activity: 체험 등록/수정용, review: 리뷰 작성용)
- * @property {string} label - 텍스트 영역의 라벨 텍스트
- * @property {string} name - form 제출 시 사용될 textarea name
- * @property {string} placeholder - 입력 필드의 placeholder 텍스트
- * @property {number} maxLength - 최대 입력 가능한 글자 수
+ * @property {string} label - 텍스트 영역의 label 텍스트
+ * @property {string} name - form 제출 시 사용될 텍스트 영역의 name
+ * @property {string} placeholder - 텍스트 영역의 placeholder 텍스트
+ * @property {number} maxLength - 텍스트 영역에 입력 가능한 최대 글자 수
  * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지
  */
 interface TextareaProps {

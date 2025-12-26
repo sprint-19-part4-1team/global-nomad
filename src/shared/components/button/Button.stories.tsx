@@ -13,7 +13,7 @@ import Button from '@/shared/components/button/Button';
  * - 스타일은 `cva` 기반으로 관리되며 `variant`, `size`, `full` 조합을 지원합니다.
  *
  * ### **사용 규칙**
- * - action 버튼에서느 `href`를 사용할 수 없습니다.
+ * - action 버튼에서는 `href`를 사용할 수 없습니다.
  * - navigation 버튼에서는 `type`, `disabled`, `onClick`을 사용할 수 없습니다.
  * - 버튼의 의미(action / navigation)는 **타입 레벨에서 강제**됩니다.
  */

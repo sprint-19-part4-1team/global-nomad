@@ -8,7 +8,7 @@ import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 
 type NeverProps<T> = {
-  [_K in keyof T]?: never;
+  [K in keyof T]?: never;
 };
 
 type DialogPropsMap = { alert: DialogAlertProps; confirm: DialogConfirmProps };

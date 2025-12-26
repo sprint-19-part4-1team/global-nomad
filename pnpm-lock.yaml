@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@eslint/eslintrc':
-        specifier: ^3.3.3
-        version: 3.3.3
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -36,6 +33,9 @@ importers:
       '@commitlint/cli':
         specifier: ^20.2.0
         version: 20.2.0(@types/node@20.19.27)(typescript@5.9.3)
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.3
       '@storybook/addon-a11y':
         specifier: ^10.1.10
         version: 10.1.10(storybook@10.1.10(@testing-library/dom@10.4.1)(prettier@3.7.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
@@ -60,12 +60,6 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.7)
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^8.50.1
-        version: 8.50.1(@typescript-eslint/parser@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^8.50.1
-        version: 8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       chromatic:
         specifier: ^13.3.4
         version: 13.3.4

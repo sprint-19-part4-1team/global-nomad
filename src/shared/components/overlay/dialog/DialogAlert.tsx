@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Button from '@/shared/components/button/Button';
 
-interface DialogAlertProps {
+export interface DialogAlertProps {
   message: ReactNode;
   closeLabel?: string;
   onClose: () => void;

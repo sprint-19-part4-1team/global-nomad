@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -10,6 +10,8 @@ import { cn } from '@/shared/utils/cn';
  * @property {string} label - 텍스트 영역의 label 텍스트
  * @property {string} name - form 제출 시 사용될 텍스트 영역의 name
  * @property {string} placeholder - 텍스트 영역의 placeholder 텍스트
+ * @property {string} value - 텍스트 영역의 현재 값
+ * @property {React.ChangeEventHandler<HTMLTextAreaElement>} onChange - 텍스트 변경 이벤트 핸들러
  * @property {number} maxLength - 텍스트 영역에 입력 가능한 최대 글자 수
  * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지
  */
@@ -18,6 +20,8 @@ interface TextareaProps {
   label: string;
   name: string;
   placeholder: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   maxLength: number;
   errorMessage?: string;
 }
@@ -58,6 +62,8 @@ const TEXTAREA_VARIANTS = {
  *   label='설명'
  *   name='content'
  *   placeholder='체험에 대한 설명을 입력해 주세요.'
+ *   value={content}
+ *   onChange={(e) => setContent(e.target.value)}
  *   maxLength={1000}
  *   errorMessage='설명을 입력해 주세요.'
  * />
@@ -69,30 +75,19 @@ export default function Textarea({
   label,
   name,
   placeholder,
+  value,
+  onChange,
   maxLength,
   errorMessage,
 }: TextareaProps) {
   // 접근성을 위한 고유 ID 생성
   const textareaId = useId();
 
-  // 입력된 텍스트 상태 관리
-  const [text, setText] = useState('');
-
   // 현재 variant에 해당하는 스타일 추출
   const { container, labelStyle, textareaBox, textCountStyle } = TEXTAREA_VARIANTS[variant];
 
-  /**
-   * 텍스트 입력 변경 핸들러
-   *
-   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - 변경 이벤트
-   */
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setText(e.target.value);
-  };
-
   // 현재 입력된 글자 수
-  const textCount = text.length;
+  const textCount = value.length;
 
   // 최대 글자 수 초과 여부
   const isOverMax = textCount > maxLength;
@@ -115,7 +110,8 @@ export default function Textarea({
           name={name}
           placeholder={placeholder}
           rows={5}
-          onChange={handleChange}
+          value={value}
+          onChange={onChange}
           className='w-full resize-none placeholder-gray-400 focus:ring-0 focus:outline-none'
         />
         <div className='w-full text-right body-14 font-medium text-gray-400'>

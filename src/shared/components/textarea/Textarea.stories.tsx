@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
+import { useState } from 'react';
 import Textarea from '@/shared/components/textarea/Textarea';
 
 /**
@@ -18,18 +19,23 @@ import Textarea from '@/shared/components/textarea/Textarea';
  * - `label`: 텍스트 영역의 label 텍스트
  * - `name`: form 제출 시 사용될 텍스트 영역의 name
  * - `placeholder`: 텍스트 영역의 placeholder 텍스트
- * - `maxLength`: 텍스트 영역에 입력 가능한 최대 글자 수 ('activity': 1000 | 'review': 100)
- * - `errorMessage`: 에러 발생 시 표시될 메시지
+ * - `value`: 텍스트 영역의 현재 값
+ * - `onChange`: 텍스트 변경 이벤트 핸들러
+ * - `maxLength`: 텍스트 영역에 입력 가능한 최대 글자 수
+ * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항)
  */
 
 const meta: Meta<typeof Textarea> = {
   title: 'Shared/Textarea',
   component: Textarea,
-  render: (args) => (
-    <div className='w-400'>
-      <Textarea {...args} />
-    </div>
-  ),
+  render: (args) => {
+    const [value, setValue] = useState('');
+    return (
+      <div className='w-400'>
+        <Textarea {...args} value={value} onChange={(e) => setValue(e.target.value)} />
+      </div>
+    );
+  },
   argTypes: {
     variant: {
       control: 'select',
@@ -48,13 +54,21 @@ const meta: Meta<typeof Textarea> = {
       control: 'text',
       description: '텍스트 영역의 placeholder 텍스트',
     },
+    value: {
+      control: 'text',
+      description: '텍스트 영역의 현재 값',
+    },
+    onChange: {
+      action: 'changed',
+      description: '텍스트 변경 이벤트 핸들러',
+    },
     maxLength: {
       control: 'number',
-      description: "텍스트 영역에 입력 가능한 최대 글자 수 ('activity': 1000 | 'review': 100)",
+      description: '텍스트 영역에 입력 가능한 최대 글자 수',
     },
     errorMessage: {
       control: 'text',
-      description: '에러 발생 시 표시될 메시지',
+      description: '에러 발생 시 표시될 메시지 (선택사항)',
     },
   },
 };
@@ -64,7 +78,9 @@ type Story = StoryObj<typeof Textarea>;
 
 /**
  * 기본 상태 (체험 등록/수정용)
- * 최대 1000자 제한
+ *
+ * 체험 등록 및 수정 페이지에서 사용되는 기본 Textarea입니다.
+ * 최대 1000자까지 입력 가능합니다.
  */
 export const Default: Story = {
   args: {
@@ -76,8 +92,11 @@ export const Default: Story = {
   },
 };
 
-/** 리뷰 작성용 Textarea
- *  최대 100자 제한
+/**
+ * 리뷰 작성용
+ *
+ * 리뷰 작성 페이지에서 사용되는 Textarea입니다.
+ * 최대 100자까지 입력 가능합니다.
  */
 export const Review: Story = {
   args: {
@@ -91,9 +110,10 @@ export const Review: Story = {
 
 /**
  * 에러 메시지 표시
- * 체험 등록/수정용인 경우에 에러 메시지 표시
+ *
+ * 테두리 색상이 빨간색으로 변경됩니다.
  */
-export const DisplayErrorMessage: Story = {
+export const WithError: Story = {
   args: {
     variant: 'activity',
     label: '설명',

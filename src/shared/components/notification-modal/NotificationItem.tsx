@@ -29,13 +29,16 @@ const STATUS_OPTIONS = {
 } as const;
 
 /**
- * 단일 알림 아이템을 표시하는 컴포넌트
+ * 단일 알림 아이템을 표시하는 컴포넌트입니다.
  *
- * - 알림 상태(승인/거절)에 따른 텍스트 및 색상 표시
- * - 알림 발생 시간 표시
- * - 개별 알림 삭제 버튼 제공
+ * @remarks
+ * - 알림 상태(승인/거절)에 따른 텍스트 및 색상을 표시합니다.
+ * - 알림 발생 시간을 표시합니다.
+ * - 개별 알림 삭제 버튼을 제공합니다.
  *
- * 삭제 로직은 상위 컴포넌트에서 주입받은 onDelete를 통해 처리
+ * @param props - 컴포넌트 속성
+ * @param props.onDelete - 상위 컴포넌트에서 주입받은 개별 알림 삭제 처리 함수
+ * @returns 알림 아이템 리스트 요소
  */
 export default function NotificationItem({
   title,

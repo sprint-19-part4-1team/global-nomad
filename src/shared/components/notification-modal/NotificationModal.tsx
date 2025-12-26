@@ -8,12 +8,20 @@ interface NotificationModalProps {
   notifications: Notification[];
 }
 /**
- * 알림 리스트를 표시하는 모달 컴포넌트
+ * 알림 리스트를 표시하는 모달 컴포넌트입니다.
  *
- * - 알림 개수 표시
- * - 전체 삭제 버튼 제공
- * - 알림 리스트 스크롤 영역 제공
- * - 모바일은 양쪽 마진 24px 적용
+ * @remarks
+ * - 전달받은 알림 목록을 기반으로 알림 개수와 리스트를 렌더링합니다.
+ * - 알림이 존재할 경우 열 수 있으며 전체 삭제 버튼을 노출합니다.
+ * - 알림 리스트 영역은 최대 높이를 가지며, 초과 시 스크롤로 처리됩니다.
+ * - 모바일 환경에서는 좌우 여백을 24px로 유지하여 화면 가장자리에 붙지 않도록 합니다.
+ *
+ * 본 컴포넌트는 UI 렌더링에 집중하며,
+ * 알림 데이터의 상태 관리 및 실제 삭제 로직은 상위 컴포넌트에서 책임집니다.
+ *
+ * @param props - NotificationModal 컴포넌트에 전달되는 속성
+ * @param props.notifications - 렌더링할 알림 목록
+ * @returns 알림 리스트를 포함한 모달 UI 요소
  */
 export default function NotificationModal({ notifications }: NotificationModalProps) {
   /**

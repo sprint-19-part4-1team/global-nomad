@@ -23,9 +23,9 @@ export const titleVariants = cva('', {
   },
 });
 
-const TAG_OPTIONS = ['h2', 'h3', 'h4', 'h5', 'h6'] as const;
+const _TAG_OPTIONS = ['h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
-type Tag = (typeof TAG_OPTIONS)[number];
+type Tag = (typeof _TAG_OPTIONS)[number];
 type TitleVariantsProps = VariantProps<typeof titleVariants>;
 
 interface TitleProps extends TitleVariantsProps {

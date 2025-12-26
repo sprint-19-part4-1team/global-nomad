@@ -24,6 +24,7 @@ export interface DialogConfirmProps {
  * @param onCancel - 취소 버튼 클릭 시 실행되는 콜백
  * @param confirmLabel - 확인 버튼에 표시될 라벨
  * @param onConfirm - 확인 버튼 클릭 시 실행되는 콜백으로 삭제, 저장 등 실제 행동을 수행한 뒤 Dialog를 닫는 용도로 사용됩니다.
+ * @param isConfirm - `true`일 경우 확인 버튼에 로딩 상태를 표시하고 중복 클릭을 방지합니다.
  */
 export default function DialogConfirm({
   message,

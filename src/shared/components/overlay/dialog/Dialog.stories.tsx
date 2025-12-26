@@ -23,7 +23,8 @@ import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLo
  *
  * ### **Story 구성**
  * - 각 Story는 Dialog를 여는 버튼을 포함한 Wrapper 형태로 구성되어 있습니다.
- * - 실제 서비스에서 Dialog를 사용하는 방식과 동일한 흐름을 확인할 수 있습니다.
+ * - ⚠️ 실제 서비스에서는 Dialog를 직접 렌더링하지 않고 `overlayStore.push(<Dialog />)` 형태로 사용합니다.
+ * - 본 스토리는 Dialog UI와 props 동작을 확인하기 위한 예시입니다.
  */
 const meta: Meta<typeof Dialog> = {
   title: 'Shared/Overlay/Dialog',

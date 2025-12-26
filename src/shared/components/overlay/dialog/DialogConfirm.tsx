@@ -2,12 +2,13 @@ import { ReactNode } from 'react';
 import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
 
-interface DialogConfirmProps {
+export interface DialogConfirmProps {
   message: ReactNode;
   cancelLabel: string;
   onCancel: () => void;
   confirmLabel: string;
   onConfirm: () => void | Promise<void>;
+  isConfirm?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export default function DialogConfirm({
   onCancel,
   confirmLabel,
   onConfirm,
+  isConfirm,
 }: DialogConfirmProps) {
   return (
     <>
@@ -41,7 +43,7 @@ export default function DialogConfirm({
         <Button variant='secondary' full onClick={onCancel}>
           {cancelLabel}
         </Button>
-        <Button full onClick={onConfirm}>
+        <Button isLoading={isConfirm} full onClick={onConfirm}>
           {confirmLabel}
         </Button>
       </div>

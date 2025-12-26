@@ -3,13 +3,27 @@
 import { mockNotifications } from '@/shared/components/notification-modal/__mocks__/notifications';
 import NotificationItem from '@/shared/components/notification-modal/NotificationItem';
 
+/**
+ * 알림 리스트를 표시하는 모달 컴포넌트
+ *
+ * - 알림 개수 표시
+ * - 전체 삭제 버튼 제공
+ * - 알림 리스트 스크롤 영역 제공
+ */
 export default function NotificationModal() {
   const notifications = mockNotifications;
 
+  /**
+   * 전체 알림 삭제 함수 (추후 API 연동 예정)
+   */
   const handleDeleteAll = () => {
     // eslint-disable-next-line no-console
     console.log('전체 삭제되었습니다!');
   };
+  /**
+   * 단일 알림 삭제 함수
+   * @param id 삭제할 알림의 id
+   */
   const handleDeleteOne = (id: number) => {
     // eslint-disable-next-line no-console
     console.log(`개별 삭제 되었습니다. id: ${id}`);

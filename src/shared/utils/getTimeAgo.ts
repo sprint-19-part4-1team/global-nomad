@@ -1,7 +1,7 @@
 /**
  * updatedAt 기준으로 상대 시간 문자열을 반환
  *
- * 규칙:
+ * 기준:
  * - 1분 미만: 방금 전
  * - 1분 ~ 1시간 미만: ~분 전
  * - 1시간 ~ 24시간 미만: ~시간 전
@@ -14,7 +14,7 @@ export function getTimeAgo(updatedAt: string): string {
   const now = new Date();
   const updated = new Date(updatedAt);
 
-  // 날짜 파싱 실패 시 원본 반환
+  // 날짜 파싱 실패 시 원본 리턴
   if (Number.isNaN(updated.getTime())) {
     return updatedAt;
   }

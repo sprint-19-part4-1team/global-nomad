@@ -9,7 +9,11 @@ export interface Notification {
   date: string;
   status: NotificationStatus;
 }
+/**
+ * NotificationItem 컴포넌트에서 사용하는 props
+ */
 export interface NotificationItemProps extends Notification {
+  /** 해당 알림을 삭제할 때 호출되는 콜백 */
   onDelete: () => void;
 }
 
@@ -24,6 +28,15 @@ const STATUS_OPTIONS = {
   },
 } as const;
 
+/**
+ * 단일 알림 아이템을 표시하는 컴포넌트
+ *
+ * - 알림 상태(승인/거절)에 따른 텍스트 및 색상 표시
+ * - 알림 발생 시간 표시
+ * - 개별 알림 삭제 버튼 제공
+ *
+ * 삭제 로직은 상위 컴포넌트에서 주입받은 onDelete를 통해 처리
+ */
 export default function NotificationItem({
   title,
   date,

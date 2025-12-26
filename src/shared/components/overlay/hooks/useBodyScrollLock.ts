@@ -18,7 +18,7 @@ import { useEffect } from 'react';
  * useBodyScrollLock(isOpen);
  * ```
  */
-export default function useBodyScrollLock(lock: boolean) {
+const useBodyScrollLock = (lock: boolean) => {
   useEffect(() => {
     if (!lock) {
       return;
@@ -31,4 +31,6 @@ export default function useBodyScrollLock(lock: boolean) {
       document.body.style.overflow = origin;
     };
   }, [lock]);
-}
+};
+
+export default useBodyScrollLock;

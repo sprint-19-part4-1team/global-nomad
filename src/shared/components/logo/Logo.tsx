@@ -45,7 +45,7 @@ const LOGO_VARIANTS = {
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },
-};
+} as const;
 
 export default function Logo({ variant = 'header' }: LogoProps) {
   const { DesktopComponent, desktopClassName, MobileComponent, mobileClassName } =

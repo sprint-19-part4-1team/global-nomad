@@ -32,7 +32,7 @@ export default function DialogConfirm({
   onCancel,
   confirmLabel,
   onConfirm,
-  isConfirm,
+  isConfirm = false,
 }: DialogConfirmProps) {
   return (
     <>

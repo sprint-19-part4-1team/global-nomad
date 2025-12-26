@@ -85,6 +85,15 @@ const meta: Meta<typeof Button> = {
         defaultValue: { summary: 'false' },
       },
     },
+    isLoading: {
+      control: 'boolean',
+      description: '로딩 상태 여부 (`action` 버튼 전용)',
+      table: {
+        category: 'Action',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
     href: {
       control: 'text',
       description: '이동할 경로 (`navigation` 버튼 전용)',
@@ -198,6 +207,20 @@ export const Disabled: Story = {
   args: {
     children: '비활성 버튼',
     disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`isLoading` 상태의 action 버튼입니다. 버튼이 비활성화되고 스피너가 표시됩니다.',
+      },
+    },
+  },
+  args: {
+    children: '버튼',
+    isLoading: true,
   },
 };
 

@@ -14,7 +14,7 @@ export interface Notification {
  */
 export interface NotificationItemProps extends Notification {
   /** 해당 알림을 삭제할 때 호출되는 콜백 */
-  onDelete: () => void;
+  onDelete: () => Promise<void>;
 }
 
 const STATUS_OPTIONS = {

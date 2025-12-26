@@ -3,10 +3,12 @@ import { LinkProps } from 'next/link';
 import { ComponentProps, ReactNode } from 'react';
 import ButtonBase from '@/shared/components/button/ButtonBase';
 import LinkBase from '@/shared/components/button/LinkBase';
+import Spinner from '@/shared/components/spinner/Spinner';
 import { cn } from '@/shared/utils/cn';
 
+/** 공통 스타일 */
 const buttonVariants = cva(
-  'cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25 disabled:cursor-default',
+  'cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25',
   {
     variants: {
       /**
@@ -66,6 +68,7 @@ type ButtonCommonProps = VariantProps<typeof buttonVariants> & {
 /** button(action) 타입 */
 type ButtonAsButton = ButtonCommonProps
   & Omit<ComponentProps<'button'>, 'className' | 'children'> & {
+    isLoading?: boolean;
     href?: never;
   };
 
@@ -126,11 +129,31 @@ export default function Button(props: ButtonProps) {
 
   // 런타임 분기상 이 시점에서는 ButtonAsButton이 확정되므로
   // 유니온 타입을 해소하기 위해 명시적으로 타입 단언
-  const { type = 'button', ...buttonProps } = rest as Omit<ButtonAsButton, keyof ButtonCommonProps>;
+  const {
+    type = 'button',
+    isLoading = false,
+    disabled,
+    ...buttonProps
+  } = rest as Omit<ButtonAsButton, keyof ButtonCommonProps>;
+
+  const isDisabled = isLoading || disabled;
+
+  /** 버튼 커서 스타일 */
+  const cursorClass = isLoading ? 'cursor-wait' : disabled ? 'cursor-default' : '';
 
   return (
-    <ButtonBase className={classes} type={type} {...buttonProps}>
-      {children}
+    <ButtonBase
+      className={cn(classes, cursorClass, isLoading && 'relative')}
+      type={type}
+      disabled={isDisabled}
+      aria-busy={isLoading || undefined}
+      {...buttonProps}>
+      <span className={cn(isLoading && 'invisible')}>{children}</span>
+      {isLoading && (
+        <span className='absolute inset-0 flex items-center justify-center'>
+          <Spinner />
+        </span>
+      )}
     </ButtonBase>
   );
 }

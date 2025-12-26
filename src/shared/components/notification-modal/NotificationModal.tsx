@@ -9,6 +9,7 @@ import NotificationItem from '@/shared/components/notification-modal/Notificatio
  * - 알림 개수 표시
  * - 전체 삭제 버튼 제공
  * - 알림 리스트 스크롤 영역 제공
+ * - 모바일은 양쪽 마진 24px 적용
  */
 export default function NotificationModal() {
   const notifications = mockNotifications;
@@ -21,7 +22,7 @@ export default function NotificationModal() {
     console.log('전체 삭제되었습니다!');
   };
   /**
-   * 단일 알림 삭제 함수
+   * 단일 알림 삭제
    * @param id 삭제할 알림의 id
    */
   const handleDeleteOne = (id: number) => {

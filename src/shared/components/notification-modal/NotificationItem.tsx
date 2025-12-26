@@ -1,4 +1,5 @@
 import Icons from '@/assets/icons';
+import { getTimeAgo } from '@/shared/utils/getTimeAgo';
 
 export type NotificationStatus = 'confirmed' | 'declined';
 export interface Notification {
@@ -23,7 +24,13 @@ const STATUS_OPTIONS = {
   },
 } as const;
 
-export default function NotificationItem({ title, date, status, onDelete }: NotificationItemProps) {
+export default function NotificationItem({
+  title,
+  date,
+  updatedAt,
+  status,
+  onDelete,
+}: NotificationItemProps) {
   const { label, color } = STATUS_OPTIONS[status];
 
   return (
@@ -32,7 +39,7 @@ export default function NotificationItem({ title, date, status, onDelete }: Noti
         <div className='body-14 font-bold'>예약 {label}</div>
         <div className='flex items-center gap-12'>
           {/* TODO: updatedAt 기준으로 시간 계산 로직 필요 */}
-          <div className='body-12 font-medium text-gray-400'>1분 전</div>
+          <div className='body-12 font-medium text-gray-400'>{getTimeAgo(updatedAt)}</div>
           <button
             type='button'
             aria-label='알림 삭제'

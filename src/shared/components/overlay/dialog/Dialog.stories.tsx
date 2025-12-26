@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 import { ComponentProps, useState } from 'react';
 import Button from '@/shared/components/button/Button';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLock';
 
 /**
  * Dialog 컴포넌트 스토리 가이드
@@ -116,6 +117,7 @@ type Story = StoryObj<typeof Dialog>;
 /** 스토리 렌더용 wrapper */
 const DialogStoryWrapper = (props: ComponentProps<typeof Dialog>) => {
   const [open, setOpen] = useState(false);
+  useBodyScrollLock(open);
 
   return (
     <>

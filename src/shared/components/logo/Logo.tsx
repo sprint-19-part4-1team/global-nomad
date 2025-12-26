@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import Logos from '@/assets/logo';
 
+interface LogoProps {
+  variant?: 'login' | 'header';
+}
+
 /**
  * 서비스 로고를 렌더링하는 공통 컴포넌트
  *
@@ -19,33 +23,29 @@ import Logos from '@/assets/logo';
  *
  * @example
  * ```tsx
+ *
+ * defalut 는 header
+ * <Logo />
+ *
  * <Logo variant="login" />
  * <Logo variant="header" />
  * ```
  */
 
-interface LogoProps {
-  variant?: 'login' | 'header';
-}
-
 export default function Logo({ variant = 'header' }: LogoProps) {
-  if (variant === 'login') {
-    return (
-      <>
-        <Link href='/' title='홈으로 이동'>
-          <Logos.LogoLogin className='hidden w-255 md:block' />
-          <Logos.Logo className='block w-144 md:hidden' />
-        </Link>
-      </>
-    );
-  }
-
   return (
-    <>
-      <Link href='/' title='홈으로 이동'>
-        <Logos.LogoNav className='hidden w-174 md:block' />
-        <Logos.Logo className='block w-28 md:hidden' />
-      </Link>
-    </>
+    <Link href='/' title='홈으로 이동' className='inline-block'>
+      {variant === 'login' ? (
+        <>
+          <Logos.LogoLogin className='hidden w-255 sm:block' />
+          <Logos.Logo className='block w-144 sm:hidden' />
+        </>
+      ) : (
+        <>
+          <Logos.LogoNav className='hidden w-174 sm:block' />
+          <Logos.Logo className='block w-28 sm:hidden' />
+        </>
+      )}
+    </Link>
   );
 }

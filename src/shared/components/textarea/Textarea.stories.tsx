@@ -4,7 +4,7 @@ import Textarea from '@/shared/components/textarea/Textarea';
 /**
  * Textarea 컴포넌트 스토리 가이드
  *
- * Textareasms 최대 글자 수 제한과 글자 수 카운터가 포함된 텍스트 입력 영역 컴포넌트입니다.<br/>
+ * Textarea는 최대 글자 수 제한과 글자 수 카운터가 포함된 텍스트 입력 영역 컴포넌트입니다.<br/>
  * variant prop에 따라 체험 등록/수정용('activity')과 리뷰 작성용('review')으로 구분됩니다.
  *
  * ### 주요 특징
@@ -79,7 +79,7 @@ export const Default: Story = {
 /** 리뷰 작성용 Textarea
  *  최대 100자 제한
  */
-export const Reivew: Story = {
+export const Review: Story = {
   args: {
     variant: 'review',
     label: '소중한 경험을 들려주세요',

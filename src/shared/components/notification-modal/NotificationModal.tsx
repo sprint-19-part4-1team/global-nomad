@@ -1,10 +1,12 @@
 'use client';
 
 import { NotificationItem, type Notification } from '@/shared/components/notification-modal';
-import OverlayPortal from '@/shared/components/overlay/overlay-portal/OverlayPortal';
+import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 
 interface NotificationModalProps {
   notifications: Notification[];
+  onDeleteAll: () => Promise<void>;
+  onDeleteOne: (id: number) => Promise<void>;
 }
 /**
  * 알림 리스트를 표시하는 모달 컴포넌트입니다.
@@ -18,27 +20,25 @@ interface NotificationModalProps {
  * 본 컴포넌트는 UI 렌더링에 집중하며,
  * 알림 데이터의 상태 관리 및 실제 삭제 로직은 상위 컴포넌트에서 책임집니다.
  *
- * @param props - NotificationModal 컴포넌트에 전달되는 속성
- * @param props.notifications - 렌더링할 알림 목록
+ * @param notifications - 렌더링할 알림 목록
+ * @param onDeleteAll - 전체 알림 삭제 처리 함수
+ * @param onDeleteOne - 개별 알림 삭제 처리 함수
  * @returns 알림 리스트를 포함한 모달 UI 요소
- */
-export default function NotificationModal({ notifications }: NotificationModalProps) {
-  /**
-   * 전체 알림 삭제 함수 (추후 API 연동 예정)
-   */
-  const handleDeleteAll = async (): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log('전체 삭제되었습니다!');
-  };
-  /**
-   * 단일 알림 삭제
-   * @param id 삭제할 알림의 id
-   */
-  const handleDeleteOne = async (id: number): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log(`개별 삭제 되었습니다. id: ${id}`);
-  };
-
+ *
+ * @example
+ * ```tsx
+ * <NotificationModal
+      notifications={notifications}
+      onDeleteAll={onDeleteAll}
+      onDeleteOne={onDeleteOne}
+    />
+ * ```
+    */
+export default function NotificationModal({
+  notifications,
+  onDeleteAll,
+  onDeleteOne,
+}: NotificationModalProps) {
   return (
     <OverlayPortal>
       <div className='mt-8 max-h-360 w-236 rounded-12 pt-16 pb-8 shadow-[0_2px_12px_0_oklch(0_0_0_/_12%)] max-sm:mx-24 max-sm:w-[calc(100%-48px)]'>
@@ -49,14 +49,14 @@ export default function NotificationModal({ notifications }: NotificationModalPr
             <button
               type='button'
               className='cursor-pointer body-13 font-semibold text-red-500'
-              onClick={handleDeleteAll}>
+              onClick={onDeleteAll}>
               전체삭제
             </button>
           )}
         </div>
         <div className='scrollbar-hidden max-h-200 divide-y divide-gray-50 overflow-x-hidden overflow-y-auto'>
           {notifications.map((item) => (
-            <NotificationItem key={item.id} {...item} onDelete={handleDeleteOne} />
+            <NotificationItem key={item.id} {...item} onDelete={onDeleteOne} />
           ))}
         </div>
       </div>

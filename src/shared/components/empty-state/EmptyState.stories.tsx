@@ -39,7 +39,7 @@ export const ExperienceWithButton: Story = {
   args: {
     type: 'experience',
     mainText: '체험이 없습니다.',
-    btnURL: '/',
+    href: '/',
     btnText: '체험 등록하기',
   },
 };

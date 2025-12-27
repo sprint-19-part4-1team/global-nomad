@@ -27,7 +27,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
   /**
    * 전체 알림 삭제 함수 (추후 API 연동 예정)
    */
-  const handleDeleteAll = () => {
+  const handleDeleteAll = async (): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log('전체 삭제되었습니다!');
   };
@@ -35,7 +35,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
    * 단일 알림 삭제
    * @param id 삭제할 알림의 id
    */
-  const handleDeleteOne = (id: number) => {
+  const handleDeleteOne = async (id: number): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log(`개별 삭제 되었습니다. id: ${id}`);
   };
@@ -43,12 +43,11 @@ export default function NotificationModal({ notifications }: NotificationModalPr
   return (
     <div className='mt-8 max-h-360 w-236 rounded-12 pt-16 pb-8 shadow-[0_2px_12px_0_oklch(0_0_0_/_12%)] max-sm:mx-24 max-sm:w-[calc(100%-48px)]'>
       <div className='flex items-center justify-between px-16 pb-12'>
-        {/* api response에 totalCount가 있어서 그걸로 변경 예정 */}
+        {/* TODO: 추후 api response의 totalCount로 변경 예정 */}
         <div className='body-16 font-bold'>알림 {notifications.length}개</div>
         {notifications.length > 0 && (
           <button
             type='button'
-            aria-label='알림 전체 삭제'
             className='cursor-pointer body-13 font-semibold text-red-500'
             onClick={handleDeleteAll}>
             전체삭제
@@ -57,7 +56,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
       </div>
       <div className='max-h-200 overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
         {notifications.map((item) => (
-          <NotificationItem key={item.id} {...item} onDelete={() => handleDeleteOne(item.id)} />
+          <NotificationItem key={item.id} {...item} onDelete={handleDeleteOne} />
         ))}
       </div>
     </div>

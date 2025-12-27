@@ -14,7 +14,7 @@ export interface Notification {
  */
 export interface NotificationItemProps extends Notification {
   /** 해당 알림을 삭제할 때 호출되는 콜백 */
-  onDelete: () => Promise<void>;
+  onDelete: (id: number) => Promise<void>;
 }
 
 const STATUS_OPTIONS = {
@@ -41,6 +41,7 @@ const STATUS_OPTIONS = {
  * @returns 알림 아이템 리스트 요소
  */
 export default function NotificationItem({
+  id,
   title,
   date,
   updatedAt,
@@ -55,11 +56,7 @@ export default function NotificationItem({
         <div className='body-14 font-bold'>예약 {label}</div>
         <div className='flex items-center gap-12'>
           <div className='body-12 font-medium text-gray-400'>{getTimeAgo(updatedAt)}</div>
-          <button
-            type='button'
-            aria-label='알림 삭제'
-            className='cursor-pointer'
-            onClick={onDelete}>
+          <button type='button' className='cursor-pointer' onClick={() => void onDelete(id)}>
             <Icons.Trash className='h-24 w-24 text-gray-300' />
           </button>
         </div>

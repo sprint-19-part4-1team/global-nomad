@@ -42,8 +42,8 @@ interface TitleProps extends TitleVariantsProps, ComponentPropsWithoutRef<Tag> {
  */
 export default function Title({
   as = 'h2',
-  size = '32',
-  weight = 'bold',
+  size,
+  weight,
   className,
   children,
   ...props

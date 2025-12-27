@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { ReactNode } from 'react';
+import { ReactNode, ComponentPropsWithoutRef } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 export const titleVariants = cva('', {
@@ -23,12 +23,10 @@ export const titleVariants = cva('', {
   },
 });
 
-const _TAG_OPTIONS = ['h2', 'h3', 'h4', 'h5', 'h6'] as const;
-
-type Tag = (typeof _TAG_OPTIONS)[number];
+type Tag = 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 type TitleVariantsProps = VariantProps<typeof titleVariants>;
 
-interface TitleProps extends TitleVariantsProps {
+interface TitleProps extends TitleVariantsProps, ComponentPropsWithoutRef<Tag> {
   as?: Tag;
   className?: string;
   children: ReactNode;
@@ -42,10 +40,19 @@ interface TitleProps extends TitleVariantsProps {
  * @param className - 추가 커스텀 스타일
  * @example <Title as='h2' size='32' weight='bold'>타이틀</Title>
  */
-export default function Title({ as = 'h2', size, weight, className, children }: TitleProps) {
+export default function Title({
+  as = 'h2',
+  size = '32',
+  weight = 'bold',
+  className,
+  children,
+  ...props
+}: TitleProps) {
   const Component = as;
 
   return (
-    <Component className={cn(titleVariants({ size, weight }), className)}>{children}</Component>
+    <Component className={cn(titleVariants({ size, weight }), className)} {...props}>
+      {children}
+    </Component>
   );
 }

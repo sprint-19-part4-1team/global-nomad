@@ -52,7 +52,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
           </button>
         )}
       </div>
-      <div className='max-h-200 divide-y divide-gray-50 overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+      <div className='scrollbar-hidden max-h-200 divide-y divide-gray-50 overflow-x-hidden overflow-y-auto'>
         {notifications.map((item) => (
           <NotificationItem key={item.id} {...item} onDelete={handleDeleteOne} />
         ))}

@@ -23,7 +23,7 @@
  * - 1년 이후: 오래 전
  */
 
-export function getTimeAgo(updatedAt: string): string {
+export const getTimeAgo = (updatedAt: string): string => {
   const now = new Date();
   const updated = new Date(updatedAt);
 
@@ -38,13 +38,8 @@ export function getTimeAgo(updatedAt: string): string {
   const diffHour = Math.floor(diffMin / 60);
   const diffDay = Math.floor(diffHour / 24);
 
-  // 현재보다 빠른 시간일 때
-  if (diffMs < 0) {
-    return '방금 전';
-  }
-
-  // 1분 미만
-  if (diffMin < 1) {
+  // 현재보다 빠른 시간이거나 1분 미만일 때
+  if (diffMs < 0 || diffMin < 1) {
     return '방금 전';
   }
 
@@ -87,4 +82,4 @@ export function getTimeAgo(updatedAt: string): string {
 
   // 1달 ~ 1년
   return `${months}달 전`;
-}
+};

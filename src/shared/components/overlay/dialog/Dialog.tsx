@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { ComponentType, useRef } from 'react';
 import DialogAlert, { DialogAlertProps } from '@/shared/components/overlay/dialog/DialogAlert';
 import DialogConfirm, {
   DialogConfirmProps,
@@ -6,6 +6,7 @@ import DialogConfirm, {
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 
 type NeverProps<T> = {
   [K in keyof T]?: never;
@@ -78,11 +79,23 @@ const DIALOG_CONTENT_MAP = {
 export default function Dialog({ variant = 'alert', ...props }: DialogProps) {
   const Content = DIALOG_CONTENT_MAP[variant] as ComponentType<DialogPropsMap[typeof variant]>;
 
+  const surfaceRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(surfaceRef, () => {
+    if (variant === 'alert') {
+      props.onClose?.();
+    } else {
+      props.onCancel?.();
+    }
+  });
+
   return (
     <OverlayPortal>
       <div role='dialog'>
         <Backdrop />
-        <OverlaySurface className='flex flex-col items-center justify-center gap-20 px-30 pt-34 pb-30 sm:gap-24 sm:px-40 sm:pt-40'>
+        <OverlaySurface
+          ref={surfaceRef}
+          className='flex flex-col items-center justify-center gap-20 px-30 pt-34 pb-30 sm:gap-24 sm:px-40 sm:pt-40'>
           <Content {...props} />
         </OverlaySurface>
       </div>

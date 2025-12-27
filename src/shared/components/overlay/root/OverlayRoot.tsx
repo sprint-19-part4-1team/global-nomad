@@ -1,6 +1,7 @@
 'use client';
 
 import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLock';
+import useOverlayEscape from '@/shared/components/overlay/hooks/useOverlayEscape';
 import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 
 /**
@@ -13,7 +14,10 @@ import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
  */
 export default function OverlayRoot() {
   const overlays = useOverlayState();
-  useBodyScrollLock(overlays.length > 0);
+  const isOpenOverlay = overlays.length > 0;
+
+  useBodyScrollLock(isOpenOverlay);
+  useOverlayEscape(isOpenOverlay);
 
   return (
     <>

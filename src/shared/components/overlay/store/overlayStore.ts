@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
  * - `element`는 실제로 렌더링될 ReactNode(Dialog, Sheet 등)입니다.
  */
 interface OverlayType {
-  id?: string;
+  id: string;
   element: ReactNode;
 }
 

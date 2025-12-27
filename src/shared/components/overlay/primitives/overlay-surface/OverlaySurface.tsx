@@ -80,6 +80,8 @@ interface SurfaceProps extends OverlaySurfaceVariantProps {
   children: ReactNode;
   /** 추가 스타일 대응 */
   className?: string;
+  /** React Ref (useOutsideClick 훅 적용 시 필요) */
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 /**
@@ -114,8 +116,16 @@ interface SurfaceProps extends OverlaySurfaceVariantProps {
  * </OverlaySurface>
  * ```
  */
-export default function OverlaySurface({ children, className, position, variant }: SurfaceProps) {
+export default function OverlaySurface({
+  children,
+  className,
+  position,
+  variant,
+  ref,
+}: SurfaceProps) {
   return (
-    <div className={cn(overlaySurfaceVariants({ position, variant }), className)}>{children}</div>
+    <div ref={ref} className={cn(overlaySurfaceVariants({ position, variant }), className)}>
+      {children}
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import HeaderShell from '@/shared/components/header/HeaderShell';
 import { User } from '@/shared/types/user';
 import Header from './Header';
 
@@ -12,6 +13,14 @@ import Header from './Header';
  * 상태 구분
  * - 비로그인: 로그인 / 회원가입 버튼 노출합니다.
  * - 로그인: 알림 영역 + 아바타 + 닉네임 노출합니다.
+ *
+ * 사용 방법
+ * - 스크롤 기능을 활용하기 위해서 ```<HeaderShell>``` 안에 ```<Header>```를 넣어줍니다.
+ * ```
+ * <HeaderShell>
+ *    <Header/>
+ * </HeaderShell>
+ * ```
  */
 
 const meta: Meta<typeof Header> = {
@@ -32,8 +41,12 @@ const meta: Meta<typeof Header> = {
   },
   decorators: [
     (Story) => (
-      <div className='relative h-80 w-full'>
-        <Story />
+      <div className='relative h-120 w-full'>
+        <div className='h-2000'>
+          <HeaderShell>
+            <Story />
+          </HeaderShell>
+        </div>
       </div>
     ),
   ],

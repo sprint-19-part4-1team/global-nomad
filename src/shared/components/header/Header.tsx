@@ -37,7 +37,7 @@ interface HeaderProps {
 
 export default function Header({ user, isLoggedIn = false }: HeaderProps) {
   return (
-    <header className='fixed top-0 z-5 w-full bg-white'>
+    <header className='w-full'>
       <div className='mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
         <Logo />
         <HeaderActions isLoggedIn={isLoggedIn} user={user} />

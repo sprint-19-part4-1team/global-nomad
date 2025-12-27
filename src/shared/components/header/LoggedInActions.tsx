@@ -9,12 +9,12 @@ interface LoggedInActionsProps {
 export default function LoggedInActions({ user }: LoggedInActionsProps) {
   return (
     <div className='flex items-center'>
-      {/* 알림 */}
+      {/* // TODO: 알림 팝업 추가 */}
       <div className='relative box-content w-24 pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
         알림
       </div>
 
-      {/* 마이페이지 */}
+      {/* // TODO: 마이페이지 드롭다운 추가 예정 */}
       <Link href='/mypage/info' className='ml-20 flex items-center'>
         <Avatar user={user}>
           <AvatarImage />

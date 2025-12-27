@@ -83,10 +83,10 @@ export default function Footer({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        'relative mt-80 w-full border-t border-gray-100 sm:mt-48 lg:mt-180',
+        'relative mt-80 w-full border-t border-gray-100 sm:mt-100 lg:mt-180',
         className
       )}>
-      <div className='mx-auto flex h-128 w-full max-w-1520 items-center justify-between bg-white px-24 sm:h-144 sm:px-40 md:px-10 lg:px-0'>
+      <div className='mx-auto flex h-128 w-full max-w-1520 items-center justify-between bg-white px-24 sm:h-144 sm:px-40 md:px-10'>
         <span className='mt-74 body-14 font-semibold text-gray-400 sm:mt-0'>&copy;FE 19기 1팀</span>
         <ul className='absolute top-30 left-1/2 flex -translate-x-1/2 items-center sm:static sm:top-0 sm:translate-x-0'>
           {TEXT_LINKS.map(({ href, title, label, withDot }) => (

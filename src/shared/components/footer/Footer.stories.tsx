@@ -20,11 +20,13 @@ import Footer from '@/shared/components/footer/Footer';
  * - 페이지 하단에 자연스럽게 배치되는지
  * - hover 시 텍스트 및 아이콘 컬러 전환
  * - 반응형 환경에서 레이아웃 유지 여부
+ * - `className` 변경 시 여백/배경 등 스타일이 정상적으로 확장되는지
  *
  * ### 구현 특징
  * - 외부 링크는 새 탭으로 열림
  * - Tailwind CSS 기반 스타일링
- * - 전역 레이아웃 컴포넌트로 props 없이 사용
+ * - 전역 레이아웃 컴포넌트로 사용 가능하며,
+ *   `className` prop을 통해 외부에서 스타일 확장 가능
  */
 
 const meta: Meta<typeof Footer> = {
@@ -33,10 +35,20 @@ const meta: Meta<typeof Footer> = {
   parameters: {
     layout: 'fullscreen',
   },
+  argTypes: {
+    className: {
+      control: 'text',
+      description: 'Footer 루트 요소에 추가로 적용할 Tailwind class',
+    },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Footer>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    className: '',
+  },
+};

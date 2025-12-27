@@ -60,7 +60,7 @@ export const getTimeAgo = (updatedAt: string): string => {
 
   // 7일 ~ 30일 -> 주 단위
   if (diffDay < 30) {
-    const weeks = Math.max(1, Math.floor(diffDay / 7));
+    const weeks = Math.floor(diffDay / 7);
     return `${weeks}주 전`;
   }
 

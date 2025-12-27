@@ -6,16 +6,16 @@ import Textarea from '@/shared/components/textarea/Textarea';
  * Textarea 컴포넌트 스토리 가이드
  *
  * Textarea는 최대 글자 수 제한과 글자 수 카운터가 포함된 텍스트 입력 영역 컴포넌트입니다.<br/>
- * variant prop에 따라 체험 등록/수정용('activity')과 리뷰 작성용('review')으로 구분됩니다.
+ * variant prop에 따라 체험 등록/수정용('form')과 리뷰 작성용('review')으로 구분됩니다.
  *
  * ### 주요 특징
- * - activity/review 두 가지 variant로 사용 목적에 따른 스타일 분리
+ * - form/review 두 가지 variant로 사용 목적에 따른 스타일 분리
  * - maxLength를 통한 입력 글자 수 제한 및 카운터 표시
  * - errorMessage prop을 통한 유효성 검사 에러 표시
  * - label, placeholder를 통한 명확한 사용자 가이드 제공
  *
  * ### Props 설명
- * - `variant`: Textarea를 사용할 위치 ('activity'|'review')
+ * - `variant`: Textarea를 사용할 위치 ('form'|'review')
  * - `label`: 텍스트 영역의 label 텍스트
  * - `name`: form 제출 시 사용될 텍스트 영역의 name
  * - `placeholder`: 텍스트 영역의 placeholder 텍스트
@@ -39,8 +39,8 @@ const meta: Meta<typeof Textarea> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['activity', 'review'],
-      description: "Textarea를 사용할 위치 ('activity': 체험 등록/수정용 | 'review': 리뷰 작성용)",
+      options: ['form', 'review'],
+      description: "Textarea를 사용할 위치 ('form': 체험 등록/수정용 | 'review': 리뷰 작성용)",
     },
     label: {
       control: 'text',
@@ -84,7 +84,7 @@ type Story = StoryObj<typeof Textarea>;
  */
 export const Default: Story = {
   args: {
-    variant: 'activity',
+    variant: 'form',
     label: '설명',
     name: 'content',
     placeholder: '체험에 대한 설명을 입력해 주세요.',
@@ -115,7 +115,7 @@ export const Review: Story = {
  */
 export const WithError: Story = {
   args: {
-    variant: 'activity',
+    variant: 'form',
     label: '설명',
     name: 'content',
     placeholder: '체험에 대한 설명을 입력해 주세요.',

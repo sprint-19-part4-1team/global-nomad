@@ -1,4 +1,15 @@
-export default function AuthLayout() {
+import { ReactNode } from 'react';
+
+interface AuthLayoutProps {
+  children: ReactNode;
+}
+
+export default function AuthLayout({ children }: AuthLayoutProps) {
   // TODO: 로그인/회원가입 레이아웃
-  return <div>로그인 회원가입 레이아웃~</div>;
+  return (
+    <>
+      로그인 회원가입 레이아웃~
+      {children}
+    </>
+  );
 }

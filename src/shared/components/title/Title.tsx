@@ -28,7 +28,6 @@ type TitleVariantsProps = VariantProps<typeof titleVariants>;
 
 interface TitleProps extends TitleVariantsProps, ComponentPropsWithoutRef<Tag> {
   as?: Tag;
-  className?: string;
   children: ReactNode;
 }
 

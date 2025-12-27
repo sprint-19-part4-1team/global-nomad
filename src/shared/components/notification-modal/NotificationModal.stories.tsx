@@ -9,7 +9,9 @@ const meta: Meta<typeof NotificationModal> = {
   decorators: [
     (Story) => (
       <div className='p-24'>
-        <Story />
+        <div id='overlay-root'>
+          <Story />
+        </div>
       </div>
     ),
   ],
@@ -21,5 +23,12 @@ type Story = StoryObj<typeof NotificationModal>;
 export const Default: Story = {
   args: {
     notifications: mockNotifications,
+    onDeleteAll: async () => {
+      // storybook debug
+    },
+    onDeleteOne: async (id: number) => {
+      // storybook debug
+      void id;
+    },
   },
 };

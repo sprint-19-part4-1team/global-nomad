@@ -63,7 +63,7 @@ export default function EmptyState({ type, mainText, href, btnText }: EmptyState
 
       {canShowButton && (
         <Button href={href} variant='primary'>
-          <span className='body-16 font-semibold'>{btnText}</span>
+          {btnText}
         </Button>
       )}
     </div>

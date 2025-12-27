@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { ComponentProps } from 'react';
 import Label from '@/shared/components/label/Label';
 
 /**
@@ -66,14 +65,6 @@ const meta: Meta<typeof Label> = {
 export default meta;
 type Story = StoryObj<typeof Label>;
 
-const StoryRender = ({ args }: { args: ComponentProps<typeof Label> }) => {
-  return (
-    <div className='flex w-320 flex-col gap-8 border border-gray-50 px-16 py-4'>
-      <Label {...args} />
-    </div>
-  );
-};
-
 export const Default: Story = {
   parameters: {
     docs: {
@@ -87,7 +78,11 @@ export const Default: Story = {
     variant: 'authForm',
     children: '이메일',
   },
-  render: (args) => <StoryRender args={args} />,
+  render: (args) => (
+    <div className='flex w-320 flex-col gap-8 border border-gray-50 px-16 py-4'>
+      <Label {...args} />
+    </div>
+  ),
 };
 
 export const Form: Story = {
@@ -103,7 +98,11 @@ export const Form: Story = {
     variant: 'form',
     children: '체험 제목',
   },
-  render: (args) => <StoryRender args={args} />,
+  render: (args) => (
+    <div className='flex w-320 flex-col gap-8 border border-gray-50 px-16 py-4'>
+      <Label {...args} />
+    </div>
+  ),
 };
 
 export const Review: Story = {
@@ -119,5 +118,9 @@ export const Review: Story = {
     variant: 'review',
     children: '소중한 경험을 들려주세요',
   },
-  render: (args) => <StoryRender args={args} />,
+  render: (args) => (
+    <div className='flex w-320 flex-col gap-8 border border-gray-50 px-16 py-4'>
+      <Label {...args} />
+    </div>
+  ),
 };

@@ -75,15 +75,26 @@ const subscribe = (listener: () => void) => {
  *
  * @example
  * ```ts
- * // ID 명시하는 경우
- * overlayStore.push(
- *   <Dialog onClose={() => overlayStore.popById(id)} />,
- *   '삭제다이얼로그'
- * );
- * // ID 없이 사용할 경우
- * overlayStore.push(
- *   <Dialog onClose={() => overlayStore.popById(id)} />
- * );
+ * // overlay 트리거 버튼에 onClick 함수를 연결하면 됩니다.
+ * const handleClick = () => {
+ *   // 띄워야 할 overlay가 하나라면 간단하게 사용할 수 있습니다.
+ *   overlayStore.push(<Dialog message='로그인이 필요합니다.' onClose={() => overlayStore.pop()} />);
+ *  };
+ * // overlay를 여러 개 띄워야 한다면 id로 관리할 수 있습니다.
+ * const handleClick = () => {
+ *   overlayStore.push(
+ *     <Dialog
+ *       variant='confirm'
+ *       message='뒤로가시겠습니까?'
+ *       confirmLabel='뒤로가기'
+ *       // 안닫힘
+ *       onConfirm={() => overlayStore.popById('id를 다르게 하면?')}
+ *        // 닫힘
+ *       onCancel={() => overlayStore.popById('원하는id')}
+ *     />,
+ *     '원하는id'
+ *   );
+ * };
  * ```
  */
 const push = (element: ReactNode, id = crypto.randomUUID()): string => {

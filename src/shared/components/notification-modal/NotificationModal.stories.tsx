@@ -5,13 +5,7 @@ import NotificationModal from './NotificationModal';
 const meta: Meta<typeof NotificationModal> = {
   title: 'Shared/NotificationModal',
   component: NotificationModal,
-  parameters: {
-    layout: 'centered',
-    backgrounds: {
-      default: 'gray',
-      values: [{ name: 'gray', value: '#F8F8F8' }],
-    },
-  },
+  parameters: {},
   decorators: [
     (Story) => (
       <div className='p-24'>

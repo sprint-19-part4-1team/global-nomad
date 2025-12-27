@@ -55,18 +55,20 @@ export default function NotificationItem({
       <div className='mb-8 flex items-center justify-between'>
         <div className='body-14 font-bold'>예약 {label}</div>
         <div className='flex items-center gap-12'>
-          <div className='body-12 font-medium text-gray-400'>{getTimeAgo(updatedAt)}</div>
+          <time dateTime={updatedAt} className='body-12 font-medium text-gray-400'>
+            {getTimeAgo(updatedAt)}
+          </time>
           <button type='button' className='cursor-pointer' onClick={() => void onDelete(id)}>
             <Icons.Trash className='h-24 w-24 text-gray-300' />
           </button>
         </div>
       </div>
       <div className='body-14 font-normal text-gray-800'>
-        <div>{title}</div>
-        <div>({date})</div>
-        <div>
+        <p>{title}</p>
+        <p>({date})</p>
+        <p>
           예약이 <span className={`font-semibold ${color}`}>{label}</span> 되었어요
-        </div>
+        </p>
       </div>
     </div>
   );

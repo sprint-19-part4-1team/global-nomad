@@ -32,7 +32,7 @@ export default function Footer() {
               href='https://github.com/orgs/sprint-19-part4-1team/discussions'
               title='코드잇 FE19기 파트4 1팀 discussions페이지로 이동'
               target='_blank'
-              className='trainstion transition-color body-14 font-medium text-gray-400 duration-500 after:ml-15 after:content-["·"] hover:text-primary-600'>
+              className='transition-color body-14 font-medium text-gray-400 transition duration-500 after:ml-15 after:content-["·"] hover:text-primary-600'>
               Discussions
             </Link>
           </li>
@@ -41,7 +41,7 @@ export default function Footer() {
               href='https://github.com/sprint-19-part4-1team/global-nomad/wiki'
               title='코드잇 FE19기 파트4 1팀 wiki페이지로 이동'
               target='_blank'
-              className='trainstion transition-color ml-15 body-14 font-medium text-gray-400 duration-500 hover:text-primary-600'>
+              className='transition-color ml-15 body-14 font-medium text-gray-400 transition duration-500 hover:text-primary-600'>
               Wiki
             </Link>
           </li>
@@ -52,7 +52,7 @@ export default function Footer() {
               href='https://www.youtube.com/'
               title='코드잇 FE19기 파트4 1팀 시연영상페이지로 이동'
               target='_blank'>
-              <Icons.Youtube className='trainstion transition-color h-25 w-25 text-gray-400 duration-500 hover:text-red-500' />
+              <Icons.Youtube className='transition-color h-25 w-25 text-gray-400 transition duration-500 hover:text-red-500' />
             </Link>
           </li>
           <li>
@@ -60,7 +60,7 @@ export default function Footer() {
               href='https://github.com/sprint-19-part4-1team/global-nomad'
               title='코드잇 FE19기 파트4 1팀 github페이지로 이동'
               target='_blank'>
-              <Icons.Github className='trainstion transition-color h-25 w-25 text-gray-400 duration-500 hover:text-gray-950' />
+              <Icons.Github className='transition-color h-25 w-25 text-gray-400 transition duration-500 hover:text-gray-950' />
             </Link>
           </li>
           <li>
@@ -68,7 +68,7 @@ export default function Footer() {
               href='https://www.notion.so/ahahahahreum/2c35213dcd4c80a99a16de00a56a8b70?source=copy_link'
               title='코드잇 FE19기 파트4 1팀 notion페이지로 이동'
               target='_blank'>
-              <Icons.Notion className='trainstion transition-color h-25 w-25 text-gray-400 duration-500 hover:text-gray-950' />
+              <Icons.Notion className='transition-color h-25 w-25 text-gray-400 transition duration-500 hover:text-gray-950' />
             </Link>
           </li>
         </ul>

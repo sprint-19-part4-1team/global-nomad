@@ -71,16 +71,22 @@ const subscribe = (listener: () => void) => {
  *
  * @param element - 렌더링할 overlay ReactNode
  * @param id - overlay를 식별하기 위한 고유 id (선택)
- * @returns 생성된 overlay id
+ * @returns`string` - 생성된 overlay id
  *
  * @example
  * ```ts
- * const id = overlayStore.push(
+ * // ID 명시하는 경우
+ * overlayStore.push(
+ *   <Dialog onClose={() => overlayStore.popById(id)} />,
+ *   '삭제다이얼로그'
+ * );
+ * // ID 없이 사용할 경우
+ * overlayStore.push(
  *   <Dialog onClose={() => overlayStore.popById(id)} />
  * );
  * ```
  */
-const push = (element: ReactNode, id = crypto.randomUUID()) => {
+const push = (element: ReactNode, id = crypto.randomUUID()): string => {
   overlays = [...overlays, { id, element }];
   emitChange();
   return id;

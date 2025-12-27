@@ -1,10 +1,10 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 interface HeaderShellProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 /**

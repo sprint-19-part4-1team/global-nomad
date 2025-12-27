@@ -36,12 +36,10 @@ const TEXTAREA_VARIANTS = {
   form: {
     container: 'gap-6 sm:gap-8',
     textareaBox: 'text-gray-800 shadow-input sm:gap-12',
-    textCountStyle: 'w-40',
   },
   review: {
     container: 'gap-16',
     textareaBox: 'gap-8 text-gray-900 shadow-card sm:gap-12',
-    textCountStyle: 'w-30',
   },
 } as const;
 
@@ -83,7 +81,7 @@ export default function Textarea({
   const textareaId = useId();
 
   // 현재 variant에 해당하는 스타일 추출
-  const { container, textareaBox, textCountStyle } = TEXTAREA_VARIANTS[variant];
+  const { container, textareaBox } = TEXTAREA_VARIANTS[variant];
 
   // 현재 입력된 글자 수
   const textCount = value.length;
@@ -112,14 +110,13 @@ export default function Textarea({
           placeholder={placeholder}
           rows={5}
           maxLength={maxLength + 1}
-          className='placeholder:gray-400 w-full resize-none focus:ring-0 focus:outline-none [&::-webkit-scrollbar]:h-27 [&::-webkit-scrollbar]:w-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent'
+          className='placeholder:gray-400 scrollbar-custom w-full resize-none focus:ring-0 focus:outline-none'
         />
         <div className='w-full text-right body-14 font-medium text-gray-400'>
           글자수:
           <span
             className={cn(
-              'inline-block',
-              textCountStyle,
+              'inline-block w-fit pl-4',
               isOverMax ? 'text-red-500' : 'text-primary-500'
             )}>
             {textCount}

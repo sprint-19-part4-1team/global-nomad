@@ -124,26 +124,25 @@ const DialogStoryWrapper = (props: ComponentProps<typeof Dialog>) => {
     <>
       <Button onClick={() => setOpen(true)}>Dialog 열기</Button>
 
-      {open && props.variant === 'alert' && (
-        <Dialog
-          variant='alert'
-          message={props.message}
-          closeLabel={props.closeLabel}
-          onClose={() => setOpen(false)}
-        />
-      )}
-
-      {open && props.variant === 'confirm' && (
-        <Dialog
-          variant='confirm'
-          message={props.message}
-          cancelLabel={props.cancelLabel}
-          confirmLabel={props.confirmLabel}
-          onCancel={() => setOpen(false)}
-          onConfirm={() => setOpen(false)}
-          isConfirm={props.isConfirm}
-        />
-      )}
+      {open
+        && (props.variant === 'confirm' ? (
+          <Dialog
+            variant='confirm'
+            message={props.message}
+            cancelLabel={props.cancelLabel}
+            confirmLabel={props.confirmLabel}
+            onCancel={() => setOpen(false)}
+            onConfirm={() => setOpen(false)}
+            isConfirm={props.isConfirm}
+          />
+        ) : (
+          <Dialog
+            variant='alert'
+            message={props.message}
+            closeLabel={props.closeLabel}
+            onClose={() => setOpen(false)}
+          />
+        ))}
     </>
   );
 };

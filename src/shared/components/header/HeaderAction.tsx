@@ -5,12 +5,11 @@ import { User } from '@/shared/types/user';
 interface HeaderActionsProps {
   isLoggedIn: boolean;
   user?: User;
-  nickname?: string;
 }
 
-export default function HeaderActions({ isLoggedIn, user, nickname }: HeaderActionsProps) {
+export default function HeaderActions({ isLoggedIn, user }: HeaderActionsProps) {
   if (isLoggedIn && user) {
-    return <LoggedInActions user={user} nickname={nickname} />;
+    return <LoggedInActions user={user} />;
   }
 
   return <GuestActions />;

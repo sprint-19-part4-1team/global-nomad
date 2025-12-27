@@ -4,10 +4,9 @@ import { User } from '@/shared/types/user';
 
 interface LoggedInActionsProps {
   user: User;
-  nickname?: string;
 }
 
-export default function LoggedInActions({ user, nickname }: LoggedInActionsProps) {
+export default function LoggedInActions({ user }: LoggedInActionsProps) {
   return (
     <div className='flex items-center'>
       {/* 알림 */}
@@ -22,7 +21,7 @@ export default function LoggedInActions({ user, nickname }: LoggedInActionsProps
           <AvatarFallback />
         </Avatar>
         <span className='transition-color ml-10 body-14 font-medium text-gray-950 transition duration-500 hover:text-primary-600'>
-          {nickname}
+          {user.nickname}
         </span>
       </Link>
     </div>

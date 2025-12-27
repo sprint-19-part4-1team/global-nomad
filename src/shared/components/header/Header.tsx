@@ -4,7 +4,6 @@ import { User } from '@/shared/types/user';
 
 interface HeaderProps {
   user?: User;
-  nickname?: string;
   isLoggedIn?: boolean;
 }
 
@@ -22,7 +21,6 @@ interface HeaderProps {
  *
  * @param props - Header 컴포넌트 props
  * @param props.user - 로그인한 사용자 정보 (로그인 상태일 때만 전달)
- * @param props.nickname - 헤더에 표시할 사용자 닉네임
  * @param props.isLoggedIn - 로그인 여부 (기본값: false)
  *
  * @example
@@ -33,17 +31,16 @@ interface HeaderProps {
  * <Header
  *   isLoggedIn
  *   user={user}
- *   nickname={user.nickname}
  * />
  * ```
  */
 
-export default function Header({ user, nickname, isLoggedIn = false }: HeaderProps) {
+export default function Header({ user, isLoggedIn = false }: HeaderProps) {
   return (
     <header className='fixed top-0 z-5 w-full bg-white'>
       <div className='mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
         <Logo />
-        <HeaderActions isLoggedIn={isLoggedIn} user={user} nickname={nickname} />
+        <HeaderActions isLoggedIn={isLoggedIn} user={user} />
       </div>
     </header>
   );

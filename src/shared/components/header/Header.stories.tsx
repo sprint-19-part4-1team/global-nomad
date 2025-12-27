@@ -25,10 +25,6 @@ const meta: Meta<typeof Header> = {
       control: 'boolean',
       description: '로그인 여부 확인',
     },
-    nickname: {
-      control: 'text',
-      description: '사용자 닉네임',
-    },
     user: {
       control: false,
       description: '로그인한 사용자 정보',
@@ -64,9 +60,6 @@ export const Guest: Story = {
     isLoggedIn: {
       table: { disable: true },
     },
-    nickname: {
-      table: { disable: true },
-    },
   },
 };
 
@@ -74,6 +67,5 @@ export const LoggedIn: Story = {
   args: {
     isLoggedIn: true,
     user: MOCK_USER,
-    nickname: MOCK_USER.nickname,
   },
 };

@@ -10,19 +10,14 @@ type ReviewProps = {
   btnURL?: never;
   btnText?: never;
 };
-type ExperienceProps =
-  | {
-      type: 'experience';
-      mainText: string;
-      btnURL: string;
-      btnText: string;
-    }
-  | {
-      type: 'experience';
-      mainText: string;
-      btnURL?: undefined;
-      btnText?: undefined;
-    };
+type ExperienceProps = {
+  type: 'experience';
+  mainText: string;
+  button?: { href: string; text: string };
+  btnURL: string;
+  btnText: string;
+};
+
 type EmptyStateProps = ReviewProps | ExperienceProps;
 
 const EMPTY_STATE_VARIANTS: Record<

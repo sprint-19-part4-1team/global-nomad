@@ -12,5 +12,5 @@ import { cn } from '@/shared/utils/cn';
  * - 클릭 이벤트, 스크롤 락 등 행동 로직은 상위 컴포넌트에서 제어
  */
 export default function Backdrop() {
-  return <div className={cn('absolute top-0 left-0 h-dvh w-dvw bg-op-50', LAYER.BACKDROP)} />;
+  return <div className={cn('fixed top-0 left-0 h-dvh w-dvw bg-op-50', LAYER.BACKDROP)} />;
 }

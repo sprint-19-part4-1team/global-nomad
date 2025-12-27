@@ -34,13 +34,20 @@ const meta: Meta<typeof Header> = {
       description: '로그인한 사용자 정보',
     },
   },
+  decorators: [
+    (Story) => (
+      <div className='relative h-80 w-full'>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
 type Story = StoryObj<typeof Header>;
 
 // mockdata
-const mockUser: User = {
+const MOCK_USER: User = {
   createdAt: '2025-12-24T08:50:57.848Z',
   email: 'test@example.com',
   id: 1,
@@ -66,7 +73,7 @@ export const Guest: Story = {
 export const LoggedIn: Story = {
   args: {
     isLoggedIn: true,
-    user: mockUser,
-    nickname: mockUser.nickname,
+    user: MOCK_USER,
+    nickname: MOCK_USER.nickname,
   },
 };

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 import { ReactNode } from 'react';
-import Backdrop from '@/shared/components/overlay/backdrop/Backdrop';
-import OverlaySurface from '@/shared/components/overlay/overlay-surface/OverlaySurface';
+import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
+import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 
 /**
  * OverlaySurface 컴포넌트 스토리 가이드

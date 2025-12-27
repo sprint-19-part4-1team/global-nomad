@@ -13,7 +13,7 @@ import { cn } from '@/shared/utils/cn';
  * - 단일 variant로 해결하기 어려운 조합 규칙은 `compoundVariants`에서 관리합니다.
  * - 실제 애니메이션, open/close 로직은 이 레이어에서 다루지 않습니다.
  */
-const overlaySurfaceVariants = cva(`absolute bg-white shadow-card ${LAYER.OVERLAY_SURFACE}`, {
+const overlaySurfaceVariants = cva(`fixed bg-white shadow-card ${LAYER.OVERLAY_SURFACE}`, {
   variants: {
     /**
      * ### position

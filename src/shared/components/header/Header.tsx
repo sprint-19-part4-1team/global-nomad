@@ -1,7 +1,12 @@
-import Link from 'next/link';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
+import HeaderActions from '@/shared/components/header/HeaderAction';
 import Logo from '@/shared/components/logo/Logo';
 import { User } from '@/shared/types/user';
+
+interface HeaderProps {
+  user?: User;
+  nickname?: string;
+  isLoggedIn?: boolean;
+}
 
 /**
  * 전역 헤더 컴포넌트
@@ -33,51 +38,13 @@ import { User } from '@/shared/types/user';
  * ```
  */
 
-export default function Header({
-  user,
-  nickname,
-  isLoggedIn = false,
-}: {
-  user?: User;
-  nickname?: string;
-  isLoggedIn?: boolean;
-}) {
+export default function Header({ user, nickname, isLoggedIn = false }: HeaderProps) {
   return (
-    <>
-      <header className='fixed top-0 z-5 mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
+    <header className='fixed top-0 z-5 w-full bg-white'>
+      <div className='mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
         <Logo />
-        {isLoggedIn && user ? (
-          <div className='flex items-center'>
-            <div className='w-24px relative pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
-              알림
-            </div>
-            <Link href={'/mypage/info'} className='ml-20 flex items-center'>
-              <Avatar user={user}>
-                <AvatarImage />
-                <AvatarFallback />
-              </Avatar>
-              <span className='trainstion transition-color ml-10 body-14 font-medium text-gray-950 duration-500 hover:text-primary-600'>
-                {nickname}
-              </span>
-            </Link>
-          </div>
-        ) : (
-          <div className='flex'>
-            <Link
-              href='/login'
-              title='로그인으로 이동'
-              className='w-60px trainstion transition-color block py-11 body-14 font-medium text-gray-950 duration-500 hover:text-primary-600 md:py-12'>
-              로그인
-            </Link>
-            <Link
-              href='/signup'
-              title='회원가입으로 이동'
-              className='w-60px trainstion transition-color ml-12 block py-11 body-14 font-medium text-gray-950 duration-500 hover:text-primary-600 md:py-12'>
-              회원가입
-            </Link>
-          </div>
-        )}
-      </header>
-    </>
+        <HeaderActions isLoggedIn={isLoggedIn} user={user} nickname={nickname} />
+      </div>
+    </header>
   );
 }

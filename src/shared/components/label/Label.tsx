@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-const LabelVariants = cva('text-gray-950', {
+const labelVariants = cva('text-gray-950', {
   variants: {
     variant: {
       authForm: 'body-14 sm:body-16 text-left font-medium',
@@ -15,7 +15,7 @@ const LabelVariants = cva('text-gray-950', {
   },
 });
 
-type LabelVariantsProps = VariantProps<typeof LabelVariants>;
+type LabelVariantsProps = VariantProps<typeof labelVariants>;
 
 interface LabelProps extends LabelVariantsProps {
   htmlFor: string;
@@ -62,7 +62,7 @@ interface LabelProps extends LabelVariantsProps {
  */
 export default function Label({ htmlFor, children, className, variant }: LabelProps) {
   return (
-    <label htmlFor={htmlFor} className={cn(LabelVariants({ variant }), className)}>
+    <label htmlFor={htmlFor} className={cn(labelVariants({ variant }), className)}>
       {children}
     </label>
   );

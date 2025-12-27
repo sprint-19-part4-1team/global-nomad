@@ -1,8 +1,6 @@
 'use client';
 
-import NotificationItem, {
-  Notification,
-} from '@/shared/components/notification-modal/NotificationItem';
+import { NotificationItem, type Notification } from '@/shared/components/notification-modal';
 
 interface NotificationModalProps {
   notifications: Notification[];
@@ -42,7 +40,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
 
   return (
     <div className='mt-8 max-h-360 w-236 rounded-12 pt-16 pb-8 shadow-[0_2px_12px_0_oklch(0_0_0_/_12%)] max-sm:mx-24 max-sm:w-[calc(100%-48px)]'>
-      <div className='flex items-center justify-between px-16 pb-12'>
+      <div className='flex items-center justify-between border-b border-gray-50 px-16 pb-12'>
         {/* TODO: 추후 api response의 totalCount로 변경 예정 */}
         <div className='body-16 font-bold'>알림 {notifications.length}개</div>
         {notifications.length > 0 && (
@@ -54,7 +52,7 @@ export default function NotificationModal({ notifications }: NotificationModalPr
           </button>
         )}
       </div>
-      <div className='max-h-200 overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+      <div className='max-h-200 divide-y divide-gray-50 overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
         {notifications.map((item) => (
           <NotificationItem key={item.id} {...item} onDelete={handleDeleteOne} />
         ))}

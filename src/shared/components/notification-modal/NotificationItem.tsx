@@ -51,7 +51,7 @@ export default function NotificationItem({
   const { label, color } = STATUS_OPTIONS[status];
 
   return (
-    <div className='border-t border-gray-50 p-16'>
+    <div className='p-16'>
       <div className='mb-8 flex items-center justify-between'>
         <div className='body-14 font-bold'>예약 {label}</div>
         <div className='flex items-center gap-12'>

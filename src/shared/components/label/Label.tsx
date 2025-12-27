@@ -31,7 +31,7 @@ interface LabelProps extends LabelVariantsProps {
  * - `variant` 프리셋을 통해 타이포그래피 스타일을 간단하게 적용할 수 있습니다.
  *
  * ### variant presets
- * - `authform` (기본값)
+ * - `authForm` (기본값)
  *   - 로그인 / 회원가입 등 유저 관련 폼에서 사용되는 기본 라벨
  *   - `md` 사이즈, 좌측 정렬, medium weight
  *
@@ -49,7 +49,7 @@ interface LabelProps extends LabelVariantsProps {
  *
  * @example
  * ```tsx
- * <Label htmlFor="email" variant="authform">이메일</Label>
+ * <Label htmlFor="email" variant="authForm">이메일</Label>
  *
  * <Label htmlFor="password" variant="form">
  *   비밀번호

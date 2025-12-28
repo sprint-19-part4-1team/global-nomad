@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { tabListBase } from '@/shared/components/tabs/styles/tabListBase';
 import { cn } from '@/shared/utils/cn';
 
 interface TabsNavProps {
@@ -32,7 +33,7 @@ interface TabsNavProps {
  */
 export default function TabsNav({ children, ariaLabel, className }: TabsNavProps) {
   return (
-    <nav className={cn('flex gap-8 border-b border-gray-100', className)} aria-label={ariaLabel}>
+    <nav className={cn(tabListBase, className)} aria-label={ariaLabel}>
       {children}
     </nav>
   );

@@ -64,6 +64,15 @@ const meta: Meta<typeof TabsNav> = {
         },
       },
     },
+    className: {
+      control: 'text',
+      description: '추가 커스텀 스타일',
+      table: {
+        type: {
+          summary: `string`,
+        },
+      },
+    },
   },
 };
 
@@ -72,8 +81,8 @@ export default meta;
 type Story = StoryObj<typeof TabsNav>;
 
 export const Default: Story = {
-  render: () => (
-    <TabsNav ariaLabel='마이페이지 섹션'>
+  render: (args) => (
+    <TabsNav ariaLabel='마이페이지 섹션' className={args.className}>
       <TabsLink href='/mypage/info' isActive>
         내 정보
       </TabsLink>

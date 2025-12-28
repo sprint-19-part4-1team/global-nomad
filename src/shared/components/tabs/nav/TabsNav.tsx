@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
+import { cn } from '@/shared/utils/cn';
 
 interface TabsNavProps {
   children: ReactNode;
   ariaLabel: string;
+  className?: string;
 }
 
 /**
@@ -28,9 +30,9 @@ interface TabsNavProps {
  * </TabsNav>
  * ```
  */
-export default function TabsNav({ children, ariaLabel }: TabsNavProps) {
+export default function TabsNav({ children, ariaLabel, className }: TabsNavProps) {
   return (
-    <nav className='flex gap-8 border-b border-gray-100' aria-label={ariaLabel}>
+    <nav className={cn('flex gap-8 border-b border-gray-100', className)} aria-label={ariaLabel}>
       {children}
     </nav>
   );

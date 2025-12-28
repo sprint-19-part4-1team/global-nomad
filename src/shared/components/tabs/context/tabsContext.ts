@@ -11,10 +11,10 @@ interface TabContextType {
 }
 
 /**
- * TabsContext
+ * ## TabsContext
  *
  * @description
- * Tabs 컴포넌트와 하위 컴포넌트(TabsList, TabsTrigger, TabsContent) 간에
+ * Tabs 컴포넌트와 하위 컴포넌트(`TabsList`, `TabsTrigger`, `TabsContent`) 간에
  * 현재 선택된 탭 상태와 변경 함수를 공유하기 위한 Context입니다.
  *
  * - Tabs Root에서 제공됩니다.

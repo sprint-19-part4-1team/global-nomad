@@ -9,7 +9,7 @@ interface TabsLinkProps {
 }
 
 /**
- * ### TabsLink
+ * ## TabsLink
  *
  * @description
  * 탭 형태로 스타일링된 **페이지 이동용 네비게이션 링크** 컴포넌트입니다.

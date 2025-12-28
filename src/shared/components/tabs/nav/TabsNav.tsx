@@ -9,7 +9,7 @@ interface TabsNavProps {
 }
 
 /**
- * ### TabsNav
+ * ## TabsNav
  *
  * @description
  * 탭 형태의 **페이지 이동용 네비게이션 컨테이너**입니다.

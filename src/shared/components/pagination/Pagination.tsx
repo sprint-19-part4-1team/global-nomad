@@ -10,7 +10,18 @@ interface PaginationProps {
   size: number;
 }
 
-// size는 한 번에 보여질 개수( ex) 메인 페이지 데스크톱은 8개, 테블릿은 4개, 모바일은 6개 )
+// size는 한 번에 보여질 개수
+/**
+ * @description
+ * - 현재 페이지는 URL의 `page` 파라미터에서 파생됩니다.
+ * - 한 번에 최대 5개의 페이지 버튼만 노출됩니다.
+ * - 선택된 페이지 버튼은 비활성화되며 hover 되지 않습니다.
+ * - 좌/우 화살표는 이동 가능한 경우에만 활성화됩니다.
+ * - 페이지 이동 시 스크롤이 상단으로 이동하지 않도록 처리되어 있습니다.
+ *
+ * @param totalCount - API에서 내려주는 전체 아이템 개수
+ * @param size - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
+ */
 export default function Pagination({ totalCount, size }: PaginationProps) {
   const router = useRouter();
   const pathname = usePathname();

@@ -44,40 +44,38 @@ export default function TabsTrigger({ value, children }: TabsTriggerProps) {
 
     const tabs = Array.from(tabList.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
 
-    /** Home키 누르면 탭 첫 번째로 */
-    if (key === 'Home') {
-      tabs[0].focus();
-      tabs[0].click();
-      return;
-    }
-
-    /** End키 누르면 탭 마지막으로 */
-    if (key === 'End') {
-      const end = tabs.length - 1;
-      tabs[end].focus();
-      tabs[end].click();
-      return;
-    }
-
     const currentIndex = tabs.indexOf(currentTarget);
     if (currentIndex === -1) {
       return;
     }
 
-    /** 화살표로 탭 이동 */
-    const nextIndex =
-      key === 'ArrowRight'
-        ? (currentIndex + 1) % tabs.length
-        : (currentIndex - 1 + tabs.length) % tabs.length;
+    let nextIndex = currentIndex;
 
-    tabs[nextIndex].focus();
-    tabs[nextIndex].click();
+    if (key === 'Home') {
+      nextIndex = 0;
+    } else if (key === 'End') {
+      nextIndex = tabs.length - 1;
+    } else if (key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    }
+
+    const nextTab = tabs[nextIndex];
+
+    nextTab.focus();
+
+    const nextValue = nextTab.dataset.value;
+    if (nextValue) {
+      setValue(nextValue);
+    }
   };
 
   return (
     <button
       role='tab'
       type='button'
+      data-value={value}
       id={`tab-${value}`}
       aria-controls={`tabpanel-${value}`}
       aria-selected={isActive}

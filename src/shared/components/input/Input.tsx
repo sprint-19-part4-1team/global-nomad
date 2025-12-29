@@ -12,11 +12,12 @@ import { cn } from '@/shared/utils/cn';
  * @property {('authForm' | 'form')} variant - Input의 스타일 변형 (authForm: 로그인 / 회원가입 등 유저 관련 폼, form: 체험 등록 / 수정 폼)
  * @property {string} label - Input의 label 텍스트
  * @property {string} name - form 제출 시 사용될 Input의 name
- * @property {HTMLInputTypeAttribute} type - Input의 타입 (text, email, password 등)
+ * @property {HTMLInputTypeAttribute} type - Input의 타입 (text, email, password, number 등)
  * @property {('email' | 'nickname' | 'current-password' | 'new-password' | 'street-address' | 'transaction-amount' | 'off')} [autoComplete='off'] - 브라우저 자동완성 동작 제어
+ * @property {boolean} [disabled] - Input 비활성화 여부
  * @property {string | number} value - Input의 현재 값
- * @property {ChangeEventHandler<HTMLInputElement>} onChange - 값 변경 이벤트 핸들러
- * @property {string} placeholder - Input의 placeholder 텍스트
+ * @property {ChangeEventHandler<HTMLInputElement>} [onChange] - 값 변경 이벤트 핸들러
+ * @property {string} [placeholder] - Input의 placeholder 텍스트
  * @property {MouseEventHandler<HTMLElement>} [onClick] - Input 컨테이너 클릭 이벤트 핸들러
  * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지 (존재하면 빨간색 테두리와 함께 하단에 표시)
  */
@@ -33,9 +34,10 @@ interface InputProps {
     | 'street-address'
     | 'transaction-amount'
     | 'off';
+  disabled?: boolean;
   value: string | number;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  placeholder: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  placeholder?: string;
   onClick?: MouseEventHandler<HTMLElement>;
   errorMessage?: string;
 }
@@ -76,6 +78,16 @@ interface InputProps {
  *   onChange={(e) => setPassword(e.target.value)}
  *   placeholder='비밀번호를 입력해주세요.'
  * />
+ *
+ * // 비활성화된 Input
+ * <Input
+ *   variant='authForm'
+ *   label='이메일'
+ *   name='email'
+ *   type='email'
+ *   disabled={true}
+ *   value='test@test.com'
+ * />
  * ```
  *
  */
@@ -85,6 +97,7 @@ export default function Input({
   name,
   type,
   autoComplete = 'off',
+  disabled,
   value,
   onChange,
   placeholder,
@@ -113,13 +126,15 @@ export default function Input({
         onClick={onClick}
         className={cn(
           'transition-color flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16',
-          errorMessage ? 'border-red-500' : 'border-gray-100 focus-within:border-primary-500'
+          errorMessage ? 'border-red-500' : 'border-gray-100 focus-within:border-primary-500',
+          disabled && 'bg-gray-25 text-gray-400'
         )}>
         <input
           id={inputId}
           name={name}
           type={inputType}
           autoComplete={autoComplete}
+          disabled={disabled}
           value={value}
           onChange={onChange}
           placeholder={placeholder}

@@ -12,19 +12,20 @@ import Input from '@/shared/components/input/Input';
  * - authForm/form 두 가지 variant로 사용 목적에 따른 스타일 분리
  * - 비밀번호 타입일 경우 표시/숨기기 토글 버튼 자동 추가
  * - errorMessage prop을 통한 유효성 검사 에러 표시
+ * - disabled 속성을 통한 Input 비활성화 지원
  * - autoComplete 속성을 통한 브라우저 자동완성 제어
  * - label, placeholder를 통한 명확한 사용자 가이드 제공
  *
  * ### Props 설명
  * - `variant`: Input을 사용할 위치 ('authForm'|'form')
  * - `label`: Input의 label 텍스트
- * - `subLabel`: Input의 부가 설명 텍스트 (선택사항)
  * - `name`: form 제출 시 사용될 Input의 name
  * - `type`: Input의 타입 (text, email, password, number 등)
  * - `autoComplete`: 브라우저 자동완성 동작 제어 (선택사항, 기본은 'off')
+ * - `disabled`: Input 비활성화 여부 (선택사항)
  * - `value`: Input의 현재 값
- * - `onChange`: 값 변경 이벤트 핸들러
- * - `placeholder`: Input의 placeholder 텍스트
+ * - `onChange`: 값 변경 이벤트 핸들러 (선택사항)
+ * - `placeholder`: Input의 placeholder 텍스트 (선택사항)
  * - `onClick`: Input 컨테이너 클릭 이벤트 핸들러 (선택사항)
  * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항)
  */
@@ -36,7 +37,11 @@ const meta: Meta<typeof Input> = {
     const [value, setValue] = useState('');
     return (
       <div className='w-400'>
-        <Input {...args} value={value} onChange={(e) => setValue(e.target.value)} />
+        {args.value ? (
+          <Input {...args} />
+        ) : (
+          <Input {...args} value={value} onChange={(e) => setValue(e.target.value)} />
+        )}
       </div>
     );
   },
@@ -71,6 +76,10 @@ const meta: Meta<typeof Input> = {
         'off',
       ],
       description: '브라우저 자동완성 동작 제어',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Input 비활성화 여부',
     },
     value: {
       control: 'text',
@@ -161,6 +170,24 @@ export const FormPriceInput: Story = {
     name: 'price',
     type: 'number',
     placeholder: '체험 금액을 입력해 주세요.',
+  },
+};
+
+/**
+ * 비활성화된 이메일 Input
+ *
+ * Input이 비활성화된 상태의 예시입니다.
+ * disabled prop이 true일 경우, 회색 배경과 함께 사용자 입력이 불가능합니다.
+ */
+export const DisabledEmail: Story = {
+  args: {
+    variant: 'authForm',
+    label: '이메일',
+    name: 'email',
+    type: 'email',
+    autoComplete: 'email',
+    disabled: true,
+    value: 'test@test.com',
   },
 };
 

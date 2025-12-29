@@ -92,7 +92,7 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
         className={cn(arrowBtnBase, canGoPrev ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoPrev}
         onClick={handlePrev}>
-        <Icons.ChevronLeft className='h-24 w-24' />
+        <Icons.ChevronLeft aria-hidden='true' focusable='false' className='h-24 w-24' />
       </button>
       {visiblePages.map((page) => {
         const isSelected = page === checkedCurrentPage;
@@ -114,7 +114,7 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
         className={cn(arrowBtnBase, canGoNext ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoNext}
         onClick={handleNext}>
-        <Icons.ChevronRight className='h-24 w-24' />
+        <Icons.ChevronRight aria-hidden='true' focusable='false' className='h-24 w-24' />
       </button>
     </nav>
   );

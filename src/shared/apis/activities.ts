@@ -10,35 +10,29 @@ export interface GetActivitiesParams {
   page?: number;
   size?: number;
 }
-
-export interface ActivitySchedule {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-
-export interface CreateActivityRequest {
+export interface CreateActivityBodyDto {
   title: string;
   category: ActivityCategory;
   description: string;
-  address: string;
   price: number;
-  schedules: ActivitySchedule[];
+  address: string;
+  schedules?: {
+    date: string;
+    startTime: string;
+    endTime: string;
+  }[];
   bannerImageUrl: string;
-  subImageUrls: string[];
+  subImageUrls?: string[];
 }
-
 export interface GetActivitySchedulesParams {
   year: string;
   month: string;
 }
-
 export interface GetActivityReviewsParams {
   page?: number;
   size?: number;
 }
-
-export interface CreateReservationRequest {
+export interface CreateReservationBodyDto {
   scheduleId: number;
   headCount: number;
 }
@@ -57,7 +51,7 @@ export const getActivities = (params: GetActivitiesParams) => {
 };
 
 // 체험 등록
-export const createActivity = (data: CreateActivityRequest) => {
+export const createActivity = (data: CreateActivityBodyDto) => {
   return baseFetcher(`/activities`, { method: 'POST', body: JSON.stringify(data) });
 };
 
@@ -97,7 +91,7 @@ export const getActivityReviews = (activityId: number, params: GetActivityReview
 };
 
 // 체험 예약 신청
-export const createActivityReservation = (activityId: number, data: CreateReservationRequest) => {
+export const createActivityReservation = (activityId: number, data: CreateReservationBodyDto) => {
   return baseFetcher(`/activities/${activityId}/reservations`, {
     method: 'POST',
     body: JSON.stringify(data),

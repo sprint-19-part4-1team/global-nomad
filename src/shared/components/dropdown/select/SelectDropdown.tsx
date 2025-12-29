@@ -1,9 +1,9 @@
 'use client';
 
 import { ReactNode, useId } from 'react';
-import DropdownBaseProvider from '@/shared/components/dropdown/context/DropdownBaseProvider';
 import { SelectContext } from '@/shared/components/dropdown/context/selectContext';
-import SelectDropdownRoot from '@/shared/components/dropdown/select/SelectDropdownRoot';
+import DropdownBaseProvider from '@/shared/components/dropdown/root/DropdownBaseProvider';
+import DropdownBaseRoot from '@/shared/components/dropdown/root/DropdownBaseRoot';
 
 interface SelectDropdownProps {
   children: ReactNode;
@@ -21,7 +21,7 @@ interface SelectDropdownProps {
  * - 선택 값(value)과 변경 핸들러를 제어하는 controlled 컴포넌트입니다.
  * - SelectContext를 통해 value / triggerId를 하위 컴포넌트에 제공합니다.
  * - DropdownBaseProvider를 통해 드롭다운의 open 상태를 관리합니다.
- * - 내부적으로 SelectDropdownRoot를 사용하여 외부 클릭 시 드롭다운을 닫습니다.
+ * - 내부적으로 DropdownRoot 사용하여 외부 클릭 시 드롭다운을 닫습니다.
  *
  * @param children - SelectDropdownTrigger, SelectDropdownContent 등의 조합 컴포넌트
  * @param value - 현재 선택된 값
@@ -62,7 +62,7 @@ export default function SelectDropdown({
   return (
     <SelectContext value={{ value, setValue: onChangeValue, triggerId }}>
       <DropdownBaseProvider>
-        <SelectDropdownRoot>{children}</SelectDropdownRoot>
+        <DropdownBaseRoot className='w-full'>{children}</DropdownBaseRoot>
       </DropdownBaseProvider>
     </SelectContext>
   );

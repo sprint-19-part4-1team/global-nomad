@@ -37,7 +37,7 @@ export default function ActionDropdownContent({ children, className }: ActionDro
   const { isOpen } = useDropdownBaseContext();
 
   if (!isOpen) {
-    return;
+    return null;
   }
 
   return (

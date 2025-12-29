@@ -29,6 +29,11 @@ interface SelectDropdownItemProps {
  * @param children - 옵션에 표시될 콘텐츠 (텍스트, 아이콘 등)
  * @param value - 옵션의 실제 선택 값
  * @param disabled - 옵션 비활성화 여부
+ *
+ * @example
+ * ```tsx
+ * <SelectDropdownItem value={문화 · 예술}>🎨 문화 · 예술</SelectDropdownItem>
+ * ```
  */
 export default function SelectDropdownItem({
   children,

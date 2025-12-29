@@ -11,11 +11,12 @@ interface DropdownBaseContextType {
 }
 
 /**
+/**
  * ## DropdownBaseContext
  *
- * Dropdown 컴포넌트의 **공통 open 상태**를 관리하는 Context입니다.
- *
- * - ActionDropdown, SelectDropdown 모두에서 사용됩니다.
- * - 선택 값(value)과 관련된 상태는 포함하지 않습니다.
+ * @description
+ * Dropdown의 **열림/닫힘(open)** 상태만 담당하는 베이스 컨텍스트입니다.
+ * - ActionDropdown, SelectDropdown에서 공통으로 사용됩니다.
+ * - 선택 값(value) 관련 상태는 SelectContext에서 별도로 관리합니다.
  */
 export const DropdownBaseContext = createContext<DropdownBaseContextType | undefined>(undefined);

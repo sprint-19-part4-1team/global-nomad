@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
 
 /**
  * Dropdown 컴포넌트 Context 타입
@@ -7,7 +7,7 @@ import { createContext } from 'react';
  */
 interface DropdownBaseContextType {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 /**

@@ -35,10 +35,6 @@ export default function SelectDropdownTrigger({ children, ref }: SelectDropdownT
   const { isOpen, setIsOpen } = useDropdownBaseContext();
   const { triggerId } = useSelectContext();
 
-  const handleOpenDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <button
       ref={ref}
@@ -47,7 +43,7 @@ export default function SelectDropdownTrigger({ children, ref }: SelectDropdownT
       aria-haspopup='listbox'
       aria-expanded={isOpen}
       className='flex w-full cursor-pointer justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:focus-within:border-primary-500'
-      onClick={handleOpenDropdown}>
+      onClick={() => setIsOpen((prev) => !prev)}>
       {children}
       <Icons.CaretBottom
         aria-hidden

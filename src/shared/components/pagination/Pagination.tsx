@@ -22,7 +22,7 @@ const PAGINATION_STYLES = {
   hoverableBtn: 'cursor-pointer hover:bg-gray-25',
   disabledArrowBtn: 'cursor-default text-gray-300',
   selectedStyle: 'border-b-2 border-primary-500 text-gray-950 rounded-none',
-};
+} as const;
 
 /**
  * @description

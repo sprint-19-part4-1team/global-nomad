@@ -63,7 +63,7 @@ const meta: Meta<typeof Input> = {
       control: 'select',
       options: [
         'email',
-        'username',
+        'nickname',
         'current-password',
         'new-password',
         'street-address',
@@ -189,7 +189,7 @@ export const DisplayError: Story = {
               label='닉네임 '
               name='nickname'
               type='text'
-              autoComplete='username'
+              autoComplete='nickname'
               value={nameValue}
               onChange={(e) => setNameValue(e.target.value)}
               placeholder='닉네임을 입력해주세요.'

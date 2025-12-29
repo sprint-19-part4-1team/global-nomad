@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEventHandler, HTMLInputTypeAttribute, MouseEventHandler, useId } from 'react';
 import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
@@ -11,7 +13,7 @@ import { cn } from '@/shared/utils/cn';
  * @property {string} label - Input의 label 텍스트
  * @property {string} name - form 제출 시 사용될 Input의 name
  * @property {HTMLInputTypeAttribute} type - Input의 타입 (text, email, password 등)
- * @property {('email' | 'username' | 'current-password' | 'new-password' | 'street-address' | 'transaction-amount' | 'off')} [autoComplete='off'] - 브라우저 자동완성 동작 제어
+ * @property {('email' | 'nickname' | 'current-password' | 'new-password' | 'street-address' | 'transaction-amount' | 'off')} [autoComplete='off'] - 브라우저 자동완성 동작 제어
  * @property {string | number} value - Input의 현재 값
  * @property {ChangeEventHandler<HTMLInputElement>} onChange - 값 변경 이벤트 핸들러
  * @property {string} placeholder - Input의 placeholder 텍스트
@@ -25,7 +27,7 @@ interface InputProps {
   type: HTMLInputTypeAttribute;
   autoComplete?:
     | 'email'
-    | 'username'
+    | 'nickname'
     | 'current-password'
     | 'new-password'
     | 'street-address'
@@ -129,8 +131,12 @@ export default function Input({
             type='button'
             aria-label={passwordLabelText}
             onClick={handlePasswordVisibility}
-            className='h-24 w-24 shrink-0 text-gray-400'>
-            {isPasswordVisible ? <Icons.Eye /> : <Icons.EyeOff />}
+            className='h-24 w-24 shrink-0 cursor-pointer text-gray-400'>
+            {isPasswordVisible ? (
+              <Icons.Eye aria-hidden='true' />
+            ) : (
+              <Icons.EyeOff aria-hidden='true' />
+            )}
           </button>
         )}
       </div>

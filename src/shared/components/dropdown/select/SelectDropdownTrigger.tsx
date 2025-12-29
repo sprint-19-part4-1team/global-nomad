@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, RefObject } from 'react';
 import Icons from '@/assets/icons';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
@@ -8,6 +8,7 @@ import { cn } from '@/shared/utils/cn';
 
 interface SelectDropdownTriggerProps {
   children: ReactNode;
+  ref?: RefObject<HTMLButtonElement | null>;
 }
 
 /**
@@ -21,6 +22,7 @@ interface SelectDropdownTriggerProps {
  * - 화살표 아이콘은 open 상태에 따라 회전합니다.
  *
  * @param children - SelectDropdownValue 등 트리거 내부에 표시될 콘텐츠
+ * @param ref - Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용
  *
  * @example
  * ```tsx
@@ -29,7 +31,7 @@ interface SelectDropdownTriggerProps {
  * </SelectDropdownTrigger>
  * ```
  */
-export default function SelectDropdownTrigger({ children }: SelectDropdownTriggerProps) {
+export default function SelectDropdownTrigger({ children, ref }: SelectDropdownTriggerProps) {
   const { isOpen, setIsOpen } = useDropdownBaseContext();
   const { triggerId } = useSelectContext();
 
@@ -39,11 +41,12 @@ export default function SelectDropdownTrigger({ children }: SelectDropdownTrigge
 
   return (
     <button
+      ref={ref}
       id={triggerId}
       type='button'
       aria-haspopup='listbox'
       aria-expanded={isOpen}
-      className='flex w-full cursor-pointer justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input'
+      className='flex w-full cursor-pointer justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:focus-within:border-primary-500'
       onClick={handleOpenDropdown}>
       {children}
       <Icons.CaretBottom

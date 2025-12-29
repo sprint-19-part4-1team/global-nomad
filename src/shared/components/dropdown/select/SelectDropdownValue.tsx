@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
 

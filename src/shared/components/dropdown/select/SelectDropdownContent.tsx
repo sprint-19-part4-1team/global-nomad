@@ -3,12 +3,21 @@
 import { ReactNode } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
-import { dropdownListBase } from '@/shared/components/dropdown/styles/dropdownContent';
+import {
+  dropdownListBase,
+  dropdownListShadowStyle,
+} from '@/shared/components/dropdown/styles/dropdownContent';
 import { cn } from '@/shared/utils/cn';
 
 interface SelectDropdownContentProps {
   children: ReactNode;
 }
+
+const dropdownContentVariants = {
+  basic:
+    'scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 p-12 shadow-input',
+  shadow: dropdownListShadowStyle,
+} as const;
 
 /**
  * ## SelectDropdownContent
@@ -22,7 +31,7 @@ interface SelectDropdownContentProps {
  */
 export default function SelectDropdownContent({ children }: SelectDropdownContentProps) {
   const { isOpen } = useDropdownBaseContext();
-  const { triggerId } = useSelectContext();
+  const { triggerId, variants } = useSelectContext();
 
   if (!isOpen) {
     return null;
@@ -32,10 +41,7 @@ export default function SelectDropdownContent({ children }: SelectDropdownConten
     <ul
       role='listbox'
       aria-labelledby={triggerId}
-      className={cn(
-        dropdownListBase,
-        'scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 p-12 shadow-input'
-      )}>
+      className={cn(dropdownListBase, dropdownContentVariants[variants])}>
       {children}
     </ul>
   );

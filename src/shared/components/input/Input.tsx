@@ -5,6 +5,7 @@ import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
 import usePasswordVisibility from '@/shared/hooks/usePasswordVisibility';
 import { cn } from '@/shared/utils/cn';
+import { formatValue } from '@/shared/utils/formatValue';
 
 /**
  * Input 컴포넌트의 Props
@@ -47,6 +48,7 @@ interface InputProps {
  *
  * Label, Input field, Error message를 포함한 완전한 form input 컴포넌트입니다.
  * 비밀번호 타입일 경우 표시/숨기기 토글 버튼이 자동으로 추가되며,
+ * number 타입일 경우 천단위 콤마 포맷팅이 자동으로 적용됩니다.
  * 에러 상태에 따라 테두리 색상이 자동으로 변경됩니다.
  *
  * @param {InputProps} props - 컴포넌트 props
@@ -77,6 +79,17 @@ interface InputProps {
  *   value={password}
  *   onChange={(e) => setPassword(e.target.value)}
  *   placeholder='비밀번호를 입력해주세요.'
+ * />
+ *
+ * // 숫자 입력 (천단위 콤마 자동 포맷팅)
+ * <Input
+ *   variant='form'
+ *   label='가격'
+ *   name='price'
+ *   type='number'
+ *   value={price}
+ *   onChange={(e) => setPrice(e.target.value)}
+ *   placeholder='가격을 입력해주세요.'
  * />
  *
  * // 비활성화된 Input
@@ -110,8 +123,68 @@ export default function Input({
   // 비밀번호 표시/숨기기 상태 및 토글 함수
   const { isPasswordVisible, handlePasswordVisibility } = usePasswordVisibility();
 
-  // 비밀번호 타입일 경우 표시 상태에 따라 실제 input type 결정
-  const inputType = type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type;
+  /**
+   * props로 받은 type에 따라 실제 input 요소에 적용될 type을 결정하는 함수
+   *
+   * @returns {string} 실제 input 요소에 적용될 type
+   *
+   * @remarks
+   * - password 타입: 표시/숨기기 상태(isPasswordVisible)에 따라 'text' 또는 'password' 반환
+   * - number 타입: 천단위 콤마 포맷팅을 위해 'text'로 변환
+   * - 그 외 타입: 원본 type 그대로 반환
+   */
+  const getInputType = () => {
+    if (type === 'password') {
+      return isPasswordVisible ? 'text' : 'password';
+    }
+    if (type === 'number') {
+      return 'text';
+    }
+    return type;
+  };
+
+  /**
+   * Input 값 변경 이벤트 핸들러
+   *
+   * @remarks
+   * - number 타입인 경우:
+   *   - 입력값에서 콤마를 제거하고 숫자만 추출
+   *   - 빈 값이거나 숫자만 있는 경우에만 처리 (붙여넣기 공격 방지)
+   *   - 부모 컴포넌트에는 콤마가 제거된 순수 숫자 문자열 전달
+   * - 그 외 타입: onChange 핸들러를 그대로 호출
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - 변경 이벤트 객체
+   * @returns {void} 반환값 없음. 부모 컴포넌트의 onChange를 호출하여 값 전달
+   *
+   */
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    // number 타입이 아니면 prop의 onChange를 그대로 전달하고 종료
+    if (type !== 'number') {
+      onChange?.(e);
+      return;
+    }
+
+    // 입력값에서 콤마 제거
+    const value = e.target.value.replaceAll(',', '');
+
+    // 빈 값이거나 숫자만 있는 경우만 처리
+    if (value === '' || /^\d+$/.test(value)) {
+      // 새로운 이벤트 객체 생성
+      const syntheticEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          name: e.target.name,
+          value: value,
+        },
+      } as React.ChangeEvent<HTMLInputElement>;
+
+      onChange?.(syntheticEvent);
+    }
+  };
+
+  // number 타입일 경우 천단위 콤마 포맷팅 적용, 그 외는 원본 값 사용
+  const displayValue = type === 'number' ? formatValue(value) || '' : value;
 
   // 비밀번호 토글 버튼의 접근성 레이블
   const passwordLabelText = isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기';
@@ -132,11 +205,11 @@ export default function Input({
         <input
           id={inputId}
           name={name}
-          type={inputType}
+          type={getInputType()}
           autoComplete={autoComplete}
           disabled={disabled}
-          value={value}
-          onChange={onChange}
+          value={displayValue}
+          onChange={handleChange}
           placeholder={placeholder}
           className='min-w-0 flex-1 bg-transparent outline-none placeholder:text-gray-400'
         />

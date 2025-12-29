@@ -3,11 +3,11 @@ import { createContext } from 'react';
 /**
  * SelectDropdown 컴포넌트 Context 타입
  * @property value - 현재 선택된 값
- * @property onChangeValue - 선택 값을 변경하는 함수
+ * @property setValue - 선택 값을 변경하는 함수
  */
 interface SelectContextType {
   value: string;
-  onChangeValue: (value: string) => void;
+  setValue: (value: string) => void;
 }
 
 /**

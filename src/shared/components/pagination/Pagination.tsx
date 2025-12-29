@@ -52,9 +52,8 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
   });
 
   const setPageInUrl = (nextPage: number) => {
-    const clampedNextPage = Math.min(Math.max(nextPage, 1), totalPage);
     const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.set('page', String(clampedNextPage));
+    nextParams.set('page', String(nextPage));
     router.push(`${pathname}?${nextParams.toString()}`, { scroll: false });
   };
 

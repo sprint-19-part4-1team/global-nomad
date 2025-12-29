@@ -5,17 +5,19 @@ import { createContext } from 'react';
  * @property value - 현재 선택된 값
  * @property setValue - 선택 값을 변경하는 함수
  * @property triggerId - 트리거와 리스트를 연결하는 id (접근성)
+ * @property variants - SelectDropdown 스타일 변형 (기본값 basic)
  */
 interface SelectContextType {
   value: string;
   setValue: (value: string) => void;
   triggerId: string;
+  variants: 'basic' | 'shadow';
 }
 
 /**
  * ## SelectContext
  *
- * SelectDropdown의 **선택 상태(value)** 를 관리하는 전용 Context입니다.
+ * SelectDropdown의 선택 상태(value) 와 스타일 정보를 관리하는 전용 Context입니다.
  *
  * - SelectDropdown 계열 컴포넌트에서만 사용됩니다.
  * - Dropdown의 open/close 상태는 관리하지 않습니다.

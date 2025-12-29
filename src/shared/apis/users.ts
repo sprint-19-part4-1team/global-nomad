@@ -1,30 +1,19 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
 
-export interface SignUpRequest {
+export interface CreateUserBodyDto {
   email: string;
   nickname: string;
   password: string;
-}
-export interface UserServiceResponseDto {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
 }
 export interface UpdateUserBodyDto {
   nickname?: string;
   profileImageUrl?: string | null;
   newPassword?: string;
 }
-export interface CreateProfileImgUrlResponseDto {
-  profileImageUrl: string;
-}
 
 // 회원가입
-export const signUp = (data: SignUpRequest) => {
-  return baseFetcher<UserServiceResponseDto>(`/users`, {
+export const signUp = (data: CreateUserBodyDto) => {
+  return baseFetcher(`/users`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -32,12 +21,12 @@ export const signUp = (data: SignUpRequest) => {
 
 // 내 정보 조회
 export const getMyInfo = () => {
-  return baseFetcher<UserServiceResponseDto>(`/users/me`, { method: 'GET' });
+  return baseFetcher(`/users/me`, { method: 'GET' });
 };
 
 // 내 정보 수정
 export const updateMyInfo = (data: UpdateUserBodyDto) => {
-  return baseFetcher<UserServiceResponseDto>(`/users/me`, {
+  return baseFetcher(`/users/me`, {
     method: 'PATCH',
     body: JSON.stringify(data),
   });
@@ -48,7 +37,7 @@ export const createProfileImageUrl = (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
 
-  return baseFetcher<CreateProfileImgUrlResponseDto>(`/users/me/image`, {
+  return baseFetcher(`/users/me/image`, {
     method: 'POST',
     body: formData,
   });

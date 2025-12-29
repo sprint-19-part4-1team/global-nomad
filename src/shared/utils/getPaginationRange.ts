@@ -55,11 +55,9 @@ export const getPaginationRange = ({
   const checkedCurrentPage = Math.min(Math.max(currentPage, 1), totalPage);
   const startPage = Math.floor((checkedCurrentPage - 1) / PAGES_PER_GROUP) * PAGES_PER_GROUP + 1;
   const endPage = Math.min(startPage + (PAGES_PER_GROUP - 1), totalPage);
-  const visiblePages: number[] = [];
 
-  for (let i = startPage; i <= endPage; i++) {
-    visiblePages.push(i);
-  }
+  const visiblePages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+
   const canGoPrev = checkedCurrentPage > 1;
   const canGoNext = checkedCurrentPage < totalPage;
 

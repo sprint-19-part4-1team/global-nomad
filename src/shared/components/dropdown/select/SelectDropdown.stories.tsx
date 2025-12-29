@@ -71,6 +71,19 @@ const meta: Meta<typeof SelectDropdown> = {
         },
       },
     },
+    variants: {
+      control: { type: 'radio' },
+      options: ['basic', 'shadow'],
+      description: 'SelectDropdown 스타일 variants',
+      table: {
+        type: {
+          summary: `'basic' | 'shadow'`,
+        },
+        defaultValue: {
+          summary: 'basic',
+        },
+      },
+    },
     children: {
       description:
         '`SelectDropdownTrigger`, `SelectDropdownContent`, `SelectDropdownItem`을 조합하여 전달',
@@ -87,11 +100,11 @@ export default meta;
 type Story = StoryObj<typeof SelectDropdown>;
 
 const CATEGORY_OPTIONS = [
-  { value: '문화 · 예술', label: '🎨 문화 · 예술' },
-  { value: '식음료', label: '🍜 식음료' },
-  { value: '투어', label: '🏙️ 투어' },
-  { value: '관광', label: '🚍 관광' },
-  { value: '웰빙', label: '🌿 웰빙' },
+  { value: '문화 · 예술', label: '🎨 문화 · 예술', disabled: false },
+  { value: '식음료', label: '🍜 식음료', disabled: true },
+  { value: '투어', label: '🏙️ 투어', disabled: false },
+  { value: '관광', label: '🚍 관광', disabled: false },
+  { value: '웰빙', label: '🌿 웰빙', disabled: false },
 ] as const;
 
 export const Default: Story = {
@@ -125,7 +138,7 @@ export const Default: Story = {
 
           <SelectDropdownContent>
             {CATEGORY_OPTIONS.map((opt) => (
-              <SelectDropdownItem key={opt.value} value={opt.value}>
+              <SelectDropdownItem key={opt.value} value={opt.value} disabled={opt.disabled}>
                 {opt.label}
               </SelectDropdownItem>
             ))}
@@ -231,6 +244,55 @@ export const WithScroll: Story = {
 
           <SelectDropdownContent>
             {LONG_OPTIONS.map((opt) => (
+              <SelectDropdownItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectDropdownItem>
+            ))}
+          </SelectDropdownContent>
+        </SelectDropdown>
+      </div>
+    );
+  },
+};
+
+export const WithShadowVariants: Story = {
+  args: {
+    variants: 'shadow',
+    triggerId: 'category-filter',
+    value: '',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+\`variants="shadow"\` 스타일을 사용하는 SelectDropdown 예제입니다.
+
+- 메인 페이지 필터 영역과 같은 **강조된 UI**에 사용됩니다.
+- placeholder / value 스타일을 개별적으로 제어할 수 있습니다.
+        `,
+      },
+    },
+  },
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs<{ value: string }>();
+
+    return (
+      <div className='h-200'>
+        <SelectDropdown
+          {...args}
+          value={value}
+          onChangeValue={(nextValue) => updateArgs({ value: nextValue })}>
+          <SelectDropdownTrigger>
+            <SelectDropdownValue
+              placeholder='🛼 모든 체험'
+              render={(value) => CATEGORY_OPTIONS.find((opt) => opt.value === value)?.label}
+              placeholderClassName='heading-18 font-bold text-gray-950'
+              valueClassName='heading-18 font-bold text-gray-950'
+            />
+          </SelectDropdownTrigger>
+
+          <SelectDropdownContent>
+            {CATEGORY_OPTIONS.map((opt) => (
               <SelectDropdownItem key={opt.value} value={opt.value}>
                 {opt.label}
               </SelectDropdownItem>

@@ -62,7 +62,7 @@ type Story = StoryObj<typeof ActionDropdown>;
 /**
  * 테스트용 유저 데이터
  */
-const defaultUser: User = {
+const DEFAULT_USER: User = {
   id: 1,
   email: 'test@example.com',
   nickname: '유저',
@@ -87,11 +87,11 @@ export const Default: Story = {
       <div className='h-90'>
         <ActionDropdown>
           <ActionDropdownTrigger className='flex items-center gap-10' aria-label='유저 메뉴 열기'>
-            <Avatar user={defaultUser}>
+            <Avatar user={DEFAULT_USER}>
               <AvatarImage />
               <AvatarFallback />
             </Avatar>
-            <span className='body-14 font-medium text-gray-950'>{defaultUser.nickname}</span>
+            <span className='body-14 font-medium text-gray-950'>{DEFAULT_USER.nickname}</span>
           </ActionDropdownTrigger>
 
           <ActionDropdownContent className='-left-20'>
@@ -128,7 +128,7 @@ export const IconOnlyTrigger: Story = {
       <div className='h-90'>
         <ActionDropdown>
           <ActionDropdownTrigger aria-label='유저 메뉴 열기'>
-            <Avatar user={defaultUser}>
+            <Avatar user={DEFAULT_USER}>
               <AvatarImage />
               <AvatarFallback />
             </Avatar>

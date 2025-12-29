@@ -24,7 +24,7 @@ interface ActionDropdownItemProps {
  *
  * @param children - 메뉴 아이템에 표시될 콘텐츠
  * @param onClick - 메뉴 선택 시 실행될 콜백 함수
- * @param className - 추가로 적용할 클래스 이름
+ * @param className - 추가로 적용할 클래스 이름 (position 조절에 활용)
  *
  * @example
  * ```tsx

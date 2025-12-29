@@ -2,10 +2,13 @@
 
 import { ReactNode } from 'react';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
+import { cn } from '@/shared/utils/cn';
 
 interface SelectDropdownValueProps {
-  placeholder: string;
+  placeholder?: string;
   render?: (value: string) => ReactNode;
+  placeholderClassName?: string;
+  valueClassName?: string;
 }
 
 const dropdownValueStyle = 'body-14 sm:body-16 font-medium text-gray-800';
@@ -23,6 +26,8 @@ const dropdownValueStyle = 'body-14 sm:body-16 font-medium text-gray-800';
  *
  * @param placeholder - 선택된 값이 없을 때 표시할 텍스트
  * @param render - 선택된 value를 받아 커스텀 UI를 반환하는 렌더 함수
+ * @param placeholderClassName - placeholder 텍스트에 적용할 추가 클래스
+ * @param valueClassName - 선택된 값 텍스트에 적용할 추가 클래스
  *
  * @example
  * ```tsx
@@ -38,16 +43,23 @@ const dropdownValueStyle = 'body-14 sm:body-16 font-medium text-gray-800';
  * </SelectDropdownTrigger>
  * ```
  */
-export default function SelectDropdownValue({ placeholder, render }: SelectDropdownValueProps) {
+export default function SelectDropdownValue({
+  placeholder,
+  render,
+  placeholderClassName,
+  valueClassName,
+}: SelectDropdownValueProps) {
   const { value } = useSelectContext();
 
   if (!value) {
-    return <span className='body-14 text-gray-400 sm:body-16'>{placeholder}</span>;
+    return (
+      <span className={cn('body-14 text-gray-400 sm:body-16', placeholderClassName)}>
+        {placeholder}
+      </span>
+    );
   }
 
-  if (render) {
-    return <span className={dropdownValueStyle}>{render(value)}</span>;
-  }
-
-  return <span className={dropdownValueStyle}>{value}</span>;
+  return (
+    <span className={cn(dropdownValueStyle, valueClassName)}>{render ? render(value) : value}</span>
+  );
 }

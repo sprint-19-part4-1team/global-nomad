@@ -18,9 +18,10 @@ const labelVariants = cva('text-gray-950', {
 type LabelVariantsProps = VariantProps<typeof labelVariants>;
 
 interface LabelProps extends LabelVariantsProps {
-  htmlFor: string;
+  htmlFor?: string;
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 /**
@@ -46,6 +47,7 @@ interface LabelProps extends LabelVariantsProps {
  * @param htmlFor - 연결될 form control의 `id` 값
  * @param variant - 라벨의 스타일 `'authForm' | 'form' | 'review'`
  * @param className - 추가적인 스타일 확장을 위한 클래스
+ * @param onClick - selectDropdown 포커스 트리거를 위한 onClick 함수
  *
  * @example
  * ```tsx
@@ -60,9 +62,12 @@ interface LabelProps extends LabelVariantsProps {
  * </Label>
  * ```
  */
-export default function Label({ htmlFor, children, className, variant }: LabelProps) {
+export default function Label({ htmlFor, children, className, variant, onClick }: LabelProps) {
   return (
-    <label htmlFor={htmlFor} className={cn(labelVariants({ variant }), className)}>
+    <label
+      htmlFor={htmlFor}
+      className={cn(labelVariants({ variant }), className)}
+      onClick={onClick}>
       {children}
     </label>
   );

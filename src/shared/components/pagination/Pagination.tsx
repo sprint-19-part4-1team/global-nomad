@@ -10,7 +10,20 @@ interface PaginationProps {
   size: number;
 }
 
-// size는 한 번에 보여질 개수
+// 버튼 스타일 모음
+// - ~Base : 기본 스타일
+// - hoverableBtn : hover 가능한 상태
+// - disabledArrowBtn : 비활성 화살표
+// - selectedStyle : 선택된 페이지
+const PAGINATION_STYLES = {
+  arrowBtnBase: 'flex items-center justify-center h-40 w-40 text-gray-950 rounded-4',
+  pageBtnBase:
+    'flex items-center justify-center h-40 w-40 body-14 font-medium select-none text-gray-300 rounded-4',
+  hoverableBtn: 'cursor-pointer hover:bg-gray-25',
+  disabledArrowBtn: 'cursor-default text-gray-300',
+  selectedStyle: 'border-b-2 border-primary-500 text-gray-950 rounded-none',
+};
+
 /**
  * @description
  * - 현재 페이지는 URL의 `page` 파라미터에서 파생됩니다.
@@ -64,17 +77,8 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
     setPageInUrl(page);
   };
 
-  // 버튼 스타일 모음
-  // - ~Base : 기본 스타일
-  // - hoverableBtn : hover 가능한 상태
-  // - disabledArrowBtn : 비활성 화살표
-  // - selectedStyle : 선택된 페이지
-  const arrowBtnBase = 'flex items-center justify-center h-40 w-40 text-gray-950 rounded-4';
-  const pageBtnBase =
-    'flex items-center justify-center h-40 w-40 body-14 font-medium select-none text-gray-300 rounded-4';
-  const hoverableBtn = 'cursor-pointer hover:bg-gray-25';
-  const disabledArrowBtn = 'cursor-default text-gray-300';
-  const selectedStyle = 'border-b-2 border-primary-500 text-gray-950 rounded-none';
+  const { arrowBtnBase, pageBtnBase, hoverableBtn, disabledArrowBtn, selectedStyle } =
+    PAGINATION_STYLES;
 
   return (
     <div className='flex items-center gap-4'>

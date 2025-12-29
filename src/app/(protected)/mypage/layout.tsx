@@ -6,11 +6,12 @@ interface MypageLayoutProps {
 }
 
 export default function MypageLayout({ children }: MypageLayoutProps) {
-  // TODO: 마이페이지 공통 레이아웃
   return (
-    <>
-      <MypageTabs />
-      {children}
-    </>
+    <div className='mx-auto w-full max-w-980 px-24 pt-80 sm:pt-120 lg:px-0 lg:pt-128'>
+      <div className='fixed top-48 left-0 z-6 w-full bg-white'>
+        <MypageTabs />
+      </div>
+      <div className='pt-48 sm:pt-0'>{children}</div>
+    </div>
   );
 }

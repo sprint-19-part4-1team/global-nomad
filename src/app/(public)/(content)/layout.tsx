@@ -1,15 +1,20 @@
 import { ReactNode } from 'react';
+import Footer from '@/shared/components/footer/Footer';
+import Header from '@/shared/components/header/Header';
+import HeaderShell from '@/shared/components/header/HeaderShell';
 
-interface PublicLayoutProps {
+interface ContentLayoutProps {
   children: ReactNode;
 }
 
-export default function PublicLayout({ children }: PublicLayoutProps) {
-  // TODO: 퍼블릭 페이지 공통 레이아웃
+export default function ContentLayout({ children }: ContentLayoutProps) {
   return (
     <>
-      퍼블릭 공통 레이아웃
+      <HeaderShell>
+        <Header />
+      </HeaderShell>
       {children}
+      <Footer />
     </>
   );
 }

@@ -36,7 +36,7 @@ interface ActionDropdownProps {
 export default function ActionDropdown({ children }: ActionDropdownProps) {
   return (
     <DropdownBaseProvider>
-      <DropdownBaseRoot className='w-fit'>{children}</DropdownBaseRoot>
+      <DropdownBaseRoot>{children}</DropdownBaseRoot>
     </DropdownBaseProvider>
   );
 }

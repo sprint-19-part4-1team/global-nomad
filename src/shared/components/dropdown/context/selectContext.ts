@@ -4,10 +4,12 @@ import { createContext } from 'react';
  * SelectDropdown 컴포넌트 Context 타입
  * @property value - 현재 선택된 값
  * @property setValue - 선택 값을 변경하는 함수
+ * @property triggerId - 트리거와 리스트를 연결하는 id (접근성)
  */
 interface SelectContextType {
   value: string;
   setValue: (value: string) => void;
+  triggerId: string;
 }
 
 /**

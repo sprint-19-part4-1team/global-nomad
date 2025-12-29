@@ -8,6 +8,7 @@ const TAB_QUERY_KEY = 'tab';
 interface UseTabsQueryParamOptions {
   defaultValue: string;
   replace?: boolean;
+  scroll?: boolean;
 }
 
 /**
@@ -21,6 +22,7 @@ interface UseTabsQueryParamOptions {
  *
  * @param defaultValue - 탭의 기본값
  * @param replace - history 관리 여부 (기본값 true)
+ * @param scroll - 페이지 이동 시 스크롤 상단으로 끌어올릴지 여부 (기본값 false)
  *
  * @example
  * ```tsx
@@ -33,7 +35,11 @@ interface UseTabsQueryParamOptions {
  * </Tabs>
  * ```
  */
-const useTabsQueryParam = ({ defaultValue, replace = true }: UseTabsQueryParamOptions) => {
+const useTabsQueryParam = ({
+  defaultValue,
+  replace = true,
+  scroll = false,
+}: UseTabsQueryParamOptions) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -47,12 +53,12 @@ const useTabsQueryParam = ({ defaultValue, replace = true }: UseTabsQueryParamOp
       const url = `?${params.toString()}`;
 
       if (replace) {
-        router.replace(url);
+        router.replace(url, { scroll: scroll });
       } else {
-        router.push(url);
+        router.push(url, { scroll: scroll });
       }
     },
-    [replace, router, searchParams]
+    [replace, router, searchParams, scroll]
   );
 
   return { value, onChangeValue };

@@ -53,8 +53,14 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
 
   const setPageInUrl = (nextPage: number) => {
     const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.set('page', String(nextPage));
-    router.push(`${pathname}?${nextParams.toString()}`, { scroll: false });
+    if (nextPage === 1) {
+      nextParams.delete('page');
+    } else {
+      nextParams.set('page', String(nextPage));
+    }
+    const query = nextParams.toString();
+
+    router.push(query ? `${pathname}?${query}` : `${pathname}`, { scroll: false });
   };
 
   const handlePrev = () => {

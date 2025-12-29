@@ -81,8 +81,9 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
     PAGINATION_STYLES;
 
   return (
-    <div className='flex items-center gap-4'>
+    <nav aria-label='페이지네이션' className='flex items-center gap-4'>
       <button
+        aria-label='이전 페이지'
         className={cn(arrowBtnBase, canGoPrev ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoPrev}
         onClick={handlePrev}>
@@ -93,6 +94,8 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
 
         return (
           <button
+            aria-current={isSelected ? 'page' : undefined}
+            aria-label={`${page} 페이지`}
             key={page}
             className={cn(pageBtnBase, isSelected ? selectedStyle : hoverableBtn)}
             disabled={isSelected}
@@ -102,11 +105,12 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
         );
       })}
       <button
+        aria-label='다음 페이지'
         className={cn(arrowBtnBase, canGoNext ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoNext}
         onClick={handleNext}>
         <Icons.ChevronRight className='h-24 w-24' />
       </button>
-    </div>
+    </nav>
   );
 }

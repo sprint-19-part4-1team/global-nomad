@@ -34,7 +34,7 @@ export default function SelectDropdownContent({ children }: SelectDropdownConten
       aria-labelledby={triggerId}
       className={cn(
         dropdownListBase,
-        'mt-8 scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 bg-white p-12 shadow-input'
+        'scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 bg-white p-12 shadow-input'
       )}>
       {children}
     </ul>

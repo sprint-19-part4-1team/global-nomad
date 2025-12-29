@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import MypageTabs from '@/features/mypage/ui/MypageTabs';
+import MypageTabs from '@/features/mypage/components/MypageTabs';
 
 interface MypageLayoutProps {
   children: ReactNode;

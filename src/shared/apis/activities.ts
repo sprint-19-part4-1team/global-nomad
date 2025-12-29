@@ -70,7 +70,7 @@ export const getActivitySchedules = (activityId: number, params: GetActivitySche
     }
   });
 
-  return baseFetcher(`/activities/${activityId}/available-schedules?${searchParams.toString()}`, {
+  return baseFetcher(`/activities/${activityId}/available-schedule?${searchParams.toString()}`, {
     method: 'GET',
   });
 };

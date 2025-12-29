@@ -1,13 +1,28 @@
 'use client';
 
+import { cva, VariantProps } from 'class-variance-authority';
 import { ReactNode, RefObject } from 'react';
 import Icons from '@/assets/icons';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
 import { cn } from '@/shared/utils/cn';
 
-interface SelectDropdownTriggerProps {
+const selectDropdownTriggerVariants = cva('cursor-pointer flex', {
+  variants: {
+    variants: {
+      basic:
+        'w-full justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:focus-within:border-primary-500',
+      shadow: 'gap-4',
+    },
+  },
+  defaultVariants: {
+    variants: 'basic',
+  },
+});
+
+interface SelectDropdownTriggerProps extends VariantProps<typeof selectDropdownTriggerVariants> {
   children: ReactNode;
+  className?: string;
   ref?: RefObject<HTMLButtonElement | null>;
 }
 
@@ -23,6 +38,7 @@ interface SelectDropdownTriggerProps {
  *
  * @param children - SelectDropdownValue 등 트리거 내부에 표시될 콘텐츠
  * @param ref - Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용
+ * @param className - variants shadow 타입일 경우 적용할 추가 스타일
  *
  * @example
  * ```tsx
@@ -31,9 +47,13 @@ interface SelectDropdownTriggerProps {
  * </SelectDropdownTrigger>
  * ```
  */
-export default function SelectDropdownTrigger({ children, ref }: SelectDropdownTriggerProps) {
+export default function SelectDropdownTrigger({
+  children,
+  ref,
+  className,
+}: SelectDropdownTriggerProps) {
   const { isOpen, setIsOpen } = useDropdownBaseContext();
-  const { triggerId } = useSelectContext();
+  const { triggerId, variants } = useSelectContext();
 
   return (
     <button
@@ -42,7 +62,7 @@ export default function SelectDropdownTrigger({ children, ref }: SelectDropdownT
       type='button'
       aria-haspopup='listbox'
       aria-expanded={isOpen}
-      className='flex w-full cursor-pointer justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:focus-within:border-primary-500'
+      className={cn(selectDropdownTriggerVariants({ variants }), className)}
       onClick={() => setIsOpen((prev) => !prev)}>
       {children}
       <Icons.CaretBottom

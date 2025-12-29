@@ -103,7 +103,7 @@ export const createActivityImage = (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
 
-  return baseFetcher<{ imageUrl: string }>(`/activities/images`, {
+  return baseFetcher<{ imageUrl: string }>('/activities/images', {
     method: 'POST',
     body: formData,
   });

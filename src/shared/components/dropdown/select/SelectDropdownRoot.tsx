@@ -28,7 +28,7 @@ export default function SelectDropdownRoot({ children }: SelectDropdownRootProps
   });
 
   return (
-    <div ref={rootRef} className='relative w-full'>
+    <div ref={rootRef} className='relative w-full select-none'>
       {children}
     </div>
   );

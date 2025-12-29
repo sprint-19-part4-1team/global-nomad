@@ -1,13 +1,43 @@
 'use client';
 
+import { cva } from 'class-variance-authority';
 import { KeyboardEvent, ReactNode } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
 import {
   dropdownItemHoverBase,
   dropdownItemBase,
+  dropdownItemShadowStyle,
 } from '@/shared/components/dropdown/styles/dropdownItem';
 import { cn } from '@/shared/utils/cn';
+
+export const dropdownItemVariants = cva(dropdownItemBase, {
+  variants: {
+    variants: {
+      basic: 'rounded-12 px-20 py-12 body-14 sm:body-16',
+      shadow: dropdownItemShadowStyle,
+    },
+    disabled: {
+      true: 'cursor-not-allowed bg-gray-25 text-gray-400',
+      false: 'text-gray-800 hover:font-bold',
+    },
+    selected: {
+      true: 'font-bold text-primary-500',
+      false: '',
+    },
+  },
+  compoundVariants: [
+    {
+      disabled: false,
+      className: dropdownItemHoverBase,
+    },
+  ],
+  defaultVariants: {
+    variants: 'basic',
+    disabled: false,
+    selected: false,
+  },
+});
 
 interface SelectDropdownItemProps {
   children: ReactNode;
@@ -41,7 +71,7 @@ export default function SelectDropdownItem({
   disabled = false,
 }: SelectDropdownItemProps) {
   const { setIsOpen } = useDropdownBaseContext();
-  const { value: selectedValue, setValue } = useSelectContext();
+  const { value: selectedValue, setValue, variants } = useSelectContext();
 
   const isSelected = selectedValue === value;
 
@@ -72,13 +102,7 @@ export default function SelectDropdownItem({
       aria-selected={isSelected}
       aria-disabled={disabled || undefined}
       tabIndex={disabled ? -1 : 0}
-      className={cn(
-        dropdownItemBase,
-        'rounded-12 px-20 py-12 body-14 sm:body-16',
-        !disabled && dropdownItemHoverBase,
-        disabled ? 'cursor-not-allowed bg-gray-25 text-gray-400' : 'text-gray-800 hover:font-bold',
-        isSelected && 'font-bold text-primary-500'
-      )}
+      className={cn(dropdownItemVariants({ variants, disabled, selected: isSelected }))}
       onClick={selectOption}
       onKeyDown={handleKeyDown}>
       {children}

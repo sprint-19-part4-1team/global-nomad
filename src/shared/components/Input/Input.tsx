@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MouseEventHandler, useId } from 'react';
+import { ChangeEventHandler, HTMLInputTypeAttribute, MouseEventHandler, useId } from 'react';
 import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
 import usePasswordVisibility from '@/shared/hooks/usePasswordVisibility';
@@ -10,7 +10,7 @@ import { cn } from '@/shared/utils/cn';
  * @property {('authForm' | 'form')} variant - Input의 스타일 변형 (authForm: 로그인 / 회원가입 등 유저 관련 폼, form: 체험 등록 / 수정 폼)
  * @property {string} label - Input의 label 텍스트
  * @property {string} name - form 제출 시 사용될 Input의 name
- * @property {string} type - Input의 타입 (text, email, password 등)
+ * @property {HTMLInputTypeAttribute} type - Input의 타입 (text, email, password 등)
  * @property {('email' | 'username' | 'current-password' | 'new-password' | 'street-address' | 'transaction-amount' | 'off')} [autoComplete='off'] - 브라우저 자동완성 동작 제어
  * @property {string | number} value - Input의 현재 값
  * @property {ChangeEventHandler<HTMLInputElement>} onChange - 값 변경 이벤트 핸들러
@@ -22,7 +22,7 @@ interface InputProps {
   variant: 'authForm' | 'form';
   label: string;
   name: string;
-  type: string;
+  type: HTMLInputTypeAttribute;
   autoComplete?:
     | 'email'
     | 'username'

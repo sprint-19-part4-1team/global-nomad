@@ -43,7 +43,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     variant: {
       control: 'select',
-      option: ['authForm', 'form'],
+      options: ['authForm', 'form'],
       description:
         "Input를 사용할 위치 ('authForm': 로그인 / 회원가입 등 유저 관련 폼 | 'form': 체험 등록 / 수정 폼)",
     },

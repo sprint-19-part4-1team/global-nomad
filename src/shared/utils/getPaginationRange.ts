@@ -13,7 +13,7 @@ type PaginationRange = {
 const PAGES_PER_GROUP = 5;
 
 /** totalPage가 0 이하인 경우를 방어하기 위한 기본 반환값 */
-const emptyRange: PaginationRange = {
+const EMPTY_RANGE: PaginationRange = {
   checkedCurrentPage: 1,
   visiblePages: [],
   canGoPrev: false,
@@ -50,7 +50,7 @@ export const getPaginationRange = ({
   totalPage,
 }: GetPaginationRangeProps): PaginationRange => {
   if (totalPage <= 0) {
-    return emptyRange;
+    return EMPTY_RANGE;
   }
   const checkedCurrentPage = Math.min(Math.max(currentPage, 1), totalPage);
   const startPage = Math.floor((checkedCurrentPage - 1) / PAGES_PER_GROUP) * PAGES_PER_GROUP + 1;

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import Input from '@/shared/components/Input/Input';
+import Input from '@/shared/components/input/Input';
 
 /**
  * Input 컴포넌트 스토리 가이드

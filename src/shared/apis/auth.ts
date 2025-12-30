@@ -5,6 +5,7 @@ export interface LoginRequest {
   password: string;
 }
 
+// 로그인
 export const logIn = (data: LoginRequest) => {
   return baseFetcher('/auth/login', {
     method: 'POST',
@@ -12,6 +13,7 @@ export const logIn = (data: LoginRequest) => {
   });
 };
 
+// 토큰 재발급
 export const refreshToken = () => {
   return baseFetcher('/auth/tokens', {
     method: 'POST',

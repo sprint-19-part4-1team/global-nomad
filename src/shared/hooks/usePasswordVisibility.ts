@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * 비밀번호 표시/숨김 상태를 관리하는 커스텀 훅
@@ -13,9 +13,9 @@ const usePasswordVisibility = () => {
   /**
    * 비밀번호 표시/숨김 상태를 토글하는 함수
    */
-  const handlePasswordVisibility = () => {
+  const handlePasswordVisibility = useCallback(() => {
     setIsPasswordVisible((prev) => !prev);
-  };
+  }, []);
 
   return {
     isPasswordVisible, // 현재 비밀번호 표시 여부 (true: 표시, false: 숨김)

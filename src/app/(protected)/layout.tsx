@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Header from '@/shared/components/header/Header';
 import BaseLayout from '@/shared/layout/BaseLayout';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 interface ProtectedLayoutProps {
   children: ReactNode;

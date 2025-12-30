@@ -1,6 +1,6 @@
 import GuestActions from '@/shared/components/header/GuestAction';
 import LoggedInActions from '@/shared/components/header/LoggedInActions';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 interface HeaderActionsProps {
   isLoggedIn: boolean;

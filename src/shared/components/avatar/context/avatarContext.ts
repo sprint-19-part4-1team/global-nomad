@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 /**
  * Avatar 컴포넌트 Context 타입

@@ -2,6 +2,7 @@
 
 import { ReactNode, useRef } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
+import useEscape from '@/shared/hooks/useEscape';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { cn } from '@/shared/utils/cn';
 
@@ -29,6 +30,10 @@ export default function DropdownBaseRoot({ children, className }: DropdownBaseRo
   const rootRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(rootRef, () => {
+    setIsOpen(false);
+  });
+
+  useEscape(() => {
     setIsOpen(false);
   });
 

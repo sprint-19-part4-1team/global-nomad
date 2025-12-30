@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 interface LoggedInActionsProps {
   user: User;

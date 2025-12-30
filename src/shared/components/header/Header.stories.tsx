@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import HeaderShell from '@/shared/components/header/HeaderShell';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 import Header from './Header';
 
 /**

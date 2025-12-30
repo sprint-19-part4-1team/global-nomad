@@ -8,7 +8,7 @@ import {
   ActionDropdownContent,
   ActionDropdownItem,
 } from '@/shared/components/dropdown/action';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 /**
  * ActionDropdown 컴포넌트 스토리 가이드

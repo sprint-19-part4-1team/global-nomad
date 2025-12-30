@@ -1,15 +1,16 @@
 import { ReactNode } from 'react';
+import Header from '@/shared/components/header/Header';
+import BaseLayout from '@/shared/layout/BaseLayout';
 
-interface PublicLayoutProps {
+interface ContentLayoutProps {
   children: ReactNode;
 }
 
-export default function PublicLayout({ children }: PublicLayoutProps) {
-  // TODO: 퍼블릭 페이지 공통 레이아웃
+export default function ContentLayout({ children }: ContentLayoutProps) {
+  // TODO: 로그인한 유저라면 header에 유저 정보 전달 아니라면 전달 X
   return (
     <>
-      퍼블릭 공통 레이아웃
-      {children}
+      <BaseLayout header={<Header />}>{children}</BaseLayout>
     </>
   );
 }

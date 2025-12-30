@@ -187,6 +187,42 @@ export const FormPriceInput: Story = {
 };
 
 /**
+ * 체험 주소 입력 (체험 등록/수정용) 컴포넌트
+ *
+ * 읽기 전용 주소 Input으로, 클릭 시 주소 검색 팝업을 통해 주소를 선택할 수 있습니다. <br/>
+ * name에 'address'가 포함되어 검색 아이콘이 자동으로 표시되며, 접근성을 위한 aria 속성이 적용되어 있습니다.
+ */
+const FromAddressInputComponent = () => {
+  const [addressValue, setAddressValue] = useState('');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleAddressClick = () => {
+    setIsPopupOpen(true);
+    // 실제로는 여기서 다음 우편번호 서비스 등을 호출
+    alert('popup open');
+  };
+
+  return (
+    <Input
+      variant='form'
+      label='주소'
+      name='address'
+      type='text'
+      autoComplete='street-address'
+      value={addressValue}
+      onChange={(e) => setAddressValue(e.target.value)}
+      placeholder='우편 번호 검색'
+      onClick={handleAddressClick}
+      readOnly
+      aria-expanded={isPopupOpen}
+      aria-haspopup='dialog'
+      aria-controls='address-popup'
+      aria-readonly='true'
+    />
+  );
+};
+
+/**
  * 체험 주소 입력 (체험 등록/수정용)
  *
  * 체험 등록 및 수정 페이지에서 사용되는 주소 Input입니다. <br/>
@@ -195,14 +231,7 @@ export const FormPriceInput: Story = {
  *
  */
 export const FormAddressInput: Story = {
-  args: {
-    variant: 'form',
-    label: '주소',
-    name: 'address',
-    type: 'text',
-    autoComplete: 'street-address',
-    placeholder: '우편 번호 검색',
-  },
+  render: () => <FromAddressInputComponent />,
 };
 
 /**

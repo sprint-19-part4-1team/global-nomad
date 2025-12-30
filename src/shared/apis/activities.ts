@@ -1,5 +1,6 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
 import type { ActivityListMethod, ActivityCategory, ActivitySortOption } from '@/shared/constants';
+import { createQueryString } from '@/shared/utils/createQueryString';
 
 export interface GetActivitiesParams {
   method: ActivityListMethod;
@@ -39,15 +40,8 @@ export interface CreateReservationBodyDto {
 
 // 체험 리스트 조회
 export const getActivities = (params: GetActivitiesParams) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      searchParams.append(key, String(value));
-    }
-  });
-
-  return baseFetcher(`/activities?${searchParams.toString()}`, { method: 'GET' });
+  const queryString = createQueryString(params);
+  return baseFetcher(`/activities${queryString}`, { method: 'GET' });
 };
 
 // 체험 등록
@@ -62,30 +56,16 @@ export const getActivityDetail = (activityId: number) => {
 
 // 체험 예약 가능일 조회
 export const getActivitySchedules = (activityId: number, params: GetActivitySchedulesParams) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      searchParams.append(key, String(value));
-    }
-  });
-
-  return baseFetcher(`/activities/${activityId}/available-schedule?${searchParams.toString()}`, {
+  const queryString = createQueryString(params);
+  return baseFetcher(`/activities/${activityId}/available-schedule${queryString}`, {
     method: 'GET',
   });
 };
 
 // 체험 리뷰 조회
 export const getActivityReviews = (activityId: number, params: GetActivityReviewsParams) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      searchParams.append(key, String(value));
-    }
-  });
-
-  return baseFetcher(`/activities/${activityId}/reviews?${searchParams.toString()}`, {
+  const queryString = createQueryString(params);
+  return baseFetcher(`/activities/${activityId}/reviews${queryString}`, {
     method: 'GET',
   });
 };

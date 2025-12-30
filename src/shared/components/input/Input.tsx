@@ -3,6 +3,7 @@
 import { ChangeEventHandler, HTMLInputTypeAttribute, MouseEventHandler, useId } from 'react';
 import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
+import useFocus from '@/shared/hooks/useFocus';
 import usePasswordVisibility from '@/shared/hooks/usePasswordVisibility';
 import { cn } from '@/shared/utils/cn';
 import { formatValue } from '@/shared/utils/formatValue';
@@ -120,6 +121,8 @@ export default function Input({
   // 접근성을 위한 고유 ID 생성
   const inputId = useId();
 
+  const { isFocus, onFocus, onBlur } = useFocus();
+
   // 비밀번호 표시/숨기기 상태 및 토글 함수
   const { isPasswordVisible, handlePasswordVisibility } = usePasswordVisibility();
 
@@ -199,7 +202,9 @@ export default function Input({
         onClick={onClick}
         className={cn(
           'transition-color flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16',
-          errorMessage ? 'border-red-500' : 'border-gray-100 focus-within:border-primary-500',
+          errorMessage && isFocus === false
+            ? 'border-red-500'
+            : 'border-gray-100 focus-within:border-primary-500',
           disabled && 'bg-gray-25 text-gray-400'
         )}>
         <input
@@ -210,6 +215,8 @@ export default function Input({
           disabled={disabled}
           value={displayValue}
           onChange={handleChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
           placeholder={placeholder}
           className='min-w-0 flex-1 bg-transparent outline-none placeholder:text-gray-400'
         />

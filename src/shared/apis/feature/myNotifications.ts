@@ -1,4 +1,4 @@
-import { baseFetcher } from '@/shared/apis/baseFetcher';
+import { baseFetcher } from '@/shared/apis/base/baseFetcher';
 import type { GetMyNotificationsParams } from '@/shared/types/myNotifications.types';
 import { createQueryString } from '@/shared/utils/createQueryString';
 

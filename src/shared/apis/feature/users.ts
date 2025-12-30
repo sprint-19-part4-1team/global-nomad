@@ -1,4 +1,4 @@
-import { baseFetcher } from '@/shared/apis/baseFetcher';
+import { baseFetcher } from '@/shared/apis/base/baseFetcher';
 import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/auth.types';
 
 // 회원가입

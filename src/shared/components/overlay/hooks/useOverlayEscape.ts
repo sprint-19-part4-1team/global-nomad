@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import useEscape from '@/shared/hooks/useEscape';
 
 /**
  * ## useOverlayEscape
@@ -23,30 +23,13 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  * ```
  */
 const useOverlayEscape = (enabled: boolean) => {
-  useEffect(() => {
-    if (!enabled) {
+  useEscape(() => {
+    const overlays = overlayStore.getSnapshot();
+    if (overlays.length === 0) {
       return;
     }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') {
-        return;
-      }
-
-      const overlays = overlayStore.getSnapshot();
-      if (overlays.length === 0) {
-        return;
-      }
-
-      overlayStore.pop();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [enabled]);
+    overlayStore.pop();
+  }, enabled);
 };
 
 export default useOverlayEscape;

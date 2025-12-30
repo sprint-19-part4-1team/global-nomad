@@ -2,6 +2,7 @@
 
 import {
   ChangeEventHandler,
+  FocusEventHandler,
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
   MouseEventHandler,
@@ -41,12 +42,14 @@ import { formatValue } from '@/shared/utils/formatValue';
  * @property {string | number} value - Input의 현재 값 (제어 컴포넌트로 동작)
  * @property {ChangeEventHandler<HTMLInputElement>} [onChange] - 값 변경 시 호출되는 이벤트 핸들러
  *   - `type='number'`인 경우: 콤마가 제거된 순수 숫자 문자열이 전달됨
+ * @property {FocusEventHandler<HTMLInputElement>} [onBlur] - Input에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
+ *   - 유효성 검증을 수행하는 용도로 주로 사용
  * @property {string} [placeholder] - Input의 placeholder 텍스트 (입력 전 표시되는 안내 문구)
  * @property {MouseEventHandler<HTMLElement>} [onClick] - Input 컨테이너 클릭 시 호출되는 이벤트 핸들러
  *   - 주소 검색 모달 열기 등의 용도로 사용
  * @property {string} [errorMessage] - 유효성 검증 실패 시 표시될 에러 메시지
  *   - 값이 존재하면 Input 하단에 빨간색 텍스트로 표시
- *   - focus가 해제된 상태에서 Input 테두리가 빨간색으로 변경됨
+ *   - Input 테두리가 빨간색으로 변경됨
  */
 interface InputProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -67,6 +70,7 @@ interface InputProps extends Omit<
   disabled?: boolean;
   value: string | number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   placeholder?: string;
   onClick?: MouseEventHandler<HTMLElement>;
   errorMessage?: string;
@@ -97,7 +101,7 @@ interface InputProps extends Omit<
  *    - `onClick` 핸들러와 함께 사용하여 주소 검색 기능을 구현할 수 있습니다.
  *
  * 4. 에러 상태 자동 처리
- *    - `errorMessage`가 존재하고 focus가 해제된 상태일 때 빨간색 테두리로 변경됩니다.
+ *    - `errorMessage`가 존재할 때 빨간색 테두리로 변경됩니다.
  *    - 에러 메시지는 Input 하단에 빨간색 텍스트로 표시됩니다.
  *
  * 5. **접근성(Accessibility) 지원**
@@ -117,9 +121,13 @@ interface InputProps extends Omit<
  *   type='email'
  *   autoComplete='email'
  *   value={email}
- *   onChange={(e) => setEmail(e.target.value)}
+ *   onChange={(e) => {
+ *     setEmail(e.target.value);
+ *     setEmailError("");
+ *   }}
+ *   onBlur={(e) => validateEmail(e.target.value)}
  *   placeholder='이메일을 입력해주세요.'
- *   errorMessage='올바른 이메일 형식이 아닙니다.'
+ *   errorMessage={emailError}
  * />
  *
  * @example
@@ -148,7 +156,7 @@ interface InputProps extends Omit<
  * />
  *
  * @example
- * // 주소 입력 예시 (검색 아이콘 자동 표시)
+ * // 주소 입력 예시 (검색 아이콘 자동 표시, 주소 검색 모달과 연동)
  * <Input
  *   variant='form'
  *   label='주소'
@@ -186,6 +194,7 @@ export default function Input({
   disabled,
   value,
   onChange,
+  onBlur,
   placeholder,
   onClick,
   errorMessage,
@@ -206,8 +215,7 @@ export default function Input({
    *   (HTML `input[type=number]`는 콤마를 지원하지 않고 숫자만 입력 가능)
    * - 그 외 타입: props로 받은 원본 type 그대로 반환
    *
-   * @returns {HTMLInputTypeAttribute | 'text' | 'password'} 실제 input 요소에 적용될 type
-   *
+   * @returns {string} 실제 input 요소에 적용될 type ('text', 'password', 'email' 등)
    */
   const getInputType = () => {
     if (type === 'password') {
@@ -237,7 +245,6 @@ export default function Input({
    *
    * @param {React.ChangeEvent<HTMLInputElement>} e - 변경 이벤트 객체
    * @returns {void}
-   *
    */
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     // number 타입이 아니면 props의 onChange를 그대로 전달하고 종료
@@ -285,7 +292,7 @@ export default function Input({
         onClick={onClick}
         className={cn(
           'input-box',
-          // 에러 메시지가 있고 포커스가 해제된 상태일 때 빨간색 테두리 표시
+          // 에러 메시지가 있을 때 빨간색 테두리 표시
           errorMessage ? 'border-input-error' : 'border-input-default',
           // 비활성화 상태일 때 회색 배경 표시
           disabled && 'input-disabled'
@@ -298,6 +305,7 @@ export default function Input({
           disabled={disabled}
           value={displayValue}
           onChange={handleChange}
+          onBlur={onBlur}
           placeholder={placeholder}
           className='input-base'
           {...props}

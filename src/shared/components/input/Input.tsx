@@ -9,7 +9,6 @@ import {
 } from 'react';
 import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
-import useFocus from '@/shared/hooks/useFocus';
 import usePasswordVisibility from '@/shared/hooks/usePasswordVisibility';
 import { cn } from '@/shared/utils/cn';
 import { formatValue } from '@/shared/utils/formatValue';
@@ -195,9 +194,6 @@ export default function Input({
   // 접근성을 위한 고유 ID 생성
   const inputId = useId();
 
-  // Input의 focus 상태 관리 (에러 테두리 표시 제어에 사용)
-  const { isFocus, onFocus, onBlur } = useFocus();
-
   // 비밀번호 표시/숨기기 상태 및 토글 함수
   const { isPasswordVisible, handlePasswordVisibility } = usePasswordVisibility();
 
@@ -290,7 +286,7 @@ export default function Input({
         className={cn(
           'input-box',
           // 에러 메시지가 있고 포커스가 해제된 상태일 때 빨간색 테두리 표시
-          errorMessage && isFocus === false ? 'border-input-error' : 'border-input-default',
+          errorMessage ? 'border-input-error' : 'border-input-default',
           // 비활성화 상태일 때 회색 배경 표시
           disabled && 'input-disabled'
         )}>
@@ -302,8 +298,6 @@ export default function Input({
           disabled={disabled}
           value={displayValue}
           onChange={handleChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
           placeholder={placeholder}
           className='input-base'
           {...props}
@@ -315,7 +309,7 @@ export default function Input({
             type='button'
             aria-label={passwordLabelText}
             onClick={handlePasswordVisibility}
-            className='input-icon'>
+            className='input-icon cursor-pointer'>
             {isPasswordVisible ? (
               <Icons.Eye aria-hidden='true' />
             ) : (

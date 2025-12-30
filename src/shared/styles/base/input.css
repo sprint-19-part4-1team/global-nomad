@@ -3,12 +3,12 @@
 }
 
 @utility input-box {
-  @apply flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16;
+  @apply flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16 focus-within:border-primary-500;
   transition: color 0.15s, background-color 0.15s, border-color 0.15s;
 }
 
 @utility border-input-default {
-  @apply border-gray-100 focus-within:border-primary-500;
+  @apply border-gray-100;
 }
 
 @utility border-input-error {
@@ -24,7 +24,7 @@
 }
 
 @utility input-icon {
-  @apply h-24 w-24 shrink-0 cursor-pointer text-gray-400;
+  @apply h-24 w-24 shrink-0 text-gray-400;
 }
 
 @utility input-error-message {

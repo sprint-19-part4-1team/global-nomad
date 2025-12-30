@@ -81,9 +81,9 @@ const useQueryParamState = <T = string>(
       const url = query ? `${pathname}?${query}` : pathname;
 
       if (replace) {
-        router.replace(url, { scroll: scroll });
+        router.replace(url, { scroll });
       } else {
-        router.push(url, { scroll: scroll });
+        router.push(url, { scroll });
       }
     },
     [key, pathname, replace, router, scroll, searchParams, serialize, removeParam]

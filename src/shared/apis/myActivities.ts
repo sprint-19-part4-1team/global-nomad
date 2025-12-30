@@ -1,44 +1,13 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
-import type { ActivityCategory } from '@/shared/constants';
+import type {
+  GetMyActivitiesParams,
+  GetMyActivityReservationDashboardParams,
+  GetMyActivityReservedSchedulesParams,
+  GetMyActivityReservationsParams,
+  UpdateMyActivityReservationBodyDto,
+  UpdateMyActivityBodyDto,
+} from '@/shared/types/myActivities.types';
 import { createQueryString } from '@/shared/utils/createQueryString';
-
-export interface GetMyActivitiesParams {
-  cursorId?: number;
-  size?: number;
-}
-export interface GetMyActivityReservationDashboardParams {
-  year: string;
-  month: string;
-}
-export interface GetMyActivityReservedSchedulesParams {
-  date: string;
-}
-export interface GetMyActivityReservationsParams {
-  cursorId?: number;
-  size?: number;
-  scheduleId: number;
-  status: 'declined' | 'pending' | 'confirmed';
-}
-export interface UpdateMyActivityReservationBodyDto {
-  status: 'declined' | 'confirmed';
-}
-export interface CreateScheduleBodyDto {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-export interface UpdateMyActivityBodyDto {
-  title?: string;
-  category?: ActivityCategory;
-  description?: string;
-  price?: number;
-  address?: string;
-  bannerImageUrl?: string;
-  subImageIdsToRemove?: number[];
-  subImageUrlsToAdd?: string[];
-  scheduleIdsToRemove?: number[];
-  schedulesToAdd?: CreateScheduleBodyDto[];
-}
 
 // 내 체험 리스트 조회
 export const getMyActivities = (params: GetMyActivitiesParams) => {

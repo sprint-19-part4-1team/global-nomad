@@ -1,9 +1,5 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
+import type { LoginRequest } from '@/shared/types/auth.types';
 
 // 로그인
 export const logIn = (data: LoginRequest) => {

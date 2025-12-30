@@ -1,10 +1,6 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
+import type { GetMyNotificationsParams } from '@/shared/types/myNotifications.types';
 import { createQueryString } from '@/shared/utils/createQueryString';
-
-export interface GetMyNotificationsParams {
-  cursorId?: number;
-  size?: number;
-}
 
 // 내 알림 리스트 조회
 export const getMyNotifications = (params: GetMyNotificationsParams) => {

@@ -1,18 +1,9 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
-
-export type OauthProvider = 'kakao';
-
-export interface UpsertOauthAppRequestBody {
-  appKey: string;
-  provider: OauthProvider;
-}
-export interface SignInWithOauthRequestBody {
-  redirectUri: string;
-  token: string;
-}
-export interface SignUpWithOauthRequestBody extends SignInWithOauthRequestBody {
-  nickname: string;
-}
+import type {
+  UpsertOauthAppRequestBody,
+  SignUpWithOauthRequestBody,
+  SignInWithOauthRequestBody,
+} from '@/shared/types/oauth.types';
 
 // 간편 로그인 App 등록/수정
 export const registerOauthApp = (data: UpsertOauthAppRequestBody) => {

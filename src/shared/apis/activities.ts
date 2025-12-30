@@ -1,42 +1,12 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
-import type { ActivityListMethod, ActivityCategory, ActivitySortOption } from '@/shared/constants';
+import type {
+  CreateActivityBodyDto,
+  CreateReservationBodyDto,
+  GetActivitiesParams,
+  GetActivityReviewsParams,
+  GetActivitySchedulesParams,
+} from '@/shared/types/activities.types';
 import { createQueryString } from '@/shared/utils/createQueryString';
-
-export interface GetActivitiesParams {
-  method: ActivityListMethod;
-  cursorId?: number;
-  category?: ActivityCategory;
-  keyword?: string;
-  sort?: ActivitySortOption;
-  page?: number;
-  size?: number;
-}
-export interface CreateActivityBodyDto {
-  title: string;
-  category: ActivityCategory;
-  description: string;
-  price: number;
-  address: string;
-  schedules?: {
-    date: string;
-    startTime: string;
-    endTime: string;
-  }[];
-  bannerImageUrl: string;
-  subImageUrls?: string[];
-}
-export interface GetActivitySchedulesParams {
-  year: string;
-  month: string;
-}
-export interface GetActivityReviewsParams {
-  page?: number;
-  size?: number;
-}
-export interface CreateReservationBodyDto {
-  scheduleId: number;
-  headCount: number;
-}
 
 // 체험 리스트 조회
 export const getActivities = (params: GetActivitiesParams) => {

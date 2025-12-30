@@ -1,15 +1,5 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
-
-export interface CreateUserBodyDto {
-  email: string;
-  nickname: string;
-  password: string;
-}
-export interface UpdateUserBodyDto {
-  nickname?: string;
-  profileImageUrl?: string | null;
-  newPassword?: string;
-}
+import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/auth.types';
 
 // 회원가입
 export const signUp = (data: CreateUserBodyDto) => {

@@ -15,7 +15,7 @@ export const getMyNotifications = (params: GetMyNotificationsParams) => {
     }
   });
 
-  return baseFetcher(`/my-notifications${searchParams.toString()}`, { method: 'GET' });
+  return baseFetcher(`/my-notifications?${searchParams.toString()}`, { method: 'GET' });
 };
 
 // 내 알림 삭제

@@ -3,7 +3,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
 import { AvatarContext } from '@/shared/components/avatar/context/avatarContext';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 import { cn } from '@/shared/utils/cn';
 
 const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative', {

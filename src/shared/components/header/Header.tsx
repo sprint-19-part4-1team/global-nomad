@@ -1,6 +1,6 @@
 import HeaderActions from '@/shared/components/header/HeaderAction';
 import Logo from '@/shared/components/logo/Logo';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 interface HeaderProps {
   user?: User;

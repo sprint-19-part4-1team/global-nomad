@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { AvatarFallback, AvatarImage } from '@/shared/components/avatar';
 import Avatar from '@/shared/components/avatar/Avatar';
-import { User } from '@/shared/types/user';
+import { User } from '@/shared/types/user.type';
 
 /**
  * Storybook에서 Avatar 컴포넌트를 제어하기 위한 Props 타입

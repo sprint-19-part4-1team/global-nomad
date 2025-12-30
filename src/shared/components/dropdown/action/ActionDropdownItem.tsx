@@ -1,12 +1,13 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { KeyboardEvent, ReactNode } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import {
   dropdownItemBase,
   dropdownItemHoverBase,
   dropdownItemShadowStyle,
 } from '@/shared/components/dropdown/styles/dropdownItem';
+import { moveFocus, moveToEdge } from '@/shared/components/dropdown/utils/focusNavigation';
 import { cn } from '@/shared/utils/cn';
 
 interface ActionDropdownItemProps {
@@ -40,9 +41,50 @@ export default function ActionDropdownItem({
 }: ActionDropdownItemProps) {
   const { setIsOpen } = useDropdownBaseContext();
 
-  const handleClickMenu = () => {
+  const executeAction = () => {
     setIsOpen(false);
     onClick();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const current = e.currentTarget;
+    const key = e.key;
+
+    if (
+      key === 'ArrowDown'
+      || key === 'ArrowUp'
+      || key === 'Home'
+      || key === 'End'
+      || key === 'Enter'
+      || key === ' '
+    ) {
+      e.preventDefault();
+    } else {
+      return;
+    }
+
+    switch (key) {
+      case 'ArrowDown':
+        moveFocus(current, 'next');
+        break;
+
+      case 'ArrowUp':
+        moveFocus(current, 'prev');
+        break;
+
+      case 'Home':
+        moveToEdge(current, 'first');
+        break;
+
+      case 'End':
+        moveToEdge(current, 'last');
+        break;
+
+      case 'Enter':
+      case ' ':
+        executeAction();
+        break;
+    }
   };
 
   return (
@@ -50,7 +92,8 @@ export default function ActionDropdownItem({
       role='menuitem'
       type='button'
       className={cn(dropdownItemBase, dropdownItemHoverBase, dropdownItemShadowStyle, className)}
-      onClick={handleClickMenu}>
+      onKeyDown={handleKeyDown}
+      onClick={executeAction}>
       {children}
     </button>
   );

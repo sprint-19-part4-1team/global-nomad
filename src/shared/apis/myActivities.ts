@@ -108,7 +108,7 @@ export const getMyActivityReservations = (
 };
 
 // 내 체험 예약 상태(승인, 거절) 업데이트
-export const updateMyActivitiesState = (
+export const updateMyActivityReservationStatus = (
   activityId: number,
   reservationId: number,
   data: UpdateMyActivityReservationBodyDto

@@ -7,7 +7,7 @@ import { getPaginationRange } from '@/shared/utils/getPaginationRange';
 
 interface PaginationProps {
   totalCount: number;
-  size: number;
+  itemsPerPage: number;
 }
 
 // 버튼 스타일 모음
@@ -32,10 +32,10 @@ const PAGINATION_STYLES = {
  * - 실제 UI는 `getPaginationRange`에서 보정된 `checkedCurrentPage`를 기준으로 렌더링됩니다.
  *
  * @param totalCount - 전체 아이템 개수
- * @param size - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
+ * @param itemsPerPage - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
  */
-export default function Pagination({ totalCount, size }: PaginationProps) {
-  const [currentPageFromUrl, setCurrentPage] = useQueryParamState<number>('page', {
+export default function Pagination({ totalCount, itemsPerPage }: PaginationProps) {
+  const [currentPage, setCurrentPage] = useQueryParamState<number>('page', {
     defaultValue: 1,
     parse: (v) => {
       const n = Number(v);
@@ -49,9 +49,9 @@ export default function Pagination({ totalCount, size }: PaginationProps) {
     scroll: false,
   });
 
-  const totalPage = Math.max(1, Math.ceil(totalCount / size));
+  const totalPage = Math.max(1, Math.ceil(totalCount / itemsPerPage));
   const { checkedCurrentPage, visiblePages, canGoPrev, canGoNext } = getPaginationRange({
-    currentPage: currentPageFromUrl,
+    currentPage: currentPage,
     totalPage,
   });
 

@@ -21,6 +21,7 @@ import Textarea from '@/shared/components/textarea/Textarea';
  * - `placeholder`: 텍스트 영역의 placeholder 텍스트
  * - `value`: 텍스트 영역의 현재 값
  * - `onChange`: 텍스트 변경 이벤트 핸들러
+ * - `onBlur`: 텍스트 영역에서 포커스가 벗어날 때 실행되는 이벤트 핸들러
  * - `maxLength`: 텍스트 영역에 입력 가능한 최대 글자 수
  * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항)
  */
@@ -30,9 +31,29 @@ const meta: Meta<typeof Textarea> = {
   component: Textarea,
   render: (args) => {
     const [value, setValue] = useState('');
+    const [textError, setTextError] = useState('');
+
+    const validateText = (value: string) => {
+      if (value.trim() === '') {
+        setTextError('설명을 입력해 주세요.');
+      } else {
+        setTextError('');
+      }
+    };
+
     return (
       <div className='w-400'>
-        <Textarea {...args} value={value} onChange={(e) => setValue(e.target.value)} />
+        {args.errorMessage ? (
+          <Textarea
+            {...args}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onBlur={(e) => validateText(e.target.value)}
+            errorMessage={textError}
+          />
+        ) : (
+          <Textarea {...args} value={value} onChange={(e) => setValue(e.target.value)} />
+        )}
       </div>
     );
   },
@@ -61,6 +82,11 @@ const meta: Meta<typeof Textarea> = {
     onChange: {
       action: 'changed',
       description: '텍스트 변경 이벤트 핸들러',
+    },
+    onBlur: {
+      action: 'blurred',
+      description:
+        '텍스트 영역에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (주로 유효성 검사나 입력 완료 시점의 처리에 활용)',
     },
     maxLength: {
       control: 'number',

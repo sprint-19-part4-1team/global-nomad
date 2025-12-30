@@ -34,6 +34,8 @@ import Input from '@/shared/components/input/Input';
  * - `value`: Input의 현재 값 (string 또는 number)
  * - `onChange`: 값 변경 이벤트 핸들러 (선택사항)
  *   - number 타입의 경우 콤마가 제거된 순수 숫자 문자열 전달
+ * - `onBlur`: Input에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (선택사항)
+ *   - 주로 유효성 검사를 수행하거나 입력 완료 시점의 처리에 활용
  * - `placeholder`: Input의 placeholder 텍스트 (선택사항)
  * - `onClick`: Input 컨테이너(div) 클릭 이벤트 핸들러 (선택사항, 주소 검색 팝업 등에 활용)
  * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항, 존재하면 빨간색 테두리와 함께 하단에 표시)
@@ -107,6 +109,11 @@ const meta: Meta<typeof Input> = {
     onChange: {
       action: 'changed',
       description: '값 변경 이벤트 핸들러 (number 타입의 경우 콤마가 제거된 순수 숫자 문자열 전달)',
+    },
+    onBlur: {
+      action: 'blurred',
+      description:
+        'Input에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (주로 유효성 검사나 입력 완료 시점의 처리에 활용)',
     },
     placeholder: {
       control: 'text',

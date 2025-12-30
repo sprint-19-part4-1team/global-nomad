@@ -100,7 +100,7 @@ export default function Textarea({
       </Label>
       <div
         className={cn(
-          'field-box flex-col gap-8 border p-16',
+          'field-box flex-col gap-8 p-16',
           textareaBox,
           isOverMax || errorMessage ? 'border-field-error' : 'border-field-default'
         )}>

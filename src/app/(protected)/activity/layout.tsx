@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { layoutContainer } from '@/shared/constants/';
 
 interface ActivityLayoutProps {
   children: ReactNode;
@@ -6,7 +7,12 @@ interface ActivityLayoutProps {
 
 export default function ActivityLayout({ children }: ActivityLayoutProps) {
   return (
-    <main className='mx-auto w-full max-w-700 px-24 pt-80 sm:px-32 sm:pt-120 lg:px-0 lg:pt-128'>
+    <main
+      className={layoutContainer({
+        maxWidth: 700,
+        paddingX: 'customSm32',
+        paddingTop: 'lg',
+      })}>
       {children}
     </main>
   );

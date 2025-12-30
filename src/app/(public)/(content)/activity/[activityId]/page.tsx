@@ -1,7 +1,14 @@
+import { layoutContainer } from '@/shared/constants/';
+
 export default function ActivityDetail() {
   return (
-    <div className='mx-auto w-full max-w-1200 px-24 pt-80 sm:px-30 sm:pt-120 md:px-40 lg:pt-128'>
+    <main
+      className={layoutContainer({
+        maxWidth: 1200,
+        paddingX: 'wide',
+        paddingTop: 'lg',
+      })}>
       체험 상세 페이지
-    </div>
+    </main>
   );
 }

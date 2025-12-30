@@ -65,5 +65,5 @@ export const baseFetcher = async <T>(endpoint: string, options: RequestInit = {}
     throw new Error(errorData.message || 'API 요청 중 오류가 발생했습니다.');
   }
 
-  return response.json();
+  return response.status === 204 ? (undefined as T) : response.json();
 };

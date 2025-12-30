@@ -24,7 +24,7 @@ interface TextareaProps {
   placeholder: string;
   value: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
-  onBlur: FocusEventHandler<HTMLTextAreaElement>;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement>;
   maxLength: number;
   errorMessage?: string;
 }

@@ -262,8 +262,29 @@ export const DisabledEmail: Story = {
 const DisplayErrorComponent = () => {
   // 닉네임 Input의 상태
   const [nameValue, setNameValue] = useState('');
+  const [nameError, setNameError] = useState('');
+
   // 제목 Input의 상태
   const [titleValue, setTitleValue] = useState('');
+  const [titleError, setTitleError] = useState('');
+
+  // 닉네임 유효성 검증 함수
+  const validateNickname = (value: string) => {
+    if (value.trim() === '') {
+      setNameError('닉네임을 입력해주세요.');
+    } else {
+      setNameError('');
+    }
+  };
+
+  // 제목 유효성 검증 함수
+  const validateTitle = (value: string) => {
+    if (value.trim() === '') {
+      setTitleError('제목을 입력해주세요.');
+    } else {
+      setTitleError('');
+    }
+  };
 
   return (
     <div className='flex gap-40'>
@@ -277,9 +298,13 @@ const DisplayErrorComponent = () => {
           type='text'
           autoComplete='nickname'
           value={nameValue}
-          onChange={(e) => setNameValue(e.target.value)}
+          onChange={(e) => {
+            setNameValue(e.target.value);
+            setNameError(''); // 입력 중에는 에러 초기화
+          }}
+          onBlur={(e) => validateNickname(e.target.value)} // 포커스 벗어날 때 검증
           placeholder='닉네임을 입력해주세요.'
-          errorMessage='닉네임 형식을 확인해 주세요.'
+          errorMessage={nameError}
         />
       </div>
       <div className='flex w-400 flex-col gap-10 rounded-10 border p-10'>
@@ -291,9 +316,13 @@ const DisplayErrorComponent = () => {
           name='title'
           type='text'
           value={titleValue}
-          onChange={(e) => setTitleValue(e.target.value)}
+          onChange={(e) => {
+            setTitleValue(e.target.value);
+            setTitleError(''); // 입력 중에는 에러 초기화
+          }}
+          onBlur={(e) => validateTitle(e.target.value)} // 포커스 벗어날 때 검증
           placeholder='제목을 입력해주세요.'
-          errorMessage='제목을 입력해주세요.'
+          errorMessage={titleError}
         />
       </div>
     </div>

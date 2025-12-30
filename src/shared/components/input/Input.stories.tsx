@@ -146,7 +146,7 @@ export const Password: Story = {
     name: 'password',
     type: 'password',
     autoComplete: 'current-password',
-    placeholder: '비밀번호을 입력해 주세요.',
+    placeholder: '비밀번호를 입력해 주세요.',
   },
 };
 
@@ -225,58 +225,61 @@ export const DisabledEmail: Story = {
 };
 
 /**
- * 에러 메시지 표시
+ * 에러 메시지 표시 컴포넌트
  *
- * 두 가지 variant(authForm, form)에서 에러 메시지가 표시되는 예시입니다. <br/>
- * 각 Input은 독립적인 상태를 가지며, errorMessage prop이 존재할 때:
- * - Input 테두리 색상이 빨간색으로 변경됩니다
- * - Input 하단에 에러 메시지가 빨간색으로 표시됩니다
- * - focus 상태가 아닐 때만 에러 테두리가 표시됩니다 (입력 중에는 일반 테두리)
+ * authForm과 form 두 가지 variant에서 에러 메시지가 표시되는 방식을 비교하는 예시 컴포넌트입니다. </br>
+ * errorMessage prop이 전달되면 Input에 빨간색 테두리가 적용되고 하단에 에러 메시지가 표시됩니다.
+ */
+const DisplayErrorComponent = () => {
+  // 닉네임 Input의 상태
+  const [nameValue, setNameValue] = useState('');
+  // 제목 Input의 상태
+  const [titleValue, setTitleValue] = useState('');
+
+  return (
+    <div className='flex gap-40'>
+      <div className='flex w-400 flex-col gap-10 rounded-10 border p-10'>
+        <div>authForm의 에러 표시 예시</div>
+        <hr />
+        <Input
+          variant='authForm'
+          label='닉네임'
+          name='nickname'
+          type='text'
+          autoComplete='nickname'
+          value={nameValue}
+          onChange={(e) => setNameValue(e.target.value)}
+          placeholder='닉네임을 입력해주세요.'
+          errorMessage='닉네임 형식을 확인해 주세요.'
+        />
+      </div>
+      <div className='flex w-400 flex-col gap-10 rounded-10 border p-10'>
+        <div>form의 에러 표시 예시</div>
+        <hr />
+        <Input
+          variant='form'
+          label='제목'
+          name='title'
+          type='text'
+          value={titleValue}
+          onChange={(e) => setTitleValue(e.target.value)}
+          placeholder='제목을 입력해주세요.'
+          errorMessage='제목을 입력해주세요.'
+        />
+      </div>
+    </div>
+  );
+};
+
+/**
+ * 에러 메시지 표시 예시
+ *
+ * Input 컴포넌트의 에러 표시 기능을 보여주는 스토리입니다. <br/>
+ * errorMessage prop을 전달하면 Input에 빨간색 테두리가 적용되고, 하단에 에러 메시지가 표시됩니다. <br/>
+ * authForm과 form 두 가지 variant에서 에러가 어떻게 표시되는지 나란히 비교할 수 있습니다. <br/>
+ *
+ * 유효성 검사 실패 시 사용자에게 명확한 피드백을 제공하는 데 활용됩니다.
  */
 export const DisplayError: Story = {
-  render: () => {
-    // 독립적인 상태 관리를 위한 컴포넌트
-    const Component = () => {
-      // 닉네임 Input의 상태
-      const [nameValue, setNameValue] = useState('');
-      // 제목 Input의 상태
-      const [titleValue, setTitleValue] = useState('');
-
-      return (
-        <div className='flex gap-40'>
-          <div className='flex w-400 flex-col gap-10 rounded-10 border p-10'>
-            <div>authForm의 에러 표시 예시</div>
-            <hr />
-            <Input
-              variant='authForm'
-              label='닉네임 '
-              name='nickname'
-              type='text'
-              autoComplete='nickname'
-              value={nameValue}
-              onChange={(e) => setNameValue(e.target.value)}
-              placeholder='닉네임을 입력해주세요.'
-              errorMessage='닉네임 형식을 확인해 주세요.'
-            />
-          </div>
-          <div className='flex w-400 flex-col gap-10 rounded-10 border p-10'>
-            <div>form의 에러 표시 예시</div>
-            <hr />
-            <Input
-              variant='form'
-              label='제목'
-              name='title'
-              type='text'
-              value={titleValue}
-              onChange={(e) => setTitleValue(e.target.value)}
-              placeholder='제목을 입력해주세요.'
-              errorMessage='제목을 입력해주세요.'
-            />
-          </div>
-        </div>
-      );
-    };
-
-    return <Component />;
-  },
+  render: () => <DisplayErrorComponent />,
 };

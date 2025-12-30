@@ -1,3 +1,8 @@
+type ApiError = Error & {
+  status: number;
+  code?: string;
+};
+
 let refreshPromise: Promise<void> | null = null;
 
 /**
@@ -61,9 +66,12 @@ export const baseFetcher = async <T>(endpoint: string, options: RequestInit = {}
   }
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'API 요청 중 오류가 발생했습니다.');
-  }
+    const errorData: { message?: string; code?: string } = await response.json().catch(() => ({}));
+    const error = new Error(errorData.message || 'API 요청 중 오류가 발생했습니다.') as ApiError;
+    error.status = response.status;
+    error.code = errorData.code;
 
+    throw error;
+  }
   return response.status === 204 ? (undefined as T) : response.json();
 };

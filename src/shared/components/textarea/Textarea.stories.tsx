@@ -21,9 +21,9 @@ import Textarea from '@/shared/components/textarea/Textarea';
  * - `placeholder`: 텍스트 영역의 placeholder 텍스트
  * - `value`: 텍스트 영역의 현재 값
  * - `onChange`: 텍스트 변경 이벤트 핸들러
- * - `onBlur`: 텍스트 영역에서 포커스가 벗어날 때 실행되는 이벤트 핸들러
+ * - `onBlur`: 텍스트 영역에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (선택)
  * - `maxLength`: 텍스트 영역에 입력 가능한 최대 글자 수
- * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항)
+ * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택)
  */
 
 const meta: Meta<typeof Textarea> = {

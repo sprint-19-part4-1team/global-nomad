@@ -1,20 +1,16 @@
 import { ReactNode } from 'react';
-import Footer from '@/shared/components/footer/Footer';
 import Header from '@/shared/components/header/Header';
-import HeaderShell from '@/shared/components/header/HeaderShell';
+import BaseLayout from '@/shared/layout/BaseLayout';
 
 interface ContentLayoutProps {
   children: ReactNode;
 }
 
 export default function ContentLayout({ children }: ContentLayoutProps) {
+  // TODO: 로그인한 유저라면 header에 유저 정보 전달 아니라면 전달 X
   return (
     <>
-      <HeaderShell>
-        <Header />
-      </HeaderShell>
-      {children}
-      <Footer />
+      <BaseLayout header={<Header />}>{children}</BaseLayout>
     </>
   );
 }

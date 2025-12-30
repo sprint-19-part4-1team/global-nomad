@@ -4,6 +4,10 @@ type ApiError = Error & {
 };
 
 let refreshPromise: Promise<void> | null = null;
+const REQUEST_TIMEOUT_MS = 10_000;
+const isAbortError = (error: unknown): boolean => {
+  return error instanceof DOMException && error.name === 'AbortError';
+};
 
 /**
  * ### baseFetcher
@@ -25,18 +29,46 @@ let refreshPromise: Promise<void> | null = null;
  */
 export const baseFetcher = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+  if (!BASE_URL) {
+    throw new Error('NEXT_PUBLIC_API_URL 환경 변수가 설정되지 않았습니다.');
+  }
 
   const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
 
   const request = async (): Promise<Response> => {
-    return fetch(`${BASE_URL}${endpoint}`, {
-      credentials: 'include',
-      ...options,
-      headers: {
-        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-        ...options.headers,
-      },
-    });
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, REQUEST_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(`${BASE_URL}${endpoint}`, {
+        ...options,
+        credentials: 'include',
+        signal: controller.signal,
+        headers: (() => {
+          const headers = new Headers(options.headers);
+
+          if (isFormData) {
+            headers.delete('Content-Type');
+          } else if (!headers.has('Content-Type')) {
+            headers.set('Content-Type', 'application/json');
+          }
+
+          return headers;
+        })(),
+      });
+
+      return response;
+    } catch (error) {
+      if (isAbortError(error)) {
+        throw new Error('요청 시간이 초과되었습니다.');
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
   };
 
   let response = await request();

@@ -159,7 +159,10 @@ const WithErrorComponent = () => {
         name='content'
         placeholder='체험에 대한 설명을 입력해 주세요.'
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          setTextError('');
+        }}
         onBlur={(e) => validateText(e.target.value)}
         maxLength={1000}
         errorMessage={textError}

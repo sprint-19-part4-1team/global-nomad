@@ -1,4 +1,5 @@
 import { baseFetcher } from '@/shared/apis/baseFetcher';
+import { createQueryString } from '@/shared/utils/createQueryString';
 
 export interface GetMyReservationsParams {
   cursorId?: number;
@@ -15,15 +16,8 @@ export interface CreateReviewBodyDto {
 
 // 내 예약 리스트 조회
 export const getMyReservations = (params: GetMyReservationsParams) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      searchParams.append(key, String(value));
-    }
-  });
-
-  return baseFetcher(`/my-reservations?${searchParams.toString()}`, { method: 'GET' });
+  const queryString = createQueryString(params);
+  return baseFetcher(`/my-reservations${queryString}`, { method: 'GET' });
 };
 
 // 내 예약 수정(취소)

@@ -94,17 +94,15 @@ export default function Textarea({
   const isOverMax = textCount > maxLength;
 
   return (
-    <div className={cn('flex w-full flex-col', container)}>
+    <div className={cn('field-container', container)}>
       <Label htmlFor={textareaId} variant={variant}>
         {label}
       </Label>
       <div
         className={cn(
-          'transition-color flex w-full flex-col gap-8 rounded-12 border p-16 body-14 sm:body-16',
+          'field-box flex-col gap-8 border p-16',
           textareaBox,
-          isOverMax || errorMessage
-            ? 'border-red-500'
-            : 'border-gray-100 focus-within:border-primary-500'
+          isOverMax || errorMessage ? 'border-field-error' : 'border-field-default'
         )}>
         <textarea
           id={textareaId}
@@ -115,7 +113,7 @@ export default function Textarea({
           placeholder={placeholder}
           rows={5}
           maxLength={maxLength + 1}
-          className='placeholder:gray-400 scrollbar-custom w-full resize-none focus:ring-0 focus:outline-none'
+          className='scrollbar-custom w-full resize-none field-placeholder focus:ring-0 focus:outline-none'
         />
         <div className='w-full text-right body-14 font-medium text-gray-400'>
           글자수:
@@ -129,9 +127,7 @@ export default function Textarea({
           /{maxLength}
         </div>
       </div>
-      {errorMessage && (
-        <p className='body-13 font-medium text-red-500 sm:body-14'>{errorMessage}</p>
-      )}
+      {errorMessage && <p className='field-error-message'>{errorMessage}</p>}
     </div>
   );
 }

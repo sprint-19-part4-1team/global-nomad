@@ -298,7 +298,7 @@ export default function Input({
         className={cn(
           'input-box',
           // 에러 메시지가 있을 때 빨간색 테두리 표시
-          errorMessage ? 'border-input-error' : 'border-input-default',
+          errorMessage ? 'border-field-error' : 'border-field-default',
           // 비활성화 상태일 때 회색 배경 표시
           disabled && 'input-disabled'
         )}>
@@ -339,7 +339,7 @@ export default function Input({
       </div>
 
       {/* 에러 메시지가 있을 경우 Input 하단에 빨간색 텍스트로 표시 */}
-      {errorMessage && <p className='input-error-message'>{errorMessage}</p>}
+      {errorMessage && <p className='field-error-message'>{errorMessage}</p>}
     </div>
   );
 }

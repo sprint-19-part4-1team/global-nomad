@@ -1,18 +1,9 @@
 @utility input-container {
-  @apply flex w-full flex-col gap-6 sm:gap-8;
+  @apply field-container gap-6 sm:gap-8;
 }
 
 @utility input-box {
-  @apply flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16 focus-within:border-primary-500;
-  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
-}
-
-@utility border-input-default {
-  @apply border-gray-100;
-}
-
-@utility border-input-error {
-  @apply border-red-500 focus-within:border-red-500;
+  @apply field-box gap-16 px-16 py-12 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15;
 }
 
 @utility input-disabled {
@@ -20,13 +11,9 @@
 }
 
 @utility input-base {
-  @apply min-w-0 flex-1 bg-transparent outline-none placeholder:text-gray-400;
+  @apply min-w-0 flex-1 bg-transparent field-placeholder outline-none;
 }
 
 @utility input-icon {
   @apply h-24 w-24 shrink-0 text-gray-400;
-}
-
-@utility input-error-message {
-  @apply body-13 font-medium text-red-500 sm:body-14;
 }

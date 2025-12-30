@@ -23,7 +23,9 @@ import { formatValue } from '@/shared/utils/formatValue';
  * @property {('authForm' | 'form')} variant - Input의 스타일 변형
  *   - `authForm`: 로그인/회원가입 등 인증 관련 폼에서 사용
  *   - `form`: 체험 등록/수정 등 일반 폼에서 사용
- * @property {string} label - Input 위에 표시될 label 텍스트 (필수 입력 필드)
+ * @property {string} [divClassName] - Input 컨테이너 div에 적용될 추가 CSS 클래스
+ * @property {string} label - Input 위에 표시될 label 텍스트 (필수)
+ * @property {string} [inputClassName] - Input 요소에 적용될 추가 CSS 클래스
  * @property {string} name - form 제출 시 사용될 Input의 name 속성
  *   - `address` 포함 시: 검색 아이콘이 자동으로 표시됨
  * @property {HTMLInputTypeAttribute} type - Input의 타입
@@ -56,7 +58,9 @@ interface InputProps extends Omit<
   'type' | 'value' | 'onChange'
 > {
   variant: 'authForm' | 'form';
+  divClassName?: string;
   label: string;
+  inputClassName?: string;
   name: string;
   type: HTMLInputTypeAttribute;
   autoComplete?:
@@ -94,7 +98,7 @@ interface InputProps extends Omit<
  *      - 화면에는 천단위 콤마가 적용된 형태로 표시됩니다 (예: 1,000,000).
  *      - 내부적으로 `text` 타입으로 변환되어 처리됩니다 (HTML `input[type=number]`는 콤마를 지원하지 않음).
  *      - 부모 컴포넌트의 `onChange`에는 콤마가 제거된 순수 숫자 문자열이 전달됩니다 (예: "1000000").
- *      - 숫자가 아닌 문자 입력은 자동으로 무시됩니다 (보안 강화).
+ *      - 숫자가 아닌 문자 입력은 자동으로 무시됩니다.
  *
  * 3. 주소 검색 아이콘 자동 표시
  *    - `name` 또는 `autoComplete`에 `'address'`가 포함된 경우 검색 아이콘이 자동으로 표시됩니다.
@@ -187,7 +191,9 @@ interface InputProps extends Omit<
  */
 export default function Input({
   variant,
+  divClassName,
   label,
+  inputClassName,
   name,
   type,
   autoComplete = 'off',
@@ -235,7 +241,6 @@ export default function Input({
    * 1. 입력값에서 모든 콤마를 제거합니다.
    * 2. 빈 문자열이거나 순수 숫자만 포함된 경우에만 처리를 진행합니다.
    *    - 유효하지 않은 입력(문자 포함, 특수문자 등)은 무시됩니다.
-   *    - 이는 붙여넣기 공격이나 잘못된 입력을 방지합니다.
    * 3. 새로운 합성 이벤트(synthetic event)를 생성하여 콤마가 제거된 순수 숫자 문자열을 전달합니다.
    *    - 예: 화면에는 "1,000,000"으로 표시되지만, onChange에는 "1000000"이 전달됩니다.
    * 4. 부모 컴포넌트의 `onChange` 핸들러를 호출합니다.
@@ -247,7 +252,7 @@ export default function Input({
    * @returns {void}
    */
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    // number 타입이 아니면 props의 onChange를 그대로 전달하고 종료
+    // number 타입이 아니면 props의 onChange를 그대로 전달
     if (type !== 'number') {
       onChange?.(e);
       return;
@@ -256,7 +261,7 @@ export default function Input({
     // 입력값에서 모든 콤마 제거 (천단위 구분 기호 제거)
     const value = e.target.value.replaceAll(',', '');
 
-    // 빈 값이거나 숫자만 있는 경우만 처리 (보안: 문자/특수문자 입력 차단)
+    // 빈 값이거나 숫자만 있는 경우만 처리 (문자/특수문자 입력 차단)
     if (value === '' || /^\d+$/.test(value)) {
       // 새로운 합성 이벤트 객체 생성 (콤마가 제거된 순수 숫자 문자열로)
       const syntheticEvent = {
@@ -279,11 +284,11 @@ export default function Input({
   // - 그 외 타입: props로 받은 원본 값 그대로 사용
   const displayValue = type === 'number' ? formatValue(value) || '' : value;
 
-  // 비밀번호 토글 버튼의 접근성 레이블 (스크린 리더가 읽음)
+  // 비밀번호 토글 버튼의 접근성 레이블 (스크린 리더용)
   const passwordLabelText = isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기';
 
   return (
-    <div className='input-container'>
+    <div className={cn('input-container', divClassName)}>
       <Label htmlFor={inputId} variant={variant}>
         {label}
       </Label>
@@ -307,7 +312,7 @@ export default function Input({
           onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          className={cn('input-base', props.className)}
+          className={cn('input-base', inputClassName)}
           {...props}
         />
 

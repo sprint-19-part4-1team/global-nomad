@@ -307,7 +307,7 @@ export default function Input({
           onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          className='input-base'
+          className={cn('input-base', props.className)}
           {...props}
         />
 

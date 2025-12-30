@@ -135,17 +135,47 @@ export const Review: Story = {
 };
 
 /**
+ * 에러 메시지 표시 컴포넌트
+ *
+ * errorMessage prop이 전달되면 Textarea에 빨간색 테두리가 적용되고 하단에 에러 메시지가 표시됩니다.
+ */
+const WithErrorComponent = () => {
+  const [text, setText] = useState('');
+  const [textError, setTextError] = useState('');
+
+  const validateText = (value: string) => {
+    if (value.trim() === '') {
+      setTextError('설명을 입력해 주세요.');
+    } else {
+      setTextError('');
+    }
+  };
+
+  return (
+    <div className='w-400'>
+      <Textarea
+        variant='form'
+        label='설명'
+        name='content'
+        placeholder='체험에 대한 설명을 입력해 주세요.'
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onBlur={(e) => validateText(e.target.value)}
+        maxLength={1000}
+        errorMessage={textError}
+      />
+    </div>
+  );
+};
+
+/**
  * 에러 메시지 표시
  *
- * 테두리 색상이 빨간색으로 변경됩니다.
+ * Textarea 컴포넌트의 에러 표시 기능을 보여주는 스토리입니다. <br/>
+ * errorMessage prop을 전달하면 Textarea에 빨간색 테두리가 적용되고, 하단에 에러 메시지가 표시됩니다.
+ *
+ * 유효성 검사 실패 시 사용자에게 명확한 피드백을 제공하는 데 활용됩니다.
  */
 export const WithError: Story = {
-  args: {
-    variant: 'form',
-    label: '설명',
-    name: 'content',
-    placeholder: '체험에 대한 설명을 입력해 주세요.',
-    maxLength: 1000,
-    errorMessage: '설명을 입력해 주세요.',
-  },
+  render: () => <WithErrorComponent />,
 };

@@ -1,0 +1,32 @@
+@utility input-container {
+  @apply flex w-full flex-col gap-6 sm:gap-8;
+}
+
+@utility input-box {
+  @apply flex w-full gap-16 rounded-12 border px-16 py-12 body-14 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15 sm:body-16;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+@utility border-input-default {
+  @apply border-gray-100 focus-within:border-primary-500;
+}
+
+@utility border-input-error {
+  @apply border-red-500;
+}
+
+@utility input-disabled {
+  @apply bg-gray-25 text-gray-400;
+}
+
+@utility input-base {
+  @apply min-w-0 flex-1 bg-transparent outline-none placeholder:text-gray-400;
+}
+
+@utility input-icon {
+  @apply h-24 w-24 shrink-0 cursor-pointer text-gray-400;
+}
+
+@utility input-error-message {
+  @apply body-13 font-medium text-red-500 sm:body-14;
+}

@@ -18,10 +18,13 @@ import Input from '@/shared/components/input/Input';
  * - autoComplete 속성을 통한 브라우저 자동완성 제어
  * - label, placeholder를 통한 명확한 사용자 가이드 제공
  * - 접근성을 위한 고유 ID 자동 생성
+ * - divClassName, inputClassName을 통한 커스텀 스타일링 지원
  *
  * ### Props 설명
  * - `variant`: Input을 사용할 위치 ('authForm'|'form')
+ * - `divClassName`: Input 컨테이너 div에 적용할 추가 CSS 클래스 (선택사항)
  * - `label`: Input의 label 텍스트
+ * - `inputClassName`: Input 요소에 적용할 추가 CSS 클래스 (선택사항)
  * - `name`: form 제출 시 사용될 Input의 name (주소 관련은 'address' 포함 시 검색 아이콘 표시)
  * - `type`: Input의 타입 (text, email, password, number 등)
  *   - password: 표시/숨기기 토글 버튼 자동 추가
@@ -58,9 +61,17 @@ const meta: Meta<typeof Input> = {
       description:
         "Input를 사용할 위치 ('authForm': 로그인 / 회원가입 등 유저 관련 폼 | 'form': 체험 등록 / 수정 폼)",
     },
+    divClassName: {
+      control: 'text',
+      description: 'Input 컨테이너 div에 적용할 추가 CSS 클래스',
+    },
     label: {
       control: 'text',
       description: 'Input의 label 텍스트',
+    },
+    inputClassName: {
+      control: 'text',
+      description: 'Input 요소에 적용할 추가 CSS 클래스',
     },
     name: {
       control: 'text',
@@ -199,7 +210,7 @@ const FromAddressInputComponent = () => {
   const handleAddressClick = () => {
     setIsPopupOpen(true);
     // 실제로는 여기서 다음 우편번호 서비스 등을 호출
-    alert('popup open');
+    alert('주소 검색 팝업 열기');
   };
 
   return (

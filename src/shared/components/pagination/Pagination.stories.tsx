@@ -28,7 +28,10 @@ const meta: Meta<typeof Pagination> = {
       control: { type: 'number', min: 0 },
       description: '전체 아이템 개수',
     },
-    size: { control: { type: 'number', min: 1 }, description: '한 페이지에 띄울 아이템 개수' },
+    itemsPerPage: {
+      control: { type: 'number', min: 1 },
+      description: '한 페이지에 띄울 아이템 개수',
+    },
   },
 };
 export default meta;
@@ -37,7 +40,7 @@ type Story = StoryObj<typeof Pagination>;
 
 const baseArgs = {
   totalCount: 80,
-  size: 8,
+  itemsPerPage: 8,
 };
 
 export const FirstPage: Story = {
@@ -47,10 +50,10 @@ export const FirstPage: Story = {
       description: {
         story: '첫 페이지',
       },
-      nextjs: {
-        appDirectory: true,
-        navigation: { pathname: '/', query: { page: '1' } },
-      },
+    },
+    nextjs: {
+      appDirectory: true,
+      navigation: { pathname: '/', query: { page: '1' } },
     },
   },
 };
@@ -77,16 +80,16 @@ export const LastPage: Story = {
       description: {
         story: '맨 마지막 페이지에 도달한 경우',
       },
-      nextjs: {
-        appDirectory: true,
-        navigation: { pathname: '/', query: { page: '10' } },
-      },
+    },
+    nextjs: {
+      appDirectory: true,
+      navigation: { pathname: '/', query: { page: '10' } },
     },
   },
 };
 
 export const FewPages: Story = {
-  args: { totalCount: 20, size: 8 },
+  args: { totalCount: 20, itemsPerPage: 8 },
   parameters: {
     docs: {
       description: {
@@ -101,7 +104,7 @@ export const FewPages: Story = {
 };
 
 export const OnePage: Story = {
-  args: { totalCount: 5, size: 8 },
+  args: { totalCount: 5, itemsPerPage: 8 },
   parameters: {
     docs: {
       description: {

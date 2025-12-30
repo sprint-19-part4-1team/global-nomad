@@ -22,21 +22,23 @@ import Input from '@/shared/components/input/Input';
  *
  * ### Props 설명
  * - `variant`: Input을 사용할 위치 ('authForm'|'form')
- * - `divClassName`: Input 컨테이너 div에 적용할 추가 CSS 클래스 (선택사항)
+ * - `divClassName`: Input 컨테이너 div에 적용할 추가 CSS 클래스 (선택)
  * - `label`: Input의 label 텍스트
- * - `inputClassName`: Input 요소에 적용할 추가 CSS 클래스 (선택사항)
+ * - `inputClassName`: Input 요소에 적용할 추가 CSS 클래스 (선택)
  * - `name`: form 제출 시 사용될 Input의 name (주소 관련은 'address' 포함 시 검색 아이콘 표시)
  * - `type`: Input의 타입 (text, email, password, number 등)
  *   - password: 표시/숨기기 토글 버튼 자동 추가
  *   - number: 천단위 콤마 포맷팅 자동 적용, 내부적으로 text로 변환
- * - `autoComplete`: 브라우저 자동완성 동작 제어 ('address' 포함 시 검색 아이콘 표시) (선택사항, 기본은 'off')
- * - `disabled`: Input 비활성화 여부 (선택사항)
+ * - `autoComplete`: 브라우저 자동완성 동작 제어 ('address' 포함 시 검색 아이콘 표시) (선택, 기본은 'off')
+ * - `disabled`: Input 비활성화 여부 (선택)
  * - `value`: Input의 현재 값 (string 또는 number)
- * - `onChange`: 값 변경 이벤트 핸들러 (선택사항)
+ * - `onChange`: 값 변경 이벤트 핸들러 (선택)
  *   - number 타입의 경우 콤마가 제거된 순수 숫자 문자열 전달
- * - `placeholder`: Input의 placeholder 텍스트 (선택사항)
- * - `onClick`: Input 컨테이너(div) 클릭 이벤트 핸들러 (선택사항, 주소 검색 팝업 등에 활용)
- * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택사항, 존재하면 빨간색 테두리와 함께 하단에 표시)
+ * - `onBlur`: Input에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (선택)
+ *   - 주로 유효성 검사를 수행하거나 입력 완료 시점의 처리에 활용
+ * - `placeholder`: Input의 placeholder 텍스트 (선택)
+ * - `onClick`: Input 컨테이너(div) 클릭 이벤트 핸들러 (선택, 주소 검색 팝업 등에 활용)
+ * - `errorMessage`: 에러 발생 시 표시될 메시지 (선택, 존재하면 빨간색 테두리와 함께 하단에 표시)
  */
 
 const meta: Meta<typeof Input> = {
@@ -107,6 +109,11 @@ const meta: Meta<typeof Input> = {
     onChange: {
       action: 'changed',
       description: '값 변경 이벤트 핸들러 (number 타입의 경우 콤마가 제거된 순수 숫자 문자열 전달)',
+    },
+    onBlur: {
+      action: 'blurred',
+      description:
+        'Input에서 포커스가 벗어날 때 실행되는 이벤트 핸들러 (주로 유효성 검사나 입력 완료 시점의 처리에 활용)',
     },
     placeholder: {
       control: 'text',

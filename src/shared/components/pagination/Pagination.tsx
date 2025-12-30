@@ -51,7 +51,7 @@ export default function Pagination({ totalCount, itemsPerPage }: PaginationProps
 
   const totalPage = Math.max(1, Math.ceil(totalCount / itemsPerPage));
   const { checkedCurrentPage, visiblePages, canGoPrev, canGoNext } = getPaginationRange({
-    currentPage: currentPage,
+    currentPage,
     totalPage,
   });
 

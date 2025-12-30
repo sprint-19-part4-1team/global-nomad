@@ -69,7 +69,7 @@ const useQueryParamState = <T = string>(
 
   const setValue = useCallback(
     (nextValue: T) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(window.location.search);
 
       if (removeParam?.(nextValue)) {
         params.delete(key);
@@ -86,7 +86,7 @@ const useQueryParamState = <T = string>(
         router.push(url, { scroll });
       }
     },
-    [key, pathname, replace, router, scroll, searchParams, serialize, removeParam]
+    [key, pathname, replace, router, scroll, serialize, removeParam]
   );
 
   return [value, setValue];

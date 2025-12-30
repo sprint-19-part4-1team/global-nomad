@@ -118,7 +118,7 @@ type Story = StoryObj<typeof Input>;
 /**
  * 기본 상태 (이메일 입력)
  *
- * 로그인 및 회원가입 페이지에서 사용되는 기본 이메일 Input입니다.
+ * 로그인 및 회원가입 페이지에서 사용되는 기본 이메일 Input입니다. <br/>
  * authForm variant를 사용하며, 이메일 자동완성이 활성화되어 있습니다.
  */
 export const Default: Story = {
@@ -135,8 +135,8 @@ export const Default: Story = {
 /**
  * 비밀번호 입력
  *
- * 로그인 및 회원가입 페이지에서 사용되는 비밀번호 Input입니다.
- * 비밀번호 타입(type='password')을 사용하며, 자동으로 표시/숨기기 토글 버튼이 추가됩니다.
+ * 로그인 및 회원가입 페이지에서 사용되는 비밀번호 Input입니다. <br/>
+ * 비밀번호 타입(type='password')을 사용하며, 자동으로 표시/숨기기 토글 버튼이 추가됩니다. <br/>
  * 토글 버튼을 클릭하여 비밀번호를 표시하거나 숨길 수 있습니다.
  */
 export const Password: Story = {
@@ -153,7 +153,7 @@ export const Password: Story = {
 /**
  * 체험 제목 입력 (체험 등록/수정용)
  *
- * 체험 등록 및 수정 페이지에서 사용되는 제목 Input입니다.
+ * 체험 등록 및 수정 페이지에서 사용되는 제목 Input입니다. <br/>
  * form variant를 사용하며, 일반 텍스트 입력이 가능합니다.
  */
 export const FormTitleInput: Story = {
@@ -169,8 +169,8 @@ export const FormTitleInput: Story = {
 /**
  * 체험 가격 입력 (체험 등록/수정용)
  *
- * 체험 등록 및 수정 페이지에서 사용되는 가격 Input입니다.
- * number 타입을 사용하여 숫자만 입력 가능하며, 천단위 콤마가 자동으로 포맷팅됩니다.
+ * 체험 등록 및 수정 페이지에서 사용되는 가격 Input입니다. <br/>
+ * number 타입을 사용하여 숫자만 입력 가능하며, 천단위 콤마가 자동으로 포맷팅됩니다. <br/>
  * 예: 1000 입력 시 "1,000"으로 표시되고, onChange에는 "1000"이 전달됩니다.
  *
  * 내부적으로 text 타입으로 변환되어 콤마 포맷팅이 가능하며,
@@ -189,8 +189,8 @@ export const FormPriceInput: Story = {
 /**
  * 체험 주소 입력 (체험 등록/수정용)
  *
- * 체험 등록 및 수정 페이지에서 사용되는 주소 Input입니다.
- * name 또는 autoComplete에 'address'가 포함되어 있어 검색 아이콘이 자동으로 표시됩니다.
+ * 체험 등록 및 수정 페이지에서 사용되는 주소 Input입니다. <br/>
+ * name 또는 autoComplete에 'address'가 포함되어 있어 검색 아이콘이 자동으로 표시됩니다. <br/>
  * onClick 핸들러를 통해 주소 검색 팝업(예: 다음 우편번호 서비스)을 연동할 수 있습니다.
  *
  */
@@ -208,8 +208,8 @@ export const FormAddressInput: Story = {
 /**
  * 비활성화된 이메일 Input
  *
- * Input이 비활성화된 상태의 예시입니다.
- * disabled prop이 true일 경우, 회색 배경과 함께 사용자 입력이 불가능합니다.
+ * Input이 비활성화된 상태의 예시입니다. <br/>
+ * disabled prop이 true일 경우, 회색 배경과 함께 사용자 입력이 불가능합니다. <br/>
  * 이미 확정된 값이나 수정 불가능한 정보를 표시할 때 사용합니다.
  */
 export const DisabledEmail: Story = {
@@ -227,7 +227,7 @@ export const DisabledEmail: Story = {
 /**
  * 에러 메시지 표시
  *
- * 두 가지 variant(authForm, form)에서 에러 메시지가 표시되는 예시입니다.
+ * 두 가지 variant(authForm, form)에서 에러 메시지가 표시되는 예시입니다. <br/>
  * 각 Input은 독립적인 상태를 가지며, errorMessage prop이 존재할 때:
  * - Input 테두리 색상이 빨간색으로 변경됩니다
  * - Input 하단에 에러 메시지가 빨간색으로 표시됩니다

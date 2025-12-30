@@ -255,7 +255,8 @@ export default function Input({
         )}
 
         {/* 주소 관련 input일 경우 검색 아이콘 렌더링 */}
-        {(name.includes('address') || autoComplete?.includes('address')) && (
+        {((type !== 'password' && name.includes('address'))
+          || autoComplete?.includes('address')) && (
           <Icons.Search aria-label='주소 검색 아이콘' className='input-icon' />
         )}
       </div>

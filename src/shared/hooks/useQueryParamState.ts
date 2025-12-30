@@ -3,14 +3,15 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
-interface UseQueryParamStateOptions<T> {
+type ParseOption<T> = T extends string ? { parse?: (v: string) => T } : { parse: (v: string) => T };
+
+type UseQueryParamStateOptions<T> = {
   defaultValue: T;
-  parse?: (value: string) => T;
   serialize?: (value: T) => string;
   replace?: boolean;
   scroll?: boolean;
   removeParam?: (value: T) => boolean;
-}
+} & ParseOption<T>;
 
 /**
  * ## useQueryParamState
@@ -38,11 +39,11 @@ interface UseQueryParamStateOptions<T> {
  * ```
  */
 
-const useQueryParamState = <T>(
+const useQueryParamState = <T = string>(
   key: string,
   {
     defaultValue,
-    parse = (v) => v as unknown as T,
+    parse = (v) => v as T,
     serialize = String,
     replace = true,
     scroll = false,

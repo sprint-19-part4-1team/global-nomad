@@ -1,13 +1,13 @@
 'use client';
 
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Icons from '@/assets/icons';
+import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { cn } from '@/shared/utils/cn';
 import { getPaginationRange } from '@/shared/utils/getPaginationRange';
 
 interface PaginationProps {
   totalCount: number;
-  size: number;
+  itemsPerPage: number;
 }
 
 // 버튼 스타일 모음
@@ -26,60 +26,52 @@ const PAGINATION_STYLES = {
 
 /**
  * @description
- * - 현재 페이지는 URL의 `page` 파라미터에서 파생됩니다.
- * - 한 번에 최대 5개의 페이지 버튼만 노출됩니다.
- * - 선택된 페이지 버튼은 비활성화되며 hover 되지 않습니다.
- * - 좌/우 화살표는 이동 가능한 경우에만 활성화됩니다.
- * - 페이지 이동 시 스크롤이 상단으로 이동하지 않도록 처리되어 있습니다.
+ * - 현재 페이지는 URL 쿼리 파라미터 `page`를 기준으로 동작합니다.
+ * - URL 상태 관리는 `useQueryParamState` 공통 훅에서 처리됩니다.
+ * - 유효하지 않은 page 값은 1페이지로 보정되며, 1페이지는 URL에 남기지 않습니다.
+ * - 실제 UI는 `getPaginationRange`에서 보정된 `checkedCurrentPage`를 기준으로 렌더링됩니다.
  *
- * @param totalCount - API에서 내려주는 전체 아이템 개수
- * @param size - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
+ * @param totalCount - 전체 아이템 개수
+ * @param itemsPerPage - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
  */
-export default function Pagination({ totalCount, size }: PaginationProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const pageParams = searchParams.get('page');
-  const pageNumber = pageParams ? Number(pageParams) : NaN;
-  const currentPageFromUrl =
-    Number.isFinite(pageNumber) && pageNumber > 0 ? Math.floor(pageNumber) : 1;
-
-  const totalPage = Math.max(1, Math.ceil(totalCount / size));
-  const { checkedCurrentPage, visiblePages, canGoPrev, canGoNext } = getPaginationRange({
-    currentPage: currentPageFromUrl,
-    totalPage,
+export default function Pagination({ totalCount, itemsPerPage }: PaginationProps) {
+  const [currentPage, setCurrentPage] = useQueryParamState<number>('page', {
+    defaultValue: 1,
+    parse: (v) => {
+      const n = Number(v);
+      if (!Number.isFinite(n) || n <= 0) {
+        return 1;
+      }
+      return Math.floor(n);
+    },
+    removeParam: (v) => v === 1,
+    replace: false,
+    scroll: false,
   });
 
-  const setPageInUrl = (nextPage: number) => {
-    const nextParams = new URLSearchParams(searchParams.toString());
-    if (nextPage === 1) {
-      nextParams.delete('page');
-    } else {
-      nextParams.set('page', String(nextPage));
-    }
-    const query = nextParams.toString();
-
-    router.push(query ? `${pathname}?${query}` : `${pathname}`, { scroll: false });
-  };
+  const totalPage = Math.max(1, Math.ceil(totalCount / itemsPerPage));
+  const { checkedCurrentPage, visiblePages, canGoPrev, canGoNext } = getPaginationRange({
+    currentPage,
+    totalPage,
+  });
 
   const handlePrev = () => {
     if (!canGoPrev) {
       return;
     }
-    setPageInUrl(checkedCurrentPage - 1);
+    setCurrentPage(checkedCurrentPage - 1);
   };
   const handleNext = () => {
     if (!canGoNext) {
       return;
     }
-    setPageInUrl(checkedCurrentPage + 1);
+    setCurrentPage(checkedCurrentPage + 1);
   };
   const handleSelectPage = (page: number) => {
     if (page === checkedCurrentPage) {
       return;
     }
-    setPageInUrl(page);
+    setCurrentPage(page);
   };
 
   const { arrowBtnBase, pageBtnBase, hoverableBtn, disabledArrowBtn, selectedStyle } =

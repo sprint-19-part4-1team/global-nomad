@@ -24,7 +24,7 @@ import { formatValue } from '@/shared/utils/formatValue';
  *   - `authForm`: 로그인/회원가입 등 인증 관련 폼에서 사용
  *   - `form`: 체험 등록/수정 등 일반 폼에서 사용
  * @property {string} [divClassName] - Input 컨테이너 div에 적용될 추가 CSS 클래스
- * @property {string} label - Input 위에 표시될 label 텍스트 (필수)
+ * @property {string} label - Input 위에 표시될 label 텍스트
  * @property {string} [inputClassName] - Input 요소에 적용될 추가 CSS 클래스
  * @property {string} name - form 제출 시 사용될 Input의 name 속성
  *   - `address` 포함 시: 검색 아이콘이 자동으로 표시됨

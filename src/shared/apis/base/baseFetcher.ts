@@ -37,6 +37,13 @@ export const baseFetcher = async <T>(endpoint: string, options: RequestInit = {}
 
   const request = async (): Promise<Response> => {
     const controller = new AbortController();
+    const headers = new Headers(options.headers);
+
+    if (isFormData) {
+      headers.delete('Content-Type');
+    } else if (!headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
+    }
 
     const timeoutId = setTimeout(() => {
       controller.abort();
@@ -48,14 +55,6 @@ export const baseFetcher = async <T>(endpoint: string, options: RequestInit = {}
         credentials: 'include',
         signal: controller.signal,
         headers: (() => {
-          const headers = new Headers(options.headers);
-
-          if (isFormData) {
-            headers.delete('Content-Type');
-          } else if (!headers.has('Content-Type')) {
-            headers.set('Content-Type', 'application/json');
-          }
-
           return headers;
         })(),
       });

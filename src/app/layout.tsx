@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
+import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
+import ToastProvider from '@/shared/components/toast/ToastProvider';
 
 // TODO: metadata 수정하기
 export const metadata: Metadata = {
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ToastProvider />
+        <OverlayRoot />
+      </body>
     </html>
   );
 }

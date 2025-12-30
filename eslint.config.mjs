@@ -1,6 +1,9 @@
+import { configs as storybookConfigs } from 'eslint-plugin-storybook';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,6 +23,12 @@ const eslintConfig = [
   }),
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
+    languageOptions: {
+      parser: tsParser,
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
     settings: {
       'import/resolver': {
         typescript: {
@@ -29,7 +38,7 @@ const eslintConfig = [
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
       'react/jsx-uses-react': 'off',
       'react/jsx-uses-vars': 'error',
       'react/jsx-key': 'error',
@@ -58,6 +67,7 @@ const eslintConfig = [
     },
   },
   { ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'] },
+  ...storybookConfigs['flat/recommended'],
 ];
 
 export default eslintConfig;

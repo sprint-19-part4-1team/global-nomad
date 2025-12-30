@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# auto-generated design tokens
+src/shared/styles/base/tokens.css
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+*storybook.log
+storybook-static

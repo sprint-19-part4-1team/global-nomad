@@ -22,15 +22,16 @@ import TabsTrigger from '@/shared/components/tabs/content/TabsTrigger';
  *
  * ### 주의사항
  * - Storybook 환경에서는 URL(`searchParams`)을 사용하지 않습니다.
- * - 실제 서비스에서는 `useTabsQueryParam` 훅과 함께 사용하는 것을 권장합니다.
+ * - 실제 서비스에서는 `useQueryParamState` 훅과 함께 사용하는 것을 권장합니다.
  *
  * ### 사용 예시
  * ```tsx
- * const { value, onChangeValue } = useTabsQueryParam({
+ *  const [tabValue, setTabValue] = useQueryParamState(TAB_QUERY_KEY, {
  *   defaultValue: 'request',
+ *   removeParam: (v) => v === 'request',
  * });
  *
- * <Tabs value={value} onChangeValue={onChangeValue}>
+ * <Tabs value={tabValue} onChangeValue={setTabValue}>
  *  <TabsList>
  *    <TabsTrigger value='request'>
  *      <span>신청</span>

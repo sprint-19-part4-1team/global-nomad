@@ -31,7 +31,7 @@ import TabsTrigger from '@/shared/components/tabs/content/TabsTrigger';
  *   removeParam: (v) => v === 'request',
  * });
  *
- * <Tabs value={value} onChangeValue={setTabValue}>
+ * <Tabs value={tabValue} onChangeValue={setTabValue}>
  *  <TabsList>
  *    <TabsTrigger value='request'>
  *      <span>신청</span>

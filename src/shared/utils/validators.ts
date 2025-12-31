@@ -12,7 +12,7 @@ import {
  * @param {string} message - 에러 메시지
  * @returns {string} 에러 메시지 또는 빈 문자열
  */
-export const isRequired = (value: string, message: string) => {
+export const isRequired = (value: string, message: string): string => {
   return !value || value.trim().length === 0 ? message : '';
 };
 
@@ -22,7 +22,7 @@ export const isRequired = (value: string, message: string) => {
  * @param {string} value - 검사할 이메일
  * @returns {string} 에러 메시지 또는 빈 문자열
  */
-const validateEmailFormat = (value: string) => {
+const validateEmailFormat = (value: string): string => {
   return VALIDATION_PATTERNS.EMAIL.test(value) ? '' : VALIDATION_MESSAGES.EMAIL.INVALID;
 };
 
@@ -34,7 +34,7 @@ const validateEmailFormat = (value: string) => {
  * @param {string} value - 검사할 비밀번호
  * @returns {string} 에러 메시지 또는 빈 문자열
  */
-const validatePasswordFormat = (value: string) => {
+const validatePasswordFormat = (value: string): string => {
   if (value.length < PASSWORD_MIN_LENGTH) {
     return VALIDATION_MESSAGES.PASSWORD.SHORT;
   }
@@ -49,7 +49,7 @@ const validatePasswordFormat = (value: string) => {
  * @param {string} value - 검사할 닉네임
  * @returns {string} 에러 메시지 또는 빈 문자열
  */
-const validateNicknameFormat = (value: string) => {
+const validateNicknameFormat = (value: string): string => {
   if (value.length > NICKNAME_MAX_LENGTH) {
     return VALIDATION_MESSAGES.NICKNAME.LONG;
   }
@@ -74,7 +74,7 @@ export const validators = {
    * validators.email('') // '이메일을 입력해 주세요.'
    * validators.email('invalid-email') // '이메일 형식으로 입력해 주세요.'
    */
-  email: (value: string) => {
+  email: (value: string): string => {
     return isRequired(value, VALIDATION_MESSAGES.EMAIL.REQUIRED) || validateEmailFormat(value);
   },
 
@@ -94,7 +94,7 @@ export const validators = {
    * validators.password('Pass') // '8자 이상 입력해주세요.'
    * validators.password('password123') // '영문 대/소문자 조합으로 입력해 주세요.'
    */
-  password: (value: string) => {
+  password: (value: string): string => {
     return (
       isRequired(value, VALIDATION_MESSAGES.PASSWORD.REQUIRED) || validatePasswordFormat(value)
     );
@@ -112,7 +112,7 @@ export const validators = {
    * validators.confirmPassword('Password123', 'Password123') // ''
    * validators.confirmPassword('Different', 'Password123') // '비밀번호와 동일하게 입력해 주세요.'
    */
-  confirmPassword: (value: string, password: string) => {
+  confirmPassword: (value: string, password: string): string => {
     return value === password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
   },
 
@@ -133,7 +133,7 @@ export const validators = {
    * validators.nickname('ㅎㄱㄷ') // '닉네임 형식을 확인해주세요.'
    * validators.nickname('홍길동@') // '닉네임 형식을 확인해주세요.'
    */
-  nickname: (value: string) => {
+  nickname: (value: string): string => {
     return (
       isRequired(value, VALIDATION_MESSAGES.NICKNAME.REQUIRED) || validateNicknameFormat(value)
     );

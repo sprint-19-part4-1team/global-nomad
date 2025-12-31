@@ -22,7 +22,7 @@ export const getJwtMaxAge = (token: string): number | undefined => {
     const payloadJson = Buffer.from(payloadBase64, 'base64').toString('utf-8');
     const payload = JSON.parse(payloadJson) as JwtPayload;
 
-    if (!payload.exp) {
+    if (typeof payload.exp !== 'number') {
       return undefined;
     }
 

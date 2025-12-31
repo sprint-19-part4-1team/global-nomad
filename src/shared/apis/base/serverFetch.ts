@@ -18,14 +18,18 @@ export const serverFetch = async <T>(endpoint: string, options: RequestInit): Pr
   const BASE_URL = process.env.API_URL;
 
   if (!BASE_URL) {
-    throw new Error('API_URL 환경 변수가 설정되지 않았습니다.');
+    throw { status: 500, message: 'API_URL 환경 변수가 설정되지 않았습니다.' };
   }
 
   const res = await fetch(`${BASE_URL}${endpoint}`, options);
 
   if (!res.ok) {
-    const error = await res.json();
-    throw { status: res.status, message: error.message };
+    const message = await res
+      .json()
+      .then((errBody) => (typeof errBody?.message === 'string' ? errBody.message : undefined))
+      .catch(() => res.statusText || 'API 응답 처리 중 오류가 발생했습니다.');
+
+    throw { status: res.status, message };
   }
 
   return res.json();

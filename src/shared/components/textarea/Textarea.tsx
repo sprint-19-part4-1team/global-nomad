@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, ChangeEventHandler } from 'react';
+import { useId, ChangeEventHandler, FocusEventHandler } from 'react';
 import Label from '@/shared/components/label/Label';
 import { cn } from '@/shared/utils/cn';
 
@@ -13,6 +13,7 @@ import { cn } from '@/shared/utils/cn';
  * @property {string} placeholder - 텍스트 영역의 placeholder 텍스트
  * @property {string} value - 텍스트 영역의 현재 값
  * @property {ChangeEventHandler<HTMLTextAreaElement>} onChange - 텍스트 변경 이벤트 핸들러
+ * @property {FocusEventHandler<HTMLTextAreaElement>} [onBlur] - 텍스트 영역에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
  * @property {number} maxLength - 텍스트 영역에 입력 가능한 최대 글자 수
  * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지
  */
@@ -23,6 +24,7 @@ interface TextareaProps {
   placeholder: string;
   value: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement>;
   maxLength: number;
   errorMessage?: string;
 }
@@ -61,6 +63,7 @@ const TEXTAREA_VARIANTS = {
  *   placeholder='체험에 대한 설명을 입력해 주세요.'
  *   value={content}
  *   onChange={(e) => setContent(e.target.value)}
+ *   onBlur={(e) => validateText(e.target.value)}
  *   maxLength={1000}
  *   errorMessage='설명을 입력해 주세요.'
  * />
@@ -74,6 +77,7 @@ export default function Textarea({
   placeholder,
   value,
   onChange,
+  onBlur,
   maxLength,
   errorMessage,
 }: TextareaProps) {
@@ -90,27 +94,26 @@ export default function Textarea({
   const isOverMax = textCount > maxLength;
 
   return (
-    <div className={cn('flex w-full flex-col', container)}>
+    <div className={cn('field-container', container)}>
       <Label htmlFor={textareaId} variant={variant}>
         {label}
       </Label>
       <div
         className={cn(
-          'transition-color flex w-full flex-col gap-8 rounded-12 border p-16 body-14 sm:body-16',
+          'field-box flex-col gap-8 p-16',
           textareaBox,
-          isOverMax || errorMessage
-            ? 'border-red-500'
-            : 'border-gray-100 focus-within:border-primary-500'
+          isOverMax || errorMessage ? 'border-field-error' : 'border-field-default'
         )}>
         <textarea
           id={textareaId}
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           placeholder={placeholder}
           rows={5}
           maxLength={maxLength + 1}
-          className='placeholder:gray-400 scrollbar-custom w-full resize-none focus:ring-0 focus:outline-none'
+          className='scrollbar-custom w-full resize-none field-placeholder focus:ring-0 focus:outline-none'
         />
         <div className='w-full text-right body-14 font-medium text-gray-400'>
           글자수:
@@ -124,9 +127,7 @@ export default function Textarea({
           /{maxLength}
         </div>
       </div>
-      {errorMessage && (
-        <p className='body-13 font-medium text-red-500 sm:body-14'>{errorMessage}</p>
-      )}
+      {errorMessage && <p className='field-error-message'>{errorMessage}</p>}
     </div>
   );
 }

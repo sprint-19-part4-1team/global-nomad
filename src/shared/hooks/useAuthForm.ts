@@ -62,7 +62,7 @@ type AuthFormValues = {
  */
 const useAuthForm = (initialValues: AuthFormValues) => {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Partial<Record<keyof AuthFormValues, string>>>({});
   const [isValid, setIsValid] = useState(false);
 
   /**
@@ -111,8 +111,9 @@ const useAuthForm = (initialValues: AuthFormValues) => {
    * />
    */
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+    setValues((prev) => ({ ...prev, [name]: newValue }));
   };
 
   /**

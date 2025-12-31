@@ -38,13 +38,13 @@ export const VALIDATION_MESSAGES = {
    */
   NICKNAME: {
     REQUIRED: '닉네임을 입력해주세요.',
-    LONG: '10자 이하로 입력해 주세요. ',
-    INVALID: '닉네임 형식을 확인해주세요 .',
+    LONG: '10자 이하로 입력해 주세요.',
+    INVALID: '닉네임 형식을 확인해주세요.',
   },
   /** 체험 제목 미입력 시 메시지 */
   TITLE_REQUIRED: '제목을 입력해 주세요.',
   /** 체험 카테고리 미선택 시 메시지 */
-  CATEGROY_REQUIRED: '카테고리를 선택해 주세요.',
+  CATEGORY_REQUIRED: '카테고리를 선택해 주세요.',
   /** 체험 설명 미입력 시 메시지 */
   DESCRIPTION_REQUIRED: '설명을 입력해 주세요.',
   /** 체험 가격 미입력 시 메시지 */

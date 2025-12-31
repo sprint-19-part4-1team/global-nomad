@@ -71,11 +71,12 @@ const useAuthForm = (initialValues: AuthFormValues) => {
    * - validators에 등록된 필드는 유효성 검사를 통과해야 함
    * - termsAgreed는 true여야 함
    *
+   * @param {AuthFormValues} valuesToCheck - 검사할 폼 값 객체
    * @returns {boolean} 폼이 유효하면 true, 아니면 false
    */
-  const checkFormValid = (): boolean => {
-    return (Object.keys(values) as Array<keyof AuthFormValues>).every((key) => {
-      const value = values[key];
+  const checkFormValid = (valuesToCheck: AuthFormValues): boolean => {
+    return (Object.keys(valuesToCheck) as Array<keyof AuthFormValues>).every((key) => {
+      const value = valuesToCheck[key];
 
       // termsAgreed는 boolean이므로 별도 처리
       if (key === 'termsAgreed') {
@@ -90,7 +91,7 @@ const useAuthForm = (initialValues: AuthFormValues) => {
       // validator가 있으면 에러 체크
       const validator = validators[key as keyof typeof validators];
       if (validator) {
-        return !validator(value as string, values);
+        return !validator(value as string, valuesToCheck);
       }
 
       return true;
@@ -99,7 +100,9 @@ const useAuthForm = (initialValues: AuthFormValues) => {
 
   /**
    * input 값 변경 핸들러
-   * 입력된 값을 상태에 업데이트
+   * - 입력된 값을 상태에 업데이트
+   * - 해당 필드의 에러 메시지 초기화 (사용자가 수정 중일 때)
+   * - 전체 폼 유효성 검사를 수행하여 isValid 상태 업데이트 (제출 버튼 활성화/비활성화)
    *
    * @param {ChangeEvent<HTMLInputElement>} e - input 변경 이벤트
    *
@@ -113,13 +116,21 @@ const useAuthForm = (initialValues: AuthFormValues) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
-    setValues((prev) => ({ ...prev, [name]: newValue }));
+    const newValues = { ...values, [name]: newValue };
+
+    setValues(newValues);
+    setIsValid(checkFormValid(newValues));
+
+    // 해당 필드의 에러 메시지 초기화
+    if (errors[name as keyof AuthFormValues]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   /**
    * input blur 핸들러
    * - 필드가 validators에 등록되어 있으면 유효성 검사 수행
-   * - 에러 메시지를 업데이트하고 전체 폼 유효성 재검사
+   * - 에러 메시지를 업데이트
    *
    * @param {FocusEvent<HTMLInputElement>} e - input blur 이벤트
    *
@@ -131,19 +142,17 @@ const useAuthForm = (initialValues: AuthFormValues) => {
    * />
    */
   const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
-    setErrors((prev) => {
-      // name이 validators의 키인지 확인
-      if (name in validators) {
-        const validatorKey = name as keyof typeof validators;
-        const errorMsg = validators[validatorKey](value, values);
-        return { ...prev, [name]: errorMsg };
-      }
-      return prev;
-    });
-
-    setIsValid(checkFormValid());
+    // name이 validators의 키인지 확인
+    if (name in validators) {
+      const validatorKey = name as keyof typeof validators;
+      // blur 시점의 최신 값을 포함한 values 생성
+      const newValue = type === 'checkbox' ? checked : value;
+      const currentValues = { ...values, [name]: newValue };
+      const errorMsg = validators[validatorKey](value, currentValues);
+      setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+    }
   };
 
   return {

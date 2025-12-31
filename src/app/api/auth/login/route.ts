@@ -2,13 +2,17 @@ import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 import { LoginResponse } from '@/shared/types/auth.types';
 import { User } from '@/shared/types/user.type';
+import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
 type LoginResponseBody = { user: User } | { message: string };
-type ApiError = {
-  status?: number;
-  message?: string;
-};
+
+const COOKIE_OPTIONS = {
+  httpOnly: true, // JS 접근 차단
+  secure: process.env.NODE_ENV === 'production', // dev는 http라서 프로덕션일때만 true로
+  sameSite: 'lax', // CSRF 방어용
+  path: '/', // 모든 경로에서 해당 쿠키 접근
+} as const;
 
 /**
  * 로그인 API (BFF)
@@ -42,28 +46,21 @@ export async function POST(request: Request): Promise<NextResponse<LoginResponse
 
     // 토큰들은 쿠키에 저장
     response.cookies.set('accessToken', accessToken, {
-      httpOnly: true, // JS 접근 차단
-      secure: process.env.NODE_ENV === 'production', // dev는 http라서 프로덕션일때만 true로
-      sameSite: 'lax', // CSRF 방어용
-      path: '/', // 모든 경로에서 해당 쿠키 접근
+      ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(accessToken), // 쿠키 만료 시간 설정
     });
 
     response.cookies.set('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
+      ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(refreshToken),
     });
 
     return response;
   } catch (err: unknown) {
-    const error = err as ApiError;
+    if (isApiError(err)) {
+      return NextResponse.json({ message: err.message }, { status: err.status });
+    }
 
-    return NextResponse.json(
-      { message: error.message ?? '네트워크 오류가 발생했습니다.' },
-      { status: error.status ?? 500 }
-    );
+    return NextResponse.json({ message: '로그인에 실패했습니다.' }, { status: 500 });
   }
 }

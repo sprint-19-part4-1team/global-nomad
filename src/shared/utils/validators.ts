@@ -105,15 +105,16 @@ export const validators = {
    * - 원본 비밀번호와 일치 여부 확인
    *
    * @param {string} value - 검사할 비밀번호 확인 값
-   * @param {string} password - 원본 비밀번호
+   * @param {Object} values - 전체 폼 값 객체
+   * @param {string} values.password - 원본 비밀번호
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
    * @example
    * validators.confirmPassword('Password123', 'Password123') // ''
    * validators.confirmPassword('Different', 'Password123') // '비밀번호와 동일하게 입력해 주세요.'
    */
-  confirmPassword: (value: string, password: string): string => {
-    return value === password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
+  confirmPassword: (value: string, values: { password: string }): string => {
+    return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
   },
 
   /**

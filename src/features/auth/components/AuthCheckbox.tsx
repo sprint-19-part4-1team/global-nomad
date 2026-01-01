@@ -61,9 +61,9 @@ export default function AuthCheckbox({
         checked={termsAgreed}
         onChange={onChange}
         onBlur={onBlur}
-        className='peer h-20 w-20 cursor-pointer appearance-none rounded-4 border border-gray-300 bg-white checked:border-none checked:bg-primary-500'
+        className='peer h-20 w-20 cursor-pointer appearance-none self-center rounded-4 border border-gray-300 bg-white checked:border-none checked:bg-primary-500'
       />
-      <Icons.Check className='pointer-events-none absolute inset-0 top-2 left-2 h-16 w-16 text-white peer-has-checked:hidden' />
+      <Icons.Check className='pointer-events-none absolute inset-0 top-4 left-2 h-16 w-16 text-white peer-has-checked:hidden' />
       <Label htmlFor={id} variant='authForm' className='cursor-pointer'>
         이용약관에 동의합니다.
       </Label>

@@ -8,16 +8,15 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || 'https://global-nomad-1team.vercel.app/'
   ),
 
-  title: { default: '글로벌 노마드: Global Nomad', template: '%s | Global Nomad' },
-  description:
-    '글로벌 노마드는 전 세계 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
+  title: { default: '글로벌 노마드 | Global Nomad', template: '%s | Global Nomad' },
+  description: '글로벌 노마드는 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
+  keywords: ['글로벌 노마드', 'Global Nomad', '체험 예약'],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     siteName: 'Global Nomad',
     title: 'Global Nomad',
-    description:
-      '글로벌 노마드는 전 세계 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
+    description: '글로벌 노마드는 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
     images: ['/og-default.png'],
   },
 
@@ -29,6 +28,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+};
+
+export const viewport = {
+  interactiveWidget: 'resizes-visual',
 };
 
 export default function RootLayout({

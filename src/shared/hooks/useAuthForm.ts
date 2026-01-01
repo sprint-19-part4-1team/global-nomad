@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState, useMemo } from 'react';
 import { validators } from '@/shared/utils/validators';
 
 /**
@@ -63,7 +63,6 @@ type AuthFormValues = {
 const useAuthForm = (initialValues: AuthFormValues) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof AuthFormValues, string>>>({});
-  const [isValid, setIsValid] = useState(false);
 
   /**
    * 전체 폼의 유효성을 검사
@@ -98,11 +97,13 @@ const useAuthForm = (initialValues: AuthFormValues) => {
     });
   };
 
+  // isValid를 useMemo로 계산 (파생 상태)
+  const isValid = useMemo(() => checkFormValid(values), [values]);
+
   /**
    * input 값 변경 핸들러
    * - 입력된 값을 상태에 업데이트
    * - 해당 필드의 에러 메시지 초기화 (사용자가 수정 중일 때)
-   * - 전체 폼 유효성 검사를 수행하여 isValid 상태 업데이트 (제출 버튼 활성화/비활성화)
    *
    * @param {ChangeEvent<HTMLInputElement>} e - input 변경 이벤트
    *
@@ -119,7 +120,6 @@ const useAuthForm = (initialValues: AuthFormValues) => {
     const newValues = { ...values, [name]: newValue };
 
     setValues(newValues);
-    setIsValid(checkFormValid(newValues));
 
     // 해당 필드의 에러 메시지 초기화
     if (errors[name as keyof AuthFormValues]) {

@@ -5,7 +5,7 @@ import ToastProvider from '@/shared/components/toast/ToastProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://global-nomad-1team.vercel.app/'
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://global-nomad-1team.vercel.app'
   ),
 
   title: { default: '글로벌 노마드 | Global Nomad', template: '%s | Global Nomad' },
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     siteName: 'Global Nomad',
+    url: '/',
     title: 'Global Nomad',
     description: '글로벌 노마드는 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
     images: ['/og-default.png'],

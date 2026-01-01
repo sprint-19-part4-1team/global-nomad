@@ -1,4 +1,4 @@
-import { baseFetcher } from '@/shared/apis/base/baseFetcher';
+import { publicFetch } from '@/shared/apis/base/publicFetch';
 import type {
   CreateActivityBodyDto,
   CreateReservationBodyDto,
@@ -16,7 +16,7 @@ import { createQueryString } from '@/shared/utils/createQueryString';
  */
 export const getActivities = (params: GetActivitiesParams) => {
   const queryString = createQueryString(params);
-  return baseFetcher(`/activities${queryString}`, { method: 'GET' });
+  return publicFetch(`/activities${queryString}`, { method: 'GET' });
 };
 
 /**
@@ -26,7 +26,7 @@ export const getActivities = (params: GetActivitiesParams) => {
  * @returns 체험 등록 API 응답 Promise
  */
 export const createActivity = (data: CreateActivityBodyDto) => {
-  return baseFetcher(`/activities`, { method: 'POST', body: JSON.stringify(data) });
+  return publicFetch(`/activities`, { method: 'POST', body: JSON.stringify(data) });
 };
 
 /**
@@ -36,7 +36,7 @@ export const createActivity = (data: CreateActivityBodyDto) => {
  * @returns 체험 상세 조회 API 응답 Promise
  */
 export const getActivityDetail = (activityId: number) => {
-  return baseFetcher(`/activities/${activityId}`, { method: 'GET' });
+  return publicFetch(`/activities/${activityId}`, { method: 'GET' });
 };
 
 /**
@@ -48,7 +48,7 @@ export const getActivityDetail = (activityId: number) => {
  */
 export const getActivitySchedules = (activityId: number, params: GetActivitySchedulesParams) => {
   const queryString = createQueryString(params);
-  return baseFetcher(`/activities/${activityId}/available-schedule${queryString}`, {
+  return publicFetch(`/activities/${activityId}/available-schedule${queryString}`, {
     method: 'GET',
   });
 };
@@ -62,7 +62,7 @@ export const getActivitySchedules = (activityId: number, params: GetActivitySche
  */
 export const getActivityReviews = (activityId: number, params: GetActivityReviewsParams) => {
   const queryString = createQueryString(params);
-  return baseFetcher(`/activities/${activityId}/reviews${queryString}`, {
+  return publicFetch(`/activities/${activityId}/reviews${queryString}`, {
     method: 'GET',
   });
 };
@@ -75,7 +75,7 @@ export const getActivityReviews = (activityId: number, params: GetActivityReview
  * @returns 체험 예약 신청 API 응답 Promise
  */
 export const createActivityReservation = (activityId: number, data: CreateReservationBodyDto) => {
-  return baseFetcher(`/activities/${activityId}/reservations`, {
+  return publicFetch(`/activities/${activityId}/reservations`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -91,7 +91,7 @@ export const createActivityImage = (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
 
-  return baseFetcher<{ imageUrl: string }>('/activities/images', {
+  return publicFetch<{ imageUrl: string }>('/activities/images', {
     method: 'POST',
     body: formData,
   });

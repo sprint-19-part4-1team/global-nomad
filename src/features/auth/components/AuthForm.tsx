@@ -54,7 +54,7 @@ export default function AuthForm({ onSubmit, className, children }: AuthFormProp
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn('flex w-full flex-col gap-20 **:last:mt-10', className)}>
+      className={cn('flex w-full flex-col gap-20 *:last:mt-10', className)}>
       {children}
     </form>
   );

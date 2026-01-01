@@ -3,7 +3,6 @@ import '@/shared/styles/globals.css';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
 
-// TODO: metadata 수정하기
 export const metadata: Metadata = {
   metadataBase: new URL('https://global-nomad-1team.vercel.app/'),
 

@@ -1,18 +1,17 @@
-import { publicFetch } from '@/shared/apis/base/publicFetch';
-import type { LoginRequest } from '@/shared/types/auth.types';
+// import type { LoginRequest } from '@/shared/types/auth.types';
 
 /**
- * 로그인 API
+ * 로그인 API (BFF)
  *
  * @param data - 로그인에 필요한 사용자 정보
  * @returns 로그인 API 응답 Promise
  */
-export const logIn = (data: LoginRequest) => {
-  return publicFetch('/auth/login', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
-};
+// export const logIn = (data: LoginRequest) => {
+//   return baseFetcher('/auth/login', {
+//     method: 'POST',
+//     body: JSON.stringify(data),
+//   });
+// };
 
 /**
  * 토큰 재발급 API (BFF)

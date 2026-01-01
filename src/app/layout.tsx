@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     siteName: 'Global Nomad',
-    url: 'https://global-nomad-1team.vercel.app',
+    url: '/',
     title: 'Global Nomad',
     description: '글로벌 노마드는 체험 상품을 탐색하고 예약할 수 있는 체험 예약 플랫폼입니다.',
     images: ['/og-default.png'],

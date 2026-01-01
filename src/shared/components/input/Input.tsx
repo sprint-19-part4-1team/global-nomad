@@ -72,7 +72,7 @@ interface InputProps extends Omit<
     | 'transaction-amount'
     | 'off';
   disabled?: boolean;
-  value: string | number;
+  value: string | number | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   placeholder?: string;

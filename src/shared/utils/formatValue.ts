@@ -23,7 +23,7 @@
  * ```
  *
  */
-export const formatValue = (value: string | number) => {
+export const formatValue = (value: string | number | undefined) => {
   // 빈 값 체크
   if (value === '' || value === null || value === undefined) {
     return;

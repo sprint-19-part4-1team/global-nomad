@@ -24,6 +24,17 @@ export const getAuthToken = async (token: AuthToken): Promise<string | undefined
 export const clearAuthTokens = async () => {
   const cookieStore = await cookies();
 
-  cookieStore.delete('accessToken');
-  cookieStore.delete('refreshToken');
+  cookieStore.set({
+    name: 'accessToken',
+    value: '',
+    path: '/',
+    maxAge: 0,
+  });
+
+  cookieStore.set({
+    name: 'refreshToken',
+    value: '',
+    path: '/',
+    maxAge: 0,
+  });
 };

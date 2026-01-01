@@ -1,4 +1,4 @@
-import { baseFetcher } from '@/shared/apis/base/baseFetcher';
+import { publicFetch } from '@/shared/apis/base/publicFetch';
 import type { LoginRequest } from '@/shared/types/auth.types';
 
 /**
@@ -8,19 +8,19 @@ import type { LoginRequest } from '@/shared/types/auth.types';
  * @returns 로그인 API 응답 Promise
  */
 export const logIn = (data: LoginRequest) => {
-  return baseFetcher('/auth/login', {
+  return publicFetch('/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
   });
 };
 
 /**
- * 토큰 재발급 API
+ * 토큰 재발급 API (BFF)
  *
  * @returns 토큰 재발급 API 응답 Promise
  */
-export const refreshToken = () => {
-  return baseFetcher('/auth/tokens', {
-    method: 'POST',
-  });
-};
+// export const refreshToken = () => {
+//   return baseFetcher('/auth/tokens', {
+//     method: 'POST',
+//   });
+// };

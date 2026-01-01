@@ -4,7 +4,9 @@ import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://global-nomad-1team.vercel.app/'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://global-nomad-1team.vercel.app/'
+  ),
 
   title: { default: '글로벌 노마드: Global Nomad', template: '%s | Global Nomad' },
   description:

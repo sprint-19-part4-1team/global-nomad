@@ -1,15 +1,16 @@
+import { isRecord } from '@/shared/utils/errorGuards';
+
 type ApiError = Error & {
   status: number;
   code?: string;
 };
 
 const isAbortError = (error: unknown): boolean => {
-  return (
-    typeof error === 'object'
-    && error !== null
-    && 'name' in error
-    && (error as { name?: unknown }).name === 'AbortError'
-  );
+  if (!isRecord(error)) {
+    return false;
+  }
+
+  return error.name === 'AbortError';
 };
 
 /**

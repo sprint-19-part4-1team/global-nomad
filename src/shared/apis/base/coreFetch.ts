@@ -47,6 +47,7 @@ export const coreFetch = async <T>(
   const request = async (): Promise<Response> => {
     const controller = new AbortController();
     const headers = new Headers(options.headers);
+    let abortedByTimeout = false;
 
     if (isFormData) {
       headers.delete('Content-Type');
@@ -67,6 +68,7 @@ export const coreFetch = async <T>(
     }
 
     const timeoutId = setTimeout(() => {
+      abortedByTimeout = true;
       controller.abort();
     }, timeoutMs);
 
@@ -79,7 +81,10 @@ export const coreFetch = async <T>(
       return response;
     } catch (error) {
       if (isAbortError(error)) {
-        throw new Error('요청이 지연되고 있습니다. 다시 시도해주세요.');
+        if (abortedByTimeout) {
+          throw new Error('요청 시간이 초과되었습니다. 다시 시도해주세요.');
+        }
+        throw new Error('요청이 취소되었습니다.');
       }
       throw error;
     } finally {
@@ -90,7 +95,7 @@ export const coreFetch = async <T>(
     }
   };
 
-  let response = await request();
+  const response = await request();
 
   if (!response.ok) {
     const errorData: { message?: string; code?: string } = await response.json().catch(() => ({}));

@@ -43,7 +43,7 @@ export default function Signup() {
         name='nickname'
         type='nickname'
         autoComplete='nickname'
-        value={values.nickname || ''}
+        value={values.nickname}
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder='닉네임을 입력해 주세요.'
@@ -67,7 +67,7 @@ export default function Signup() {
         name='confirmPassword'
         type='password'
         autoComplete='new-password'
-        value={values.confirmPassword || ''}
+        value={values.confirmPassword}
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder='비밀번호를 한 번 더 입력해 주세요. '

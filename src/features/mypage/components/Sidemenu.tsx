@@ -8,11 +8,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar'
 import { User } from '@/shared/types/user.type';
 import { cn } from '@/shared/utils/cn';
 
-interface MypageInActionsProps {
+interface SidemenuProps {
   user: User;
 }
 
-const mypageMenus = [
+const MYPAGE_MENUS = [
   {
     href: '/mypage/info',
     title: '내 정보로 이동',
@@ -37,7 +37,7 @@ const mypageMenus = [
     label: '예약 현황',
     icon: Icons.ReservationList,
   },
-];
+] as const;
 
 const mypageLinkClass = cn(
   'flex items-center gap-8',
@@ -71,7 +71,7 @@ const activeLinkClass = 'bg-primary-100 text-primary-500';
  * - `cn` 유틸을 사용해 기본/활성 클래스 조건부 병합
  * - 아이콘 컴포넌트를 데이터로 전달해 map 렌더링 단순화
  *
- * @param {MypageInActionsProps} props
+ * @param {SidemenuProps} props
  * @param {User} props.user - 아바타에 표시할 사용자 정보
  *
  * @example
@@ -80,16 +80,18 @@ const activeLinkClass = 'bg-primary-100 text-primary-500';
  * ```
  */
 
-export default function Sidemenu({ user }: MypageInActionsProps) {
+export default function Sidemenu({ user }: SidemenuProps) {
   const pathname = usePathname();
   return (
-    <aside className='hidden w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:w-290'>
-      <Avatar user={user} size='md' className='h:70 mx-auto h-70 md:h-120 md:w-120'>
+    <aside
+      className='hidden w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:w-290'
+      aria-label='마이페이지 사이드 메뉴'>
+      <Avatar user={user} size='md' className='mx-auto h-70 md:h-120 md:w-120'>
         <AvatarImage />
         <AvatarFallback />
       </Avatar>
       <ul className='mt-10 md:mt-24'>
-        {mypageMenus.map(({ href, title, label, icon: Icon }) => (
+        {MYPAGE_MENUS.map(({ href, title, label, icon: Icon }) => (
           <li key={href}>
             <Link
               href={href}

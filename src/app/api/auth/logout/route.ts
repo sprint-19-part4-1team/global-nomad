@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { clearAuthTokens } from '@/shared/utils/authCookies';
 
+type LogoutResponseBody = {
+  message: string;
+};
+
 /**
  * ## 로그아웃 API (BFF)
  *
@@ -22,11 +26,11 @@ import { clearAuthTokens } from '@/shared/utils/authCookies';
  * }
  * ```
  */
-export async function POST() {
+export async function POST(): Promise<NextResponse<LogoutResponseBody>> {
   try {
     await clearAuthTokens();
 
-    return NextResponse.json({ message: '로그아웃 되었습니다.' }, { status: 200 });
+    return NextResponse.json({ message: '로그아웃 되었습니다.' });
   } catch {
     return NextResponse.json({ message: '로그아웃에 실패했습니다.' }, { status: 500 });
   }

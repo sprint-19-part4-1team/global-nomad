@@ -5,7 +5,11 @@ type ApiError = Error & {
   code?: string;
 };
 
-const isAbortError = (error: unknown): boolean => {
+type AbortError = {
+  name: 'AbortError';
+};
+
+export const isAbortError = (error: unknown): error is AbortError => {
   if (!isRecord(error)) {
     return false;
   }

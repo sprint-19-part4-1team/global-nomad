@@ -53,7 +53,7 @@ export default function Signup() {
         label='비밀번호'
         name='password'
         type='password'
-        autoComplete='current-password'
+        autoComplete='new-password'
         value={values.password}
         onChange={handleChange}
         onBlur={handleBlur}

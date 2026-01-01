@@ -31,7 +31,9 @@ export async function POST(): Promise<NextResponse<LogoutResponseBody>> {
     await clearAuthTokens();
 
     return NextResponse.json({ message: '로그아웃 되었습니다.' });
-  } catch {
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
     return NextResponse.json({ message: '로그아웃에 실패했습니다.' }, { status: 500 });
   }
 }

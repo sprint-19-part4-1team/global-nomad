@@ -86,7 +86,7 @@ export default function Sidemenu({ user }: SidemenuProps) {
     <aside
       className='hidden w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:w-290'
       aria-label='마이페이지 사이드 메뉴'>
-      <Avatar user={user} size='md' className='mx-auto h-70 md:h-120 md:w-120'>
+      <Avatar user={user} size='md' className='mx-auto'>
         <AvatarImage />
         <AvatarFallback />
       </Avatar>

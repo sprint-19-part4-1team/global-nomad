@@ -51,19 +51,13 @@ export default function Signup() {
         />
       );
     } catch (err: unknown) {
+      let message: string = SIGNUP_MESSAGE.NETWORK_ERROR;
+
       if (isApiError(err)) {
-        if (err.status === 409) {
-          overlayStore.push(
-            <Dialog message={SIGNUP_MESSAGE.DUPLICATE_EMAIL} onClose={() => overlayStore.pop()} />
-          );
-          return;
-        }
-        overlayStore.push(<Dialog message={err.message} onClose={() => overlayStore.pop()} />);
-        return;
+        message = err.status === 409 ? SIGNUP_MESSAGE.DUPLICATE_EMAIL : err.message;
       }
-      overlayStore.push(
-        <Dialog message={SIGNUP_MESSAGE.NETWORK_ERROR} onClose={() => overlayStore.pop()} />
-      );
+
+      overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
     }
   };
 

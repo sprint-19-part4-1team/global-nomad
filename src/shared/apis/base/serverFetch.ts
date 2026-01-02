@@ -1,3 +1,5 @@
+import { coreFetch } from '@/shared/apis/base/coreFetch';
+
 /**
  * ## serverFetch
  * 서버 환경에서 사용하는 공통 fetch 유틸 함수
@@ -7,30 +9,26 @@
  * - 응답이 실패(`!res.ok`)일 경우, 상태 코드와 메시지를 포함한 에러를 throw 합니다.
  * - 성공 시 응답 body를 JSON으로 파싱하여 반환합니다.
  *
- * @param endpoint - 호출할 백엔드 API의 엔드포인트
- * @param options - fetch에 전달할 RequestInit 옵션
- * @returns 백엔드 API 응답 JSON 데이터
+ * @param {string} endpoint - 호출할 백엔드 API의 엔드포인트
+ * @param {RequestInit} options - fetch에 전달할 RequestInit 옵션
+ * @param {number} [timeoutMs] - 요청 제한 시간(ms), 미지정 시 coreFetch의 기본 timeout 사용 (10초)
+ * @returns {Promise<T>} - 백엔드 API 응답 JSON 데이터
  *
  * @throws
  * `{ status: number; message: string }` 형태의 에러 객체
  */
-export const serverFetch = async <T>(endpoint: string, options: RequestInit): Promise<T> => {
+export const serverFetch = async <T>(
+  endpoint: string,
+  options: RequestInit = {},
+  timeoutMs?: number
+): Promise<T> => {
   const BASE_URL = process.env.API_URL;
 
   if (!BASE_URL) {
-    throw { status: 500, message: 'API_URL 환경 변수가 설정되지 않았습니다.' };
+    throw new Error('API_URL 환경 변수가 설정되지 않았습니다.');
   }
 
-  const res = await fetch(`${BASE_URL}${endpoint}`, options);
+  const url = BASE_URL + endpoint;
 
-  if (!res.ok) {
-    const message = await res
-      .json()
-      .then((errBody) => (typeof errBody?.message === 'string' ? errBody.message : undefined))
-      .catch(() => res.statusText || 'API 응답 처리 중 오류가 발생했습니다.');
-
-    throw { status: res.status, message };
-  }
-
-  return res.json();
+  return coreFetch<T>(url, options, timeoutMs);
 };

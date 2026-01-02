@@ -36,14 +36,14 @@ const LOGO_VARIANTS = {
   login: {
     DesktopComponent: Logos.LogoLogin,
     desktopClassName:
-      'hidden w-255 sm:block text-[#1F1F22] trainstion transition-color duration-500 hover:text-primary-600',
+      'hidden w-255 sm:block text-[#1F1F22] transition transition-color duration-500 hover:text-primary-600',
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-144 sm:hidden',
   },
   header: {
     DesktopComponent: Logos.LogoNav,
     desktopClassName:
-      'hidden w-174 sm:block text-[#1F1F22] trainstion transition-color duration-500 hover:text-primary-600',
+      'hidden w-174 sm:block text-[#1F1F22] transition transition-color duration-500 hover:text-primary-600',
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },

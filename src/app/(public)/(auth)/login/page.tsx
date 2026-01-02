@@ -1,12 +1,21 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthForm from '@/features/auth/components/AuthForm';
+import { login } from '@/shared/apis/feature/auth';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { COMMON_MESSAGE } from '@/shared/constants/errorMessages';
 import useAuthForm from '@/shared/hooks/useAuthForm';
+import { useUserStore } from '@/shared/stores/userStore';
+import { isApiError } from '@/shared/utils/errorGuards';
 
+// TODO: 로그인한 상태일 때 로그인 페이지 접속 시 안내 모달 띄우기
 export default function Login() {
+  const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'login',
     initialValues: {
@@ -15,8 +24,20 @@ export default function Login() {
     },
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log('회원가입 시도 : ', values, e);
+  const handleSubmit = async () => {
+    try {
+      const userData = await login({ email: values.email, password: values.password });
+      setUser(userData);
+      router.replace('/');
+    } catch (err: unknown) {
+      let message: string = COMMON_MESSAGE.NETWORK_ERROR;
+
+      if (isApiError(err)) {
+        message = err.message;
+      }
+
+      overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+    }
   };
 
   return (

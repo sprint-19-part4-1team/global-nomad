@@ -5,7 +5,7 @@ export default function MypageActivity() {
   return (
     <>
       <div>
-        <Title size='18' className='font-size text-gray-950 sm:heading-20 md:heading-24'>
+        <Title size='18' className='text-gray-950 sm:heading-20 md:heading-24'>
           내 체험 관리
         </Title>
         <p className='mt-10 font-medium text-gray-600'>

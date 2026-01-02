@@ -9,11 +9,14 @@ import useAuthForm from '@/shared/hooks/useAuthForm';
 
 export default function Signup() {
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
-    email: '',
-    nickname: '',
-    password: '',
-    confirmPassword: '',
-    termsAgreed: false,
+    validationType: 'signup',
+    initialValues: {
+      email: '',
+      nickname: '',
+      password: '',
+      confirmPassword: '',
+      termsAgreed: false,
+    },
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

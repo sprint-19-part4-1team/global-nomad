@@ -8,8 +8,11 @@ import useAuthForm from '@/shared/hooks/useAuthForm';
 
 export default function Login() {
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
-    email: '',
-    password: '',
+    validationType: 'login',
+    initialValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

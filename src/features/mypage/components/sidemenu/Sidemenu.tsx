@@ -84,7 +84,7 @@ export default function Sidemenu({ user }: SidemenuProps) {
   const pathname = usePathname();
   return (
     <aside
-      className='hidden w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:w-290'
+      className='hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290'
       aria-label='마이페이지 사이드 메뉴'>
       <Avatar user={user} size='md' className='mx-auto'>
         <AvatarImage />

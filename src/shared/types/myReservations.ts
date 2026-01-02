@@ -1,7 +1,15 @@
+export enum ReservationStatus {
+  Pending = 'pending',
+  Confirmed = 'confirmed',
+  Declined = 'declined',
+  Canceled = 'canceled',
+  Completed = 'completed',
+}
+
 export interface GetMyReservationsParams {
   cursorId?: number;
   size?: number;
-  status?: 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+  status?: ReservationStatus;
 }
 export interface UpdateMyReservationBodyDto {
   status: 'canceled';
@@ -10,8 +18,6 @@ export interface CreateReviewBodyDto {
   rating: number;
   content: string;
 }
-
-export type ReservationStatus = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
 
 export interface ReservationWithActivityResponseDto {
   id: number;
@@ -30,13 +36,13 @@ export interface ReservationWithActivityResponseDto {
   date: string;
   startTime: string;
   endTime: string;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /** 내 예약 리스트 조회 리스폰스 */
 export interface GetMyReservationsResponse {
-  cursorId: number;
+  cursorId: number | null;
   reservations: ReservationWithActivityResponseDto[];
   totalCount: number;
 }
@@ -55,14 +61,14 @@ export interface ReservationResponseDto {
   date: string;
   startTime: string;
   endTime: string;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /** 내 예약 리뷰 작성 리스폰스 */
 export interface CreateReviewResponse {
   updatedAt: string;
-  createAt: string;
+  createdAt: string;
   content: string;
   rating: number;
   userId: number;

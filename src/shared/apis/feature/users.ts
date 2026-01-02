@@ -1,6 +1,6 @@
+import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { publicFetch } from '@/shared/apis/base/publicFetch';
-import type { CreateUserBodyDto } from '@/shared/types/auth.types';
-// import type { UpdateUserBodyDto}  from '@/shared/types/auth.types';
+import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/auth.types';
 
 /**
  * 회원가입 요청 API
@@ -20,9 +20,9 @@ export const signUp = (data: CreateUserBodyDto) => {
  *
  * @returns 내 정보 조회 API 응답 Promise
  */
-// export const getMyInfo = () => {
-//   return baseFetcher(`/users/me`, { method: 'GET' });
-// };
+export const getMyInfo = () => {
+  return bffFetch(`/users/me`, { method: 'GET' });
+};
 
 /**
  * 로그인한 사용자의 내 정보 수정 API (BFF)
@@ -30,12 +30,12 @@ export const signUp = (data: CreateUserBodyDto) => {
  * @param data - 수정할 사용자 정보
  * @returns 내 정보 수정 API 응답 Promise
  */
-// export const updateMyInfo = (data: UpdateUserBodyDto) => {
-//   return baseFetcher(`/users/me`, {
-//     method: 'PATCH',
-//     body: JSON.stringify(data),
-//   });
-// };
+export const updateMyInfo = (data: UpdateUserBodyDto) => {
+  return bffFetch(`/users/me`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+};
 
 /**
  * 프로필 이미지 업로드를 위한 이미지 URL 생성 API (BFF)
@@ -43,12 +43,12 @@ export const signUp = (data: CreateUserBodyDto) => {
  * @param image - 업로드할 프로필 이미지 파일
  * @returns 프로필 이미지 URL 생성 API 응답 Promise
  */
-// export const createProfileImageUrl = (image: File) => {
-//   const formData = new FormData();
-//   formData.append('image', image);
+export const createProfileImageUrl = (image: File) => {
+  const formData = new FormData();
+  formData.append('image', image);
 
-//   return baseFetcher(`/users/me/image`, {
-//     method: 'POST',
-//     body: formData,
-//   });
-// };
+  return bffFetch(`/users/me/image`, {
+    method: 'POST',
+    body: formData,
+  });
+};

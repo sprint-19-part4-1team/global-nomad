@@ -133,6 +133,16 @@ const clear = () => {
 };
 
 /**
+ * 특정 id를 가진 overlay가 현재 열려 있는지 확인합니다.
+ *
+ * @param id - 확인할 overlay id
+ * @returns boolean
+ */
+const has = (id: string) => {
+  return overlays.some((o) => o.id === id);
+};
+
+/**
  * ## overlayStore
  *
  * @description
@@ -147,4 +157,5 @@ export const overlayStore = {
   pop,
   popById,
   clear,
+  has,
 };

@@ -72,8 +72,8 @@ export const validators = {
   /**
    * 이메일 유효성 검사
    *
-   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @param {string} value - 검사할 이메일
+   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
    * @description
@@ -82,15 +82,15 @@ export const validators = {
    *
    * @example
    * // 로그인
-   * validators.email('login', 'test') // ''
-   * validators.email('login', '') // '이메일을 입력해 주세요.'
+   * validators.email('test', 'login') // ''
+   * validators.email('', 'login') // '이메일을 입력해 주세요.'
    *
    * // 회원가입
-   * validators.email('signup', 'test@example.com') // ''
-   * validators.email('signup', '') // '이메일을 입력해 주세요.'
-   * validators.email('signup', 'invalid-email') // '이메일 형식으로 입력해 주세요.'
+   * validators.email('test@example.com', 'signup') // ''
+   * validators.email('', 'signup') // '이메일을 입력해 주세요.'
+   * validators.email('invalid-email', 'signup') // '이메일 형식으로 입력해 주세요.'
    */
-  email: (type: ValidationType = 'signup', value: string): string => {
+  email: (value: string, type: ValidationType = 'signup'): string => {
     if (type === 'login') {
       // 로그인: 필수 입력만 체크
       return isRequired(value, VALIDATION_MESSAGES.EMAIL.REQUIRED);
@@ -102,8 +102,8 @@ export const validators = {
   /**
    * 비밀번호 유효성 검사
    *
-   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @param {string} value - 검사할 비밀번호
+   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
    * @description
@@ -112,17 +112,17 @@ export const validators = {
    *
    * @example
    * // 로그인
-   * validators.password('login', 'pass') // ''
-   * validators.password('login', '') // '비밀번호를 입력해 주세요.'
+   * validators.password('pass', 'login') // ''
+   * validators.password('', 'login') // '비밀번호를 입력해 주세요.'
    *
    * // 회원가입
-   * validators.password('signup', 'Password') // ''
-   * validators.password('signup', 'Password123') // ''
-   * validators.password('signup', '') // '비밀번호를 입력해 주세요.'
-   * validators.password('signup', 'Pass') // '8자 이상 입력해주세요.'
-   * validators.password('signup', 'password123') // '영문 대/소문자 조합으로 입력해 주세요.'
+   * validators.password('Password', 'signup') // ''
+   * validators.password('Password123', 'signup') // ''
+   * validators.password('', 'signup') // '비밀번호를 입력해 주세요.'
+   * validators.password('Pass', 'signup') // '8자 이상 입력해주세요.'
+   * validators.password('password123', 'signup') // '영문 대/소문자 조합으로 입력해 주세요.'
    */
-  password: (type: ValidationType = 'signup', value: string): string => {
+  password: (value: string, type: ValidationType = 'signup'): string => {
     if (type === 'login') {
       return isRequired(value, VALIDATION_MESSAGES.PASSWORD.REQUIRED);
     }

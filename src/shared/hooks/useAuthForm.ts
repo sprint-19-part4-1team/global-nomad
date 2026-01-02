@@ -117,10 +117,10 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
 
         // validator가 있으면 에러 체크
         if (key === 'email') {
-          return !validators.email(validationType, value as string);
+          return !validators.email(value as string, validationType);
         }
         if (key === 'password') {
-          return !validators.password(validationType, value as string);
+          return !validators.password(value as string, validationType);
         }
         if (key === 'confirmPassword') {
           return !validators.confirmPassword(value as string, valuesToCheck);
@@ -190,9 +190,9 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
 
     // 각 필드에 맞는 validator 호출
     if (name === 'email') {
-      errorMsg = validators.email(validationType, value);
+      errorMsg = validators.email(value, validationType);
     } else if (name === 'password') {
-      errorMsg = validators.password(validationType, value);
+      errorMsg = validators.password(value, validationType);
     } else if (name === 'confirmPassword') {
       errorMsg = validators.confirmPassword(value, currentValues);
     } else if (name === 'nickname') {

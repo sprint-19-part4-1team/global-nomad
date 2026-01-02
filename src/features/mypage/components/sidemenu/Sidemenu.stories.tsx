@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Sidemenu from '@/features/mypage/components/sidemenu/Sidemenu';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
  * 마이페이지 사이드 메뉴 컴포넌트
@@ -37,7 +37,7 @@ export default meta;
 type Story = StoryObj<typeof Sidemenu>;
 
 // mockdata
-const MOCK_USER: User = {
+const MOCK_USER: UserServiceResponseDto = {
   createdAt: '2025-12-24T08:50:57.848Z',
   email: 'test@example.com',
   id: 1,

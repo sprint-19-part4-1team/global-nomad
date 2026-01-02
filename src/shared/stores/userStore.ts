@@ -56,7 +56,7 @@ export const useUserStore = create<UserStore>()(
         partialize: (state) => ({
           user: state.user,
         }),
-        onRehydrateStorage: () => (state) => {
+        onRehydrateStorage: (state) => {
           if (state) {
             state.hasHydrated = true;
           }

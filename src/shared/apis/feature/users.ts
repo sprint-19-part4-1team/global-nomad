@@ -1,6 +1,6 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { publicFetch } from '@/shared/apis/base/publicFetch';
-import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/auth';
+import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/user';
 
 /**
  * 회원가입 요청 API

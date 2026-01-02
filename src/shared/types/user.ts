@@ -16,3 +16,15 @@ export interface UserServiceResponseDto {
   /** 계정 최종 수정 일시 (ISO 8601 형식) */
   updatedAt: string;
 }
+
+export interface CreateUserBodyDto {
+  email: string;
+  nickname: string;
+  password: string;
+}
+
+export interface UpdateUserBodyDto {
+  nickname?: string;
+  profileImageUrl?: string | null;
+  newPassword?: string;
+}

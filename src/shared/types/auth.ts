@@ -14,15 +14,3 @@ export interface LoginResponse {
 export interface LogoutResponse {
   message: string;
 }
-
-export interface CreateUserBodyDto {
-  email: string;
-  nickname: string;
-  password: string;
-}
-
-export interface UpdateUserBodyDto {
-  nickname?: string;
-  profileImageUrl?: string | null;
-  newPassword?: string;
-}

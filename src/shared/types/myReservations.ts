@@ -24,7 +24,7 @@ export interface ReservationWithActivityResponseDto {
   };
   scheduleId: number;
   status: ReservationStatus;
-  reviewSubmmitted: boolean;
+  reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
   date: string;
@@ -49,7 +49,7 @@ export interface ReservationResponseDto {
   activityId: number;
   scheduleId: number;
   status: ReservationStatus;
-  reviewSubmmitted: boolean;
+  reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
   date: string;

@@ -1,5 +1,7 @@
 import { coreFetch } from '@/shared/apis/base/coreFetch';
 
+const BASE_URL = '/api';
+
 /**
  * ## bffFetch
  * Next.js API Route(BFF)를 호출하기 위한 공통 fetch 유틸 함수
@@ -24,7 +26,6 @@ export const bffFetch = async <T>(
   options: RequestInit,
   timeoutMs?: number
 ): Promise<T> => {
-  const BASE_URL = '/api';
   const url = BASE_URL + endpoint;
 
   return coreFetch<T>(url, { ...options, credentials: 'include' }, timeoutMs);

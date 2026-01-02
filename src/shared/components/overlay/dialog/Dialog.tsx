@@ -89,8 +89,9 @@ export default function Dialog({ variant = 'alert', autoCloseAfterMs, ...props }
 
   const surfaceRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeHandlerRef = useRef<(() => void) | null>(null);
 
-  const closeHandler =
+  closeHandlerRef.current =
     variant === 'alert'
       ? (props as DialogAlertProps).onClose
       : (props as DialogConfirmProps).onCancel;
@@ -101,7 +102,7 @@ export default function Dialog({ variant = 'alert', autoCloseAfterMs, ...props }
     }
 
     timeoutRef.current = setTimeout(() => {
-      closeHandler?.();
+      closeHandlerRef.current?.();
     }, autoCloseAfterMs);
 
     return () => {
@@ -109,10 +110,10 @@ export default function Dialog({ variant = 'alert', autoCloseAfterMs, ...props }
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [autoCloseAfterMs, closeHandler]);
+  }, [autoCloseAfterMs, closeHandlerRef]);
 
   useOutsideClick(surfaceRef, () => {
-    closeHandler?.();
+    closeHandlerRef.current?.();
   });
 
   return (

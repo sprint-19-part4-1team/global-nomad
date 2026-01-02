@@ -173,6 +173,12 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
     if (errors[name as keyof AuthFormValues]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+
+    // 회원가입 페이지에서 비밀번호가 변경되고, 비밀번호 확인에 값이 있을 때 재검증
+    if (validationType === 'signup' && name === 'password' && newValues.confirmPassword) {
+      const confirmError = validateField('confirmPassword', newValues.confirmPassword, newValues);
+      setErrors((prev) => ({ ...prev, confirmPassword: confirmError }));
+    }
   };
 
   /**

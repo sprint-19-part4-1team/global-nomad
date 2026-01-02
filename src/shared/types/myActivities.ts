@@ -1,5 +1,6 @@
 import type { ActivityCategory } from '@/shared/constants';
 import type { ActivityBasicDto } from '@/shared/types/activities';
+import { ReservationStatus } from '@/shared/types/myReservations';
 
 export interface GetMyActivitiesParams {
   cursorId?: number;
@@ -75,8 +76,8 @@ export interface ReservationWithUserResponseDto {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  // TODO: API 연동 시 리스폰스 타입 확인해서 status 변경 필요. 스웨거 기준 {}만 있어서 기재를 못했습니다..
-  status: {};
+  // TODO: API 연동 시 리스폰스 타입 확인해서 status 타입 변경 필요.
+  status: ReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

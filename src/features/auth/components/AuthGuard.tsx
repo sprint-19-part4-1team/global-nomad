@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
@@ -43,7 +44,12 @@ interface AuthGuardProps {
  */
 export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
+  const { user, hasHydrated } = useUserStore(
+    useShallow((state) => ({
+      user: state.user,
+      hasHydrated: state.hasHydrated,
+    }))
+  );
 
   useEffect(() => {
     if (!user) {
@@ -71,7 +77,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     };
   }, [user, router]);
 
-  if (user) {
+  if (user || !hasHydrated) {
     return null;
   }
 

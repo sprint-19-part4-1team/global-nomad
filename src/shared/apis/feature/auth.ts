@@ -1,5 +1,5 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import { LoginResponse, LogoutResponse, type LoginRequest } from '@/shared/types/auth';
+import type { LoginResponse, LogoutResponse, LoginRequest } from '@/shared/types/auth';
 
 /**
  * 로그인 API (BFF)

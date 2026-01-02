@@ -30,8 +30,9 @@ export const logout = (): Promise<LogoutResponse> => {
  *
  * @returns 토큰 재발급 API 응답 Promise
  */
-export const refreshToken = () => {
-  return bffFetch('/auth/tokens', {
+export const refreshToken = (): Promise<any> => {
+  // TODO: API 응답 타입이 확정되면 any 대신 구체적인 타입으로 교체해주세요.
+  return bffFetch<any>('/auth/tokens', {
     method: 'POST',
   });
 };

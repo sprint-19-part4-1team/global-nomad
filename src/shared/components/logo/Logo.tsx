@@ -35,13 +35,15 @@ interface LogoProps {
 const LOGO_VARIANTS = {
   login: {
     DesktopComponent: Logos.LogoLogin,
-    desktopClassName: 'hidden w-255 sm:block',
+    desktopClassName:
+      'hidden w-255 sm:block text-[#1F1F22] trainstion transition-color duration-500 hover:text-primary-600',
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-144 sm:hidden',
   },
   header: {
     DesktopComponent: Logos.LogoNav,
-    desktopClassName: 'hidden w-174 sm:block',
+    desktopClassName:
+      'hidden w-174 sm:block text-[#1F1F22] trainstion transition-color duration-500 hover:text-primary-600',
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },
@@ -52,9 +54,11 @@ export default function Logo({ variant = 'header' }: LogoProps) {
     LOGO_VARIANTS[variant];
 
   return (
-    <Link href='/' title='홈으로 이동'>
-      <DesktopComponent className={desktopClassName} />
-      <MobileComponent className={mobileClassName} />
-    </Link>
+    <h1>
+      <Link href='/' title='홈으로 이동'>
+        <DesktopComponent className={desktopClassName} />
+        <MobileComponent className={mobileClassName} />
+      </Link>
+    </h1>
   );
 }

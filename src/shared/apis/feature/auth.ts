@@ -1,5 +1,5 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import { LoginResponse, type LoginRequest } from '@/shared/types/auth.types';
+import { LoginResponse, LogoutResponse, type LoginRequest } from '@/shared/types/auth';
 
 /**
  * 로그인 API (BFF)
@@ -7,7 +7,7 @@ import { LoginResponse, type LoginRequest } from '@/shared/types/auth.types';
  * @param data - 로그인에 필요한 사용자 정보
  * @returns 로그인 API 응답 Promise
  */
-export const login = (data: LoginRequest) => {
+export const login = (data: LoginRequest): Promise<LoginResponse> => {
   return bffFetch<LoginResponse>('/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -19,8 +19,8 @@ export const login = (data: LoginRequest) => {
  *
  * @returns 로그아웃 API 응답 Promise
  */
-export const logout = () => {
-  return bffFetch('/auth/logout', {
+export const logout = (): Promise<LogoutResponse> => {
+  return bffFetch<LogoutResponse>('/auth/logout', {
     method: 'POST',
   });
 };

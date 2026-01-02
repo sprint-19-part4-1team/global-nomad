@@ -57,44 +57,76 @@ const validateNicknameFormat = (value: string): string => {
 };
 
 /**
+ * 유효성 검사 타입
+ *
+ * @property {'login'} login - 로그인 페이지용 검사 (필수 입력만 확인)
+ * @property {'signup'} signup - 회원가입 페이지용 검사 (필수 입력 + 형식 검사)
+ */
+type ValidationType = 'login' | 'signup';
+
+/**
  * 유효성 검사 함수들
  * 각 함수는 에러 메시지를 반환하며, 유효한 경우 빈 문자열 반환
  */
 export const validators = {
   /**
    * 이메일 유효성 검사
-   * - 필수 입력 확인
-   * - 이메일 형식 확인
    *
+   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @param {string} value - 검사할 이메일
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
+   * @description
+   * - login: 필수 입력만 확인
+   * - signup: 필수 입력 + 이메일 형식 확인
+   *
    * @example
-   * validators.email('test@example.com') // ''
-   * validators.email('') // '이메일을 입력해 주세요.'
-   * validators.email('invalid-email') // '이메일 형식으로 입력해 주세요.'
+   * // 로그인
+   * validators.email('login', 'test') // ''
+   * validators.email('login', '') // '이메일을 입력해 주세요.'
+   *
+   * // 회원가입
+   * validators.email('signup', 'test@example.com') // ''
+   * validators.email('signup', '') // '이메일을 입력해 주세요.'
+   * validators.email('signup', 'invalid-email') // '이메일 형식으로 입력해 주세요.'
    */
-  email: (value: string): string => {
+  email: (type: ValidationType = 'signup', value: string): string => {
+    if (type === 'login') {
+      // 로그인: 필수 입력만 체크
+      return isRequired(value, VALIDATION_MESSAGES.EMAIL.REQUIRED);
+    }
+    // 회원가입: 필수 + 이메일 형식 체크
     return isRequired(value, VALIDATION_MESSAGES.EMAIL.REQUIRED) || validateEmailFormat(value);
   },
 
   /**
    * 비밀번호 유효성 검사
-   * - 필수 입력 확인
-   * - 8자 이상
-   * - 영문 대소문자 조합 (숫자 선택)
    *
+   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
    * @param {string} value - 검사할 비밀번호
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
+   * @description
+   * - login: 필수 입력만 확인
+   * - signup: 필수 입력 + 8자 이상 + 영문 대소문자 조합 (숫자 선택)
+   *
    * @example
-   * validators.password('Password') // ''
-   * validators.password('Password123') // ''
-   * validators.password('') // '비밀번호를 입력해 주세요.'
-   * validators.password('Pass') // '8자 이상 입력해주세요.'
-   * validators.password('password123') // '영문 대/소문자 조합으로 입력해 주세요.'
+   * // 로그인
+   * validators.password('login', 'pass') // ''
+   * validators.password('login', '') // '비밀번호를 입력해 주세요.'
+   *
+   * // 회원가입
+   * validators.password('signup', 'Password') // ''
+   * validators.password('signup', 'Password123') // ''
+   * validators.password('signup', '') // '비밀번호를 입력해 주세요.'
+   * validators.password('signup', 'Pass') // '8자 이상 입력해주세요.'
+   * validators.password('signup', 'password123') // '영문 대/소문자 조합으로 입력해 주세요.'
    */
-  password: (value: string): string => {
+  password: (type: ValidationType = 'signup', value: string): string => {
+    if (type === 'login') {
+      return isRequired(value, VALIDATION_MESSAGES.PASSWORD.REQUIRED);
+    }
+
     return (
       isRequired(value, VALIDATION_MESSAGES.PASSWORD.REQUIRED) || validatePasswordFormat(value)
     );
@@ -103,6 +135,7 @@ export const validators = {
   /**
    * 비밀번호 확인 유효성 검사
    * - 원본 비밀번호와 일치 여부 확인
+   * - 회원가입 전용 필드
    *
    * @param {string} value - 검사할 비밀번호 확인 값
    * @param {Object} values - 전체 폼 값 객체
@@ -110,8 +143,8 @@ export const validators = {
    * @returns {string} 에러 메시지 또는 빈 문자열
    *
    * @example
-   * validators.confirmPassword('Password123', 'Password123') // ''
-   * validators.confirmPassword('Different', 'Password123') // '비밀번호와 동일하게 입력해 주세요.'
+   * validators.confirmPassword('Password123', { password: 'Password123' }) // ''
+   * validators.confirmPassword('Different', { password: 'Password123' }) // '비밀번호와 동일하게 입력해 주세요.'
    */
   confirmPassword: (value: string, values: { password: string }): string => {
     return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
@@ -122,6 +155,7 @@ export const validators = {
    * - 필수 입력 확인
    * - 10자 이하
    * - 완성된 한글, 영문, 숫자만 허용 (공백, 특수문자, 자음/모음 제외)
+   * - 회원가입 전용 필드
    *
    * @param {string} value - 검사할 닉네임
    * @returns {string} 에러 메시지 또는 빈 문자열

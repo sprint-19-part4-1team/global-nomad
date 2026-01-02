@@ -33,14 +33,12 @@ export default function Signup() {
   });
 
   const handleSubmit = async () => {
-    const nickname = values.nickname;
-
-    if (!nickname) {
+    if (!values.nickname) {
       return;
     }
 
     try {
-      await signUp({ email: values.email, password: values.password, nickname });
+      await signUp({ email: values.email, password: values.password, nickname: values.nickname });
       overlayStore.push(
         <Dialog
           message={SIGNUP_MESSAGE.SUCCESS}
@@ -79,7 +77,7 @@ export default function Signup() {
         variant='authForm'
         label='닉네임'
         name='nickname'
-        type='nickname'
+        type='text'
         autoComplete='nickname'
         value={values.nickname}
         onChange={handleChange}
@@ -108,7 +106,7 @@ export default function Signup() {
         value={values.confirmPassword}
         onChange={handleChange}
         onBlur={handleBlur}
-        placeholder='비밀번호를 한 번 더 입력해 주세요. '
+        placeholder='비밀번호를 한 번 더 입력해 주세요.'
         errorMessage={errors.confirmPassword}
       />
       <AuthCheckbox

@@ -1,9 +1,17 @@
 import Link from 'next/link';
 import Logos from '@/assets/logo';
+import { cn } from '@/shared/utils/cn';
 
 interface LogoProps {
   variant?: 'login' | 'header';
 }
+
+const desktopLogoBaseClass = cn(
+  'hidden sm:block',
+  'text-gray-950',
+  'transition transition-color duration-500',
+  'hover:text-primary-600'
+);
 
 /**
  * 서비스 로고를 렌더링하는 공통 컴포넌트
@@ -35,13 +43,13 @@ interface LogoProps {
 const LOGO_VARIANTS = {
   login: {
     DesktopComponent: Logos.LogoLogin,
-    desktopClassName: 'hidden w-255 sm:block',
+    desktopClassName: `${desktopLogoBaseClass} w-255`,
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-144 sm:hidden',
   },
   header: {
     DesktopComponent: Logos.LogoNav,
-    desktopClassName: 'hidden w-174 sm:block',
+    desktopClassName: `${desktopLogoBaseClass} w-174`,
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },
@@ -52,9 +60,11 @@ export default function Logo({ variant = 'header' }: LogoProps) {
     LOGO_VARIANTS[variant];
 
   return (
-    <Link href='/' title='홈으로 이동'>
-      <DesktopComponent className={desktopClassName} />
-      <MobileComponent className={mobileClassName} />
-    </Link>
+    <h1>
+      <Link href='/' title='홈으로 이동'>
+        <DesktopComponent className={desktopClassName} />
+        <MobileComponent className={mobileClassName} />
+      </Link>
+    </h1>
   );
 }

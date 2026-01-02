@@ -1,9 +1,9 @@
 import HeaderActions from '@/shared/components/header/HeaderAction';
 import Logo from '@/shared/components/logo/Logo';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 interface HeaderProps {
-  user?: User;
+  user?: UserServiceResponseDto;
   isLoggedIn?: boolean;
 }
 

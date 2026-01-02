@@ -2,7 +2,7 @@
  * 사용자 정보 타입
  * @description API 응답으로 받는 사용자 데이터 구조
  */
-export interface User {
+export interface UserServiceResponseDto {
   /** 사용자 고유 ID */
   id: number;
   /** 사용자 이메일 주소 */

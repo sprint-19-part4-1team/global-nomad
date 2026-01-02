@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
  * Avatar 컴포넌트 Context 타입
@@ -7,7 +7,7 @@ import { User } from '@/shared/types/user.type';
  * @property {Dispatch<SetStateAction<boolean>>} setImageError - 이미지 로딩 에러 상태 설정 함수
  */
 interface AvatarContextType {
-  user: User;
+  user: UserServiceResponseDto;
   imageError: boolean;
   setImageError: Dispatch<SetStateAction<boolean>>;
 }

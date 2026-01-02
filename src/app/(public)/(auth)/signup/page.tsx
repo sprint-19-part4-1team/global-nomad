@@ -1,13 +1,26 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
 import AuthForm from '@/features/auth/components/AuthForm';
+import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useAuthForm from '@/shared/hooks/useAuthForm';
+import { isApiError } from '@/shared/utils/errorGuards';
+
+// TODO: 로그인한 상태일 때 회원가입 페이지 접속 시 안내 모달 띄우기
+
+const SIGNUP_MESSAGE = {
+  SUCCESS: '가입이 완료되었습니다.',
+  DUPLICATE_EMAIL: '이미 사용 중인 이메일입니다.',
+  NETWORK_ERROR: '네트워크 오류가 발생했습니다.',
+} as const;
 
 export default function Signup() {
+  const router = useRouter();
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'signup',
     initialValues: {
@@ -19,8 +32,31 @@ export default function Signup() {
     },
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log('회원가입 시도 : ', values, e);
+  const handleSubmit = async () => {
+    if (!values.nickname) {
+      return;
+    }
+
+    try {
+      await signUp({ email: values.email, password: values.password, nickname: values.nickname });
+      overlayStore.push(
+        <Dialog
+          message={SIGNUP_MESSAGE.SUCCESS}
+          onClose={() => {
+            overlayStore.pop();
+            router.replace('/login');
+          }}
+        />
+      );
+    } catch (err: unknown) {
+      let message: string = SIGNUP_MESSAGE.NETWORK_ERROR;
+
+      if (isApiError(err)) {
+        message = err.status === 409 ? SIGNUP_MESSAGE.DUPLICATE_EMAIL : err.message;
+      }
+
+      overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+    }
   };
 
   return (
@@ -41,7 +77,7 @@ export default function Signup() {
         variant='authForm'
         label='닉네임'
         name='nickname'
-        type='nickname'
+        type='text'
         autoComplete='nickname'
         value={values.nickname}
         onChange={handleChange}
@@ -70,7 +106,7 @@ export default function Signup() {
         value={values.confirmPassword}
         onChange={handleChange}
         onBlur={handleBlur}
-        placeholder='비밀번호를 한 번 더 입력해 주세요. '
+        placeholder='비밀번호를 한 번 더 입력해 주세요.'
         errorMessage={errors.confirmPassword}
       />
       <AuthCheckbox

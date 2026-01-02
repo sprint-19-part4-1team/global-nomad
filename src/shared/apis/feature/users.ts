@@ -1,6 +1,11 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { publicFetch } from '@/shared/apis/base/publicFetch';
-import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/user';
+import type {
+  CreateProfileImageUrlResponse,
+  UserServiceResponseDto,
+  CreateUserBodyDto,
+  UpdateUserBodyDto,
+} from '@/shared/types/user';
 
 /**
  * 회원가입 요청 API
@@ -8,8 +13,8 @@ import type { CreateUserBodyDto, UpdateUserBodyDto } from '@/shared/types/user';
  * @param data - 회원가입에 필요한 사용자 정보
  * @returns 회원가입 API 응답 Promise
  */
-export const signUp = (data: CreateUserBodyDto) => {
-  return publicFetch(`/users`, {
+export const signUp = (data: CreateUserBodyDto): Promise<UserServiceResponseDto> => {
+  return publicFetch<UserServiceResponseDto>(`/users`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -20,8 +25,8 @@ export const signUp = (data: CreateUserBodyDto) => {
  *
  * @returns 내 정보 조회 API 응답 Promise
  */
-export const getMyInfo = () => {
-  return bffFetch(`/users/me`, { method: 'GET' });
+export const getMyInfo = (): Promise<UserServiceResponseDto> => {
+  return bffFetch<UserServiceResponseDto>(`/users/me`, { method: 'GET' });
 };
 
 /**
@@ -30,8 +35,8 @@ export const getMyInfo = () => {
  * @param data - 수정할 사용자 정보
  * @returns 내 정보 수정 API 응답 Promise
  */
-export const updateMyInfo = (data: UpdateUserBodyDto) => {
-  return bffFetch(`/users/me`, {
+export const updateMyInfo = (data: UpdateUserBodyDto): Promise<UserServiceResponseDto> => {
+  return bffFetch<UserServiceResponseDto>(`/users/me`, {
     method: 'PATCH',
     body: JSON.stringify(data),
   });
@@ -43,11 +48,11 @@ export const updateMyInfo = (data: UpdateUserBodyDto) => {
  * @param image - 업로드할 프로필 이미지 파일
  * @returns 프로필 이미지 URL 생성 API 응답 Promise
  */
-export const createProfileImageUrl = (image: File) => {
+export const createProfileImageUrl = (image: File): Promise<CreateProfileImageUrlResponse> => {
   const formData = new FormData();
   formData.append('image', image);
 
-  return bffFetch(`/users/me/image`, {
+  return bffFetch<CreateProfileImageUrlResponse>(`/users/me/image`, {
     method: 'POST',
     body: formData,
   });

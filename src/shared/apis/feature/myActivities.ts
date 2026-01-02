@@ -1,4 +1,5 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+import type { ActivityWithSchedulesResponseDto } from '@/shared/types/activities';
 import type {
   GetMyActivitiesParams,
   GetMyActivityReservationDashboardParams,
@@ -6,7 +7,12 @@ import type {
   GetMyActivityReservationsParams,
   UpdateMyActivityReservationBodyDto,
   UpdateMyActivityBodyDto,
+  MyActivitiesResponse,
+  FindReservationsByMonthResponseDto,
+  ReservedScheduleResponseDto,
+  GetMyActivityReservationsResponse,
 } from '@/shared/types/myActivities';
+import type { ReservationResponseDto } from '@/shared/types/myReservations';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
 /**
@@ -15,10 +21,10 @@ import { createQueryString } from '@/shared/utils/createQueryString';
  * @param params - 내 체험 리스트 조회를 위한 쿼리 파라미터
  * @returns 내 체험 리스트 조회 API 응답 Promise
  */
-export const getMyActivities = (params: GetMyActivitiesParams) => {
+export const getMyActivities = (params: GetMyActivitiesParams): Promise<MyActivitiesResponse> => {
   const queryString = createQueryString(params);
 
-  return bffFetch(`/my-activities${queryString}`, {
+  return bffFetch<MyActivitiesResponse>(`/my-activities${queryString}`, {
     method: 'GET',
   });
 };
@@ -33,12 +39,15 @@ export const getMyActivities = (params: GetMyActivitiesParams) => {
 export const getMyActivityReservationDashboard = (
   activityId: number,
   params: GetMyActivityReservationDashboardParams
-) => {
+): Promise<FindReservationsByMonthResponseDto[]> => {
   const queryString = createQueryString(params);
 
-  return bffFetch(`/my-activities/${activityId}/reservation-dashboard${queryString}`, {
-    method: 'GET',
-  });
+  return bffFetch<FindReservationsByMonthResponseDto[]>(
+    `/my-activities/${activityId}/reservation-dashboard${queryString}`,
+    {
+      method: 'GET',
+    }
+  );
 };
 
 /**
@@ -51,12 +60,15 @@ export const getMyActivityReservationDashboard = (
 export const getMyActivityReservedSchedules = (
   activityId: number,
   params: GetMyActivityReservedSchedulesParams
-) => {
+): Promise<ReservedScheduleResponseDto[]> => {
   const queryString = createQueryString(params);
 
-  return bffFetch(`/my-activities/${activityId}/reserved-schedule${queryString}`, {
-    method: 'GET',
-  });
+  return bffFetch<ReservedScheduleResponseDto[]>(
+    `/my-activities/${activityId}/reserved-schedule${queryString}`,
+    {
+      method: 'GET',
+    }
+  );
 };
 
 /**
@@ -69,12 +81,15 @@ export const getMyActivityReservedSchedules = (
 export const getMyActivityReservations = (
   activityId: number,
   params: GetMyActivityReservationsParams
-) => {
+): Promise<GetMyActivityReservationsResponse> => {
   const queryString = createQueryString(params);
 
-  return bffFetch(`/my-activities/${activityId}/reservations${queryString}`, {
-    method: 'GET',
-  });
+  return bffFetch<GetMyActivityReservationsResponse>(
+    `/my-activities/${activityId}/reservations${queryString}`,
+    {
+      method: 'GET',
+    }
+  );
 };
 
 /**
@@ -89,11 +104,14 @@ export const updateMyActivityReservationStatus = (
   activityId: number,
   reservationId: number,
   data: UpdateMyActivityReservationBodyDto
-) => {
-  return bffFetch(`/my-activities/${activityId}/reservations/${reservationId}`, {
-    method: 'PATCH',
-    body: JSON.stringify(data),
-  });
+): Promise<ReservationResponseDto> => {
+  return bffFetch<ReservationResponseDto>(
+    `/my-activities/${activityId}/reservations/${reservationId}`,
+    {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }
+  );
 };
 
 /**
@@ -102,8 +120,8 @@ export const updateMyActivityReservationStatus = (
  * @param activityId - 삭제할 체험 ID
  * @returns 내 체험 삭제 API 응답 Promise
  */
-export const deleteMyActivity = (activityId: number) => {
-  return bffFetch(`/my-activities/${activityId}`, { method: 'DELETE' });
+export const deleteMyActivity = (activityId: number): Promise<void> => {
+  return bffFetch<void>(`/my-activities/${activityId}`, { method: 'DELETE' });
 };
 
 /**
@@ -113,8 +131,11 @@ export const deleteMyActivity = (activityId: number) => {
  * @param data - 체험 수정에 필요한 정보
  * @returns 내 체험 수정 API 응답 Promise
  */
-export const updateMyActivity = (activityId: number, data: UpdateMyActivityBodyDto) => {
-  return bffFetch(`/my-activities/${activityId}`, {
+export const updateMyActivity = (
+  activityId: number,
+  data: UpdateMyActivityBodyDto
+): Promise<ActivityWithSchedulesResponseDto> => {
+  return bffFetch<ActivityWithSchedulesResponseDto>(`/my-activities/${activityId}`, {
     method: 'PATCH',
     body: JSON.stringify(data),
   });

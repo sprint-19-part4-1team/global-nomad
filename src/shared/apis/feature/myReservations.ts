@@ -3,6 +3,9 @@ import type {
   GetMyReservationsParams,
   UpdateMyReservationBodyDto,
   CreateReviewBodyDto,
+  GetMyReservationsResponse,
+  ReservationResponseDto,
+  CreateReviewResponse,
 } from '@/shared/types/myReservations';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
@@ -12,9 +15,11 @@ import { createQueryString } from '@/shared/utils/createQueryString';
  * @param params - 내 예약 리스트 조회를 위한 쿼리 파라미터
  * @returns 내 예약 리스트 조회 API 응답 Promise
  */
-export const getMyReservations = (params: GetMyReservationsParams) => {
+export const getMyReservations = (
+  params: GetMyReservationsParams
+): Promise<GetMyReservationsResponse> => {
   const queryString = createQueryString(params);
-  return bffFetch(`/my-reservations${queryString}`, { method: 'GET' });
+  return bffFetch<GetMyReservationsResponse>(`/my-reservations${queryString}`, { method: 'GET' });
 };
 
 /**
@@ -24,8 +29,11 @@ export const getMyReservations = (params: GetMyReservationsParams) => {
  * @param data - 예약 수정(취소)에 필요한 정보
  * @returns 내 예약 수정 API 응답 Promise
  */
-export const updateMyReservation = (reservationId: number, data: UpdateMyReservationBodyDto) => {
-  return bffFetch(`/my-reservations/${reservationId}`, {
+export const updateMyReservation = (
+  reservationId: number,
+  data: UpdateMyReservationBodyDto
+): Promise<ReservationResponseDto> => {
+  return bffFetch<ReservationResponseDto>(`/my-reservations/${reservationId}`, {
     method: 'PATCH',
     body: JSON.stringify(data),
   });
@@ -38,8 +46,11 @@ export const updateMyReservation = (reservationId: number, data: UpdateMyReserva
  * @param data - 리뷰 작성에 필요한 정보
  * @returns 내 예약 리뷰 작성 API 응답 Promise
  */
-export const createReview = (reservationId: number, data: CreateReviewBodyDto) => {
-  return bffFetch(`/my-reservations/${reservationId}/reviews`, {
+export const createReview = (
+  reservationId: number,
+  data: CreateReviewBodyDto
+): Promise<CreateReviewResponse> => {
+  return bffFetch<CreateReviewResponse>(`/my-reservations/${reservationId}/reviews`, {
     method: 'POST',
     body: JSON.stringify(data),
   });

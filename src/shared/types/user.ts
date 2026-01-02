@@ -28,3 +28,7 @@ export interface UpdateUserBodyDto {
   profileImageUrl?: string | null;
   newPassword?: string;
 }
+
+export interface CreateProfileImageUrlResponse {
+  profileImageUrl: string;
+}

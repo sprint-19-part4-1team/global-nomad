@@ -8,7 +8,7 @@ import {
   ActionDropdownContent,
   ActionDropdownItem,
 } from '@/shared/components/dropdown/action';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
  * ActionDropdown 컴포넌트 스토리 가이드
@@ -62,7 +62,7 @@ type Story = StoryObj<typeof ActionDropdown>;
 /**
  * 테스트용 유저 데이터
  */
-const DEFAULT_USER: User = {
+const DEFAULT_USER: UserServiceResponseDto = {
   id: 1,
   email: 'test@example.com',
   nickname: '유저',

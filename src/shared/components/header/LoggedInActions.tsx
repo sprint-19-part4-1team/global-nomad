@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 interface LoggedInActionsProps {
-  user: User;
+  user: UserServiceResponseDto;
 }
 
 export default function LoggedInActions({ user }: LoggedInActionsProps) {

@@ -20,9 +20,7 @@ export default function Signup() {
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log('회원가입 시도 : ', values);
+    console.log('회원가입 시도 : ', values, e);
   };
 
   return (

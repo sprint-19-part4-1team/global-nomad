@@ -16,9 +16,7 @@ export default function Login() {
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log('로그인 시도 : ', values);
+    console.log('회원가입 시도 : ', values, e);
   };
 
   return (

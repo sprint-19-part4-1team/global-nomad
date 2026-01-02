@@ -4,12 +4,12 @@ import { cn } from '@/shared/utils/cn';
 /**
  * AuthForm 컴포넌트의 Props
  *
- * @property {(e: FormEvent<HTMLFormElement>) => void} onSubmit - 폼 제출 시 실행될 콜백 함수 (이벤트 객체 전달)
+ * @property {(e: FormEvent<HTMLFormElement>) => Promise<void> | void} onSubmit - 폼 제출 시 실행될 콜백 함수 (이벤트 객체 전달)
  * @property {string} [className] - 추가 스타일을 위한 선택적 className
  * @property {ReactNode} children - 폼 내부에 렌더링될 자식 요소들 (input, button 등)
  */
 interface AuthFormProps {
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void> | void;
   className?: string;
   children: ReactNode;
 }

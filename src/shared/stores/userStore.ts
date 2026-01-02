@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
@@ -14,9 +14,17 @@ import { UserServiceResponseDto } from '@/shared/types/user';
  * - 로그인, `/users/me` 조회, 프로필 수정 등
  *   **서버에서 최신 사용자 정보를 받은 시점에만** `setUser`를 호출해야 합니다.
  * - 로그아웃 시에는 `clearUser`를 호출하여 사용자 정보를 초기화합니다.
+ * - 이 store는 `zustand/persist`를 사용하여
+ *   새로고침 후에도 사용자 정보를 복원합니다.
+ *
+ * @type {UserServiceResponseDto | undefined} - 로그인한 사용자 정보 (비로그인 시 undefined)
+ * @type {boolean} - persist hydration 완료 여부 (SSR → CSR 깜빡임 방지용)
+ * @type {(user: UserServiceResponseDto) => void} - 사용자 정보 설정
+ * @type {() => void} - 로그아웃
  */
 type UserStore = {
   user: UserServiceResponseDto | undefined;
+  hasHydrated: boolean;
   setUser: (user: UserServiceResponseDto) => void;
   clearUser: () => void;
 };
@@ -36,14 +44,25 @@ type UserStore = {
  */
 export const useUserStore = create<UserStore>()(
   devtools(
-    (set) => ({
-      user: undefined,
-      setUser: (user) => set({ user }, false, 'user/setUser'),
-      clearUser: () => set({ user: undefined }, false, 'user/clearUser'),
-    }),
-    {
-      name: 'UserStore',
-      enabled: process.env.NODE_ENV === 'development',
-    }
+    persist(
+      (set) => ({
+        user: undefined,
+        hasHydrated: false,
+        setUser: (user) => set({ user }, false, 'user/setUser'),
+        clearUser: () => set({ user: undefined }, false, 'user/clearUser'),
+      }),
+      {
+        name: 'user',
+        partialize: (state) => ({
+          user: state.user,
+        }),
+        onRehydrateStorage: () => (state) => {
+          if (state) {
+            state.hasHydrated = true;
+          }
+        },
+      }
+    ),
+    { enabled: process.env.NODE_ENV === 'development' }
   )
 );

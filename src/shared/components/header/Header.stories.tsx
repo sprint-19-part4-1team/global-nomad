@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import HeaderShell from '@/shared/components/header/HeaderShell';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 import Header from './Header';
 
 /**
@@ -56,7 +56,7 @@ export default meta;
 type Story = StoryObj<typeof Header>;
 
 // mockdata
-const MOCK_USER: User = {
+const MOCK_USER: UserServiceResponseDto = {
   createdAt: '2025-12-24T08:50:57.848Z',
   email: 'test@example.com',
   id: 1,

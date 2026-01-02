@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import Icons from '@/assets/icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 import { cn } from '@/shared/utils/cn';
 
 interface SidemenuProps {
-  user: User;
+  user: UserServiceResponseDto;
 }
 
 const MYPAGE_MENUS = [

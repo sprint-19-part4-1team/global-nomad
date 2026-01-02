@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { LoginResponse } from '@/shared/types/auth.types';
-import { User } from '@/shared/types/user.type';
+import { LoginResponse } from '@/shared/types/auth';
+import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
-type LoginResponseBody = { user: User } | { message: string };
+type LoginResponseBody = { user: UserServiceResponseDto } | { message: string };
 
 const COOKIE_OPTIONS = {
   httpOnly: true, // JS 접근 차단

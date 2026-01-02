@@ -3,7 +3,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
 import { AvatarContext } from '@/shared/components/avatar/context/avatarContext';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 import { cn } from '@/shared/utils/cn';
 
 const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative', {
@@ -27,7 +27,7 @@ const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative'
  * @property {string} [className] - 추가 CSS 클래스
  */
 interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatarVariants> {
-  user: User;
+  user: UserServiceResponseDto;
   children: ReactNode;
 }
 

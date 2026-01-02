@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { AvatarFallback, AvatarImage } from '@/shared/components/avatar';
 import Avatar from '@/shared/components/avatar/Avatar';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
  * Storybook에서 Avatar 컴포넌트를 제어하기 위한 Props 타입
@@ -15,7 +15,7 @@ import { User } from '@/shared/types/user.type';
  * @property {string} [fallbackClassName] - AvatarFallback 추가 스타일
  */
 interface AvatarStoryProps {
-  user: User;
+  user: UserServiceResponseDto;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   imageClassName?: string;
@@ -78,7 +78,7 @@ export default meta;
 type Story = StoryObj<AvatarStoryProps>;
 
 // Mock 사용자 데이터 - 프로필 이미지 없음
-const defaultUser: User = {
+const defaultUser: UserServiceResponseDto = {
   id: 1,
   email: 'test@example.com',
   nickname: '테스트',
@@ -88,7 +88,7 @@ const defaultUser: User = {
 };
 
 // Mock 사용자 데이터 - 프로필 이미지 있음
-const withImageUser: User = {
+const withImageUser: UserServiceResponseDto = {
   id: 1,
   email: 'test@example.com',
   nickname: '이미지 테스트',

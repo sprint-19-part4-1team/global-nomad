@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import Header from '@/shared/components/header/Header';
 import BaseLayout from '@/shared/layout/BaseLayout';
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 interface ProtectedLayoutProps {
   children: ReactNode;
 }
 
 // 임시
-const MOCK_USER: User = {
+const MOCK_USER: UserServiceResponseDto = {
   createdAt: '2025-12-24T08:50:57.848Z',
   email: 'test@example.com',
   id: 1,

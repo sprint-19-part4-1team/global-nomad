@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import Sidemenu from '@/features/mypage/components/Sidemenu';
+import Sidemenu from '@/features/mypage/components/sidemenu/Sidemenu';
 import { User } from '@/shared/types/user.type';
 
 /**
@@ -22,7 +22,7 @@ import { User } from '@/shared/types/user.type';
  */
 
 const meta: Meta<typeof Sidemenu> = {
-  title: 'Features/Sidemenu',
+  title: 'Features/Mypage/Sidemenu',
   component: Sidemenu,
   argTypes: {
     user: {

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import MypageTabs from '@/features/mypage/components/MypageTabs';
-import Sidemenu from '@/features/mypage/components/Sidemenu';
+import Sidemenu from '@/features/mypage/components/sidemenu/Sidemenu';
 import { layoutContainer } from '@/shared/constants/';
 
 interface MypageLayoutProps {

@@ -54,7 +54,7 @@ export interface ActivityBasicDto {
 
 /** 체험 리스트 조회 API */
 export interface GetActivitiesResponse {
-  cursorId: number;
+  cursorId: number | null;
   totalCount: number;
   activities: ActivityBasicDto[];
 }
@@ -86,8 +86,8 @@ export interface ActivityWithSchedulesResponseDto {
   bannerImageUrl: string;
   rating: number;
   reviewCount: number;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
   subImages: SubImagesType[];
   schedules: ScheduleResponseDto[];
 }
@@ -111,8 +111,8 @@ export interface ActivityWithSubImagesAndSchedulesDto {
   bannerImageUrl: string;
   rating: number;
   reviewCount: number;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
   subImages: SubImagesType[];
   schedules: DetailSchedulesType[];
 }
@@ -151,8 +151,8 @@ export interface ReservationResponseDto {
   headCount: number;
   date: string;
   startTime: string;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /** 체험 이미지 업로드를 위한 이미지 URL */

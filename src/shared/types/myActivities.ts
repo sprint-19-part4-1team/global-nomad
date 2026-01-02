@@ -6,22 +6,27 @@ export interface GetMyActivitiesParams {
   cursorId?: number;
   size?: number;
 }
+
 export interface GetMyActivityReservationDashboardParams {
   year: string;
   month: string;
 }
+
 export interface GetMyActivityReservedSchedulesParams {
   date: string;
 }
+
 export interface GetMyActivityReservationsParams {
   cursorId?: number;
   size?: number;
   scheduleId: number;
-  status: 'declined' | 'pending' | 'confirmed';
+  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
 }
+
 export interface UpdateMyActivityReservationBodyDto {
-  status: 'declined' | 'confirmed';
+  status: ReservationStatus.Declined | ReservationStatus.Confirmed;
 }
+
 export interface CreateScheduleBodyDto {
   date: string;
   startTime: string;
@@ -42,7 +47,7 @@ export interface UpdateMyActivityBodyDto {
 
 /** 내 체험 리스트 조회 리스폰스 */
 export interface MyActivitiesResponse {
-  cursorId: number;
+  cursorId: number | null;
   totalCount: number;
   activities: ActivityBasicDto[];
 }
@@ -90,7 +95,7 @@ export interface ReservationWithUserResponseDto {
 
 /** 내 체험 예약 시간대별 예약 내역 조회 리스폰스 타입 */
 export interface GetMyActivityReservationsResponse {
-  cursorId: number;
+  cursorId: number | null;
   totalCount: number;
   reservations: ReservationWithUserResponseDto[];
 }

@@ -6,8 +6,7 @@ import { coreFetch } from '@/shared/apis/base/coreFetch';
  *
  * @description
  * - Next.js API Route(BFF) 내부에서 백엔드 API를 호출하기 위한 함수입니다.
- * - 응답이 실패(`!res.ok`)일 경우, 상태 코드와 메시지를 포함한 에러를 throw 합니다.
- * - 성공 시 응답 body를 JSON으로 파싱하여 반환합니다.
+ * - 실제 요청 실행 및 에러 처리는 coreFetch에 위임합니다.
  *
  * @param {string} endpoint - 호출할 백엔드 API의 엔드포인트
  * @param {RequestInit} options - fetch에 전달할 RequestInit 옵션

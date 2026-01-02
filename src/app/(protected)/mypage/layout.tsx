@@ -30,12 +30,8 @@ export default function MypageLayout({ children }: MypageLayoutProps) {
             updatedAt: '2025-12-24T08:50:57.848Z',
           }}
         />
-        <div className='w-full border-2 sm:w-[calc(100%-178px-30px)] md:w-[calc(100%-290px-48px)]'>
-          {children}
-        </div>
+        <div className='w-full flex-1 border-2'>{children}</div>
       </div>
     </main>
   );
 }
-
-//  w-178 md:w-290

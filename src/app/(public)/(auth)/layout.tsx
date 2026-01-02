@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       <div className='mx-auto w-144 sm:w-255'>
         <Logo variant='login' />
       </div>
-      <main className='mt-40 sm:mt-60'>{children}</main>
+      <div className='mt-40 sm:mt-60'>{children}</div>
     </main>
   );
 }

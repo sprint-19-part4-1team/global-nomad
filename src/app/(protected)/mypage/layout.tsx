@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import MypageTabs from '@/features/mypage/components/MypageTabs';
+import MypageTabs from '@/features/mypage/components/mypage-tabs/MypageTabs';
 import Sidemenu from '@/features/mypage/components/sidemenu/Sidemenu';
 import { layoutContainer } from '@/shared/constants/';
 

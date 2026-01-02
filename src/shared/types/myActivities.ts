@@ -6,22 +6,27 @@ export interface GetMyActivitiesParams {
   cursorId?: number;
   size?: number;
 }
+
 export interface GetMyActivityReservationDashboardParams {
   year: string;
   month: string;
 }
+
 export interface GetMyActivityReservedSchedulesParams {
   date: string;
 }
+
 export interface GetMyActivityReservationsParams {
   cursorId?: number;
   size?: number;
   scheduleId: number;
-  status: 'declined' | 'pending' | 'confirmed';
+  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
 }
+
 export interface UpdateMyActivityReservationBodyDto {
-  status: 'declined' | 'confirmed';
+  status: ReservationStatus.Declined | ReservationStatus.Confirmed;
 }
+
 export interface CreateScheduleBodyDto {
   date: string;
   startTime: string;

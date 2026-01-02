@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, useState, useMemo } from 'react';
+import { ChangeEvent, FocusEvent, useState, useMemo, useCallback } from 'react';
 import { validators } from '@/shared/utils/validators';
 
 /**
@@ -20,22 +20,43 @@ type AuthFormValues = {
 };
 
 /**
- * 인증 폼(로그인/회원가입) 관리를 위한 커스텀 훅
- * 폼 상태 관리, 유효성 검사 기능 제공
+ * 유효성 검사 타입
  *
- * @param {AuthFormValues} initialValues - 폼의 초기값 객체
- * @param {string} initialValues.email - 이메일 초기값
- * @param {string} initialValues.password - 비밀번호 초기값
- * @param {string} [initialValues.confirmPassword] - 비밀번호 확인 초기값 (회원가입 시)
- * @param {string} [initialValues.nickname] - 닉네임 초기값 (회원가입 시)
- * @param {boolean} [initialValues.termsAgreed] - 약관 동의 초기값 (회원가입 시)
+ * @property {'login'} login - 로그인 페이지용 검사
+ * @property {'signup'} signup - 회원가입 페이지용 검사
+ */
+type ValidationType = 'login' | 'signup';
+
+/**
+ * 인증 폼 Props 타입
+ *
+ * @property {ValidationType} validationType - 유효성 검사 타입
+ * @property {AuthFormValues} initialValues - 폼의 초기값 객체
+ */
+type AuthFormProps = {
+  validationType: ValidationType;
+  initialValues: AuthFormValues;
+};
+
+/**
+ * 인증 폼(로그인/회원가입) 관리를 위한 커스텀 훅
+ * 폼 상태 관리, 유효성 검사, 에러 메시지 관리 기능 제공
+ *
+ * @param {AuthFormProps} props - 훅 설정 객체
+ * @param {ValidationType} props.validationType - 유효성 검사 타입 ('login' | 'signup')
+ * @param {AuthFormValues} props.initialValues - 폼의 초기값 객체
+ * @param {string} props.initialValues.email - 이메일 초기값
+ * @param {string} props.initialValues.password - 비밀번호 초기값
+ * @param {string} [props.initialValues.confirmPassword] - 비밀번호 확인 초기값 (회원가입 시)
+ * @param {string} [props.initialValues.nickname] - 닉네임 초기값 (회원가입 시)
+ * @param {boolean} [props.initialValues.termsAgreed] - 약관 동의 초기값 (회원가입 시)
  *
  * @returns {Object} 폼 관리 객체
  * @returns {AuthFormValues} return.values - 현재 폼 입력값들
- * @returns {Object} return.errors - 각 필드의 에러 메시지 (key: 필드명, value: 에러 메시지)
- * @returns {boolean} return.isValid - 폼 전체 유효성 여부 (submit 버튼 활성화용)
- * @returns {Function} return.handleChange - input 변경 핸들러
- * @returns {Function} return.handleBlur - input blur 핸들러 (유효성 검사 수행)
+ * @returns {Partial<Record<keyof AuthFormValues, string>>} return.errors - 각 필드의 에러 메시지 객체
+ * @returns {boolean} return.isValid - 폼 전체 유효성 여부 (모든 필드가 유효하고 필수값이 입력되었을 때 true)
+ * @returns {(e: ChangeEvent<HTMLInputElement>) => void} return.handleChange - input 변경 핸들러 (값 업데이트 및 에러 초기화)
+ * @returns {(e: FocusEvent<HTMLInputElement>) => void} return.handleBlur - input blur 핸들러 (유효성 검사 수행 및 에러 설정)
  *
  * @example
  * // 로그인 폼
@@ -46,59 +67,86 @@ type AuthFormValues = {
  *   handleChange,
  *   handleBlur
  * } = useAuthForm({
- *   email: '',
- *   password: ''
+ *   validationType: 'login',
+ *   initialValues: {
+ *     email: '',
+ *     password: ''
+ *   }
  * });
  *
  * @example
  * // 회원가입 폼
  * const form = useAuthForm({
- *   email: '',
- *   password: '',
- *   confirmPassword: '',
- *   nickname: '',
- *   termsAgreed: false
+ *   validationType: 'signup',
+ *   initialValues: {
+ *     email: '',
+ *     password: '',
+ *     confirmPassword: '',
+ *     nickname: '',
+ *     termsAgreed: false
+ *   }
  * });
  */
-const useAuthForm = (initialValues: AuthFormValues) => {
+const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof AuthFormValues, string>>>({});
+
+  /**
+   * 개별 필드의 유효성을 검사
+   *
+   * @param {string} name - 검사할 필드명
+   * @param {string | boolean | undefined} value - 검사할 필드값
+   * @param {AuthFormValues} allValues - 전체 폼 값 (confirmPassword 검사 시 password와 비교용)
+   * @returns {string} 에러 메시지 (유효하면 빈 문자열)
+   */
+  const validateField = useCallback(
+    (name: string, value: string | boolean | undefined, allValues: AuthFormValues): string => {
+      switch (name) {
+        case 'email':
+          return validators.email(value as string, validationType);
+        case 'password':
+          return validators.password(value as string, validationType);
+        case 'confirmPassword':
+          return validators.confirmPassword(value as string, allValues as { password: string });
+        case 'nickname':
+          return validators.nickname(value as string);
+        default:
+          return '';
+      }
+    },
+    [validationType]
+  );
 
   /**
    * 전체 폼의 유효성을 검사
    * - 모든 필드에 값이 있어야 함
    * - validators에 등록된 필드는 유효성 검사를 통과해야 함
-   * - termsAgreed는 true여야 함
+   * - termsAgreed는 true여야 함 (회원가입 시)
    *
    * @param {AuthFormValues} valuesToCheck - 검사할 폼 값 객체
    * @returns {boolean} 폼이 유효하면 true, 아니면 false
    */
-  const checkFormValid = (valuesToCheck: AuthFormValues): boolean => {
-    return (Object.keys(valuesToCheck) as Array<keyof AuthFormValues>).every((key) => {
-      const value = valuesToCheck[key];
+  const checkFormValid = useCallback(
+    (valuesToCheck: AuthFormValues): boolean => {
+      return (Object.keys(valuesToCheck) as Array<keyof AuthFormValues>).every((key) => {
+        const value = valuesToCheck[key];
 
-      // termsAgreed는 boolean이므로 별도 처리
-      if (key === 'termsAgreed') {
-        return value === true;
-      }
+        if (key === 'termsAgreed') {
+          return value === true;
+        }
 
-      // 값이 없으면 invalid
-      if (!value) {
-        return false;
-      }
+        if (!value) {
+          return false;
+        }
 
-      // validator가 있으면 에러 체크
-      const validator = validators[key as keyof typeof validators];
-      if (validator) {
-        return !validator(value as string, valuesToCheck);
-      }
-
-      return true;
-    });
-  };
+        return !validateField(key as string, value, valuesToCheck);
+      });
+    },
+    [validateField]
+  );
 
   // isValid를 useMemo로 계산 (파생 상태)
-  const isValid = useMemo(() => checkFormValid(values), [values]);
+  const isValid = useMemo(() => checkFormValid(values), [values, checkFormValid]);
 
   /**
    * input 값 변경 핸들러
@@ -125,6 +173,12 @@ const useAuthForm = (initialValues: AuthFormValues) => {
     if (errors[name as keyof AuthFormValues]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+
+    // 회원가입 페이지에서 비밀번호가 변경되고, 비밀번호 확인에 값이 있을 때 재검증
+    if (validationType === 'signup' && name === 'password' && newValues.confirmPassword) {
+      const confirmError = validateField('confirmPassword', newValues.confirmPassword, newValues);
+      setErrors((prev) => ({ ...prev, confirmPassword: confirmError }));
+    }
   };
 
   /**
@@ -144,15 +198,13 @@ const useAuthForm = (initialValues: AuthFormValues) => {
   const handleBlur = (e: FocusEvent<HTMLInputElement>): void => {
     const { name, value, type, checked } = e.target;
 
-    // name이 validators의 키인지 확인
-    if (name in validators) {
-      const validatorKey = name as keyof typeof validators;
-      // blur 시점의 최신 값을 포함한 values 생성
-      const newValue = type === 'checkbox' ? checked : value;
-      const currentValues = { ...values, [name]: newValue };
-      const errorMsg = validators[validatorKey](value, currentValues);
-      setErrors((prev) => ({ ...prev, [name]: errorMsg }));
-    }
+    // blur 시점의 최신 값을 포함한 values 생성
+    const newValue = type === 'checkbox' ? checked : value;
+    const currentValues = { ...values, [name]: newValue };
+
+    const errorMsg = validateField(name, newValue, currentValues);
+
+    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
   };
 
   return {

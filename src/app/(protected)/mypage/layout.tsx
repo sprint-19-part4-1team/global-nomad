@@ -19,7 +19,7 @@ export default function MypageLayout({ children }: MypageLayoutProps) {
       <div className='fixed top-48 left-0 z-6 w-full bg-white'>
         <MypageTabs />
       </div>
-      <div className='pt-48 sm:pt-0'>
+      <div className='flex gap-0 pt-48 sm:gap-30 sm:pt-0 md:gap-48'>
         <Sidemenu
           user={{
             createdAt: '2025-12-24T08:50:57.848Z',
@@ -30,8 +30,12 @@ export default function MypageLayout({ children }: MypageLayoutProps) {
             updatedAt: '2025-12-24T08:50:57.848Z',
           }}
         />
-        {children}
+        <div className='w-full border-2 sm:w-[calc(100%-178px-30px)] md:w-[calc(100%-290px-48px)]'>
+          {children}
+        </div>
       </div>
     </main>
   );
 }
+
+//  w-178 md:w-290

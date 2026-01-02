@@ -3,7 +3,7 @@ import type {
   UpsertOauthAppRequestBody,
   SignUpWithOauthRequestBody,
   SignInWithOauthRequestBody,
-} from '@/shared/types/oauth.types';
+} from '@/shared/types/oauth';
 
 /**
  * 간편 로그인 App 등록 및 수정 API (BFF)

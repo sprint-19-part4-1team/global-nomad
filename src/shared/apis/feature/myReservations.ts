@@ -3,7 +3,7 @@ import type {
   GetMyReservationsParams,
   UpdateMyReservationBodyDto,
   CreateReviewBodyDto,
-} from '@/shared/types/myReservations.types';
+} from '@/shared/types/myReservations';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
 /**

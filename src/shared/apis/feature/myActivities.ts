@@ -6,7 +6,7 @@ import type {
   GetMyActivityReservationsParams,
   UpdateMyActivityReservationBodyDto,
   UpdateMyActivityBodyDto,
-} from '@/shared/types/myActivities.types';
+} from '@/shared/types/myActivities';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
 /**

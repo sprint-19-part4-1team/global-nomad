@@ -1,5 +1,5 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import type { GetMyNotificationsParams } from '@/shared/types/myNotifications.types';
+import type { GetMyNotificationsParams } from '@/shared/types/myNotifications';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
 /**

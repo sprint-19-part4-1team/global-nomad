@@ -5,7 +5,7 @@ import type {
   GetActivitiesParams,
   GetActivityReviewsParams,
   GetActivitySchedulesParams,
-} from '@/shared/types/activities.types';
+} from '@/shared/types/activities';
 import { createQueryString } from '@/shared/utils/createQueryString';
 
 /**

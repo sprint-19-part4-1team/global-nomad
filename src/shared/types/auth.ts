@@ -1,4 +1,4 @@
-import { User } from '@/shared/types/user.type';
+import { UserServiceResponseDto } from '@/shared/types/user';
 
 export interface LoginRequest {
   email: string;
@@ -8,7 +8,11 @@ export interface LoginRequest {
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
-  user: User;
+  user: UserServiceResponseDto;
+}
+
+export interface LogoutResponse {
+  message: string;
 }
 
 export interface CreateUserBodyDto {

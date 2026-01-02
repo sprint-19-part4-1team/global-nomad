@@ -8,6 +8,7 @@ import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { COMMON_MESSAGE } from '@/shared/constants/errorMessages';
 import useAuthForm from '@/shared/hooks/useAuthForm';
 import { isApiError } from '@/shared/utils/errorGuards';
 
@@ -16,7 +17,6 @@ import { isApiError } from '@/shared/utils/errorGuards';
 const SIGNUP_MESSAGE = {
   SUCCESS: '가입이 완료되었습니다.',
   DUPLICATE_EMAIL: '이미 사용 중인 이메일입니다.',
-  NETWORK_ERROR: '네트워크 오류가 발생했습니다.',
 } as const;
 
 export default function Signup() {
@@ -49,7 +49,7 @@ export default function Signup() {
         />
       );
     } catch (err: unknown) {
-      let message: string = SIGNUP_MESSAGE.NETWORK_ERROR;
+      let message: string = COMMON_MESSAGE.NETWORK_ERROR;
 
       if (isApiError(err)) {
         message = err.status === 409 ? SIGNUP_MESSAGE.DUPLICATE_EMAIL : err.message;

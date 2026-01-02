@@ -11,6 +11,10 @@ export interface LoginResponse {
   user: UserServiceResponseDto;
 }
 
+export interface BffLoginResponse {
+  user: UserServiceResponseDto;
+}
+
 export interface LogoutResponse {
   message: string;
 }

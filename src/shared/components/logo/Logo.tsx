@@ -13,6 +13,8 @@ const desktopLogoBaseClass = cn(
   'hover:text-primary-600'
 );
 
+const desktopLogoClass = (width: string) => cn(desktopLogoBaseClass, width);
+
 /**
  * 서비스 로고를 렌더링하는 공통 컴포넌트
  *
@@ -43,13 +45,13 @@ const desktopLogoBaseClass = cn(
 const LOGO_VARIANTS = {
   login: {
     DesktopComponent: Logos.LogoLogin,
-    desktopClassName: cn(desktopLogoBaseClass, 'w-255'),
+    desktopClassName: desktopLogoClass('w-255'),
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-144 sm:hidden',
   },
   header: {
     DesktopComponent: Logos.LogoNav,
-    desktopClassName: cn(desktopLogoBaseClass, 'w-174'),
+    desktopClassName: desktopLogoClass('w-255'),
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },

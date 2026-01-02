@@ -7,6 +7,7 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 
 const OVERLAY_ID = 'auth-guard-already-logged-in';
+const AUTH_GUARD_REDIRECT_DELAY_MS = 1500;
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -56,7 +57,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     overlayStore.push(
       <Dialog
         message='이미 로그인된 계정입니다.'
-        autoCloseAfterMs={1500}
+        autoCloseAfterMs={AUTH_GUARD_REDIRECT_DELAY_MS}
         onClose={() => {
           overlayStore.popById(OVERLAY_ID);
           router.replace('/');
@@ -64,6 +65,10 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       />,
       OVERLAY_ID
     );
+
+    return () => {
+      overlayStore.popById(OVERLAY_ID);
+    };
   }, [user, router]);
 
   if (user) {

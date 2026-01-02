@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
 import AuthForm from '@/features/auth/components/AuthForm';
 import { signUp } from '@/shared/apis/feature/users';
@@ -21,6 +22,7 @@ const SIGNUP_MESSAGE = {
 
 export default function Signup() {
   const router = useRouter();
+  const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'signup',
     initialValues: {
@@ -33,9 +35,11 @@ export default function Signup() {
   });
 
   const handleSubmit = async () => {
-    if (!values.nickname) {
+    if (!values.nickname || isSubmitting) {
       return;
     }
+
+    setSubmitting(true);
 
     try {
       await signUp({ email: values.email, password: values.password, nickname: values.nickname });
@@ -56,6 +60,8 @@ export default function Signup() {
       }
 
       overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -116,7 +122,7 @@ export default function Signup() {
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      <Button type='submit' disabled={!isValid} full>
+      <Button type='submit' isLoading={isSubmitting} disabled={!isValid} full>
         회원가입하기
       </Button>
     </AuthForm>

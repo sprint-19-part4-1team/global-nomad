@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import AuthForm from '@/features/auth/components/AuthForm';
 import { login } from '@/shared/apis/feature/auth';
 import Button from '@/shared/components/button/Button';
@@ -16,6 +17,7 @@ import { isApiError } from '@/shared/utils/errorGuards';
 export default function Login() {
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
+  const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'login',
     initialValues: {
@@ -25,6 +27,12 @@ export default function Login() {
   });
 
   const handleSubmit = async () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    setSubmitting(true);
+
     try {
       const userData = await login({ email: values.email, password: values.password });
       setUser(userData);
@@ -37,6 +45,8 @@ export default function Login() {
       }
 
       overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -66,7 +76,7 @@ export default function Login() {
         placeholder='비밀번호를 입력해 주세요.'
         errorMessage={errors.password}
       />
-      <Button type='submit' disabled={!isValid} full>
+      <Button type='submit' isLoading={isSubmitting} disabled={!isValid} full>
         로그인 하기
       </Button>
     </AuthForm>

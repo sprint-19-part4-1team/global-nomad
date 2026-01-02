@@ -19,13 +19,13 @@ import { coreFetch } from '@/shared/apis/base/coreFetch';
  */
 export const serverFetch = async <T>(
   endpoint: string,
-  options: RequestInit = {},
+  options: RequestInit,
   timeoutMs?: number
 ): Promise<T> => {
   const BASE_URL = process.env.API_URL;
 
   if (!BASE_URL) {
-    throw new Error('API_URL 환경 변수가 설정되지 않았습니다.');
+    throw Object.assign(new Error('API_URL 환경 변수가 설정되지 않았습니다.'), { status: 500 });
   }
 
   const url = BASE_URL + endpoint;

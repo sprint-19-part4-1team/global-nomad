@@ -15,6 +15,17 @@ export const login = (data: LoginRequest) => {
 };
 
 /**
+ * 로그아웃 API (BFF)
+ *
+ * @returns 로그아웃 API 응답 Promise
+ */
+export const logout = () => {
+  return bffFetch('/auth/logout', {
+    method: 'POST',
+  });
+};
+
+/**
  * 토큰 재발급 API (BFF)
  *
  * @returns 토큰 재발급 API 응답 Promise

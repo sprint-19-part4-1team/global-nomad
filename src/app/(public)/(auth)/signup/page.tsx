@@ -1,13 +1,20 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
 import AuthForm from '@/features/auth/components/AuthForm';
+import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useAuthForm from '@/shared/hooks/useAuthForm';
+import { isApiError } from '@/shared/utils/errorGuards';
+
+// TODO: 로그인한 상태일 때 회원가입 페이지 접속 시 안내 모달 띄우기
 
 export default function Signup() {
+  const router = useRouter();
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'signup',
     initialValues: {
@@ -19,8 +26,39 @@ export default function Signup() {
     },
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log('회원가입 시도 : ', values, e);
+  const handleSubmit = async () => {
+    const nickname = values.nickname;
+
+    if (!nickname) {
+      return;
+    }
+
+    try {
+      await signUp({ email: values.email, password: values.password, nickname });
+      overlayStore.push(
+        <Dialog
+          message='가입이 완료되었습니다.'
+          onClose={() => {
+            overlayStore.pop();
+            router.replace('/login');
+          }}
+        />
+      );
+    } catch (err: unknown) {
+      if (isApiError(err)) {
+        if (err.status === 409) {
+          overlayStore.push(
+            <Dialog message={'이미 사용 중인 이메일입니다.'} onClose={() => overlayStore.pop()} />
+          );
+          return;
+        }
+        overlayStore.push(<Dialog message={err.message} onClose={() => overlayStore.pop()} />);
+        return;
+      }
+      overlayStore.push(
+        <Dialog message={'네트워크 오류가 발생했습니다.'} onClose={() => overlayStore.pop()} />
+      );
+    }
   };
 
   return (

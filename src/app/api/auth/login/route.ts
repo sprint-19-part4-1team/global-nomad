@@ -5,7 +5,7 @@ import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
-type LoginResponseBody = { user: UserServiceResponseDto } | { message: string };
+type LoginResponseBody = UserServiceResponseDto | { message: string };
 
 const COOKIE_OPTIONS = {
   httpOnly: true, // JS 접근 차단
@@ -39,7 +39,7 @@ export async function POST(request: Request): Promise<NextResponse<LoginResponse
     const { accessToken, refreshToken, user } = data;
 
     // 유저 정보만 response로 리턴
-    const response = NextResponse.json({ user });
+    const response = NextResponse.json(user);
 
     // 토큰들은 쿠키에 저장
     response.cookies.set('accessToken', accessToken, {

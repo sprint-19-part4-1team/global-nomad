@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
 import AuthForm from '@/features/auth/components/AuthForm';
 import { signUp } from '@/shared/apis/feature/users';
@@ -8,6 +9,7 @@ import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { COMMON_MESSAGE } from '@/shared/constants/errorMessages';
 import useAuthForm from '@/shared/hooks/useAuthForm';
 import { isApiError } from '@/shared/utils/errorGuards';
 
@@ -16,11 +18,11 @@ import { isApiError } from '@/shared/utils/errorGuards';
 const SIGNUP_MESSAGE = {
   SUCCESS: '가입이 완료되었습니다.',
   DUPLICATE_EMAIL: '이미 사용 중인 이메일입니다.',
-  NETWORK_ERROR: '네트워크 오류가 발생했습니다.',
 } as const;
 
 export default function Signup() {
   const router = useRouter();
+  const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'signup',
     initialValues: {
@@ -33,9 +35,11 @@ export default function Signup() {
   });
 
   const handleSubmit = async () => {
-    if (!values.nickname) {
+    if (!values.nickname || isSubmitting) {
       return;
     }
+
+    setSubmitting(true);
 
     try {
       await signUp({ email: values.email, password: values.password, nickname: values.nickname });
@@ -49,13 +53,15 @@ export default function Signup() {
         />
       );
     } catch (err: unknown) {
-      let message: string = SIGNUP_MESSAGE.NETWORK_ERROR;
+      let message: string = COMMON_MESSAGE.NETWORK_ERROR;
 
       if (isApiError(err)) {
         message = err.status === 409 ? SIGNUP_MESSAGE.DUPLICATE_EMAIL : err.message;
       }
 
       overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -116,7 +122,7 @@ export default function Signup() {
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      <Button type='submit' disabled={!isValid} full>
+      <Button type='submit' isLoading={isSubmitting} disabled={!isValid} full>
         회원가입하기
       </Button>
     </AuthForm>

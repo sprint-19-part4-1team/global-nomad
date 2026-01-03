@@ -1,18 +1,12 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import { COOKIE_OPTIONS } from '@/shared/constants';
 import { LoginResponse } from '@/shared/types/auth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
 type LoginResponseBody = UserServiceResponseDto | { message: string };
-
-const COOKIE_OPTIONS = {
-  httpOnly: true, // JS 접근 차단
-  secure: process.env.NODE_ENV === 'production', // dev는 http라서 프로덕션일때만 true로
-  sameSite: 'lax', // CSRF 방어용
-  path: '/', // 모든 경로에서 해당 쿠키 접근
-} as const;
 
 /**
  * 로그인 API (BFF)

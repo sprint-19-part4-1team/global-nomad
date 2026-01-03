@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
+import RefreshProvider from '@/shared/providers/RefreshProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -43,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body>
-        {children}
+        <RefreshProvider>{children}</RefreshProvider>
         <ToastProvider />
         <OverlayRoot />
       </body>

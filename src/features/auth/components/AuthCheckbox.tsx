@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
 import Icons from '@/assets/icons';
 import Label from '@/shared/components/label/Label';
@@ -65,7 +66,15 @@ export default function AuthCheckbox({
       />
       <Icons.Check className='pointer-events-none absolute inset-0 top-4 left-2 h-16 w-16 text-white peer-has-checked:hidden' />
       <Label htmlFor={id} variant='authForm' className='cursor-pointer'>
-        이용약관에 동의합니다.
+        <Link
+          href='/terms'
+          target='_blank'
+          className='text-primary-500 underline underline-offset-2 transition-colors duration-500 hover:text-primary-600'
+          title='새 창에서 이용약관 열기'
+          onClick={(e) => e.stopPropagation()}>
+          이용약관
+        </Link>
+        에 동의합니다.
       </Label>
     </div>
   );

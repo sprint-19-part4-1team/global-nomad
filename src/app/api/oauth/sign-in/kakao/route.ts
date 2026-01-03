@@ -5,11 +5,13 @@ import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
-type SignInResponse = {
+type SignInWithOauthResponse = {
   user: UserServiceResponseDto;
   accessToken: string;
   refreshToken: string;
 };
+
+type ApiErrorResponse = { message: string };
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -18,30 +20,44 @@ const COOKIE_OPTIONS = {
   path: '/',
 } as const;
 
-export async function POST(request: Request) {
-  const body = (await request.json()) as SignInWithOauthRequestBody;
+export async function POST(
+  request: Request
+): Promise<NextResponse<UserServiceResponseDto | ApiErrorResponse>> {
   const redirectUri = process.env.KAKAO_REDIRECT_URI;
-
   if (!redirectUri) {
     return NextResponse.json(
       { message: 'KAKAO_REDIRECT_URI 환경 변수가 설정되지 않았습니다.' },
       { status: 500 }
     );
   }
+
+  let body: SignInWithOauthRequestBody;
+  try {
+    body = (await request.json()) as SignInWithOauthRequestBody;
+  } catch {
+    return NextResponse.json({ message: '요청 본문이 올바르지 않습니다.' }, { status: 400 });
+  }
+
+  const token = typeof body.token === 'string' ? body.token : '';
+  if (!token) {
+    return NextResponse.json({ message: 'token이 필요합니다.' }, { status: 400 });
+  }
+
   const payload: SignInWithOauthRequestBody = {
-    ...body,
-    redirectUri,
+    token,
+    redirectUri: redirectUri,
   };
 
   try {
-    const data = await serverFetch<SignInResponse>(`/oauth/sign-in/kakao`, {
+    const signInResponse = await serverFetch<SignInWithOauthResponse>('/oauth/sign-in/kakao', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
-    const { accessToken, refreshToken, user } = data;
+    const { accessToken, refreshToken, user } = signInResponse;
 
-    const response = NextResponse.json(user ?? { ok: true });
+    const response = NextResponse.json(user);
 
     response.cookies.set('accessToken', accessToken, {
       ...COOKIE_OPTIONS,

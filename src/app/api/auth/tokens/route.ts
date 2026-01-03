@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { AUTH_API_MESSAGE } from '@/shared/constants';
+import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS } from '@/shared/constants';
 import { TokensResponse } from '@/shared/types/auth';
 import { MessageResponse } from '@/shared/types/common';
-import { setAuthCookies } from '@/shared/utils/authCookies';
+import { getAuthCookies, setAuthCookies } from '@/shared/utils/authCookies';
 import { isApiError } from '@/shared/utils/errorGuards';
 
 /**
@@ -22,14 +22,26 @@ import { isApiError } from '@/shared/utils/errorGuards';
  */
 export async function POST(): Promise<NextResponse<MessageResponse>> {
   try {
-    const data = await serverFetch<TokensResponse>('/auth/tokens', {
+    const refreshToken = await getAuthCookies(AUTH_COOKIE_KEYS.REFRESH_TOKEN);
+
+    if (!refreshToken) {
+      return NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_FAILED }, { status: 401 });
+    }
+
+    const newToken = await serverFetch<TokensResponse>('/auth/tokens', {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
     });
 
-    const { accessToken, refreshToken } = data;
     const response = NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_SUCCESS });
 
-    setAuthCookies({ response, accessToken, refreshToken });
+    setAuthCookies({
+      response,
+      accessToken: newToken.accessToken,
+      refreshToken: newToken.refreshToken,
+    });
 
     return response;
   } catch (err: unknown) {

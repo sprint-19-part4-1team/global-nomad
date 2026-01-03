@@ -1,5 +1,5 @@
-import { Metadata } from 'next';
 import Link from 'next/link';
+import AuthBackButton from '@/features/auth/components/terms/AuthBackButton';
 import Title from '@/shared/components/title/Title';
 
 type TermsSection =
@@ -83,9 +83,9 @@ const TEAM_MEMBERS = [
   { name: '최우석', github: 'https://github.com/chldntjr1321' },
 ];
 
-export const metadata: Metadata = {
-  title: '이용약관',
-};
+// export const metadata: Metadata = {
+//   title: '이용약관',
+// };
 
 export default function Terms() {
   return (
@@ -126,7 +126,7 @@ export default function Terms() {
                     <Link
                       href={member.github}
                       target='_blank'
-                      className='pl-8 font-medium text-primary-500 underline hover:text-primary-600'>
+                      className='pl-8 font-medium text-primary-500 underline transition-colors duration-500 hover:text-primary-600'>
                       GitHub
                     </Link>
                   </li>
@@ -140,6 +140,8 @@ export default function Terms() {
       ))}
 
       <span className='body-14 font-semibold text-gray-500'>© 2026 Sprint 19기 1팀</span>
+
+      <AuthBackButton />
     </div>
   );
 }

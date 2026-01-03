@@ -52,7 +52,11 @@ export default function MypageSectionHeader({ title, description, btn }: MypageS
       </Title>
       <p className='mt-10 font-medium whitespace-pre-line text-gray-600'>{description}</p>
       {/* TODO: 버튼 기능 추가 */}
-      {btn ? <div className='absolute top-0 right-0 w-135 border-1'>button</div> : ''}
+      {btn ? (
+        <div className='absolute top-0 right-0 hidden w-135 border-1 sm:block'>button</div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

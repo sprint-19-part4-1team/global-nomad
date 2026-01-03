@@ -1,3 +1,4 @@
+import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { publicFetch } from '@/shared/apis/base/publicFetch';
 import type {
   ActivityWithSchedulesResponseDto,
@@ -35,7 +36,7 @@ export const getActivities = (params: GetActivitiesParams): Promise<GetActivitie
 export const createActivity = (
   data: CreateActivityBodyDto
 ): Promise<ActivityWithSchedulesResponseDto> => {
-  return publicFetch<ActivityWithSchedulesResponseDto>(`/activities`, {
+  return bffFetch<ActivityWithSchedulesResponseDto>(`/activities`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -106,7 +107,7 @@ export const createActivityReservation = (
   activityId: number,
   data: CreateReservationBodyDto
 ): Promise<ReservationResponseDto> => {
-  return publicFetch<ReservationResponseDto>(`/activities/${activityId}/reservations`, {
+  return bffFetch<ReservationResponseDto>(`/activities/${activityId}/reservations`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -122,7 +123,7 @@ export const createActivityImage = (image: File): Promise<CreateActivityImageRes
   const formData = new FormData();
   formData.append('image', image);
 
-  return publicFetch<CreateActivityImageResponse>('/activities/images', {
+  return bffFetch<CreateActivityImageResponse>('/activities/images', {
     method: 'POST',
     body: formData,
   });

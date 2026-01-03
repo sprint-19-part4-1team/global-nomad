@@ -20,15 +20,15 @@ const COOKIE_OPTIONS = {
 } as const;
 
 /**
- * Kakao OAuth 로그인 요청을 처리합니다.
+ * Kakao OAuth 로그인(BFF) 요청을 처리한다.
  *
  * @description
- * - 클라이언트로부터 전달된 인가 코드를 기반으로 백엔드 로그인 API를 호출.
- * - 로그인 성공 시 accessToken, refreshToken을 httpOnly 쿠키로 설정.
- * - 실패 시 에러 메시지를 JSON 형태로 반환.
+ * - 클라이언트에서 전달한 인가 코드(token)로 백엔드 OAuth 로그인 API를 호출한다.
+ * - 로그인 성공 시 accessToken/refreshToken을 HttpOnly 쿠키로 저장한다.
+ * - 클라이언트에는 토큰을 노출하지 않고 `{ user, accessTokenExpiresAt }`만 반환한다.
  *
- * @param request Request 객체.
- * @returns 사용자 정보 또는 에러 메시지를 포함한 NextResponse.
+ * @param request `token`을 포함한 JSON 요청 본문을 가진 Request 객체.
+ * @returns 성공 시 `{ user, accessTokenExpiresAt }`, 실패 시 `{ message }`를 반환한다.
  */
 export async function POST(
   request: Request

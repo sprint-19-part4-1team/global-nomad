@@ -31,12 +31,15 @@ const isAlreadyRegisteredUserError = (message: string) => {
 };
 
 /**
- * 카카오 OAuth 콜백 페이지.
+ * Kakao OAuth 콜백 처리 페이지.
+ *
  * @description
- * - 쿼리의 `code`, `state`를 파싱한다.
- * - `state`에 따라 회원가입/로그인을 요청한다.
- * - 이미 가입된 사용자는 로그인 authorize로 재시도한다.
- * @returns `카카오 로그인 처리 중...` 문구
+ * - 쿼리스트링의 `code`, `state`를 파싱한다.
+ * - `state` 값에 따라 카카오 로그인 또는 회원가입 BFF API를 호출한다.
+ * - 성공 시 `{ user, accessTokenExpiresAt }`로 세션을 저장하고 `/`로 이동한다.
+ * - 회원가입 시 이미 가입된 사용자 오류는 로그인(authorize)으로 재시도한다.
+ *
+ * @returns `카카오 처리 중...`안내 UI를 렌더링한다.
  */
 export default function KakaoOauthCallbackPage() {
   const router = useRouter();

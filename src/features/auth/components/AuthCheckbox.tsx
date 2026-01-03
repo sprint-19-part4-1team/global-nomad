@@ -69,7 +69,7 @@ export default function AuthCheckbox({
         <Link
           href={'/terms'}
           target='_blank'
-          className='text-primary-500 underline underline-offset-2 hover:text-primary-600'
+          className='text-primary-500 underline underline-offset-2 transition-colors duration-500 hover:text-primary-600'
           title='새 창에서 이용약관 열기'
           onClick={(e) => e.stopPropagation()}>
           이용약관

@@ -12,7 +12,7 @@ const isProtectedPath = (pathname: string): boolean => {
     .some((rule) => (typeof rule === 'string' ? pathname === rule : rule.test(pathname)));
 };
 
-export function middleware(request: NextRequest) {
+export const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
   if (!isProtectedPath(pathname)) {
@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+};
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],

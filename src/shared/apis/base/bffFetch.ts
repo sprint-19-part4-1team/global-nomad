@@ -76,6 +76,8 @@ export const bffFetch = async <T>(
 
       return await coreFetch<T>(url, requestOptions, timeoutMs);
     } catch (refreshError) {
+      // eslint-disable-next-line no-console
+      console.error('리프레시 토큰 갱신 실패:', refreshError);
       if (isApiError(refreshError) && refreshError.status === 401) {
         useUserStore.getState().clearSession('expired');
       }

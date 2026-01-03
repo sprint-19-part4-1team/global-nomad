@@ -48,7 +48,9 @@ export default function useTokenRefresh() {
           user,
           accessTokenExpiresAt: res.accessTokenExpiresAt,
         });
-      } catch {
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('리프레시 토큰 갱신 실패:', error);
         clearSession('expired');
       } finally {
         isRefreshingRef.current = false;

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
 import { getJwtMaxAge } from '@/shared/utils/jwt';
 
-type AuthToken = 'accessToken' | 'refreshToken';
+export type AuthToken = (typeof AUTH_COOKIE_KEYS)[keyof typeof AUTH_COOKIE_KEYS];
 
 /**
  * ## getAuthCookies

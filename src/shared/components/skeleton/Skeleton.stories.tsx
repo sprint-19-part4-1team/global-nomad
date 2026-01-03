@@ -45,7 +45,7 @@ export const Default: Story = {
 /**
  * 정사각형 Box
  *
- * 이미지나 썸네일 영역을 표시하는 박스형 Skeleton입니다.
+ * 이미지나 썸네일 영역을 표시하는 박스형 Skeleton입니다. </br>
  * rounded-24를 통해 둥근 모서리가 적용됩니다.
  */
 export const Box: Story = {
@@ -57,7 +57,7 @@ export const Box: Story = {
 /**
  * 텍스트 Line
  *
- * 텍스트 로딩을 표시하는 라인형 Skeleton입니다.
+ * 텍스트 로딩을 표시하는 라인형 Skeleton입니다. </br>
  * 제목, 본문 등 다양한 텍스트 영역에 활용할 수 있습니다.
  */
 export const Line: Story = {
@@ -69,7 +69,7 @@ export const Line: Story = {
 /**
  * 원형 Avatar
  *
- * 사용자 프로필 이미지 영역 등을 표시하는 원형 Skeleton입니다.
+ * 사용자 프로필 이미지 영역 등을 표시하는 원형 Skeleton입니다. </br>
  * rounded-full을 통해 완전한 원형으로 표시됩니다.
  */
 export const Avatar: Story = {

@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import AuthForm from '@/features/auth/components/AuthForm';
 import { login } from '@/shared/apis/feature/auth';
 import Button from '@/shared/components/button/Button';
@@ -49,6 +49,24 @@ export default function Login() {
     }
   };
 
+  const searchParams = useSearchParams();
+
+  const oauth = searchParams.get('oauth');
+  const oauthCode = searchParams.get('oauthCode');
+
+  useEffect(() => {
+    if (oauth === 'signin_failed' && oauthCode) {
+      console.log('[OAuth] 카카오 로그인 실패(미가입 가능):', { oauth, oauthCode });
+    }
+  }, [oauth, oauthCode]);
+
+  const handleGoToOauthSignUp = () => {
+    if (!oauthCode) {
+      return;
+    }
+    router.push(`/signup?oauthCode=${encodeURIComponent(oauthCode)}`);
+  };
+
   return (
     <AuthForm onSubmit={handleSubmit}>
       <Input
@@ -78,6 +96,11 @@ export default function Login() {
       <Button type='submit' isLoading={isSubmitting} disabled={!isValid} full>
         로그인 하기
       </Button>
+      {oauth === 'signin_failed' && oauthCode && (
+        <Button type='button' full onClick={handleGoToOauthSignUp}>
+          카카오로 회원가입 이동(임시)
+        </Button>
+      )}
     </AuthForm>
   );
 }

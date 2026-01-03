@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { AUTH_COOKIE_KEYS } from '@/shared/constants';
+import { AUTH_COOKIE_KEYS } from '@/shared/constants';
 
 const PROTECTED_ROUTE_RULES = {
   ACTIVITY: ['/activity/new', /^\/activity\/[^/]+\/edit$/],
@@ -21,8 +21,7 @@ export const middleware = (request: NextRequest) => {
     return NextResponse.next();
   }
 
-  // TODO: 리프레시 토큰 PR 머지되면 상수로 변경 AUTH_COOKIE_KEYS.ACCESS_TOKEN
-  const accessToken = request.cookies.get('accessToken')?.value;
+  const accessToken = request.cookies.get(AUTH_COOKIE_KEYS.ACCESS_TOKEN)?.value;
 
   if (!accessToken) {
     const loginUrl = new URL('/login', request.url);

@@ -1,16 +1,25 @@
-import GuestActions from '@/shared/components/header/GuestAction';
-import LoggedInActions from '@/shared/components/header/LoggedInActions';
-import { UserServiceResponseDto } from '@/shared/types/user';
+'use client';
 
-interface HeaderActionsProps {
-  isLoggedIn: boolean;
-  user?: UserServiceResponseDto;
+import dynamic from 'next/dynamic';
+import GuestActions from '@/shared/components/header/GuestAction';
+import { useUserStore } from '@/shared/stores/userStore';
+import LoggedInActions from './LoggedInActions';
+
+function HeaderActionsContent() {
+  const user = useUserStore((state) => state.user);
+  return user ? <LoggedInActions user={user} /> : <GuestActions />;
 }
 
-export default function HeaderActions({ isLoggedIn, user }: HeaderActionsProps) {
-  if (isLoggedIn && user) {
-    return <LoggedInActions user={user} />;
-  }
+// dynamic import로 SSR 비활성화
+const DynamicHeaderActionsContent = dynamic(() => Promise.resolve(HeaderActionsContent), {
+  ssr: false,
+  loading: () => (
+    <div className='flex items-center gap-16'>
+      <div className='h-32 w-150 animate-pulse rounded bg-gray-200' />
+    </div>
+  ),
+});
 
-  return <GuestActions />;
+export default function HeaderActions() {
+  return <DynamicHeaderActionsContent />;
 }

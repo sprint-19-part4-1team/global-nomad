@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { useUserStore } from '@/shared/stores/userStore';
 import type { UserServiceResponseDto } from '@/shared/types/user';
@@ -41,7 +41,7 @@ const isAlreadyRegisteredUserError = (message: string) => {
  *
  * @returns `카카오 처리 중...`안내 UI를 렌더링한다.
  */
-export default function KakaoOauthCallbackPage() {
+function KakaoOauthCallbackInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hasProcessedRef = useRef(false);
@@ -125,5 +125,18 @@ export default function KakaoOauthCallbackPage() {
     <main className='flex min-h-[60vh] items-center justify-center'>
       <p className='body-20 font-semibold text-gray-700'>카카오 로그인 처리 중...</p>
     </main>
+  );
+}
+
+export default function KakaoOauthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className='flex min-h-[60vh] items-center justify-center'>
+          <p className='body-20 font-semibold text-gray-700'>카카오 로그인 처리 중...</p>
+        </main>
+      }>
+      <KakaoOauthCallbackInner />
+    </Suspense>
   );
 }

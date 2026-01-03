@@ -49,7 +49,7 @@ export default function KakaoOauthCallbackPage() {
             }),
           });
 
-          router.replace('/login?oauth=signup_success');
+          router.replace('/');
           return;
         }
 
@@ -60,7 +60,25 @@ export default function KakaoOauthCallbackPage() {
         });
 
         router.replace('/');
-      } catch {
+      } catch (err: unknown) {
+        const message =
+          typeof err === 'object' && err !== null && 'message' in err
+            ? String((err as any).message)
+            : '';
+
+        const isAlreadyRegistered =
+          message.includes('이미') && (message.includes('등록') || message.includes('가입'));
+
+        if (state === 'signup' && isAlreadyRegistered) {
+          try {
+            window.location.href = '/api/oauth/kakao/authorize?mode=signin';
+            return;
+          } catch {
+            router.replace('/login?oauth=signin_failed');
+            return;
+          }
+        }
+
         if (state === 'signup') {
           router.replace('/signup?oauth=signup_failed');
         } else {

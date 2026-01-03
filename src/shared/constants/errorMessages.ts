@@ -24,6 +24,7 @@ export const AUTH_API_MESSAGE = {
     FAILED: '로그아웃에 실패했습니다.',
   },
   TOKEN: {
+    REFRESH_SUCCESS: '토큰 갱신에 성공했습니다.',
     REFRESH_FAILED: '토큰 갱신에 실패했습니다.',
   },
 } as const;

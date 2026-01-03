@@ -10,12 +10,10 @@ import { cn } from '@/shared/utils/cn';
  */
 const FOOTER_SPACER_RULES = [
   {
-    name: 'mypage-activity',
     match: (pathname: string) => pathname === '/mypage/activity',
     height: 'h-74',
   },
   {
-    name: 'activity-detail',
     match: (pathname: string) => /^\/activity\/\d+$/.test(pathname),
     height: 'h-142',
   },

@@ -3,6 +3,13 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { useUserStore } from '@/shared/stores/userStore';
+import type { UserServiceResponseDto } from '@/shared/types/user';
+
+type OAuthSessionResponseBody = {
+  user: UserServiceResponseDto;
+  accessTokenExpiresAt: number;
+};
 
 type OAuthMode = 'signin' | 'signup';
 
@@ -35,6 +42,7 @@ export default function KakaoOauthCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hasProcessedRef = useRef(false);
+  const setSession = useUserStore((state) => state.setSession);
 
   useEffect(() => {
     if (hasProcessedRef.current) {
@@ -63,7 +71,7 @@ export default function KakaoOauthCallbackPage() {
     (async () => {
       try {
         if (state === 'signup') {
-          await bffFetch('/oauth/sign-up/kakao', {
+          const res = await bffFetch<OAuthSessionResponseBody>('/oauth/sign-up/kakao', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -72,14 +80,24 @@ export default function KakaoOauthCallbackPage() {
             }),
           });
 
+          setSession({
+            user: res.user,
+            accessTokenExpiresAt: res.accessTokenExpiresAt,
+          });
+
           router.replace('/');
           return;
         }
 
-        await bffFetch('/oauth/sign-in/kakao', {
+        const res = await bffFetch<OAuthSessionResponseBody>('/oauth/sign-in/kakao', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token: code }),
+        });
+
+        setSession({
+          user: res.user,
+          accessTokenExpiresAt: res.accessTokenExpiresAt,
         });
 
         router.replace('/');
@@ -98,7 +116,7 @@ export default function KakaoOauthCallbackPage() {
         }
       }
     })();
-  }, [router, searchParams]);
+  }, [router, searchParams, setSession]);
 
   return (
     <main className='flex min-h-[60vh] items-center justify-center'>

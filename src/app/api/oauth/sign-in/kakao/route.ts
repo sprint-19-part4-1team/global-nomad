@@ -3,12 +3,11 @@ import { serverFetch } from '@/shared/apis/base/serverFetch';
 import { SignInWithOauthRequestBody } from '@/shared/types/oauth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
-import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
+import { getJwtMaxAge } from '@/shared/utils/jwt';
 
-type SignInWithOauthResponse = {
+type OAuthSessionResponseBody = {
   user: UserServiceResponseDto;
-  accessToken: string;
-  refreshToken: string;
+  accessTokenExpiresAt: number;
 };
 
 type ApiErrorResponse = { message: string };
@@ -33,7 +32,7 @@ const COOKIE_OPTIONS = {
  */
 export async function POST(
   request: Request
-): Promise<NextResponse<UserServiceResponseDto | ApiErrorResponse>> {
+): Promise<NextResponse<OAuthSessionResponseBody | ApiErrorResponse>> {
   const redirectUri = process.env.KAKAO_REDIRECT_URI;
   if (!redirectUri) {
     return NextResponse.json(
@@ -60,7 +59,11 @@ export async function POST(
   };
 
   try {
-    const signInResponse = await serverFetch<SignInWithOauthResponse>('/oauth/sign-in/kakao', {
+    const signInResponse = await serverFetch<{
+      user: UserServiceResponseDto;
+      accessToken: string;
+      refreshToken: string;
+    }>('/oauth/sign-in/kakao', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -68,11 +71,13 @@ export async function POST(
 
     const { accessToken, refreshToken, user } = signInResponse;
 
-    const response = NextResponse.json(user);
+    const accessTokenMaxAge = getJwtMaxAge(accessToken);
+    const accessTokenExpiresAt = Date.now() + accessTokenMaxAge * 1000;
+    const response = NextResponse.json({ user, accessTokenExpiresAt });
 
     response.cookies.set('accessToken', accessToken, {
       ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(accessToken),
+      maxAge: accessTokenMaxAge,
     });
 
     response.cookies.set('refreshToken', refreshToken, {

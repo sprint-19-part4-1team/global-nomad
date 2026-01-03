@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { AUTH_CLIENT_MESSAGE } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**
@@ -20,7 +21,7 @@ export default function SessionWatcher() {
 
   useEffect(() => {
     if (prevUserRef.current && !user && logoutReason === 'expired') {
-      toast.info('로그인이 만료되어 자동으로 로그아웃되었습니다.');
+      toast.info(AUTH_CLIENT_MESSAGE.SESSION_EXPIRED);
     }
 
     prevUserRef.current = user;

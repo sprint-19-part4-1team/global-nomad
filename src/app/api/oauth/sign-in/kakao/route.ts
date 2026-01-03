@@ -20,11 +20,23 @@ const COOKIE_OPTIONS = {
 
 export async function POST(request: Request) {
   const body = (await request.json()) as SignInWithOauthRequestBody;
+  const redirectUri = process.env.KAKAO_REDIRECT_URI;
+
+  if (!redirectUri) {
+    return NextResponse.json(
+      { message: 'KAKAO_REDIRECT_URI 환경 변수가 설정되지 않았습니다.' },
+      { status: 500 }
+    );
+  }
+  const payload: SignInWithOauthRequestBody = {
+    ...body,
+    redirectUri,
+  };
 
   try {
     const data = await serverFetch<SignInResponse>(`/oauth/sign-in/kakao`, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     });
 
     const { accessToken, refreshToken, user } = data;

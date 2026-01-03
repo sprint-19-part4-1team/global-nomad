@@ -33,10 +33,23 @@ export async function POST(
 ): Promise<NextResponse<UserServiceResponseDto | ErrorBody>> {
   const body = (await request.json()) as SignUpWithOauthRequestBody;
 
+  const redirectUri = process.env.KAKAO_REDIRECT_URI;
+  if (!redirectUri) {
+    return NextResponse.json(
+      { message: 'KAKAO_REDIRECT_URI가 설정되어 있지 않습니다.' },
+      { status: 500 }
+    );
+  }
+
+  const payload: SignUpWithOauthRequestBody = {
+    ...body,
+    redirectUri,
+  };
+
   try {
     const data = await serverFetch<SignUpResponse>('/oauth/sign-up/kakao', {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     });
 
     const { accessToken, refreshToken, user } = data;

@@ -12,7 +12,7 @@ export default function MypageActivity() {
       />
       <div className='mt-24 sm:mt-32'>마이페이지 내 체험 관리 페이지 구현</div>
       {/* TODO: float button 구현 */}
-      <div>float button</div>
+      <div className='fixed bottom-16 z-2 block sm:hidden'>float button</div>
     </>
   );
 }

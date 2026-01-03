@@ -1,6 +1,7 @@
 import { cva } from 'class-variance-authority';
 import Link from 'next/link';
 import Icons from '@/assets/icons';
+import { FooterPageSpacer } from '@/shared/components/footer/FooterPageSpacer';
 import { cn } from '@/shared/utils/cn';
 
 interface FooterProps {
@@ -116,6 +117,7 @@ export default function Footer({ className }: FooterProps) {
           ))}
         </ul>
       </div>
+      <FooterPageSpacer />
     </footer>
   );
 }

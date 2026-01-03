@@ -15,7 +15,7 @@ import { isApiError } from '@/shared/utils/errorGuards';
 
 export default function Login() {
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
+  const setSession = useUserStore((state) => state.setSession);
   const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'login',
@@ -33,8 +33,8 @@ export default function Login() {
     setSubmitting(true);
 
     try {
-      const userData = await login({ email: values.email, password: values.password });
-      setUser(userData);
+      const res = await login({ email: values.email, password: values.password });
+      setSession({ user: res.user, accessTokenExpiresAt: res.accessTokenExpiresAt });
       router.replace('/');
     } catch (err: unknown) {
       let message: string = COMMON_MESSAGE.NETWORK_ERROR;

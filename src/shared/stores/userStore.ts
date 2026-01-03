@@ -12,21 +12,24 @@ import { UserServiceResponseDto } from '@/shared/types/user';
  *
  * @remarks
  * - 로그인, `/users/me` 조회, 프로필 수정 등
- *   **서버에서 최신 사용자 정보를 받은 시점에만** `setUser`를 호출해야 합니다.
- * - 로그아웃 시에는 `clearUser`를 호출하여 사용자 정보를 초기화합니다.
+ *   **서버에서 최신 사용자 정보를 받은 시점에만** `setUser | setSession`를 호출해야 합니다.
+ * - 로그아웃 시에는 `clearSession`를 호출하여 사용자 정보를 초기화합니다.
  * - 이 store는 `zustand/persist`를 사용하여
  *   새로고침 후에도 사용자 정보를 복원합니다.
  *
  * @type {UserServiceResponseDto | undefined} - 로그인한 사용자 정보 (비로그인 시 undefined)
+ * @type {number | undefined} - accessToken 만료 시각 (ms timestamp)
  * @type {boolean} - persist hydration 완료 여부 (SSR → CSR 깜빡임 방지용)
  * @type {(user: UserServiceResponseDto) => void} - 사용자 정보 설정
  * @type {() => void} - 로그아웃
  */
 type UserStore = {
   user: UserServiceResponseDto | undefined;
+  accessTokenExpiresAt: number | undefined;
   hasHydrated: boolean;
   setUser: (user: UserServiceResponseDto) => void;
-  clearUser: () => void;
+  setSession: (params: { user: UserServiceResponseDto; accessTokenExpiresAt: number }) => void;
+  clearSession: () => void;
 };
 
 /**
@@ -47,14 +50,19 @@ export const useUserStore = create<UserStore>()(
     persist(
       (set) => ({
         user: undefined,
+        accessTokenExpiresAt: undefined,
         hasHydrated: false,
         setUser: (user) => set({ user }, false, 'user/setUser'),
-        clearUser: () => set({ user: undefined }, false, 'user/clearUser'),
+        setSession: ({ user, accessTokenExpiresAt }) =>
+          set({ user, accessTokenExpiresAt }, false, 'user/setSession'),
+        clearSession: () =>
+          set({ user: undefined, accessTokenExpiresAt: undefined }, false, 'user/clearSession'),
       }),
       {
         name: 'user',
         partialize: (state) => ({
           user: state.user,
+          accessTokenExpiresAt: state.accessTokenExpiresAt,
         }),
         onRehydrateStorage: (state) => {
           if (state) {

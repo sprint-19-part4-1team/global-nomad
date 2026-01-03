@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 
-const KAKAO_AUTH_BASE_URL = 'https://kauth.kakao.com/oauth/authorize';
+const KAKAO_OAUTH_AUTHORIZE_URL = 'https://kauth.kakao.com/oauth/authorize';
 
-type Mode = 'signin' | 'signup';
+type OAuthMode = 'signin' | 'signup';
 
-const isMode = (value: string | null): value is Mode => value === 'signin' || value === 'signup';
+const DEFAULT_OAUTH_MODE: OAuthMode = 'signin';
+
+const isOAuthMode = (value: string | null): value is OAuthMode =>
+  value === 'signin' || value === 'signup';
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
 
-  const modeParam = url.searchParams.get('mode');
-  const mode: Mode = isMode(modeParam) ? modeParam : 'signin';
+  const oauthModeParam = url.searchParams.get('mode');
+  const oauthMode: OAuthMode = isOAuthMode(oauthModeParam) ? oauthModeParam : DEFAULT_OAUTH_MODE;
 
   const clientId = process.env.KAKAO_REST_API_KEY;
   const redirectUri = process.env.KAKAO_REDIRECT_URI;
@@ -29,14 +32,12 @@ export async function GET(request: Request) {
     );
   }
 
-  // state는 우리가 넣고, 카카오가 콜백에 그대로 되돌려줌
-  // 로그인/회원가입 의도를 전달하는 용도로 사용
-  const authorizeUrl = new URL(KAKAO_AUTH_BASE_URL);
+  const authorizeUrl = new URL(KAKAO_OAUTH_AUTHORIZE_URL);
+
   authorizeUrl.searchParams.set('response_type', 'code');
   authorizeUrl.searchParams.set('client_id', clientId);
   authorizeUrl.searchParams.set('redirect_uri', redirectUri);
-  authorizeUrl.searchParams.set('state', mode);
+  authorizeUrl.searchParams.set('state', oauthMode);
 
-  // 카카오 로그인 화면으로 리다이렉트
   return NextResponse.redirect(authorizeUrl.toString());
 }

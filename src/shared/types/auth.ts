@@ -34,14 +34,3 @@ export interface TokensResponse {
 export interface LoginResponse extends TokensResponse {
   user: UserServiceResponseDto;
 }
-
-/**
- * 로그아웃 응답 (BFF API)
- *
- * @description
- * - 로그아웃 처리 결과를 클라이언트에 전달하기 위한 응답 타입입니다.
- * - 주로 메시지 형태로 성공/실패 여부를 전달합니다.
- */
-export interface LogoutResponse {
-  message: string;
-}

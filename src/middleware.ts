@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PROTECTED_ROUTE_RULES = {
   ACTIVITY: ['/activity/new', /^\/activity\/[^/]+\/edit$/],
-  MYPAGE: [/^\/mypage(\/.*)?$/],
+  MYPAGE: [/^\/mypage(?:\/|$)/],
 } as const;
 
 const ALL_PROTECTED_RULES = Object.values(PROTECTED_ROUTE_RULES).flat();

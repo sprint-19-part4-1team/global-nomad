@@ -30,6 +30,21 @@ const COPY_BY_MODE: Record<
   },
 };
 
+/**
+ * Kakao OAuth 인가 요청을 시작하는 버튼 컴포넌트.
+ *
+ * @description
+ * - Kakao authorize 엔드포인트로 리다이렉트한다.
+ * - `mode`에 따라 하단 안내 문구와 링크가 변경된다.
+ *
+ * @param props KakaoButtonProps
+ * @returns JSX.Element
+ *
+ * @example
+ * ```tsx
+ * <KakaoButton mode="signin" />
+ * ```
+ */
 export default function KakaoButton({ mode, className }: KakaoButtonProps) {
   const { subText, linkText, linkHref } = COPY_BY_MODE[mode];
   const lineStyle = 'h-1 flex-1 bg-gray-100';

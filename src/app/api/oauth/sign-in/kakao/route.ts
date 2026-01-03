@@ -20,6 +20,17 @@ const COOKIE_OPTIONS = {
   path: '/',
 } as const;
 
+/**
+ * Kakao OAuth 로그인 요청을 처리합니다.
+ *
+ * @description
+ * - 클라이언트로부터 전달된 인가 코드를 기반으로 백엔드 로그인 API를 호출.
+ * - 로그인 성공 시 accessToken, refreshToken을 httpOnly 쿠키로 설정.
+ * - 실패 시 에러 메시지를 JSON 형태로 반환.
+ *
+ * @param request Request 객체.
+ * @returns 사용자 정보 또는 에러 메시지를 포함한 NextResponse.
+ */
 export async function POST(
   request: Request
 ): Promise<NextResponse<UserServiceResponseDto | ApiErrorResponse>> {

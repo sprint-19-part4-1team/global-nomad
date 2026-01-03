@@ -23,6 +23,14 @@ const isAlreadyRegisteredUserError = (message: string) => {
   return message.includes('이미') && (message.includes('등록') || message.includes('가입'));
 };
 
+/**
+ * 카카오 OAuth 콜백 페이지.
+ * @description
+ * - 쿼리의 `code`, `state`를 파싱한다.
+ * - `state`에 따라 회원가입/로그인을 요청한다.
+ * - 이미 가입된 사용자는 로그인 authorize로 재시도한다.
+ * @returns `카카오 로그인 처리 중...` 문구
+ */
 export default function KakaoOauthCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();

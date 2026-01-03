@@ -5,13 +5,13 @@ import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
-type SignUpResponse = {
+type SignUpWithOauthResponse = {
   user: UserServiceResponseDto;
   refreshToken: string;
   accessToken: string;
 };
 
-type ErrorBody = { message: string };
+type ApiErrorResponse = { message: string };
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -20,19 +20,9 @@ const COOKIE_OPTIONS = {
   path: '/',
 } as const;
 
-/**
- * OAuth 기반 간편 회원가입 API (BFF)
- *
- * @description
- * - 클라이언트에서 전달받은 OAuth 회원가입 정보를 백엔드 OAuth 회원가입 API로 전달합니다.
- * - 백엔드로부터 전달받은 access / refresh token을 HttpOnly Cookie로 저장합니다.
- * - 클라이언트에는 토큰을 노출하지 않고, 유저 정보만 반환합니다.
- */
 export async function POST(
   request: Request
-): Promise<NextResponse<UserServiceResponseDto | ErrorBody>> {
-  const body = (await request.json()) as SignUpWithOauthRequestBody;
-
+): Promise<NextResponse<UserServiceResponseDto | ApiErrorResponse>> {
   const redirectUri = process.env.KAKAO_REDIRECT_URI;
   if (!redirectUri) {
     return NextResponse.json(
@@ -41,18 +31,37 @@ export async function POST(
     );
   }
 
+  let body: SignUpWithOauthRequestBody;
+  try {
+    body = (await request.json()) as SignUpWithOauthRequestBody;
+  } catch {
+    return NextResponse.json({ message: '요청 본문이 올바르지 않습니다.' }, { status: 400 });
+  }
+
+  const token = typeof body.token === 'string' ? body.token : '';
+  const nickname = typeof body.nickname === 'string' ? body.nickname : '';
+
+  if (!token) {
+    return NextResponse.json({ message: 'token이 필요합니다.' }, { status: 400 });
+  }
+  if (!nickname) {
+    return NextResponse.json({ message: 'nickname이 필요합니다.' }, { status: 400 });
+  }
+
   const payload: SignUpWithOauthRequestBody = {
-    ...body,
-    redirectUri,
+    token,
+    nickname,
+    redirectUri: redirectUri,
   };
 
   try {
-    const data = await serverFetch<SignUpResponse>('/oauth/sign-up/kakao', {
+    const signUpResponse = await serverFetch<SignUpWithOauthResponse>('/oauth/sign-up/kakao', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
-    const { accessToken, refreshToken, user } = data;
+    const { accessToken, refreshToken, user } = signUpResponse;
 
     const response = NextResponse.json(user);
 

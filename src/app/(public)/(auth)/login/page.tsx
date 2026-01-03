@@ -13,7 +13,6 @@ import useAuthForm from '@/shared/hooks/useAuthForm';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isApiError } from '@/shared/utils/errorGuards';
 
-// TODO: 로그인한 상태일 때 로그인 페이지 접속 시 안내 모달 띄우기
 export default function Login() {
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/shared/constants';
 import { MessageResponse } from '@/shared/types/common';
-import { clearAuthTokens } from '@/shared/utils/authCookies';
+import { clearAuthCookies } from '@/shared/utils/authCookies';
 
 /**
  * ## 로그아웃 API (BFF)
@@ -26,7 +26,7 @@ import { clearAuthTokens } from '@/shared/utils/authCookies';
  */
 export async function POST(): Promise<NextResponse<MessageResponse>> {
   try {
-    await clearAuthTokens();
+    await clearAuthCookies();
 
     return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.SUCCESS });
   } catch (error) {

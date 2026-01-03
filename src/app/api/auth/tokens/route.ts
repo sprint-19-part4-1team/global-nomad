@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
+import { AUTH_API_MESSAGE } from '@/shared/constants';
 import { TokensResponse } from '@/shared/types/auth';
 import { MessageResponse } from '@/shared/types/common';
+import { setAuthCookies } from '@/shared/utils/authCookies';
 import { isApiError } from '@/shared/utils/errorGuards';
-import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
 /**
  * 리프레시 토큰 갱신 API (BFF)
@@ -27,18 +27,9 @@ export async function POST(): Promise<NextResponse<MessageResponse>> {
     });
 
     const { accessToken, refreshToken } = data;
-
     const response = NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_SUCCESS });
 
-    response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(accessToken),
-    });
-
-    response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(refreshToken),
-    });
+    setAuthCookies({ response, accessToken, refreshToken });
 
     return response;
   } catch (err: unknown) {

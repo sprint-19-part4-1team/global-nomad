@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
+import { AUTH_API_MESSAGE } from '@/shared/constants';
 import { LoginResponse } from '@/shared/types/auth';
 import { UserServiceResponseDto } from '@/shared/types/user';
+import { setAuthCookies } from '@/shared/utils/authCookies';
 import { isApiError } from '@/shared/utils/errorGuards';
-import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
 type LoginResponseBody = UserServiceResponseDto | { message: string };
 
@@ -35,16 +35,7 @@ export async function POST(request: Request): Promise<NextResponse<LoginResponse
     // 유저 정보만 response로 리턴
     const response = NextResponse.json(user);
 
-    // 토큰들은 쿠키에 저장
-    response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(accessToken), // 쿠키 만료 시간 설정
-    });
-
-    response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(refreshToken),
-    });
+    setAuthCookies({ response, accessToken, refreshToken });
 
     return response;
   } catch (err: unknown) {

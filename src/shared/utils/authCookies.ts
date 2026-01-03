@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers';
-import { AUTH_COOKIE_KEYS } from '@/shared/constants';
+import { NextResponse } from 'next/server';
+import { AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
+import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
 
 type AuthToken = 'accessToken' | 'refreshToken';
 
@@ -14,6 +16,38 @@ type AuthToken = 'accessToken' | 'refreshToken';
 export const getAuthCookies = async (token: AuthToken): Promise<string | undefined> => {
   const cookieStore = await cookies();
   return cookieStore.get(token)?.value;
+};
+
+interface SetAuthCookiesOptions {
+  response: NextResponse;
+  accessToken: string;
+  refreshToken: string;
+}
+
+/**
+ * ## setAuthCookies
+ *
+ * @description
+ * 인증 과정에서 발급받은 access / refresh token을 HttpOnly Cookie로 설정하는 유틸 함수
+ *
+ * @param response - 쿠키를 설정할 `NextResponse` 객체
+ * @param accessToken - 백엔드 인증 서버로부터 발급받은 access token
+ * @param refreshToken - 백엔드 인증 서버로부터 발급받은 refresh token
+ */
+export const setAuthCookies = async ({
+  response,
+  accessToken,
+  refreshToken,
+}: SetAuthCookiesOptions): Promise<void> => {
+  response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: getJwtMaxAge(accessToken),
+  });
+
+  response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: getJwtMaxAge(refreshToken),
+  });
 };
 
 /**

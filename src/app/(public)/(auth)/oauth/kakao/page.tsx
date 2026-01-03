@@ -4,27 +4,38 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
-type Mode = 'signin' | 'signup';
+type OAuthMode = 'signin' | 'signup';
 
-const makeTempNickname = () => {
+// 카카오 회원 랜덤 닉네임
+const generateTempNickname = () => {
   const rand = Math.random().toString(36).slice(2, 8);
   return `kakao_${rand}`;
+};
+
+const getErrorMessage = (err: unknown) => {
+  if (typeof err === 'object' && err !== null && 'message' in err) {
+    return String((err as { message: unknown }).message);
+  }
+  return '';
+};
+
+const isAlreadyRegisteredUserError = (message: string) => {
+  return message.includes('이미') && (message.includes('등록') || message.includes('가입'));
 };
 
 export default function KakaoOauthCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const didRunRef = useRef(false);
+  const hasProcessedRef = useRef(false);
 
   useEffect(() => {
-    // React StrictMode(dev)에서 useEffect가 2번 실행될 수 있어서 1회만 실행하도록 방지
-    if (didRunRef.current) {
+    if (hasProcessedRef.current) {
       return;
     }
-    didRunRef.current = true;
+    hasProcessedRef.current = true;
 
     const code = searchParams.get('code');
-    const state = (searchParams.get('state') as Mode | null) ?? 'signin';
+    const state = (searchParams.get('state') as OAuthMode | null) ?? 'signin';
 
     const error = searchParams.get('error');
     if (error) {
@@ -37,6 +48,10 @@ export default function KakaoOauthCallbackPage() {
       return;
     }
 
+    const redirectToAuthorizeSignin = () => {
+      window.location.replace('/api/oauth/kakao/authorize?mode=signin');
+    };
+
     (async () => {
       try {
         if (state === 'signup') {
@@ -44,7 +59,7 @@ export default function KakaoOauthCallbackPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              nickname: makeTempNickname(),
+              nickname: generateTempNickname(),
               token: code,
             }),
           });
@@ -61,22 +76,11 @@ export default function KakaoOauthCallbackPage() {
 
         router.replace('/');
       } catch (err: unknown) {
-        const message =
-          typeof err === 'object' && err !== null && 'message' in err
-            ? String((err as any).message)
-            : '';
+        const message = getErrorMessage(err);
 
-        const isAlreadyRegistered =
-          message.includes('이미') && (message.includes('등록') || message.includes('가입'));
-
-        if (state === 'signup' && isAlreadyRegistered) {
-          try {
-            window.location.href = '/api/oauth/kakao/authorize?mode=signin';
-            return;
-          } catch {
-            router.replace('/login?oauth=signin_failed');
-            return;
-          }
+        if (state === 'signup' && isAlreadyRegisteredUserError(message)) {
+          redirectToAuthorizeSignin();
+          return;
         }
 
         if (state === 'signup') {
@@ -90,7 +94,7 @@ export default function KakaoOauthCallbackPage() {
 
   return (
     <main className='flex min-h-[60vh] items-center justify-center'>
-      <p className='body-16 text-gray-700'>카카오 로그인 처리 중...</p>
+      <p className='body-20 font-semibold text-gray-700'>카카오 로그인 처리 중...</p>
     </main>
   );
 }

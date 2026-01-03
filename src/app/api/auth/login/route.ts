@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { COOKIE_OPTIONS } from '@/shared/constants';
+import { AUTH_API_MESSAGE, COOKIE_OPTIONS } from '@/shared/constants';
 import { LoginResponse } from '@/shared/types/auth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
@@ -52,6 +52,6 @@ export async function POST(request: Request): Promise<NextResponse<LoginResponse
       return NextResponse.json({ message: err.message }, { status: err.status });
     }
 
-    return NextResponse.json({ message: '로그인에 실패했습니다.' }, { status: 500 });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGIN.FAILED }, { status: 500 });
   }
 }

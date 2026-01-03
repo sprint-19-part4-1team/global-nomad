@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { AUTH_API_MESSAGE } from '@/shared/constants';
 import { clearAuthTokens } from '@/shared/utils/authCookies';
 
 type LogoutResponseBody = {
@@ -30,10 +31,10 @@ export async function POST(): Promise<NextResponse<LogoutResponseBody>> {
   try {
     await clearAuthTokens();
 
-    return NextResponse.json({ message: '로그아웃 되었습니다.' });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.SUCCESS });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return NextResponse.json({ message: '로그아웃에 실패했습니다.' }, { status: 500 });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.FAILED }, { status: 500 });
   }
 }

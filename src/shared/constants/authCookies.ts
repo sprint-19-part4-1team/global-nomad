@@ -1,4 +1,16 @@
 /**
+ * ## AUTH_COOKIE_KEYS
+ *
+ * @description
+ * - 인증과 관련된 HttpOnly 쿠키 키 상수입니다.
+ * - access / refresh token 쿠키 이름을 일관되게 관리하기 위해 사용됩니다.
+ */
+export const AUTH_COOKIE_KEYS = {
+  ACCESS_TOKEN: 'accessToken',
+  REFRESH_TOKEN: 'refreshToken',
+} as const;
+
+/**
  * ## COOKIE_OPTIONS
  *
  * @description

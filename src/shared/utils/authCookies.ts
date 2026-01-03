@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { AUTH_COOKIE_KEYS } from '@/shared/constants';
 
 type AuthToken = 'accessToken' | 'refreshToken';
 
@@ -25,14 +26,14 @@ export const clearAuthTokens = async () => {
   const cookieStore = await cookies();
 
   cookieStore.set({
-    name: 'accessToken',
+    name: AUTH_COOKIE_KEYS.ACCESS_TOKEN,
     value: '',
     path: '/',
     maxAge: 0,
   });
 
   cookieStore.set({
-    name: 'refreshToken',
+    name: AUTH_COOKIE_KEYS.REFRESH_TOKEN,
     value: '',
     path: '/',
     maxAge: 0,

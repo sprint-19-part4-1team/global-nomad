@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { AUTH_API_MESSAGE, COOKIE_OPTIONS } from '@/shared/constants';
+import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
 import { LoginResponse } from '@/shared/types/auth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
@@ -36,12 +36,12 @@ export async function POST(request: Request): Promise<NextResponse<LoginResponse
     const response = NextResponse.json(user);
 
     // 토큰들은 쿠키에 저장
-    response.cookies.set('accessToken', accessToken, {
+    response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
       ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(accessToken), // 쿠키 만료 시간 설정
     });
 
-    response.cookies.set('refreshToken', refreshToken, {
+    response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
       ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(refreshToken),
     });

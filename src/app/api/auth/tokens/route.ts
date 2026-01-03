@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { AUTH_API_MESSAGE, COOKIE_OPTIONS } from '@/shared/constants';
+import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
 import { TokensResponse } from '@/shared/types/auth';
 import { MessageResponse } from '@/shared/types/common';
 import { isApiError } from '@/shared/utils/errorGuards';
@@ -30,12 +30,12 @@ export async function POST(): Promise<NextResponse<MessageResponse>> {
 
     const response = NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_SUCCESS });
 
-    response.cookies.set('accessToken', accessToken, {
+    response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
       ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(accessToken),
     });
 
-    response.cookies.set('refreshToken', refreshToken, {
+    response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
       ...COOKIE_OPTIONS,
       maxAge: getJwtMaxAge(refreshToken),
     });

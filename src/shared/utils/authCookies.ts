@@ -34,11 +34,11 @@ interface SetAuthCookiesOptions {
  * @param accessToken - 백엔드 인증 서버로부터 발급받은 access token
  * @param refreshToken - 백엔드 인증 서버로부터 발급받은 refresh token
  */
-export const setAuthCookies = async ({
+export const setAuthCookies = ({
   response,
   accessToken,
   refreshToken,
-}: SetAuthCookiesOptions): Promise<void> => {
+}: SetAuthCookiesOptions): void => {
   response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
     ...COOKIE_OPTIONS,
     maxAge: getJwtMaxAge(accessToken),

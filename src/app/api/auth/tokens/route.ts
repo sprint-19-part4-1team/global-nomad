@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 import { AUTH_API_MESSAGE, AUTH_COOKIE_KEYS } from '@/shared/constants';
-import { TokensResponse } from '@/shared/types/auth';
+import { BffRefreshTokenResponse, TokensResponse } from '@/shared/types/auth';
 import { MessageResponse } from '@/shared/types/common';
 import { getAuthCookies, setAuthCookies } from '@/shared/utils/authCookies';
 import { isApiError } from '@/shared/utils/errorGuards';
+import { getJwtExpiresAt } from '@/shared/utils/jwt';
+
+type RefreshTokenResponseBody = BffRefreshTokenResponse | MessageResponse;
 
 /**
  * 리프레시 토큰 갱신 API (BFF)
@@ -20,7 +23,7 @@ import { isApiError } from '@/shared/utils/errorGuards';
  * - 성공 시: 토큰 갱신 성공 메시지(JSON)
  * - 실패 시: 에러 메시지와 HTTP 상태 코드(JSON)
  */
-export async function POST(): Promise<NextResponse<MessageResponse>> {
+export async function POST(): Promise<NextResponse<RefreshTokenResponseBody>> {
   try {
     const refreshToken = await getAuthCookies(AUTH_COOKIE_KEYS.REFRESH_TOKEN);
 
@@ -35,7 +38,11 @@ export async function POST(): Promise<NextResponse<MessageResponse>> {
       },
     });
 
-    const response = NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_SUCCESS });
+    const accessTokenExpiresAt = getJwtExpiresAt(newToken.accessToken);
+    const response = NextResponse.json({
+      message: AUTH_API_MESSAGE.TOKEN.REFRESH_SUCCESS,
+      accessTokenExpiresAt,
+    });
 
     setAuthCookies({
       response,

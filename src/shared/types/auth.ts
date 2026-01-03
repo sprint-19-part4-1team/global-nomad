@@ -34,3 +34,40 @@ export interface TokensResponse {
 export interface LoginResponse extends TokensResponse {
   user: UserServiceResponseDto;
 }
+
+/**
+ * 로그인 성공 응답 (Next API)
+ *
+ * @description
+ * - 로그인 성공 시 Next API가 클라이언트에 반환하는 응답 타입입니다.
+ *
+ * @property user
+ * - 로그인한 사용자 정보
+ *
+ * @property accessTokenExpiresAt
+ * - accessToken의 만료 시각 (ms timestamp)
+ * - JWT의 `exp` 값을 기반으로 BFF에서 계산됩니다.
+ */
+export interface BffLoginResponse {
+  user: UserServiceResponseDto;
+  accessTokenExpiresAt: number;
+}
+
+/**
+ * 토큰 재발급 성공 응답 (Next API)
+ *
+ * @description
+ * - refresh token을 사용하여 새로운 access token이 발급되었을 때
+ *   Next API(BFF)가 클라이언트에 반환하는 응답 타입입니다.
+ *
+ * @property message
+ * - 토큰 재발급 처리 결과에 대한 안내 메시지
+ *
+ * @property accessTokenExpiresAt
+ * - 새로 발급된 accessToken의 만료 시각 (ms timestamp)
+ * - JWT의 `exp` 값을 기반으로 BFF에서 계산됩니다.
+ */
+export interface BffRefreshTokenResponse {
+  message: string;
+  accessTokenExpiresAt: number;
+}

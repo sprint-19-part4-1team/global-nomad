@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/shared/constants';
-import { getJwtMaxAge } from '@/shared/utils/getJwtMaxAge';
+import { getJwtMaxAge } from '@/shared/utils/jwt';
 
 type AuthToken = 'accessToken' | 'refreshToken';
 

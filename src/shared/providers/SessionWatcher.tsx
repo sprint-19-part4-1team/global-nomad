@@ -15,16 +15,16 @@ import { useUserStore } from '@/shared/stores/userStore';
  */
 export default function SessionWatcher() {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
+  const { user, logoutReason } = useUserStore();
   const prevUserRef = useRef(user);
 
   useEffect(() => {
-    if (prevUserRef.current && !user) {
+    if (prevUserRef.current && !user && logoutReason === 'expired') {
       toast.info('로그인이 만료되어 자동으로 로그아웃되었습니다.');
     }
 
     prevUserRef.current = user;
-  }, [user, router]);
+  }, [user, router, logoutReason]);
 
   return null;
 }

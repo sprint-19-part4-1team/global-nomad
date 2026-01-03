@@ -49,7 +49,7 @@ export default function useTokenRefresh() {
           accessTokenExpiresAt: res.accessTokenExpiresAt,
         });
       } catch {
-        clearSession();
+        clearSession('expired');
       } finally {
         isRefreshingRef.current = false;
       }

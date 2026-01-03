@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/shared/constants';
+import { MessageResponse } from '@/shared/types/common';
 import { clearAuthTokens } from '@/shared/utils/authCookies';
-
-type LogoutResponseBody = {
-  message: string;
-};
 
 /**
  * ## 로그아웃 API (BFF)
@@ -27,7 +24,7 @@ type LogoutResponseBody = {
  * }
  * ```
  */
-export async function POST(): Promise<NextResponse<LogoutResponseBody>> {
+export async function POST(): Promise<NextResponse<MessageResponse>> {
   try {
     await clearAuthTokens();
 

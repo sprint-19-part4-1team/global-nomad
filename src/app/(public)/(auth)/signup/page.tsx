@@ -13,8 +13,6 @@ import { COMMON_MESSAGE } from '@/shared/constants/errorMessages';
 import useAuthForm from '@/shared/hooks/useAuthForm';
 import { isApiError } from '@/shared/utils/errorGuards';
 
-// TODO: 로그인한 상태일 때 회원가입 페이지 접속 시 안내 모달 띄우기
-
 const SIGNUP_MESSAGE = {
   SUCCESS: '가입이 완료되었습니다.',
   DUPLICATE_EMAIL: '이미 사용 중인 이메일입니다.',

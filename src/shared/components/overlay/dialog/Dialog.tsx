@@ -1,4 +1,4 @@
-import { ComponentType, useRef } from 'react';
+import { ComponentType, useEffect, useRef } from 'react';
 import DialogAlert, { DialogAlertProps } from '@/shared/components/overlay/dialog/DialogAlert';
 import DialogConfirm, {
   DialogConfirmProps,
@@ -14,15 +14,23 @@ type NeverProps<T> = {
 
 type DialogPropsMap = { alert: DialogAlertProps; confirm: DialogConfirmProps };
 
-type DialogProps =
-  | ({
-      variant?: 'alert';
-    } & DialogAlertProps
-      & NeverProps<Omit<DialogConfirmProps, 'message'>>)
-  | ({
-      variant: 'confirm';
-    } & DialogConfirmProps
-      & NeverProps<Omit<DialogAlertProps, 'message'>>);
+type DialogBaseProps = {
+  autoCloseAfterMs?: number;
+};
+
+type AlertDialogProps = {
+  variant?: 'alert';
+} & DialogBaseProps
+  & DialogAlertProps
+  & NeverProps<Omit<DialogConfirmProps, 'message'>>;
+
+type ConfirmDialogProps = {
+  variant: 'confirm';
+} & DialogBaseProps
+  & DialogConfirmProps
+  & NeverProps<Omit<DialogAlertProps, 'message'>>;
+
+type DialogProps = AlertDialogProps | ConfirmDialogProps;
 
 /** Dialog content */
 const DIALOG_CONTENT_MAP = {
@@ -76,17 +84,36 @@ const DIALOG_CONTENT_MAP = {
  * />
  * ```
  */
-export default function Dialog({ variant = 'alert', ...props }: DialogProps) {
+export default function Dialog({ variant = 'alert', autoCloseAfterMs, ...props }: DialogProps) {
   const Content = DIALOG_CONTENT_MAP[variant] as ComponentType<DialogPropsMap[typeof variant]>;
 
   const surfaceRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeHandlerRef = useRef<(() => void) | null>(null);
+
+  closeHandlerRef.current =
+    variant === 'alert'
+      ? (props as DialogAlertProps).onClose
+      : (props as DialogConfirmProps).onCancel;
+
+  useEffect(() => {
+    if (!autoCloseAfterMs) {
+      return;
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      closeHandlerRef.current?.();
+    }, autoCloseAfterMs);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [autoCloseAfterMs, closeHandlerRef]);
 
   useOutsideClick(surfaceRef, () => {
-    if (variant === 'alert') {
-      props.onClose?.();
-    } else {
-      props.onCancel?.();
-    }
+    closeHandlerRef.current?.();
   });
 
   return (

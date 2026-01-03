@@ -4,12 +4,14 @@ import { NextRequest, NextResponse } from 'next/server';
 const PROTECTED_ROUTE_RULES = {
   ACTIVITY: ['/activity/new', /^\/activity\/[^/]+\/edit$/],
   MYPAGE: [/^\/mypage(\/.*)?$/],
-};
+} as const;
+
+const ALL_PROTECTED_RULES = Object.values(PROTECTED_ROUTE_RULES).flat();
 
 const isProtectedPath = (pathname: string): boolean => {
-  return Object.values(PROTECTED_ROUTE_RULES)
-    .flat()
-    .some((rule) => (typeof rule === 'string' ? pathname === rule : rule.test(pathname)));
+  return ALL_PROTECTED_RULES.some((rule) =>
+    typeof rule === 'string' ? pathname === rule : rule.test(pathname)
+  );
 };
 
 export const middleware = (request: NextRequest) => {

@@ -6,6 +6,7 @@
  */
 export const COMMON_MESSAGE = {
   NETWORK_ERROR: '네트워크 오류가 발생했습니다.',
+  TOKEN_ERROR: '인증 오류가 발생했습니다.',
 } as const;
 
 /**

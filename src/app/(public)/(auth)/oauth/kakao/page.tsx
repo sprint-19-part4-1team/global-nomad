@@ -66,24 +66,18 @@ function KakaoOauthCallbackInner() {
       window.location.replace('/api/oauth/kakao/authorize?mode=signin');
     };
 
+    const isSignup = state === 'signup';
+    const failureRedirectUrl = isSignup
+      ? '/signup?oauth=signup_failed'
+      : '/login?oauth=signin_failed';
     (async () => {
       try {
-        if (state === 'signup') {
-          const res = await signUpWithOauth({
-            nickname: generateTempNickname(),
-            token: code,
-          });
-
-          setSession({
-            user: res.user,
-            accessTokenExpiresAt: res.accessTokenExpiresAt,
-          });
-
-          router.replace('/');
-          return;
-        }
-
-        const res = await signInWithOauth({ token: code });
+        const res = isSignup
+          ? await signUpWithOauth({
+              nickname: generateTempNickname(),
+              token: code,
+            })
+          : await signInWithOauth({ token: code });
 
         setSession({
           user: res.user,
@@ -94,16 +88,12 @@ function KakaoOauthCallbackInner() {
       } catch (err: unknown) {
         const message = getErrorMessage(err);
 
-        if (state === 'signup' && isAlreadyRegisteredUserError(message)) {
+        if (isSignup && isAlreadyRegisteredUserError(message)) {
           redirectToAuthorizeSignin();
           return;
         }
 
-        if (state === 'signup') {
-          router.replace('/signup?oauth=signup_failed');
-        } else {
-          router.replace('/login?oauth=signin_failed');
-        }
+        router.replace(failureRedirectUrl);
       }
     })();
   }, [router, searchParams, setSession]);

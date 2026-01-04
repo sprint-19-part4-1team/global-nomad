@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import type { MessageResponse } from '@/shared/types/common';
 import { SignUpWithOauthRequestBody } from '@/shared/types/oauth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
@@ -8,8 +9,6 @@ import {
   getRequiredKakaoRedirectUri,
 } from '@/shared/utils/oauthSession';
 import type { OAuthSessionResponseBody } from '@/shared/utils/oauthSession';
-
-type ApiErrorResponse = { message: string };
 
 /**
  * Kakao OAuth 회원가입(BFF) 요청을 처리한다.
@@ -24,7 +23,7 @@ type ApiErrorResponse = { message: string };
  */
 export async function POST(
   request: Request
-): Promise<NextResponse<OAuthSessionResponseBody | ApiErrorResponse>> {
+): Promise<NextResponse<OAuthSessionResponseBody | MessageResponse>> {
   let redirectUri: string;
   try {
     redirectUri = getRequiredKakaoRedirectUri();

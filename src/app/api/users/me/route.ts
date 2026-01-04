@@ -7,7 +7,7 @@ export const GET = createAuthorizedRoute(async ({ accessToken }) => {
 });
 
 export const PATCH = createAuthorizedRoute<UpdateUserBodyDto>(async ({ accessToken, body }) => {
-  return proxy<UserServiceResponseDto | UpdateUserBodyDto>(
+  return proxy<UserServiceResponseDto, UpdateUserBodyDto>(
     '/users/me',
     { method: 'PATCH', body },
     accessToken

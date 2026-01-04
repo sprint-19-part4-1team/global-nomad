@@ -4,13 +4,13 @@ import { Suspense, ReactNode, useState, useEffect } from 'react';
  * DelayedSuspense 컴포넌트의 Props
  *
  * @property {ReactNode} fallback - 로딩 중 표시할 스켈레톤 컴포넌트
- * @property {number} [minDuration=500] - 최소 표시 시간 (밀리초)
+ * @property {number} [minDuration=1000] - 최소 표시 시간 (밀리초)
  * @property {ReactNode} children - 실제 콘텐츠
  */
 interface DelayedSuspenseProps {
   /** 로딩 중 표시할 스켈레톤 컴포넌트 */
   fallback: ReactNode;
-  /** 최소 표시 시간 (밀리초, 기본값: 500) */
+  /** 최소 표시 시간 (밀리초, 기본값: 1000) */
   minDuration?: number;
   /** 실제 콘텐츠 */
   children: ReactNode;

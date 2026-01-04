@@ -34,23 +34,14 @@ export default function Signup() {
   });
 
   const handleSubmit = async () => {
-    if (isSubmitting) {
-      return;
-    }
-
-    if (!isValid) {
+    if (!values.nickname || isSubmitting) {
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const { email, password, nickname } = values;
-      if (!email || !password || !nickname) {
-        return;
-      }
-
-      await signUp({ email, password, nickname });
+      await signUp({ email: values.email, password: values.password, nickname: values.nickname });
       overlayStore.push(
         <Dialog
           message={SIGNUP_MESSAGE.SUCCESS}

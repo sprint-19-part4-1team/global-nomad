@@ -22,11 +22,12 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
   const handleLogout = async () => {
     try {
       await logout();
-    } finally {
       useUserStore.persist.clearStorage();
       useUserStore.getState().clearUser();
       router.replace('/');
       router.refresh();
+    } catch (error) {
+      console.error('로그아웃에 실패했습니다:', error);
     }
   };
 

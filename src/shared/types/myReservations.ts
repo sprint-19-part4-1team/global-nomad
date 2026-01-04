@@ -12,7 +12,7 @@ export interface GetMyReservationsParams {
   status?: ReservationStatus;
 }
 export interface UpdateMyReservationBodyDto {
-  status: 'canceled';
+  status: ReservationStatus.Canceled;
 }
 export interface CreateReviewBodyDto {
   rating: number;

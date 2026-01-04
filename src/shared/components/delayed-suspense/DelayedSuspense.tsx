@@ -22,6 +22,7 @@ interface DelayedSuspenseProps {
  * @description
  * 데이터 로딩이 빠르게 완료되어도 최소 시간 동안 스켈레톤을 표시하여
  * 깜빡임 현상을 방지하고, 콘텐츠 전환 시 부드러운 fade-in 효과를 제공합니다.
+ * children은 즉시 렌더링되어 데이터 fetching이 지연되지 않습니다.
  *
  * @param {DelayedSuspenseProps} props - 컴포넌트 props
  * @returns {JSX.Element} DelayedSuspense 컴포넌트
@@ -44,11 +45,12 @@ export default function DelayedSuspense({
   minDuration = 1000,
   children,
 }: DelayedSuspenseProps) {
-  // 실제 콘텐츠 표시 여부를 관리하는 상태
-  const [show, setShow] = useState(false);
+  // 최소 시간이 경과했는지 여부
+  const [isShow, setIsShow] = useState(false);
   // 컴포넌트 마운트 시점을 기록 (최소 시간 계산용)
   const [startTime] = useState(() => Date.now());
 
+  // 최소 표시 시간 타이머
   useEffect(() => {
     // 경과 시간 계산
     const elapsed = Date.now() - startTime;
@@ -56,8 +58,8 @@ export default function DelayedSuspense({
     // 최소 표시 시간에서 경과 시간을 뺀 나머지 시간 계산
     const remaining = Math.max(0, minDuration - elapsed);
 
-    // 남은 시간 후에 콘텐츠 표시
-    const timer = setTimeout(() => setShow(true), remaining);
+    // 남은 시간 후에 표시 가능 상태로 변경
+    const timer = setTimeout(() => setIsShow(true), remaining);
 
     // cleanup: 컴포넌트 언마운트 시 타이머 제거
     return () => clearTimeout(timer);
@@ -65,13 +67,11 @@ export default function DelayedSuspense({
 
   return (
     <Suspense fallback={fallback}>
-      {show ? (
-        // 최소 시간이 지난 후 fade-in 애니메이션과 함께 실제 콘텐츠 표시
-        <div className='animate-fadeIn'>{children}</div>
-      ) : (
-        // 최소 시간이 지나지 않았으면 스켈레톤 계속 표시
-        fallback
-      )}
+      {/* children은 항상 렌더링되어 즉시 데이터 fetching 시작 */}
+      {/* Suspense가 resolve되면 이 부분이 렌더링됨 */}
+      <div className={isShow ? 'animate-fadeIn' : 'hidden'}>{children}</div>
+      {/* isShow가 false면 fallback 추가 표시 (로딩 완료 후 최소 시간 보장) */}
+      {!isShow && fallback}
     </Suspense>
   );
 }

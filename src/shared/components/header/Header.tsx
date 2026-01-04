@@ -21,13 +21,11 @@ import Logo from '@/shared/components/logo/Logo';
 
 export default function Header() {
   return (
-    <>
-      <header className='w-full'>
-        <div className='mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
-          <Logo />
-          <HeaderActions />
-        </div>
-      </header>
-    </>
+    <header className='w-full'>
+      <div className='mx-auto flex h-48 w-full max-w-1520 items-center justify-between px-24 py-4 sm:h-80 sm:px-10 sm:py-16'>
+        <Logo />
+        <HeaderActions />
+      </div>
+    </header>
   );
 }

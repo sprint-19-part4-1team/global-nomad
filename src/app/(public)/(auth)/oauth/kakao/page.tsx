@@ -5,6 +5,7 @@ import { Suspense, useEffect, useRef } from 'react';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { useUserStore } from '@/shared/stores/userStore';
 import type { UserServiceResponseDto } from '@/shared/types/user';
+import { isRecord } from '@/shared/utils/errorGuards';
 
 type OAuthSessionResponseBody = {
   user: UserServiceResponseDto;
@@ -19,9 +20,9 @@ const generateTempNickname = () => {
   return `kakao${rand}`;
 };
 
-const getErrorMessage = (err: unknown) => {
-  if (typeof err === 'object' && err !== null && 'message' in err) {
-    return String((err as { message: unknown }).message);
+export const getErrorMessage = (err: unknown): string => {
+  if (isRecord(err) && typeof err.message === 'string') {
+    return err.message;
   }
   return '';
 };

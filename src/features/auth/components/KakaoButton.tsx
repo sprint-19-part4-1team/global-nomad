@@ -75,7 +75,7 @@ export default function KakaoButton({ mode, className }: KakaoButtonProps) {
         {subText}
         <Link
           href={linkHref}
-          className='cursor-pointer underline decoration-2 transition-colors hover:text-gray-800'>
+          className='cursor-pointer font-semibold underline decoration-2 underline-offset-2 transition-colors hover:text-gray-800'>
           {linkText}
         </Link>
       </p>

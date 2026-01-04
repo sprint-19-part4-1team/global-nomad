@@ -123,7 +123,7 @@ export const createActivityImage = (image: File): Promise<CreateActivityImageRes
   const formData = new FormData();
   formData.append('image', image);
 
-  return bffFetch<CreateActivityImageResponse>('/activities/images', {
+  return bffFetch<CreateActivityImageResponse>('/activities/image', {
     method: 'POST',
     body: formData,
   });

@@ -5,7 +5,6 @@ import { cn } from '@/shared/utils/cn';
 type KakaoAuthMode = 'signin' | 'signup';
 type KakaoButtonProps = {
   mode: KakaoAuthMode;
-  label?: string;
   className?: string;
 };
 

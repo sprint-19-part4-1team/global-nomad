@@ -1,4 +1,5 @@
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import { isRecord } from '@/shared/utils/errorGuards';
 
 /**
  * proxy에 전달되는 옵션 타입입니다.
@@ -64,7 +65,7 @@ export const proxy = <TResponse, TBody = unknown>(
   let resolvedBody: BodyInit | undefined;
 
   if (options.body !== undefined) {
-    if (typeof options.body === 'object' && !(options.body instanceof FormData)) {
+    if (isRecord(options.body) && !(options.body instanceof FormData)) {
       resolvedBody = JSON.stringify(options.body);
     } else {
       resolvedBody = options.body as BodyInit;

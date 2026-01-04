@@ -14,7 +14,7 @@ const KAKAO_OAUTH_AUTHORIZE_URL = 'https://kauth.kakao.com/oauth/authorize';
  * @param request Next.js Request 객체.
  * @returns Kakao OAuth authorize URL로의 리다이렉트 응답.
  */
-export async function GET(request: Request) {
+export function GET(request: Request) {
   const url = new URL(request.url);
 
   const oauthModeParam = url.searchParams.get('mode');

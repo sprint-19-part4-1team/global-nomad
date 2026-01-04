@@ -1,13 +1,8 @@
 import { NextResponse } from 'next/server';
+import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/shared/constants/oauthMode';
+import type { OAuthMode } from '@/shared/constants/oauthMode';
 
 const KAKAO_OAUTH_AUTHORIZE_URL = 'https://kauth.kakao.com/oauth/authorize';
-
-type OAuthMode = 'signin' | 'signup';
-
-const DEFAULT_OAUTH_MODE: OAuthMode = 'signin';
-
-const isOAuthMode = (value: string | null): value is OAuthMode =>
-  value === 'signin' || value === 'signup';
 
 /**
  * Kakao OAuth 인가 엔드포인트로 리다이렉트합니다.

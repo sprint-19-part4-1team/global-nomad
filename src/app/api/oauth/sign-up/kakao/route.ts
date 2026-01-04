@@ -64,7 +64,6 @@ export async function POST(
       accessToken: string;
     }>('/oauth/sign-up/kakao', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 

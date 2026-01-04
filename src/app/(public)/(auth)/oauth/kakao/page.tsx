@@ -14,7 +14,7 @@ const generateTempNickname = () => {
   return `kakao${rand}`;
 };
 
-export const getErrorMessage = (err: unknown): string => {
+const getErrorMessage = (err: unknown): string => {
   if (isRecord(err) && typeof err.message === 'string') {
     return err.message;
   }

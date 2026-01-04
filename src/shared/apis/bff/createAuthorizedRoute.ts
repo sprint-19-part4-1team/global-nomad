@@ -78,6 +78,10 @@ export const createAuthorizedRoute = <TBody = unknown>(
         request,
       });
 
+      if (result === undefined) {
+        return new NextResponse(null, { status: 204 });
+      }
+
       return NextResponse.json(result);
     } catch (err) {
       if (isApiError(err)) {

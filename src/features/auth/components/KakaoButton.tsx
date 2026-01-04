@@ -12,17 +12,20 @@ const KAKAO_AUTHORIZE_PATH = '/api/oauth/kakao/authorize';
 const COPY_BY_MODE: Record<
   KakaoAuthMode,
   {
+    separatorText: string;
     subText: string;
     linkText: string;
     linkHref: string;
   }
 > = {
   signin: {
+    separatorText: 'or',
     subText: '회원이 아니신가요?',
     linkText: '회원가입하기',
     linkHref: '/signup',
   },
   signup: {
+    separatorText: 'SNS 계정으로 회원가입하기',
     subText: '회원이신가요?',
     linkText: '로그인하기',
     linkHref: '/login',
@@ -45,7 +48,7 @@ const COPY_BY_MODE: Record<
  * ```
  */
 export default function KakaoButton({ mode, className }: KakaoButtonProps) {
-  const { subText, linkText, linkHref } = COPY_BY_MODE[mode];
+  const { separatorText, subText, linkText, linkHref } = COPY_BY_MODE[mode];
   const lineStyle = 'h-1 flex-1 bg-gray-100';
 
   const handleClick = () => {
@@ -56,7 +59,7 @@ export default function KakaoButton({ mode, className }: KakaoButtonProps) {
     <div>
       <div className='flex items-center gap-14 py-20 sm:py-30'>
         <div className={lineStyle} />
-        <span className='shrink-0 body-16 font-semibold text-gray-700'>또는</span>
+        <span className='shrink-0 body-16 font-semibold text-gray-700'>{separatorText}</span>
         <div className={lineStyle} />
       </div>
       <button

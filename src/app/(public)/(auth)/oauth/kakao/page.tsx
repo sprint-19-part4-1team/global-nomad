@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
 import { signInWithOauth, signUpWithOauth } from '@/shared/apis/feature/oauth';
+import Spinner from '@/shared/components/spinner/Spinner';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isRecord } from '@/shared/utils/errorGuards';
 
@@ -99,9 +100,9 @@ function KakaoOauthCallbackInner() {
   }, [router, searchParams, setSession]);
 
   return (
-    <main className='flex min-h-[60vh] items-center justify-center'>
-      <p className='body-20 font-semibold text-gray-700'>카카오 로그인 처리 중...</p>
-    </main>
+    <div className='flex min-h-[60vh] items-center justify-center'>
+      <Spinner size={48} borderWidth={4} />
+    </div>
   );
 }
 
@@ -109,9 +110,9 @@ export default function KakaoOauthCallbackPage() {
   return (
     <Suspense
       fallback={
-        <main className='flex min-h-[60vh] items-center justify-center'>
-          <p className='body-20 font-semibold text-gray-700'>카카오 로그인 처리 중...</p>
-        </main>
+        <div className='flex min-h-[60vh] items-center justify-center'>
+          <Spinner size={48} borderWidth={4} />
+        </div>
       }>
       <KakaoOauthCallbackInner />
     </Suspense>

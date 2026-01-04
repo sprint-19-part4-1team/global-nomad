@@ -3,21 +3,13 @@ import { serverFetch } from '@/shared/apis/base/serverFetch';
 import { SignUpWithOauthRequestBody } from '@/shared/types/oauth';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
-import { getJwtMaxAge } from '@/shared/utils/jwt';
-
-type OAuthSessionResponseBody = {
-  user: UserServiceResponseDto;
-  accessTokenExpiresAt: number;
-};
+import {
+  createOAuthSessionResponse,
+  getRequiredKakaoRedirectUri,
+} from '@/shared/utils/oauthSession';
+import type { OAuthSessionResponseBody } from '@/shared/utils/oauthSession';
 
 type ApiErrorResponse = { message: string };
-
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
-  path: '/',
-} as const;
 
 /**
  * Kakao OAuth 회원가입(BFF) 요청을 처리한다.
@@ -33,8 +25,10 @@ const COOKIE_OPTIONS = {
 export async function POST(
   request: Request
 ): Promise<NextResponse<OAuthSessionResponseBody | ApiErrorResponse>> {
-  const redirectUri = process.env.KAKAO_REDIRECT_URI;
-  if (!redirectUri) {
+  let redirectUri: string;
+  try {
+    redirectUri = getRequiredKakaoRedirectUri();
+  } catch {
     return NextResponse.json(
       { message: 'KAKAO_REDIRECT_URI가 설정되어 있지 않습니다.' },
       { status: 500 }
@@ -77,22 +71,7 @@ export async function POST(
 
     const { accessToken, refreshToken, user } = signUpResponse;
 
-    const accessTokenMaxAge = getJwtMaxAge(accessToken);
-    const accessTokenExpiresAt = Date.now() + accessTokenMaxAge * 1000;
-
-    const response = NextResponse.json({ user, accessTokenExpiresAt });
-
-    response.cookies.set('accessToken', accessToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: accessTokenMaxAge,
-    });
-
-    response.cookies.set('refreshToken', refreshToken, {
-      ...COOKIE_OPTIONS,
-      maxAge: getJwtMaxAge(refreshToken),
-    });
-
-    return response;
+    return createOAuthSessionResponse({ user, accessToken, refreshToken });
   } catch (err: unknown) {
     if (isApiError(err)) {
       return NextResponse.json({ message: err.message }, { status: err.status });

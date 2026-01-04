@@ -1,0 +1,77 @@
+import { Suspense, ReactNode, useState, useEffect } from 'react';
+
+/**
+ * DelayedSuspense 컴포넌트의 Props
+ *
+ * @property {ReactNode} fallback - 로딩 중 표시할 스켈레톤 컴포넌트
+ * @property {number} [minDuration=500] - 최소 표시 시간 (밀리초)
+ * @property {ReactNode} children - 실제 콘텐츠
+ */
+interface DelayedSuspenseProps {
+  /** 로딩 중 표시할 스켈레톤 컴포넌트 */
+  fallback: ReactNode;
+  /** 최소 표시 시간 (밀리초, 기본값: 500) */
+  minDuration?: number;
+  /** 실제 콘텐츠 */
+  children: ReactNode;
+}
+
+/**
+ * 최소 로딩 시간을 보장하고 fade-in 효과를 제공하는 Suspense 래퍼 컴포넌트
+ *
+ * @description
+ * 데이터 로딩이 빠르게 완료되어도 최소 시간 동안 스켈레톤을 표시하여
+ * 깜빡임 현상을 방지하고, 콘텐츠 전환 시 부드러운 fade-in 효과를 제공합니다.
+ *
+ * @param {DelayedSuspenseProps} props - 컴포넌트 props
+ * @returns {JSX.Element} DelayedSuspense 컴포넌트
+ *
+ * @example
+ * ```tsx
+ * // 기본 사용 (1000ms 최소 표시)
+ * <DelayedSuspense fallback={<PopularActivitySkeleton />}>
+ *   <PopularActivityList />
+ * </DelayedSuspense>
+ *
+ * // 커스텀 최소 시간 설정
+ * <DelayedSuspense fallback={<ActivitySkeleton />} minDuration={800}>
+ *   <ActivityList />
+ * </DelayedSuspense>
+ * ```
+ */
+export default function DelayedSuspense({
+  fallback,
+  minDuration = 1000,
+  children,
+}: DelayedSuspenseProps) {
+  // 실제 콘텐츠 표시 여부를 관리하는 상태
+  const [show, setShow] = useState(false);
+  // 컴포넌트 마운트 시점을 기록 (최소 시간 계산용)
+  const [startTime] = useState(() => Date.now());
+
+  useEffect(() => {
+    // 경과 시간 계산
+    const elapsed = Date.now() - startTime;
+
+    // 최소 표시 시간에서 경과 시간을 뺀 나머지 시간 계산
+    const remaining = Math.max(0, minDuration - elapsed);
+
+    // 남은 시간 후에 콘텐츠 표시
+    const timer = setTimeout(() => setShow(true), remaining);
+
+    // cleanup: 컴포넌트 언마운트 시 타이머 제거
+    return () => clearTimeout(timer);
+  }, [startTime, minDuration]);
+
+  return (
+    <Suspense fallback={fallback}>
+      {show ? (
+        // 최소 시간이 지난 후 fade-in 애니메이션과 함께 실제 콘텐츠 표시
+        <div className='animate-fadeIn'>{children}</div>
+      ) : (
+        // 최소 시간이 지나지 않았으면 스켈레톤 계속 표시
+        fallback
+      )}
+    </Suspense>
+  );
+}

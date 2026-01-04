@@ -62,9 +62,9 @@ export default function ActivityCardSkeleton({ variant, className }: ActivityCar
       aria-busy='true'
       aria-label='체험 카드 로딩 중'>
       {/* 이미지 */}
-      <Skeleton className='sm-rounded-t-32 h-4/5 w-full rounded-t-18' />
+      <Skeleton className='h-4/5 w-full rounded-t-18 sm:rounded-t-32' />
       {/* 정보 영역 */}
-      <div className='sm-gap-16 absolute bottom-0 left-0 flex h-112 w-full flex-col justify-between overflow-hidden rounded-18 bg-white px-17 py-16 shadow-card sm:h-134 sm:rounded-32 sm:px-30 sm:py-20'>
+      <div className='absolute bottom-0 left-0 flex h-112 w-full flex-col justify-between overflow-hidden rounded-18 bg-white px-17 py-16 shadow-card sm:h-134 sm:gap-16 sm:rounded-32 sm:px-30 sm:py-20'>
         <div className='flex flex-col gap-2'>
           {/* 제목 */}
           <Skeleton className='h-24 w-[45%] rounded sm:h-26' />

@@ -4,10 +4,9 @@ import { getAuthCookies } from '@/shared/utils/authCookies';
 import { isApiError } from '@/shared/utils/errorGuards';
 
 /**
- * 인증이 필요한 Route Handler에서 handler로 전달되는 컨텍스트 타입입니다.
+ * 인증이 필요한 Route Handler에서 handler로 전달되는 컨텍스트 타입
  *
  * @template TBody - 요청 body의 타입 (JSON, FormData 등)
- *
  * @property accessToken - 인증된 사용자의 access token
  * @property body - HTTP 요청 body (GET/DELETE에서는 undefined)
  * @property request - 원본 Request 객체
@@ -31,25 +30,16 @@ type HandlerContext<TBody = unknown> = {
  *     - 그 외 → `request.json()`
  * - handler 실행 중 발생한 에러를 HTTP Response로 변환합니다.
  *
- *
  * @template TBody - handler에서 사용할 요청 body 타입
- *
- * @param handler
- * 인증 및 body 파싱이 완료된 후 실행될 함수입니다.
- * `accessToken`, `body`, `request`를 컨텍스트로 전달받습니다.
- *
- * @returns
- * Next.js Route Handler 함수
+ * @param handler - 인증 및 body 파싱이 완료된 후 실행될 함수 (`accessToken`, `body`, `request`를 전달)
+ * @returns - Next.js Route Handler 함수
  *
  * @example
  * ```ts
  * export const GET = createAuthorizedRoute(async ({ accessToken }) => {
  *   return proxy('/users/me', { method: 'GET' }, accessToken);
  * });
- * ```
  *
- * @example
- * ```ts
  * export const PATCH = createAuthorizedRoute<UpdateUserBody>(async ({ accessToken, body }) => {
  *   return proxy('/users/me', { method: 'PATCH', body }, accessToken);
  * });
@@ -73,8 +63,12 @@ export const createAuthorizedRoute = <TBody = unknown>(
 
         if (contentType.includes('multipart/form-data')) {
           body = await request.formData();
+        } else if (contentType.includes('application/json')) {
+          // body가 비어있을 때 undefined를 처리하기 위해 추가
+          const text = await request.text();
+          body = text ? JSON.parse(text) : undefined;
         } else {
-          body = await request.json();
+          body = undefined;
         }
       }
 

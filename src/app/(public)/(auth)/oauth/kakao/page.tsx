@@ -2,15 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
-import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { signInWithOauth, signUpWithOauth } from '@/shared/apis/feature/oauth';
 import { useUserStore } from '@/shared/stores/userStore';
-import type { UserServiceResponseDto } from '@/shared/types/user';
 import { isRecord } from '@/shared/utils/errorGuards';
-
-type OAuthSessionResponseBody = {
-  user: UserServiceResponseDto;
-  accessTokenExpiresAt: number;
-};
 
 type OAuthMode = 'signin' | 'signup';
 
@@ -75,13 +69,9 @@ function KakaoOauthCallbackInner() {
     (async () => {
       try {
         if (state === 'signup') {
-          const res = await bffFetch<OAuthSessionResponseBody>('/oauth/sign-up/kakao', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              nickname: generateTempNickname(),
-              token: code,
-            }),
+          const res = await signUpWithOauth({
+            nickname: generateTempNickname(),
+            token: code,
           });
 
           setSession({
@@ -93,11 +83,7 @@ function KakaoOauthCallbackInner() {
           return;
         }
 
-        const res = await bffFetch<OAuthSessionResponseBody>('/oauth/sign-in/kakao', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: code }),
-        });
+        const res = await signInWithOauth({ token: code });
 
         setSession({
           user: res.user,

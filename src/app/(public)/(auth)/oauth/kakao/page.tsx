@@ -16,7 +16,7 @@ type OAuthMode = 'signin' | 'signup';
 // 카카오 회원 랜덤 닉네임
 const generateTempNickname = () => {
   const rand = Math.random().toString(36).slice(2, 8);
-  return `kakao_${rand}`;
+  return `kakao${rand}`;
 };
 
 const getErrorMessage = (err: unknown) => {

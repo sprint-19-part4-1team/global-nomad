@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { logout } from '@/shared/apis/feature/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
 import {
   ActionDropdown,
@@ -8,6 +9,7 @@ import {
   ActionDropdownItem,
   ActionDropdownTrigger,
 } from '@/shared/components/dropdown/action';
+import { useUserStore } from '@/shared/stores/userStore';
 import { UserServiceResponseDto } from '@/shared/types/user';
 
 interface LoggedInActionsProps {
@@ -16,6 +18,17 @@ interface LoggedInActionsProps {
 
 export default function LoggedInActions({ user }: LoggedInActionsProps) {
   const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      useUserStore.persist.clearStorage();
+      useUserStore.getState().clearUser();
+      router.replace('/');
+      router.refresh();
+    }
+  };
 
   return (
     <div className='flex items-center'>
@@ -33,7 +46,7 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
             </Avatar>
           </ActionDropdownTrigger>
           <ActionDropdownContent>
-            <ActionDropdownItem onClick={() => false} />
+            <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
             <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
               마이페이지
             </ActionDropdownItem>

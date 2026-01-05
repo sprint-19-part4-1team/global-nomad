@@ -59,10 +59,11 @@ export const useChangePasswordForm = () => {
    */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const fieldName = name as keyof ChangePasswordValues;
 
     const nextValues: ChangePasswordValues = {
       ...values,
-      [name]: value,
+      [fieldName]: value,
     };
 
     setValues(nextValues);
@@ -70,7 +71,7 @@ export const useChangePasswordForm = () => {
     setErrors((prevErrors) => {
       const nextErrors: ChangePasswordErrors = {
         ...prevErrors,
-        [name]: undefined,
+        [fieldName]: undefined,
       };
 
       if (nextValues.confirmPassword) {

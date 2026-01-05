@@ -16,10 +16,13 @@ import { UpdateMyReservationBodyDto, ReservationResponseDto } from '@/shared/typ
  *
  * @returns 수정된 예약 정보 (`ReservationResponseDto`)
  */
-export const PATCH = async (request: Request, context: { params: { reservationId: string } }) => {
+export const PATCH = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-reservations/[reservationId]'>
+) => {
   const routeHandler = createAuthorizedRoute<UpdateMyReservationBodyDto>(
     async ({ accessToken, body }) => {
-      const { reservationId } = context.params;
+      const { reservationId } = await ctx.params;
 
       return proxy<ReservationResponseDto, UpdateMyReservationBodyDto>(
         `/my-reservations/${reservationId}`,

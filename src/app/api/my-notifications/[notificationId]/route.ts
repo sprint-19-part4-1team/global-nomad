@@ -16,9 +16,12 @@ import { proxy } from '@/shared/apis/bff/proxy';
  *
  * @returns 삭제 성공 시 204 No Content
  */
-export const DELETE = async (request: Request, context: { params: { notificationId: string } }) => {
+export const DELETE = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-notifications/[notificationId]'>
+) => {
   const routeHandler = createAuthorizedRoute(async ({ accessToken }) => {
-    const { notificationId } = context.params;
+    const { notificationId } = await ctx.params;
 
     return proxy<void>(`/my-notifications/${notificationId}`, { method: 'DELETE' }, accessToken);
   });

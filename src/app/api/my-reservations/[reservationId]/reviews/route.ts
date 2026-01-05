@@ -16,9 +16,12 @@ import { CreateReviewBodyDto, CreateReviewResponse } from '@/shared/types/myRese
  *
  * @returns 생성된 리뷰 정보 (`CreateReviewResponse`)
  */
-export const POST = async (request: Request, context: { params: { reservationId: string } }) => {
+export const POST = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-reservations/[reservationId]/reviews'>
+) => {
   const routeHandler = createAuthorizedRoute<CreateReviewBodyDto>(async ({ accessToken, body }) => {
-    const { reservationId } = context.params;
+    const { reservationId } = await ctx.params;
 
     return proxy<CreateReviewResponse, CreateReviewBodyDto>(
       `/my-reservations/${reservationId}/reviews`,

@@ -19,9 +19,12 @@ import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities'
  * @returns 월별 예약 현황 리스트 (`FindReservationsByMonthResponseDto[]`)
  */
 
-export const GET = async (request: Request, context: { params: { activityId: string } }) => {
+export const GET = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-activities/[activityId]/reservation-dashboard'>
+) => {
   const routeHandler = createAuthorizedRoute(async ({ accessToken, request }) => {
-    const { activityId } = context.params;
+    const { activityId } = await ctx.params;
     const { search } = new URL(request.url);
 
     return proxy<FindReservationsByMonthResponseDto[]>(

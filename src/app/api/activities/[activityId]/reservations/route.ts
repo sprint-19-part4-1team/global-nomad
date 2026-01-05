@@ -21,10 +21,13 @@ import { ReservationResponseDto } from '@/shared/types/myReservations';
  *
  * @returns 생성된 예약 정보 (`ReservationResponseDto`)
  */
-export const POST = async (request: Request, context: { params: { activityId: string } }) => {
+export const POST = async (
+  request: Request,
+  ctx: RouteContext<'/api/activities/[activityId]/reservations'>
+) => {
   const routeHandler = createAuthorizedRoute<CreateReservationBodyDto>(
     async ({ accessToken, body }) => {
-      const { activityId } = context.params;
+      const { activityId } = await ctx.params;
 
       return proxy<ReservationResponseDto, CreateReservationBodyDto>(
         `/activities/${activityId}/reservations`,

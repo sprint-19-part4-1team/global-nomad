@@ -3,6 +3,8 @@ import { proxy } from '@/shared/apis/bff/proxy';
 import { ActivityWithSchedulesResponseDto } from '@/shared/types/activities';
 import { UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
 
+type API_URL = '/api/my-activities/[activityId]/reservations';
+
 /**
  * ## 내 체험 수정 API (BFF)
  *
@@ -21,10 +23,10 @@ import { UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
  *
  * @returns 수정된 체험 정보 및 일정 목록 (`ActivityWithSchedulesResponseDto`)
  */
-export const PATCH = async (request: Request, context: { params: { activityId: string } }) => {
+export const PATCH = async (request: Request, ctx: RouteContext<API_URL>) => {
   const routeHandler = createAuthorizedRoute<UpdateMyActivityBodyDto>(
     async ({ accessToken, body }) => {
-      const { activityId } = context.params;
+      const { activityId } = await ctx.params;
 
       return proxy<ActivityWithSchedulesResponseDto, UpdateMyActivityBodyDto>(
         `/my-activities/${activityId}`,
@@ -52,9 +54,9 @@ export const PATCH = async (request: Request, context: { params: { activityId: s
  *
  * @returns 삭제 성공 시 204 No Content
  */
-export const DELETE = async (request: Request, context: { params: { activityId: string } }) => {
+export const DELETE = async (request: Request, ctx: RouteContext<API_URL>) => {
   const routeHandler = createAuthorizedRoute(async ({ accessToken }) => {
-    const { activityId } = context.params;
+    const { activityId } = await ctx.params;
 
     return proxy<void>(`/my-activities/${activityId}`, { method: 'DELETE' }, accessToken);
   });

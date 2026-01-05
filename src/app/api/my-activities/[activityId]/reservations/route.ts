@@ -18,9 +18,12 @@ import type { GetMyActivityReservationsResponse } from '@/shared/types/myActivit
  *
  * @returns 조건에 해당하는 예약 내역 목록 (`GetMyActivityReservationsResponse`)
  */
-export const GET = async (request: Request, context: { params: { activityId: string } }) => {
+export const GET = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-activities/[activityId]/reservations'>
+) => {
   const routeHandler = createAuthorizedRoute(async ({ accessToken, request }) => {
-    const { activityId } = context.params;
+    const { activityId } = await ctx.params;
     const { search } = new URL(request.url);
 
     return proxy<GetMyActivityReservationsResponse>(

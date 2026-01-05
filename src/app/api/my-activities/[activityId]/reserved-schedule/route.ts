@@ -18,9 +18,12 @@ import { ReservedScheduleResponseDto } from '@/shared/types/myActivities';
  *
  * @returns 날짜별 예약 목록 (`ReservedScheduleResponseDto[]`)
  */
-export const GET = async (request: Request, context: { params: { activityId: string } }) => {
+export const GET = async (
+  request: Request,
+  ctx: RouteContext<'/api/my-activities/[activityId]/reserved-schedule'>
+) => {
   const routeHandler = createAuthorizedRoute(async ({ accessToken, request }) => {
-    const { activityId } = context.params;
+    const { activityId } = await ctx.params;
     const { search } = new URL(request.url);
 
     return proxy<ReservedScheduleResponseDto[]>(

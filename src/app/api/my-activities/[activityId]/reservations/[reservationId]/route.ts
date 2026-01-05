@@ -24,11 +24,11 @@ import { ReservationResponseDto } from '@/shared/types/myReservations';
  */
 export const PATCH = async (
   request: Request,
-  context: { params: { activityId: string; reservationId: string } }
+  ctx: RouteContext<'/api/my-activities/[activityId]/reservations/[reservationId]'>
 ) => {
   const routeHandler = createAuthorizedRoute<UpdateMyActivityReservationBodyDto>(
     async ({ accessToken, body }) => {
-      const { activityId, reservationId } = context.params;
+      const { activityId, reservationId } = await ctx.params;
 
       return proxy<ReservationResponseDto, UpdateMyActivityReservationBodyDto>(
         `/my-activities/${activityId}/reservations/${reservationId}`,

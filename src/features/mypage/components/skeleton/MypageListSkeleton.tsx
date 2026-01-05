@@ -66,6 +66,7 @@ export default function MypageListSkeleton({
   className,
 }: MypageListSkeletonProps) {
   return (
+    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <div className={cn('flex flex-col', LIST_GAP[variant], className)}>
       {Array.from({ length: count }).map((_, i) => (
         <MypageCardSkeleton key={i} variant={variant} />

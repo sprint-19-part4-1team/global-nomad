@@ -31,6 +31,7 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
  */
 export default function PopularActivitySkeleton() {
   return (
+    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <section
       className='scrollbar-hidden overflow-x-auto'
       role='status'

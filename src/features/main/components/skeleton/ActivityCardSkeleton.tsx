@@ -56,6 +56,7 @@ const activityCardVariants = cva(
  */
 export default function ActivityCardSkeleton({ variant, className }: ActivityCardSkeletonProps) {
   return (
+    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <div
       className={cn(activityCardVariants({ variant }), className)}
       role='status'

@@ -32,7 +32,7 @@ export const useChangePasswordForm = () => {
       }
 
       if (name === 'confirmPassword') {
-        return validators.confirmPassword(value, {
+        return validators.confirmPassword('changePassword', value, {
           password: values.newPassword,
         });
       }

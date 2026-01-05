@@ -107,7 +107,11 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
         case 'password':
           return validators.password(value as string, validationType);
         case 'confirmPassword':
-          return validators.confirmPassword(value as string, allValues as { password: string });
+          return validators.confirmPassword(
+            'signup',
+            value as string,
+            allValues as { password: string }
+          );
         case 'nickname':
           return validators.nickname(value as string);
         default:

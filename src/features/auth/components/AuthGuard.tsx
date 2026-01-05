@@ -46,7 +46,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
   const isMainPage = pathname === '/';
-  const isAuthPage = pathname === '/login' || pathname === '/signup';
+  const isAuthPage = ['/login', '/signup'].includes(pathname);
 
   const { user, isAuthInProgress, hasHydrated, setIsAuthInProgress } = useUserStore(
     useShallow((state) => ({

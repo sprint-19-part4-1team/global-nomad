@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import { COOKIE_OPTIONS } from '@/shared/constants';
 import type { UserServiceResponseDto } from '@/shared/types/user';
 import { setAuthCookies } from '@/shared/utils/authCookies';
-import { getJwtMaxAge, getJwtExpiresAt } from '@/shared/utils/jwt';
+import { getJwtExpiresAt } from '@/shared/utils/jwt';
 
 export type OAuthSessionResponseBody = {
   user: UserServiceResponseDto;
@@ -21,11 +20,6 @@ export const createOAuthSessionResponse = (params: {
   const response = NextResponse.json({ user, accessTokenExpiresAt });
 
   setAuthCookies({ response, accessToken, refreshToken });
-
-  response.cookies.set('refreshToken', refreshToken, {
-    ...COOKIE_OPTIONS,
-    maxAge: getJwtMaxAge(refreshToken),
-  });
 
   return response;
 };

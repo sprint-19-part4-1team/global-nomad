@@ -4,6 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.26.1",
   "scripts": {
+    "typegen": "next typegen",
     "generate:tokens": "node scripts/generateTokens.js",
     "dev": "pnpm generate:tokens && next dev --turbopack",
     "build": "pnpm generate:tokens && next build",

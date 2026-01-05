@@ -5,7 +5,7 @@ export interface UpsertOauthAppRequestBody {
   provider: OauthProvider;
 }
 export interface SignInWithOauthRequestBody {
-  redirectUri: string;
+  redirectUri?: string;
   token: string;
 }
 export interface SignUpWithOauthRequestBody extends SignInWithOauthRequestBody {

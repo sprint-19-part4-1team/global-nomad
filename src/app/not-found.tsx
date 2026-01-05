@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
+
+export const metadata: Metadata = {
+  title: '404 - Page Not Found',
+};
 
 /**
  * @description
@@ -9,8 +14,6 @@ import Button from '@/shared/components/button/Button';
 export default function NotFound() {
   return (
     <>
-      <title>404 | 페이지를 찾을 수 없습니다</title>
-
       <div className='flex min-h-screen flex-col items-center justify-center'>
         <Icons.SadEarth className='h-300 w-300' aria-hidden='true' />
         <div className='flex flex-col items-center justify-center gap-20'>

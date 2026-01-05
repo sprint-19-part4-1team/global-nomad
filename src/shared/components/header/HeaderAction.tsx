@@ -11,6 +11,7 @@ function HeaderActionsContent() {
 }
 
 // dynamic import로 SSR 비활성화
+// TODO: 스켈레톤 공통으로 구현하기
 const DynamicHeaderActionsContent = dynamic(() => Promise.resolve(HeaderActionsContent), {
   ssr: false,
   loading: () => (

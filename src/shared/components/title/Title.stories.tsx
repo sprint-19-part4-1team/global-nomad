@@ -4,17 +4,18 @@ import Title from './Title';
 /**
  * Title 컴포넌트 스토리 가이드
  *
+ * - `size`(고정)와 `responsive`(반응형 프리셋)는 동시에 사용할 수 없습니다.
+ * - 기본값은 `size="32"` 입니다. (`responsive`를 지정하지 않은 경우)
+ *
  * - Tailwind v4의 `@utility foo-*`는 `*` 자리에 들어갈 값들을 오름차순으로 정렬합니다.
  * - 따라서 `font-size: 18px → 20px → 24px → 32px` 순서로 CSS가 생성됩니다.
  * - Storybook에서 `className`으로 `heading-*`을 덮어쓰려 해도,
  *   `size`가 32라면 CSS 선언 순서상 적용되지 않습니다.
  *
- * 확인 방법
- * - `size`를 18로 설정
- * - `className`에 더 큰 `heading-*` 클래스 입력
- *
- * 참고
- * - `font-bold`, `font-semibold` 등은 서로 다른 속성이므로 정상 적용됩니다.
+ * 참고: Tailwind v4의 `@utility foo-*`는 `*` 자리에 들어갈 값들을 오름차순으로 정렬합니다.
+ * - 따라서 `heading-18 → heading-20 → heading-24 → heading-32` 순서로 CSS가 생성됩니다.
+ * - `className`으로 `heading-*`을 덮어쓰려 해도, `size`가 큰 값이면 선언 순서상 덮어쓰기가 어려울 수 있습니다.
+ *   (이 경우에는 `size`/`responsive`를 조정하거나, 더 구체적인 선택자를 사용하세요.)
  */
 
 const meta: Meta<typeof Title> = {
@@ -30,7 +31,12 @@ const meta: Meta<typeof Title> = {
     size: {
       control: 'select',
       options: ['32', '24', '20', '18'],
-      description: '폰트 크기 (px 단위 타이포그래피 토큰)',
+      description: '고정 폰트 크기. `responsive`와 동시에 사용할 수 없습니다.',
+    },
+    responsive: {
+      control: 'select',
+      options: ['lg', 'md', 'sm'],
+      description: '반응형 폰트 프리셋. `size`와 동시에 사용할 수 없습니다.',
     },
     weight: {
       control: 'select',
@@ -39,9 +45,7 @@ const meta: Meta<typeof Title> = {
     },
     className: {
       control: 'text',
-      description:
-        '추가 커스텀 스타일 (레이아웃/여백/색상 등). '
-        + '타이포그래피(heading-*)는 size/weight prop이 단일 책임을 가집니다.',
+      description: '추가 커스텀 스타일. 필요 시 className으로 보완할 수 있습니다.',
     },
     children: {
       control: 'text',
@@ -57,5 +61,23 @@ export const Default: Story = {
   args: {
     as: 'h2',
     children: '🔥 인기 체험',
+  },
+};
+
+export const FixedSize: Story = {
+  args: {
+    as: 'h2',
+    size: '24',
+    weight: 'bold',
+    children: '고정 크기 타이틀 (size=24)',
+  },
+};
+
+export const ResponsivePreset: Story = {
+  args: {
+    as: 'h2',
+    responsive: 'lg',
+    weight: 'bold',
+    children: '반응형 프리셋 타이틀 (responsive=lg)',
   },
 };

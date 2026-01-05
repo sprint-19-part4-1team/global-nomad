@@ -5,16 +5,12 @@ import Title from './Title';
  * Title 컴포넌트 스토리 가이드
  *
  * - `size`(고정)와 `responsive`(반응형 프리셋)는 동시에 사용할 수 없습니다.
- * - 기본값은 `size="32"` 입니다. (`responsive`를 지정하지 않은 경우)
- *
- * - Tailwind v4의 `@utility foo-*`는 `*` 자리에 들어갈 값들을 오름차순으로 정렬합니다.
- * - 따라서 `font-size: 18px → 20px → 24px → 32px` 순서로 CSS가 생성됩니다.
- * - Storybook에서 `className`으로 `heading-*`을 덮어쓰려 해도,
- *   `size`가 32라면 CSS 선언 순서상 적용되지 않습니다.
+ * - `size`와 `responsive`를 모두 지정하지 않으면 `size="32"`가 적용됩니다.
+ * - `responsive`를 지정한 경우에는 기본 `size`가 자동으로 붙지 않습니다.
  *
  * 참고: Tailwind v4의 `@utility foo-*`는 `*` 자리에 들어갈 값들을 오름차순으로 정렬합니다.
  * - 따라서 `heading-18 → heading-20 → heading-24 → heading-32` 순서로 CSS가 생성됩니다.
- * - `className`으로 `heading-*`을 덮어쓰려 해도, `size`가 큰 값이면 선언 순서상 덮어쓰기가 어려울 수 있습니다.
+ * - `className`으로 `heading-*`을 덮어쓰려 해도, 선언 순서상 덮어쓰기가 어려울 수 있습니다.
  *   (이 경우에는 `size`/`responsive`를 조정하거나, 더 구체적인 선택자를 사용하세요.)
  */
 
@@ -26,12 +22,12 @@ const meta: Meta<typeof Title> = {
     as: {
       control: 'select',
       options: ['h2', 'h3', 'h4', 'h5', 'h6'],
-      description: '렌더링할 HTML 태그(`h2` ~ `h6`)',
+      description: '렌더링할 HTML 태그 (`h2` ~ `h6`)',
     },
     size: {
       control: 'select',
       options: ['32', '24', '20', '18'],
-      description: '고정 폰트 크기. `responsive`와 동시에 사용할 수 없습니다.',
+      description: '고정 폰트 크기(heading-* 토큰). `responsive`와 동시에 사용할 수 없습니다.',
     },
     responsive: {
       control: 'select',
@@ -45,7 +41,8 @@ const meta: Meta<typeof Title> = {
     },
     className: {
       control: 'text',
-      description: '추가 커스텀 스타일. 필요 시 className으로 보완할 수 있습니다.',
+      description:
+        '추가 커스텀 스타일(레이아웃/여백/색상 등). 필요 시 타이포그래피도 className으로 보완할 수 있습니다.',
     },
     children: {
       control: 'text',

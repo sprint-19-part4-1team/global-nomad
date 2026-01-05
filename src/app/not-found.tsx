@@ -12,7 +12,7 @@ export default function NotFound() {
       <title>404 | 페이지를 찾을 수 없습니다</title>
 
       <div className='flex min-h-screen flex-col items-center justify-center'>
-        <Icons.SadEarth className='h-300 w-300' />
+        <Icons.SadEarth className='h-300 w-300' aria-hidden='true' />
         <div className='flex flex-col items-center justify-center gap-20'>
           <span className='heading-20 font-medium'>404 | 페이지를 찾을 수 없습니다.</span>
           <Button href={'/'}>홈으로 이동</Button>

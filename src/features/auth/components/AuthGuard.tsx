@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -45,17 +45,16 @@ interface AuthGuardProps {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
 
-  const { user, hasHydrated } = useUserStore(
+  const { user, isAuthInProgress, hasHydrated } = useUserStore(
     useShallow((state) => ({
       user: state.user,
+      isAuthInProgress: state.isAuthInProgress,
       hasHydrated: state.hasHydrated,
     }))
   );
 
-  const initialUserRef = useRef(user);
-
   useEffect(() => {
-    if (!hasHydrated || !initialUserRef.current) {
+    if (!hasHydrated || isAuthInProgress || !user) {
       return;
     }
 
@@ -78,7 +77,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     return () => {
       overlayStore.popById(OVERLAY_ID);
     };
-  }, [router, hasHydrated]);
+  }, [router, hasHydrated, user, isAuthInProgress]);
 
   return <>{children}</>;
 }

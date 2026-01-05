@@ -8,7 +8,7 @@ import { cn } from '@/shared/utils/cn';
 
 /** 공통 스타일 */
 const buttonVariants = cva(
-  'cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25',
+  'block cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25',
   {
     variants: {
       /**

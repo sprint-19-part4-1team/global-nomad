@@ -5,13 +5,13 @@ import { useState } from 'react';
 import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
 import AuthForm from '@/features/auth/components/AuthForm';
 import KakaoButton from '@/features/auth/components/KakaoButton';
+import useAuthForm from '@/features/auth/hooks/useAuthForm';
 import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { COMMON_MESSAGE } from '@/shared/constants';
-import useAuthForm from '@/shared/hooks/useAuthForm';
 import { isApiError } from '@/shared/utils/errorGuards';
 
 const SIGNUP_MESSAGE = {

@@ -10,6 +10,12 @@ export const titleVariants = cva('', {
       '20': 'heading-20',
       '18': 'heading-18',
     },
+    responsive: {
+      lg: 'heading-18 sm:heading-24 md:heading-32',
+      md: 'heading-18 sm:heading-20 md:heading-24',
+      sm: 'heading-16 md:heading-18',
+    },
+
     weight: {
       bold: 'font-bold',
       semibold: 'font-semibold',
@@ -25,11 +31,28 @@ export const titleVariants = cva('', {
 
 type Tag = 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 type TitleVariantsProps = VariantProps<typeof titleVariants>;
+type TitleResponsivePreset = NonNullable<TitleVariantsProps['responsive']>;
 
-interface TitleProps extends TitleVariantsProps, ComponentPropsWithoutRef<Tag> {
-  as?: Tag;
-  children: ReactNode;
-}
+// size가 있으면 반응형 사용 불가
+type TitleFixedSizeProps = {
+  size?: TitleVariantsProps['size'];
+  responsive?: never;
+};
+
+// responsive가 있다면 고정된 크기 사용 불가
+type TitleResponsiveSizeProps = {
+  responsive?: TitleResponsivePreset;
+  size?: never;
+};
+
+type TitleSizeProps = TitleFixedSizeProps | TitleResponsiveSizeProps;
+
+export type TitleProps = TitleSizeProps
+  & Omit<ComponentPropsWithoutRef<Tag>, 'children'> & {
+    as?: Tag;
+    children: ReactNode;
+    weight?: TitleVariantsProps['weight'];
+  };
 
 /**
  * 프로젝트 공통 Title 컴포넌트
@@ -42,6 +65,7 @@ interface TitleProps extends TitleVariantsProps, ComponentPropsWithoutRef<Tag> {
 export default function Title({
   as = 'h2',
   size,
+  responsive,
   weight,
   className,
   children,
@@ -50,7 +74,7 @@ export default function Title({
   const Component = as;
 
   return (
-    <Component className={cn(titleVariants({ size, weight }), className)} {...props}>
+    <Component className={cn(titleVariants({ size, responsive, weight }), className)} {...props}>
       {children}
     </Component>
   );

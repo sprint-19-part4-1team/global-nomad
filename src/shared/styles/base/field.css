@@ -1,0 +1,24 @@
+@utility field-container {
+  @apply flex w-full flex-col;
+}
+
+@utility field-box {
+ @apply flex w-full rounded-12 border body-14 sm:body-16 focus-within:border-primary-500;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+@utility border-field-default {
+  @apply border-gray-100;
+}
+
+@utility border-field-error {
+  @apply border-red-500 focus-within:border-red-500;
+}
+
+@utility field-placeholder {
+  @apply placeholder:text-gray-400;
+}
+
+@utility field-error-message {
+  @apply body-13 font-medium text-red-500 sm:body-14;
+}

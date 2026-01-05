@@ -1,0 +1,36 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
+import Backdrop from './Backdrop';
+
+<Meta title='Shared/Overlay/Primitives/Backdrop' />
+
+# Backdrop
+
+Backdrop 컴포넌트 스토리 가이드
+
+- `Backdrop` 컴포넌트는 Dialog / Panel / BottomSheet 뒤에 깔리는 dimmed 배경 레이어입니다.
+
+<br />
+
+## **사용 목적**
+
+- 배경 콘텐츠와의 상호작용 차단
+- overlay 계열 컴포넌트에 시각적 집중 제공
+
+<br />
+
+## **⚠️ 주의사항**
+
+- 단독으로 사용하지 않습니다.
+- 항상 `OverlaySurface` 또는 상위 `overlay` 컴포넌트와 함께 사용해야 합니다.
+- 클릭 이벤트, 스크롤 락은 상위 컴포넌트에서 제어합니다.
+
+<br />
+
+## **사용 예시**
+
+```tsx
+<Backdrop />
+<OverlaySurface variant="dialog" position='center'>
+  Dialog Content
+</OverlaySurface>
+```

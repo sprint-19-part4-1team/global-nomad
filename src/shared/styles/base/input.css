@@ -1,0 +1,19 @@
+@utility input-container {
+  @apply field-container gap-6 sm:gap-8;
+}
+
+@utility input-box {
+  @apply field-box gap-16 px-16 py-12 font-normal text-gray-800 shadow-input sm:rounded-16 sm:py-15;
+}
+
+@utility input-disabled {
+  @apply bg-gray-25 text-gray-400;
+}
+
+@utility input-base {
+  @apply min-w-0 flex-1 bg-transparent field-placeholder outline-none;
+}
+
+@utility input-icon {
+  @apply h-24 w-24 shrink-0 text-gray-400;
+}

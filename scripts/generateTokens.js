@@ -4,8 +4,8 @@ const path = require('path');
 /** rem 기본 단위 16px */
 const REM_DIVIDER = 16;
 
-/** spacing 단위 최대 1200px까지 */
-const SPACING_LIMIT = 1200;
+/** spacing 단위 최대 1520px까지 */
+const SPACING_LIMIT = 1520;
 
 /** border-radius 최대 48px까지 */
 const RADIUS_LIMIT = 48;

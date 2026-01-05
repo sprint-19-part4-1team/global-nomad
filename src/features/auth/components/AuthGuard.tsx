@@ -63,12 +63,10 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     }
   }, [isMainPage, isAuthInProgress, setIsAuthInProgress]);
 
-  useEffect(() => {
-    if (!isAuthPage) {
-      return;
-    }
+  const shouldBlockAuthPage = isAuthPage && hasHydrated && user && !isAuthInProgress;
 
-    if (!hasHydrated || isAuthInProgress || !user) {
+  useEffect(() => {
+    if (!shouldBlockAuthPage) {
       return;
     }
 
@@ -93,7 +91,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         overlayStore.popById(OVERLAY_ID);
       }
     };
-  }, [router, hasHydrated, user, isAuthInProgress, isAuthPage]);
+  }, [shouldBlockAuthPage, router]);
 
   return <>{children}</>;
 }

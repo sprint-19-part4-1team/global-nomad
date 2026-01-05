@@ -16,7 +16,7 @@ interface ActivityCardSkeletonProps {
 }
 
 /** 체험 카드 스켈레톤의 스타일 변형을 관리하는 CVA 설정 */
-const ActivityCardVariants = cva(
+const activityCardVariants = cva(
   'relative flex flex-col overflow-hidden rounded-18 bg-transparent sm:h-423 sm:w-332 sm:rounded-32 lg:h-366 lg:w-262',
   {
     variants: {
@@ -57,7 +57,7 @@ const ActivityCardVariants = cva(
 export default function ActivityCardSkeleton({ variant, className }: ActivityCardSkeletonProps) {
   return (
     <div
-      className={cn(ActivityCardVariants({ variant }), className)}
+      className={cn(activityCardVariants({ variant }), className)}
       role='status'
       aria-busy='true'
       aria-label='체험 카드 로딩 중'>

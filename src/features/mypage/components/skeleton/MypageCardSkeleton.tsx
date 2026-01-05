@@ -16,7 +16,7 @@ interface MypageCardSkeletonProps {
 }
 
 /** 마이페이지 카드 스켈레톤의 스타일 변형을 관리하는 CVA 설정 */
-const MypageCardVariants = cva('flex h-full rounded-24 bg-white', {
+const mypageCardVariants = cva('flex h-full rounded-24 bg-white', {
   variants: {
     variant: {
       reservation:
@@ -125,7 +125,7 @@ export default function MypageCardSkeleton({ variant, className }: MypageCardSke
       role='status'
       aria-busy='true'
       aria-label={`${isReservation ? '예약' : '내 체험'} 카드 로딩 중`}>
-      <div className={cn(MypageCardVariants({ variant }))}>
+      <div className={cn(mypageCardVariants({ variant }))}>
         {isReservation ? <ReservationSkeleton /> : <ActivitySkeleton />}
       </div>
       {/* 예약 - 이미지 */}

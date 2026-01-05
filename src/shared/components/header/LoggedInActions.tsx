@@ -40,21 +40,23 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
         알림
       </div>
 
-      <ActionDropdown>
-        <ActionDropdownTrigger aria-label='유저 메뉴 열기' className='ml-20 flex items-center'>
-          <Avatar user={user}>
-            <AvatarImage />
-            <AvatarFallback />
-          </Avatar>
-          <span className='ml-10 body-14 font-medium text-gray-950'>{user.nickname}</span>
-        </ActionDropdownTrigger>
-        <ActionDropdownContent>
-          <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
-          <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
-            마이페이지
-          </ActionDropdownItem>
-        </ActionDropdownContent>
-      </ActionDropdown>
+      <div className='ml-20'>
+        <ActionDropdown>
+          <ActionDropdownTrigger aria-label='유저 메뉴 열기' className='flex items-center'>
+            <Avatar user={user}>
+              <AvatarImage />
+              <AvatarFallback />
+            </Avatar>
+            <span className='ml-10 body-14 font-medium text-gray-950'>{user.nickname}</span>
+          </ActionDropdownTrigger>
+          <ActionDropdownContent>
+            <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
+            <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
+              마이페이지
+            </ActionDropdownItem>
+          </ActionDropdownContent>
+        </ActionDropdown>
+      </div>
     </div>
   );
 }

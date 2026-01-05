@@ -24,7 +24,6 @@ export const titleVariants = cva('', {
     },
   },
   defaultVariants: {
-    size: '32',
     weight: 'bold',
   },
 });
@@ -61,10 +60,10 @@ export type TitleProps = TitleSizeProps
 /**
  * @description
  * - 프로젝트 공통 Title 컴포넌트.
- * - `size`(고정) 또는 `responsive`(반응형 프리셋) 중 하나만 사용 가능.
+ * - `size`와 `responsive`를 모두 지정하지 않으면 `size='32'`가 적용됩니다.
  *
  * @param as - 렌더링할 HTML 태그 (기본값: 'h2')
- * @param size - 고정 폰트 크기 ('32' | '24' | '20' | '18' / 기본값: '32'). `responsive`와 동시 사용 불가.
+ * @param size - 고정 폰트 크기 ('32' | '24' | '20' | '18'). 미지정 시 기본값은 `'32'`이며, `responsive`가 있으면 적용되지 않습니다. `responsive`와 동시 사용 불가.
  * @param responsive - 반응형 폰트 프리셋 ('lg' | 'md' | 'sm'). `size`와 동시에 사용 불가.
  * @param weight - 폰트 두께 (bold | semibold | medium | normal / 기본값: 'bold')
  * @param className - 추가 커스텀 스타일
@@ -91,7 +90,16 @@ export default function Title({
   const Component = as;
 
   return (
-    <Component className={cn(titleVariants({ size, responsive, weight }), className)} {...props}>
+    <Component
+      className={cn(
+        titleVariants({
+          size: responsive ? undefined : (size ?? '32'),
+          responsive,
+          weight,
+        }),
+        className
+      )}
+      {...props}>
       {children}
     </Component>
   );

@@ -47,7 +47,7 @@ interface MypageSectionHeaderProps {
 export default function MypageSectionHeader({ title, description, btn }: MypageSectionHeaderProps) {
   return (
     <div className={cn('relative pr-0', btn ? 'sm:pr-140' : 'sm:pr-0')}>
-      <Title size='18' className='text-gray-950 sm:heading-20 md:heading-24'>
+      <Title responsive='md' className='text-gray-950'>
         {title}
       </Title>
       <p className='mt-10 body-14 font-medium whitespace-pre-line text-gray-600 sm:body-16'>

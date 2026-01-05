@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
@@ -44,16 +44,30 @@ interface AuthGuardProps {
  */
 export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isMainPage = pathname === '/';
+  const isAuthPage = pathname === '/login' || pathname === '/signup';
 
-  const { user, isAuthInProgress, hasHydrated } = useUserStore(
+  const { user, isAuthInProgress, hasHydrated, setIsAuthInProgress } = useUserStore(
     useShallow((state) => ({
       user: state.user,
       isAuthInProgress: state.isAuthInProgress,
+      setIsAuthInProgress: state.setIsAuthInProgress,
       hasHydrated: state.hasHydrated,
     }))
   );
 
   useEffect(() => {
+    if (isMainPage && isAuthInProgress) {
+      setIsAuthInProgress(false);
+    }
+  }, [isMainPage, isAuthInProgress, setIsAuthInProgress]);
+
+  useEffect(() => {
+    if (!isAuthPage) {
+      return;
+    }
+
     if (!hasHydrated || isAuthInProgress || !user) {
       return;
     }
@@ -75,9 +89,11 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     );
 
     return () => {
-      overlayStore.popById(OVERLAY_ID);
+      if (overlayStore.has(OVERLAY_ID)) {
+        overlayStore.popById(OVERLAY_ID);
+      }
     };
-  }, [router, hasHydrated, user, isAuthInProgress]);
+  }, [router, hasHydrated, user, isAuthInProgress, isAuthPage]);
 
   return <>{children}</>;
 }

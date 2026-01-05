@@ -51,9 +51,9 @@ export default function KakaoButton({ mode, className }: KakaoButtonProps) {
   const { separatorText, subText, linkText, linkHref } = COPY_BY_MODE[mode];
   const lineStyle = 'h-1 flex-1 bg-gray-100';
 
-  const handleClick = () => {
-    window.location.href = `${KAKAO_AUTHORIZE_PATH}?mode=${mode}`;
-  };
+  // const handleClick = () => {
+  //   window.location.href = `${KAKAO_AUTHORIZE_PATH}?mode=${mode}`;
+  // };
 
   return (
     <div>
@@ -62,15 +62,17 @@ export default function KakaoButton({ mode, className }: KakaoButtonProps) {
         <span className='shrink-0 body-16 font-semibold text-gray-700'>{separatorText}</span>
         <div className={lineStyle} />
       </div>
-      <button
-        type='button'
-        className={cn('w-full cursor-pointer rounded-16 bg-kakao px-40 py-12', className)}
-        onClick={handleClick}>
+      <a
+        href={`${KAKAO_AUTHORIZE_PATH}?mode=${mode}`}
+        className={cn(
+          'no-underline, block w-full cursor-pointer rounded-16 bg-kakao px-40 py-12 text-inherit',
+          className
+        )}>
         <div className='flex items-center justify-center gap-8'>
           <Icons.Kakao className='h-20 w-20' />
           <span className='body-14 font-semibold text-op-85 sm:body-16'>카카오로 시작하기</span>
         </div>
-      </button>
+      </a>
       <p className='flex items-center justify-center gap-4 pt-24 body-14 font-medium text-gray-400 select-none sm:pt-30 sm:body-16'>
         {subText}
         <Link

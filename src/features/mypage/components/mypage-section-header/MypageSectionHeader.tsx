@@ -50,7 +50,9 @@ export default function MypageSectionHeader({ title, description, btn }: MypageS
       <Title size='18' className='text-gray-950 sm:heading-20 md:heading-24'>
         {title}
       </Title>
-      <p className='mt-10 font-medium whitespace-pre-line text-gray-600'>{description}</p>
+      <p className='mt-10 body-14 font-medium whitespace-pre-line text-gray-600 sm:body-16'>
+        {description}
+      </p>
       {/* TODO: 버튼 기능 추가 */}
       {btn && <div className='absolute top-0 right-0 hidden w-135 border-1 sm:block'>button</div>}
     </div>

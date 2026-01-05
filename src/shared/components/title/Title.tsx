@@ -55,12 +55,25 @@ export type TitleProps = TitleSizeProps
   };
 
 /**
- * 프로젝트 공통 Title 컴포넌트
+ * @description
+ * - 프로젝트 공통 Title 컴포넌트.
+ * - `size`(고정) 또는 `responsive`(반응형 프리셋) 중 하나만 사용 가능.
+ *
  * @param as - 렌더링할 HTML 태그 (기본값: 'h2')
- * @param size - 폰트 크기 ('32' | '24' | '20' | '18' / 기본값: '32')
- * @param weight - 폰트 두께 (bold, semibold, medium, normal / 기본값: 'bold')
+ * @param size - 고정 폰트 크기 ('32' | '24' | '20' | '18' / 기본값: '32'). `responsive`와 동시 사용 불가.
+ * @param responsive - 반응형 폰트 프리셋 ('lg' | 'md' | 'sm'). `size`와 동시에 사용 불가.
+ * @param weight - 폰트 두께 (bold | semibold | medium | normal / 기본값: 'bold')
  * @param className - 추가 커스텀 스타일
- * @example <Title as='h2' size='32' weight='bold'>타이틀</Title>
+ *
+ * @example
+ * ```tsx
+ * <Title as="h2" size="32" weight="bold">타이틀</Title>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * <Title as="h2" responsive="lg" weight="bold">타이틀</Title>
+ * ```
  */
 export default function Title({
   as = 'h2',

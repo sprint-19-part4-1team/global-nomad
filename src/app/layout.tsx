@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
+import AuthGuard from '@/features/auth/components/AuthGuard';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
 import QueryProvider from '@/shared/providers/QueryProvider';
@@ -49,7 +50,7 @@ export default function RootLayout({
         <QueryProvider>
           <RefreshProvider>
             <SessionWatcher />
-            {children}
+            <AuthGuard>{children}</AuthGuard>
           </RefreshProvider>
         </QueryProvider>
         <ToastProvider />

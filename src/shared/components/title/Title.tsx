@@ -33,13 +33,17 @@ type Tag = 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 type TitleVariantsProps = VariantProps<typeof titleVariants>;
 type TitleResponsivePreset = NonNullable<TitleVariantsProps['responsive']>;
 
-// size가 있으면 반응형 사용 불가
+/**
+ * size가 있으면 반응형 사용 불가
+ */
 type TitleFixedSizeProps = {
   size?: TitleVariantsProps['size'];
   responsive?: never;
 };
 
-// responsive가 있다면 고정된 크기 사용 불가
+/**
+ * responsive가 있다면 고정된 크기 사용 불가
+ */
 type TitleResponsiveSizeProps = {
   responsive?: TitleResponsivePreset;
   size?: never;

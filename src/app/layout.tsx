@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
+import QueryProvider from '@/shared/providers/QueryProvider';
 import RefreshProvider from '@/shared/providers/RefreshProvider';
 import SessionWatcher from '@/shared/providers/SessionWatcher';
 
@@ -45,10 +46,12 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body>
-        <RefreshProvider>
-          <SessionWatcher />
-          {children}
-        </RefreshProvider>
+        <QueryProvider>
+          <RefreshProvider>
+            <SessionWatcher />
+            {children}
+          </RefreshProvider>
+        </QueryProvider>
         <ToastProvider />
         <OverlayRoot />
       </body>

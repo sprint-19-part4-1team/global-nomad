@@ -17,6 +17,7 @@ import { isApiError } from '@/shared/utils/errorGuards';
 export default function Login() {
   const router = useRouter();
   const setSession = useUserStore((state) => state.setSession);
+  const setIsAuthInProgress = useUserStore((state) => state.setIsAuthInProgress);
   const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'login',
@@ -35,6 +36,7 @@ export default function Login() {
 
     try {
       const res = await login({ email: values.email, password: values.password });
+      setIsAuthInProgress(true);
       setSession({ user: res.user, accessTokenExpiresAt: res.accessTokenExpiresAt });
       router.replace('/');
     } catch (err: unknown) {

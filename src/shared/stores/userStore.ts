@@ -29,6 +29,7 @@ type LogoutReason = 'user' | 'expired';
  * @property {number | undefined} accessTokenExpiresAt - accessToken 만료 시각 (ms timestamp)
  * @property {LogoutReason | undefined} logoutReason - 세션 종료 원인 수동 로그아웃(`user`) 또는 자동 로그아웃(`expired`)
  * @property {boolean} hasHydrated - persist hydration 완료 여부 (SSR → CSR 깜빡임 방지용)
+ * @property {boolean} isAuthInProgress - 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환이 진행 중인지 여부
  * @function setUser - 사용자 정보 설정
  * @function setSession - 사용자 정보와 accessToken 만료 시각을 함께 설정 (로그인, 토큰 만료)
  * @function clearSession - 인증 세션을 종료하고 사용자 정보를 초기화
@@ -38,6 +39,8 @@ type UserStore = {
   accessTokenExpiresAt: number | undefined;
   logoutReason: LogoutReason | undefined;
   hasHydrated: boolean;
+  isAuthInProgress: boolean;
+  setIsAuthInProgress: (isAuthTransitioning: boolean) => void;
   setUser: (user: UserServiceResponseDto) => void;
   setSession: (params: { user: UserServiceResponseDto; accessTokenExpiresAt: number }) => void;
   clearSession: (reason: LogoutReason) => void;
@@ -64,6 +67,9 @@ export const useUserStore = create<UserStore>()(
         accessTokenExpiresAt: undefined,
         logoutReason: undefined,
         hasHydrated: false,
+        isAuthInProgress: false,
+        setIsAuthInProgress: (value: boolean) =>
+          set({ isAuthInProgress: value }, false, 'user/setIsAuthInProgress'),
         setUser: (user) => set({ user }, false, 'user/setUser'),
         setSession: ({ user, accessTokenExpiresAt }) =>
           set(

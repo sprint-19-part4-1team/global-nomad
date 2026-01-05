@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useRef } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -44,18 +44,29 @@ interface AuthGuardProps {
  */
 export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isMainPage = pathname === '/';
+  const isAuthPage = ['/login', '/signup'].includes(pathname);
 
-  const { user, hasHydrated } = useUserStore(
+  const { user, isAuthInProgress, hasHydrated, setIsAuthInProgress } = useUserStore(
     useShallow((state) => ({
       user: state.user,
+      isAuthInProgress: state.isAuthInProgress,
+      setIsAuthInProgress: state.setIsAuthInProgress,
       hasHydrated: state.hasHydrated,
     }))
   );
 
-  const initialUserRef = useRef(user);
+  useEffect(() => {
+    if (isMainPage && isAuthInProgress) {
+      setIsAuthInProgress(false);
+    }
+  }, [isMainPage, isAuthInProgress, setIsAuthInProgress]);
+
+  const shouldBlockAuthPage = isAuthPage && hasHydrated && user && !isAuthInProgress;
 
   useEffect(() => {
-    if (!hasHydrated || !initialUserRef.current) {
+    if (!shouldBlockAuthPage) {
       return;
     }
 
@@ -76,9 +87,11 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     );
 
     return () => {
-      overlayStore.popById(OVERLAY_ID);
+      if (overlayStore.has(OVERLAY_ID)) {
+        overlayStore.popById(OVERLAY_ID);
+      }
     };
-  }, [router, hasHydrated]);
+  }, [shouldBlockAuthPage, router]);
 
   return <>{children}</>;
 }

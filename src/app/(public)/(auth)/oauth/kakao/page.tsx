@@ -10,7 +10,7 @@ import { isRecord } from '@/shared/utils/errorGuards';
 
 // 카카오 회원 랜덤 닉네임
 const generateTempNickname = () => {
-  const rand = Math.random().toString(36).slice(2, 8);
+  const rand = Math.random().toString(36).slice(2, 6);
   return `kakao${rand}`;
 };
 

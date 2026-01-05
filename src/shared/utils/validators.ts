@@ -62,7 +62,7 @@ const validateNicknameFormat = (value: string): string => {
  * @property {'login'} login - 로그인 페이지용 검사 (필수 입력만 확인)
  * @property {'signup'} signup - 회원가입 페이지용 검사 (필수 입력 + 형식 검사)
  */
-type ValidationType = 'login' | 'signup';
+type ValidationType = 'login' | 'signup' | 'changePassword';
 
 /**
  * 유효성 검사 함수들
@@ -146,7 +146,11 @@ export const validators = {
    * validators.confirmPassword('Password123', { password: 'Password123' }) // ''
    * validators.confirmPassword('Different', { password: 'Password123' }) // '비밀번호와 동일하게 입력해 주세요.'
    */
-  confirmPassword: (value: string, values: { password: string }): string => {
+  confirmPassword: (type: ValidationType, value: string, values: { password: string }): string => {
+    if (type === 'changePassword') {
+      return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.NEW_MISMATCH;
+    }
+
     return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
   },
 

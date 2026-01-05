@@ -29,6 +29,7 @@ export const VALIDATION_MESSAGES = {
     SHORT: '8자 이상 입력해주세요.',
     INVALID: '영문 대/소문자 조합으로 입력해 주세요.',
     MISMATCH: '비밀번호와 동일하게 입력해 주세요.',
+    NEW_MISMATCH: '새 비밀번호와 동일하게 입력해 주세요.',
   },
   /**
    * 닉네임 관련 검증 메시지

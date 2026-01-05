@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import { LoginResponse } from '@/shared/types/auth';
 import type { MessageResponse } from '@/shared/types/common';
 import { SignInWithOauthRequestBody } from '@/shared/types/oauth';
-import { UserServiceResponseDto } from '@/shared/types/user';
 import { isApiError } from '@/shared/utils/errorGuards';
 import {
   createOAuthSessionResponse,
@@ -52,11 +52,7 @@ export async function POST(
   };
 
   try {
-    const signInResponse = await serverFetch<{
-      user: UserServiceResponseDto;
-      accessToken: string;
-      refreshToken: string;
-    }>('/oauth/sign-in/kakao', {
+    const signInResponse = await serverFetch<LoginResponse>('/oauth/sign-in/kakao', {
       method: 'POST',
       body: JSON.stringify(payload),
     });

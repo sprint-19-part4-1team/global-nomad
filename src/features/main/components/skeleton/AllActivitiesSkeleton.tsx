@@ -16,13 +16,13 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
  *
  * @example
  * ```tsx
- * import { Suspense } from 'react';
+ * import DelayedSuspense from '@/shared/components/delayed-suspense/DelayedSuspense';
  *
  * function AllActivitiesPage() {
  *   return (
- *     <Suspense fallback={<AllActivitiesSkeleton />}>
+ *     <DelayedSuspense fallback={<AllActivitiesSkeleton />}>
  *       <AllActivitiesList />
- *     </Suspense>
+ *     </DelayedSuspense>
  *   );
  * }
  * ```

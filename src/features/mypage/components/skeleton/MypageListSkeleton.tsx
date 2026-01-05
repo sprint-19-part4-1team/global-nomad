@@ -41,21 +41,21 @@ interface MypageListSkeletonProps {
  *
  * @example
  * ```tsx
- * import { Suspense } from 'react';
+ * import DelayedSuspense from '@/shared/components/delayed-suspense/DelayedSuspense';
  *
  * function ReservationPage() {
  *   return (
- *     <Suspense fallback={<MypageListSkeleton variant="reservation" count={3} />}>
+ *     <DelayedSuspense fallback={<MypageListSkeleton variant="reservation" count={3} />}>
  *       <ReservationList />
- *     </Suspense>
+ *     </DelayedSuspense>
  *   );
  * }
  *
  * function MyActivitiesPage() {
  *   return (
- *     <Suspense fallback={<MypageListSkeleton variant="activity" count={5} />}>
+ *     <DelayedSuspense fallback={<MypageListSkeleton variant="activity" count={5} />}>
  *       <MyActivitiesList />
- *     </Suspense>
+ *     </DelayedSuspense>
  *   );
  * }
  * ```

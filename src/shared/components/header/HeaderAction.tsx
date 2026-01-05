@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import GuestActions from '@/shared/components/header/GuestAction';
+import Skeleton from '@/shared/components/skeleton/Skeleton';
 import { useUserStore } from '@/shared/stores/userStore';
 import LoggedInActions from './LoggedInActions';
 
@@ -11,12 +12,11 @@ function HeaderActionsContent() {
 }
 
 // dynamic import로 SSR 비활성화
-// TODO: 스켈레톤 공통으로 구현하기
 const DynamicHeaderActionsContent = dynamic(() => Promise.resolve(HeaderActionsContent), {
   ssr: false,
   loading: () => (
     <div className='flex items-center gap-16'>
-      <div className='h-32 w-150 animate-pulse rounded bg-gray-200' />
+      <Skeleton className='h-32 w-150 rounded' />
     </div>
   ),
 });

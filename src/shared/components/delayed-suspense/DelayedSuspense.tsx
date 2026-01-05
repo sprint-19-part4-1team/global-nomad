@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, ReactNode, useState, useEffect } from 'react';
+import { Suspense, ReactNode, useState, useEffect, useRef } from 'react';
 
 /**
  * DelayedSuspense 컴포넌트의 Props
@@ -50,12 +50,12 @@ export default function DelayedSuspense({
   // 최소 시간이 경과했는지 여부
   const [isShow, setIsShow] = useState(false);
   // 컴포넌트 마운트 시점을 기록 (최소 시간 계산용)
-  const [startTime] = useState(() => Date.now());
+  const startTime = useRef(Date.now());
 
   // 최소 표시 시간 타이머
   useEffect(() => {
     // 경과 시간 계산
-    const elapsed = Date.now() - startTime;
+    const elapsed = Date.now() - startTime.current;
 
     // 최소 표시 시간에서 경과 시간을 뺀 나머지 시간 계산
     const remaining = Math.max(0, minDuration - elapsed);
@@ -65,7 +65,7 @@ export default function DelayedSuspense({
 
     // cleanup: 컴포넌트 언마운트 시 타이머 제거
     return () => clearTimeout(timer);
-  }, [startTime, minDuration]);
+  }, [minDuration]);
 
   return (
     <Suspense fallback={fallback}>

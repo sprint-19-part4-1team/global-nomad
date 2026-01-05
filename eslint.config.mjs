@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import queryPlugin from '@tanstack/eslint-plugin-query';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,6 +29,7 @@ const eslintConfig = [
     },
     plugins: {
       '@typescript-eslint': tseslint,
+      '@tanstack/query': queryPlugin,
     },
     settings: {
       'import/resolver': {
@@ -60,6 +62,9 @@ const eslintConfig = [
         },
       ],
       'import/no-unresolved': 'off',
+      '@tanstack/query/exhaustive-deps': 'error',
+      '@tanstack/query/no-rest-destructuring': 'warn',
+      '@tanstack/query/stable-query-client': 'error',
       curly: ['error'],
       'no-var': 'error',
       'no-console': 'warn',

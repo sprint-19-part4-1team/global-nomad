@@ -1,9 +1,16 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useChangePasswordForm } from '@/features/mypage/info/hooks/useChangePasswordForm';
+import { logout } from '@/shared/apis/feature/auth';
+import { updateMyInfo } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { useUserStore } from '@/shared/stores/userStore';
 
 interface ChangePasswordFormProps {
   userEmail: string;
@@ -20,12 +27,45 @@ interface ChangePasswordFormProps {
 export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
   const { values, errors, isValid, handleChange, handleBlur } = useChangePasswordForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const clearSession = useUserStore((state) => state.clearSession);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleLogout = async () => {
+    try {
+      overlayStore.pop();
+      await logout();
+      clearSession('user');
+      router.replace('/login');
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error('로그아웃에 실패했습니다.');
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: 비밀번호 변경 API 연동 예정
-    setIsSubmitting(false);
-    console.log('변경 폼 제출!');
+    try {
+      setIsSubmitting(true);
+      await updateMyInfo({ newPassword: values.newPassword });
+      overlayStore.push(
+        <Dialog
+          message={
+            <div className='text-center'>
+              성공적으로 변경되었습니다!
+              <br />
+              다시 로그인 해주세요.
+            </div>
+          }
+          onClose={handleLogout}
+        />
+      );
+    } catch (error) {
+      console.log(error);
+      toast.error('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -64,7 +104,6 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
         placeholder='새 비밀번호를 한 번 더 입력해 주세요.'
         errorMessage={errors.confirmPassword}
       />
-      {/* TODO: API 연동 시 버튼 조건 추가 */}
       <Button type='submit' disabled={!isValid} isLoading={isSubmitting} className='w-160'>
         변경하기
       </Button>

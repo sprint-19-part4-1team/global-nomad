@@ -11,16 +11,15 @@ import { CreateProfileImageUrlResponse } from '@/shared/types/user';
  *
  * - 인증이 필요한 API로, `createAuthorizedRoute`를 통해
  *   access token 검증 및 공통 에러 처리가 수행됩니다.
- * - 요청 body는 `multipart/form-data` 형식의 파일(`File`)이며,
- *   `createAuthorizedRoute`에서 `FormData`로 파싱됩니다.
+ * - 요청 body는 `multipart/form-data` 형식의 파일이며, `createAuthorizedRoute`에서 `FormData`로 파싱됩니다.
  * - 실제 백엔드 요청은 `proxy`를 통해 `/users/me/image` 엔드포인트로 전달됩니다.
  *
  * @param body 업로드할 프로필 이미지 파일
  *
  * @returns 생성된 프로필 이미지 URL (`CreateProfileImageUrlResponse`)
  */
-export const POST = createAuthorizedRoute<File>(async ({ accessToken, body }) => {
-  return proxy<CreateProfileImageUrlResponse>(
+export const POST = createAuthorizedRoute<FormData>(async ({ accessToken, body }) => {
+  return proxy<CreateProfileImageUrlResponse, FormData>(
     '/users/me/image',
     { method: 'POST', body },
     accessToken

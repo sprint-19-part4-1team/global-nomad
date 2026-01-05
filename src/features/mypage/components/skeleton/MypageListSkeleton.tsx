@@ -67,10 +67,14 @@ export default function MypageListSkeleton({
 }: MypageListSkeletonProps) {
   return (
     // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
-    <div className={cn('flex flex-col', LIST_GAP[variant], className)}>
-      {Array.from({ length: count }).map((_, i) => (
-        <MypageCardSkeleton key={i} variant={variant} />
-      ))}
+    <div
+      aria-busy='true'
+      aria-label={`${variant === 'reservation' ? '예약' : '내 체험'} 카드 로딩 중`}>
+      <div className={cn('flex flex-col', LIST_GAP[variant], className)} aria-hidden='true'>
+        {Array.from({ length: count }).map((_, i) => (
+          <MypageCardSkeleton key={i} variant={variant} />
+        ))}
+      </div>
     </div>
   );
 }

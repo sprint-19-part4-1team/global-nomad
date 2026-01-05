@@ -121,11 +121,7 @@ export default function MypageCardSkeleton({ variant, className }: MypageCardSke
 
   return (
     // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
-    <div
-      className={cn('relative h-full w-full', className)}
-      role='status'
-      aria-busy='true'
-      aria-label={`${isReservation ? '예약' : '내 체험'} 카드 로딩 중`}>
+    <div className={cn('relative h-full w-full', className)}>
       <div className={cn(mypageCardVariants({ variant }))}>
         {isReservation ? <ReservationSkeleton /> : <ActivitySkeleton />}
       </div>

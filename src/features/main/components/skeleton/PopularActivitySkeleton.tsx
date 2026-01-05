@@ -34,10 +34,9 @@ export default function PopularActivitySkeleton() {
     // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <section
       className='scrollbar-hidden overflow-x-auto'
-      role='status'
       aria-busy='true'
       aria-label='인기 체험 로딩 중'>
-      <div className='flex w-full gap-12 sm:gap-20 lg:gap-24'>
+      <div className='flex w-full gap-12 sm:gap-20 lg:gap-24' aria-hidden='true'>
         <ActivityCardSkeleton variant='popular' className='shrink-0' />
         <ActivityCardSkeleton variant='popular' className='shrink-0' />
         <ActivityCardSkeleton variant='popular' className='shrink-0 sm:hidden lg:block' />

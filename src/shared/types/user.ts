@@ -33,7 +33,7 @@ export interface UpdateUserBodyDto {
   nickname?: string;
   /** 변경할 프로필 이미지 URL (없을 경우 null) */
   profileImageUrl?: string | null;
-  /** 변경할 닉네임 */
+  /** 변경할 새 비밀번호 */
   newPassword?: string;
 }
 

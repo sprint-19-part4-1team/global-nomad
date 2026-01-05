@@ -1,6 +1,6 @@
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import type { LogoutResponse, LoginRequest } from '@/shared/types/auth';
-import type { UserServiceResponseDto } from '@/shared/types/user';
+import type { BffLoginResponse, BffRefreshTokenResponse, LoginRequest } from '@/shared/types/auth';
+import type { MessageResponse } from '@/shared/types/common';
 
 /**
  * 로그인 API (BFF)
@@ -8,8 +8,8 @@ import type { UserServiceResponseDto } from '@/shared/types/user';
  * @param data - 로그인에 필요한 사용자 정보
  * @returns 로그인 API 응답 Promise
  */
-export const login = (data: LoginRequest): Promise<UserServiceResponseDto> => {
-  return bffFetch<UserServiceResponseDto>('/auth/login', {
+export const login = (data: LoginRequest): Promise<BffLoginResponse> => {
+  return bffFetch<BffLoginResponse>('/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -20,8 +20,8 @@ export const login = (data: LoginRequest): Promise<UserServiceResponseDto> => {
  *
  * @returns 로그아웃 API 응답 Promise
  */
-export const logout = (): Promise<LogoutResponse> => {
-  return bffFetch<LogoutResponse>('/auth/logout', {
+export const logout = (): Promise<MessageResponse> => {
+  return bffFetch<MessageResponse>('/auth/logout', {
     method: 'POST',
   });
 };
@@ -31,9 +31,8 @@ export const logout = (): Promise<LogoutResponse> => {
  *
  * @returns 토큰 재발급 API 응답 Promise
  */
-export const refreshToken = (): Promise<any> => {
-  // TODO: API 응답 타입이 확정되면 any 대신 구체적인 타입으로 교체해주세요.
-  return bffFetch<any>('/auth/tokens', {
+export const refreshToken = (): Promise<BffRefreshTokenResponse> => {
+  return bffFetch<BffRefreshTokenResponse>('/auth/tokens', {
     method: 'POST',
   });
 };

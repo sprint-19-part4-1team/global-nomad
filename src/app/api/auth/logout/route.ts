@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import { clearAuthTokens } from '@/shared/utils/authCookies';
-
-type LogoutResponseBody = {
-  message: string;
-};
+import { AUTH_API_MESSAGE } from '@/shared/constants';
+import { MessageResponse } from '@/shared/types/common';
+import { clearAuthCookies } from '@/shared/utils/authCookies';
 
 /**
  * ## 로그아웃 API (BFF)
@@ -26,14 +24,14 @@ type LogoutResponseBody = {
  * }
  * ```
  */
-export async function POST(): Promise<NextResponse<LogoutResponseBody>> {
+export async function POST(): Promise<NextResponse<MessageResponse>> {
   try {
-    await clearAuthTokens();
+    await clearAuthCookies();
 
-    return NextResponse.json({ message: '로그아웃 되었습니다.' });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.SUCCESS });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return NextResponse.json({ message: '로그아웃에 실패했습니다.' }, { status: 500 });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.FAILED }, { status: 500 });
   }
 }

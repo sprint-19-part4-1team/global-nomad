@@ -9,7 +9,7 @@ import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
-import { COMMON_MESSAGE } from '@/shared/constants/errorMessages';
+import { COMMON_MESSAGE } from '@/shared/constants';
 import useAuthForm from '@/shared/hooks/useAuthForm';
 import { isApiError } from '@/shared/utils/errorGuards';
 

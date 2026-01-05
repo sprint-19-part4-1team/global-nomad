@@ -6,9 +6,5 @@ interface ContentLayoutProps {
 }
 
 export default function ContentLayout({ children }: ContentLayoutProps) {
-  return (
-    <>
-      <BaseLayout>{children}</BaseLayout>
-    </>
-  );
+  return <BaseLayout>{children}</BaseLayout>;
 }

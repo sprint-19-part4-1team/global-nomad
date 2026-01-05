@@ -15,7 +15,7 @@ interface ChangePasswordFormProps {
  * @description
  * - 마이페이지 내 정보 수정에서 사용하는 비밀번호 변경 폼입니다.
  *
- * @param userEmail - 로그인한 유저 이메일
+ * @param {string} userEmail - 로그인한 유저 이메일
  */
 export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
   const { values, errors, isValid, handleChange, handleBlur } = useChangePasswordForm();

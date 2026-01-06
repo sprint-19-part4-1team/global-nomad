@@ -24,9 +24,9 @@ const LABEL_BASE = 'body-14 font-semibold whitespace-nowrap text-gray-950 sm:bod
  * 예약 상태를 선택하기 위한 필터 버튼 컴포넌트입니다.
  * - 선택 여부(`isActive`)에 따라 스타일이 변경됩니다.
  *
- * @param status - 버튼이 나타내는 예약 상태
+ * @param status - 버튼이 나타내는 예약 상태 (`ReservationStatus` enum)
  * @param isActive - 현재 선택된 상태인지 여부
- * @param onSelect - 상태 선택 시 호출되는 콜백
+ * @param onSelect - 상태 선택 시 호출되는 콜백 (ReservationStatus 전달)
  */
 export default function ReservationFilterButton({
   status,

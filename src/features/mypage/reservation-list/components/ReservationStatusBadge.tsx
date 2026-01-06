@@ -17,10 +17,12 @@ interface ReservationStatusProps {
 /**
  * @description
  * 예약 상태를 표시하는 배지 컴포넌트입니다.
- * - 상태(`status`)에 따라 배경색과 글자색이 변경됩니다.
+ *
+ * - `status`는 문자열이 아닌 `ReservationStatus` enum 값을 사용합니다.
+ * - 상태 값에 따라 배경색과 글자색이 결정됩니다.
  * - 카드 UI 등 “표시 목적”으로만 사용됩니다.
  *
- * @param status - 예약 상태 값
+ * @param status - 표시할 예약 상태 (`ReservationStatus` enum)
  */
 export function ReservationStatusBadge({ status }: ReservationStatusProps) {
   return (

@@ -3,7 +3,7 @@ import { RESERVATION_STATUSES, ReservationStatusType } from '../constants/common
 import { ReservationStatusBadge } from './ReservationStatusBadge';
 
 const meta: Meta<typeof ReservationStatusBadge> = {
-  title: 'Mypage/Reservation/ReservationStatusBadge',
+  title: 'Features/Mypage/Reservation-List/ReservationStatusBadge',
   component: ReservationStatusBadge,
   args: {
     status: 'pending',

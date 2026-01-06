@@ -7,7 +7,7 @@ import {
 import ReservationFilterButton from './ReservationFilterButton';
 
 const meta: Meta<typeof ReservationFilterButton> = {
-  title: 'Mypage/Reservation/ReservationFilterButton',
+  title: 'Features/Mypage/Reservation-List/ReservationFilterButton',
   component: ReservationFilterButton,
   argTypes: {
     status: {

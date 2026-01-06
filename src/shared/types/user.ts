@@ -23,9 +23,17 @@ export interface CreateUserBodyDto {
   password: string;
 }
 
+/**
+ * 유저 정보 수정 요청 body 타입
+ *
+ * @description 마이페이지에서 유저의 기본 정보를 수정할 때 사용하는 요청 body 타입
+ */
 export interface UpdateUserBodyDto {
+  /** 변경할 닉네임 */
   nickname?: string;
+  /** 변경할 프로필 이미지 URL (없을 경우 null) */
   profileImageUrl?: string | null;
+  /** 변경할 새 비밀번호 */
   newPassword?: string;
 }
 

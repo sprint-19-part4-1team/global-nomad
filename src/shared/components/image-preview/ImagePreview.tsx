@@ -7,7 +7,7 @@ import { cn } from '@/shared/utils/cn';
 
 interface ImagePreviewProps {
   /** 서버에서 전달받은 이미지 URL */
-  src?: string;
+  src?: string | null;
   /** 사용자가 등록한 이미지 파일 */
   file?: File | null;
   /** 이미지 대체 텍스트 */
@@ -84,7 +84,7 @@ export default function ImagePreview({
   return (
     <div className='relative h-full w-full'>
       <div className={cn('relative h-full w-full overflow-hidden', className)}>
-        <Image fill src={imageSrc} alt={alt} className='object-cover' />
+        <Image fill src={imageSrc} alt={alt} className='object-cover' sizes='120px' />
       </div>
       {onRemove && (
         <button

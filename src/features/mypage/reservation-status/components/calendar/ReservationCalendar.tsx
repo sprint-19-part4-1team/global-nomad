@@ -222,7 +222,7 @@ export default function ReservationCalendar({
                     )}
                     {reservation.reservations.confirmed > 0 && (
                       <div
-                        className={`${CALENDAR_STYLE.STATUS}gap-2 bg-orange-100 text-orange-500`}>
+                        className={`${CALENDAR_STYLE.STATUS} gap-2 bg-orange-100 text-orange-500`}>
                         <span>승인</span>
                         <span>{reservation.reservations.confirmed}</span>
                       </div>

@@ -84,7 +84,7 @@ export default function ImagePreview({
   return (
     <div className='relative h-full w-full'>
       <div className={cn('relative h-full w-full overflow-hidden', className)}>
-        <Image fill src={imageSrc} alt={alt} className='object-cover' />
+        <Image fill src={imageSrc} alt={alt} className='object-cover' sizes='120px' />
       </div>
       {onRemove && (
         <button

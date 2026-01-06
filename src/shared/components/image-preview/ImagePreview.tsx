@@ -70,7 +70,10 @@ export default function ImagePreview({
 
   let imageSrc: string;
 
-  if (file && previewUrl) {
+  if (file) {
+    if (!previewUrl) {
+      return fallback ?? null;
+    }
     imageSrc = previewUrl;
   } else if (src) {
     imageSrc = src;

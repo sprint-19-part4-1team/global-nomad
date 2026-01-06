@@ -1,8 +1,15 @@
 import { cva } from 'class-variance-authority';
 
-type ReservationStatus = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+export const RESERVATION_STATUSES = [
+  'pending',
+  'confirmed',
+  'declined',
+  'canceled',
+  'completed',
+] as const;
+type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
 
-export const reservationStatusVariants = cva(
+const reservationStatusVariants = cva(
   'flex w-fit items-center justify-center rounded-full px-8 py-2',
   {
     variants: {
@@ -16,8 +23,7 @@ export const reservationStatusVariants = cva(
     },
   }
 );
-
-export const reservationStatusLabelVariants = cva('body-13 font-bold', {
+const reservationStatusLabelVariants = cva('body-13 font-bold', {
   variants: {
     status: {
       pending: 'text-green-500',
@@ -29,7 +35,7 @@ export const reservationStatusLabelVariants = cva('body-13 font-bold', {
   },
 });
 
-export const RESERVATION_STATUS_LABEL: Record<ReservationStatus, string> = {
+const RESERVATION_STATUS_LABEL: Record<ReservationStatus, string> = {
   pending: '예약 완료',
   confirmed: '예약 승인',
   declined: '예약 거절',
@@ -41,7 +47,7 @@ interface RerservationStatusProps {
   status: ReservationStatus;
 }
 
-export default function ReservationStatus({ status }: RerservationStatusProps) {
+export function ReservationStatus({ status }: RerservationStatusProps) {
   return (
     <div className={reservationStatusVariants({ status })}>
       <span className={reservationStatusLabelVariants({ status })}>

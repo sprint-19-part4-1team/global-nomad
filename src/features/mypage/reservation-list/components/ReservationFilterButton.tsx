@@ -33,16 +33,16 @@ export default function ReservationFilterButton({
   isActive,
   onSelect,
 }: ReservationFilterButtonProps) {
-  const SELECTED_BUTTON = cn('border-transparent', statusBackgroundVariants({ status }));
-  const SELECTED_LABEL = statusTextVariants({ status });
+  const selectedButtonStyle = cn('border-transparent', statusBackgroundVariants({ status }));
+  const selectedLabelStyle = statusTextVariants({ status });
 
   return (
     <button
       type='button'
       aria-pressed={isActive}
       onClick={() => onSelect(status)}
-      className={cn(BUTTON_BASE, isActive ? SELECTED_BUTTON : '')}>
-      <span className={cn(LABEL_BASE, isActive ? SELECTED_LABEL : '')}>
+      className={cn(BUTTON_BASE, isActive ? selectedButtonStyle : '')}>
+      <span className={cn(LABEL_BASE, isActive ? selectedLabelStyle : '')}>
         {RESERVATION_STATUS_LABEL[status]}
       </span>
     </button>

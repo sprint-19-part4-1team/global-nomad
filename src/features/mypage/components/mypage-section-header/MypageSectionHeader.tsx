@@ -55,11 +55,12 @@ export default function MypageSectionHeader({ title, description, btn }: MypageS
         {description}
       </p>
       {btn && (
-        <div className='absolute top-0 right-0 hidden w-135 sm:block'>
-          <Button href='/activity/new' size='lg'>
-            체험 등록하기
-          </Button>
-        </div>
+        <Button
+          href='/activity/new'
+          size='lg'
+          className='absolute top-0 right-0 hidden w-135 sm:block'>
+          체험 등록하기
+        </Button>
       )}
     </div>
   );

@@ -7,7 +7,7 @@ import { cn } from '@/shared/utils/cn';
 
 interface ImagePreviewProps {
   /** 서버에서 전달받은 이미지 URL */
-  src?: string;
+  src?: string | null;
   /** 사용자가 등록한 이미지 파일 */
   file?: File | null;
   /** 이미지 대체 텍스트 */

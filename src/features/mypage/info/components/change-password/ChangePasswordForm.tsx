@@ -36,7 +36,9 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
       await logout();
       clearSession('user');
       router.replace('/login');
-    } catch {
+    } catch (error) {
+      // TODO: 프로덕션 배포 시 console.error 삭제
+      console.error('로그아웃 실패: ', error);
       toast.error('로그아웃에 실패했습니다.');
     }
   };
@@ -58,7 +60,9 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
           onClose={handleLogout}
         />
       );
-    } catch {
+    } catch (error) {
+      // TODO: 프로덕션 배포 시 console.error 삭제
+      console.error('비밀번호 변경 실패: ', error);
       toast.error('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);

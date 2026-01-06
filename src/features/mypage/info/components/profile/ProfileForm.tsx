@@ -29,7 +29,8 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
     nickname,
     nicknameError,
     profileImg,
-    setProfileImg,
+    handleImageSelect,
+    handleImageReset,
     canSubmit,
     handleChange,
     handleBlur,
@@ -45,7 +46,12 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
   return (
     <form className='mt-24 sm:mt-32' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-24 sm:gap-32 md:flex-row'>
-        <ProfileImageSection user={user} profileImg={profileImg} setProfileImg={setProfileImg} />
+        <ProfileImageSection
+          user={user}
+          profileImg={profileImg}
+          onSelect={handleImageSelect}
+          onReset={handleImageReset}
+        />
         <ProfileInfoSection
           user={user}
           nickname={nickname}
@@ -75,5 +81,9 @@ export default function ProfileForm() {
     return <ProfileFormSkeleton />;
   }
 
-  return <ProfileFormInner user={user} />;
+  return (
+    <>
+      <ProfileFormInner user={user} />
+    </>
+  );
 }

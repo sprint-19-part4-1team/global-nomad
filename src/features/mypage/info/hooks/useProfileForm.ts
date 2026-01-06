@@ -17,6 +17,7 @@ import { UserServiceResponseDto } from '@/shared/types/user';
 
 export const useProfileForm = (user: UserServiceResponseDto) => {
   const [profileImg, setProfileImg] = useState<File | null>(null);
+  const [isImageDirty, setIsImageDirty] = useState(false);
 
   const {
     nickname,
@@ -26,22 +27,34 @@ export const useProfileForm = (user: UserServiceResponseDto) => {
     isValid: isNicknameValid,
   } = useNicknameValidation(user.nickname);
 
-  // 프로필 이미지 검증
-  const hadImage = Boolean(user.profileImageUrl);
-  const hasNewImage = Boolean(profileImg);
-  const isProfileImageDirty = hadImage !== hasNewImage;
+  /**
+   * 새 이미지 선택
+   */
+  const handleImageSelect = (file: File) => {
+    setProfileImg(file);
+    setIsImageDirty(true);
+  };
+
+  /**
+   * 기본 이미지로 변경 (이미지 제거)
+   */
+  const handleImageReset = () => {
+    setProfileImg(null);
+    setIsImageDirty(Boolean(user.profileImageUrl));
+  };
 
   // 닉네임 검증
   const isNicknameDirty = nickname !== user.nickname;
 
   // 전체 폼 검증
-  const canSubmit = isNicknameValid && (isNicknameDirty || isProfileImageDirty);
+  const canSubmit = isNicknameValid && (isNicknameDirty || isImageDirty);
 
   return {
     nickname,
     nicknameError,
     profileImg,
-    setProfileImg,
+    handleImageSelect,
+    handleImageReset,
     canSubmit,
     handleChange,
     handleBlur,

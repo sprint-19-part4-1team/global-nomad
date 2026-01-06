@@ -11,8 +11,8 @@ import { UserServiceResponseDto } from '@/shared/types/user';
 interface ProfileImageFormProps {
   user: UserServiceResponseDto | undefined;
   profileImg: File | null;
-  /** 프로필 이미지 파일 상태를 업데이트하는 setter 함수 */
-  setProfileImg: (file: File | null) => void;
+  onSelect: (file: File) => void;
+  onReset: () => void;
 }
 
 /**
@@ -23,12 +23,14 @@ interface ProfileImageFormProps {
  *
  * @param user - 현재 로그인한 사용자 정보
  * @param profileImg - 사용자가 새로 선택한 프로필 이미지 파일
- * @param setProfileImg - 프로필 이미지 파일 상태를 업데이트하는 setter 함수
+ * @param onSelect - 프로필 이미지 파일 선택 시 호출되는 콜백 함수
+ * @param onReset - 기본 이미지로 변경 버튼 클릭 시 호출되는 콜백 함수
  */
 export default function ProfileImageSection({
   user,
   profileImg,
-  setProfileImg,
+  onSelect,
+  onReset,
 }: ProfileImageFormProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -39,12 +41,8 @@ export default function ProfileImageSection({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setProfileImg(file);
+      onSelect(file);
     }
-  };
-
-  const resetProfileImg = () => {
-    setProfileImg(null);
   };
 
   return (
@@ -86,7 +84,7 @@ export default function ProfileImageSection({
         variant='secondary'
         size='sm'
         disabled={user?.profileImageUrl === null && profileImg === null}
-        onClick={resetProfileImg}>
+        onClick={onReset}>
         기본 이미지로 변경
       </Button>
     </div>

@@ -3,6 +3,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
 import { AvatarContext } from '@/shared/components/avatar/context/avatarContext';
+import Skeleton from '@/shared/components/skeleton/Skeleton';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { cn } from '@/shared/utils/cn';
 
@@ -27,7 +28,7 @@ const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative'
  * @property {string} [className] - 추가 CSS 클래스
  */
 interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatarVariants> {
-  user: UserServiceResponseDto;
+  user?: UserServiceResponseDto;
   children: ReactNode;
 }
 
@@ -51,6 +52,10 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeo
 export default function Avatar({ size, className, user, children }: AvatarProps) {
   // 이미지 로딩 실패 상태
   const [imageError, setImageError] = useState(false);
+
+  if (!user) {
+    return <Skeleton className={cn(avatarVariants({ size }), 'rounded-full')} />;
+  }
 
   return (
     <AvatarContext value={{ user, imageError, setImageError }}>

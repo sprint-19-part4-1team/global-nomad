@@ -10,7 +10,7 @@ const BADGE_CONTAINER_BASE = 'flex w-fit items-center justify-center rounded-ful
 
 const BADGE_LABEL_BASE = 'body-13 font-bold';
 
-interface RerservationStatusProps {
+interface ReservationStatusProps {
   status: ReservationStatusType;
 }
 
@@ -22,7 +22,7 @@ interface RerservationStatusProps {
  *
  * @param status - 예약 상태 값
  */
-export function ReservationStatusBadge({ status }: RerservationStatusProps) {
+export function ReservationStatusBadge({ status }: ReservationStatusProps) {
   return (
     <div className={cn(BADGE_CONTAINER_BASE, statusBackgroundVariants({ status }))}>
       <span className={cn(BADGE_LABEL_BASE, statusTextVariants({ status }))}>

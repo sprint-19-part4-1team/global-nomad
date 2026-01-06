@@ -8,6 +8,7 @@ import ExperienceCard from './ExperienceCard';
  * - 마이페이지 / 활동 관리 목록 화면에서 사용
  * - 좌측에는 활동 정보(제목, 평점, 가격, 액션 버튼)
  * - 우측에는 반응형 배너 이미지 표시
+ * - 활동을 식별하기 위한 고유 id를 포함하여 수정/삭제 액션에 활용
  *
  * ### UI 특징
  * - 제목은 한 줄 말줄임 처리
@@ -17,6 +18,7 @@ import ExperienceCard from './ExperienceCard';
  * ### 사용 예
  * ```tsx
  * <ExperienceCard
+ *   id={1}
  *   title="서핑 원데이 클래스"
  *   price={50000}
  *   rating={4.8}
@@ -27,10 +29,11 @@ import ExperienceCard from './ExperienceCard';
  */
 
 const meta: Meta<typeof ExperienceCard> = {
-  title: 'Shared/Card/ExperienceCard',
+  title: 'Features/Mypage/Activity/ExperienceCard',
   component: ExperienceCard,
   tags: ['autodocs'],
   args: {
+    id: 123,
     title: '서핑 원데이 클래스',
     price: 50000,
     rating: 4.8,

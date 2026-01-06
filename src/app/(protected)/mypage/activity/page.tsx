@@ -1,9 +1,8 @@
+import ExperienceCard from '@/features/mypage/activity/ExperienceCard/ExperienceCard';
 import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';
-import ExperienceCard from '@/shared/components/card/ExperienceCard/ExperienceCard';
 
 export default function MypageActivity() {
-  // TODO: 마이페이지 내 체험 관리 페이지 구현
   return (
     <>
       <MypageSectionHeader
@@ -16,6 +15,7 @@ export default function MypageActivity() {
         <ul>
           <li className='mt-20 sm:mt-24'>
             <ExperienceCard
+              id={123}
               title='제목'
               rating={3.2}
               price={11223}
@@ -25,6 +25,7 @@ export default function MypageActivity() {
           </li>
           <li className='mt-20 sm:mt-24'>
             <ExperienceCard
+              id={123}
               title='제목'
               rating={3.2}
               price={11223}
@@ -34,6 +35,7 @@ export default function MypageActivity() {
           </li>
           <li className='mt-20 sm:mt-24'>
             <ExperienceCard
+              id={123}
               title='제목'
               rating={3.2}
               price={11223}
@@ -43,11 +45,13 @@ export default function MypageActivity() {
           </li>
         </ul>
       </div>
-      <div className='fixed bottom-16 z-2 block w-full sm:hidden'>
-        <Button full href='/activity/new' size='lg'>
-          체험 등록하기
-        </Button>
-      </div>
+      <Button
+        full
+        href='/activity/new'
+        size='lg'
+        className='fixed bottom-16 z-2 block w-full max-w-[calc(100%-48px)] sm:hidden'>
+        체험 등록하기
+      </Button>
     </>
   );
 }

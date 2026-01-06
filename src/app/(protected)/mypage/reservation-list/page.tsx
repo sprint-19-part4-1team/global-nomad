@@ -1,18 +1,39 @@
+'use client';
+
+import { useState } from 'react';
 import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
-import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/reservation-status/ReservationStatusBadge';
+import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
+import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
+import {
+  RESERVATION_STATUSES,
+  ReservationStatusType,
+} from '@/features/mypage/reservation-list/constants/common';
 
 export default function MypageReservationList() {
+  const [selectedStatus, setSelectedStatus] = useState<ReservationStatusType | null>(null);
+
+  const handleStatusSelect = (status: ReservationStatusType) => {
+    setSelectedStatus(status);
+  };
+
   // TODO: 마이페이지 예약 내역 리스트 페이지 구현
   return (
     <>
       <MypageSectionHeader title='예약 내역' description='체험 예약을 변경/취소할 수 있습니다.' />
-      <section className='my-24 w-full bg-gray-25 sm:my-32'>
-        {/* TODO: 예약 내역 표시 영역 UI 구현 */}필터 표시 영역
+      <section className='my-24 scrollbar-hidden flex w-full gap-8 overflow-x-auto sm:my-32'>
+        {RESERVATION_STATUSES.map((status) => (
+          <ReservationFilterButton
+            key={status}
+            status={status}
+            isActive={selectedStatus === status}
+            onSelect={handleStatusSelect}
+          />
+        ))}
       </section>
       <section className='h-full w-full bg-gray-25'>
         {/* TODO: 예약 내역 카드 표시 */}
         예약 내역 카드 표시 영역
-        <ReservationStatusBadge status='completed' />
+        <ReservationStatusBadge status='declined' />
       </section>
     </>
   );

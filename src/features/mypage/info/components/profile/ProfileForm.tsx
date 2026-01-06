@@ -75,5 +75,5 @@ export default function ProfileForm() {
     return <ProfileFormSkeleton />;
   }
 
-  return <ProfileFormInner key={user.id} user={user} />;
+  return <ProfileFormInner user={user} />;
 }

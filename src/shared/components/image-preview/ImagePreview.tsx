@@ -8,7 +8,7 @@ import { cn } from '@/shared/utils/cn';
 interface ImagePreviewProps {
   /** 서버에서 전달받은 이미지 URL */
   src?: string;
-  /** 서버에서 전달받은 이미지 URL */
+  /** 사용자가 등록한 이미지 파일 */
   file?: File | null;
   /** 이미지 대체 텍스트 */
   alt?: string;
@@ -16,7 +16,7 @@ interface ImagePreviewProps {
   className?: string;
   /** 이미지가 없을 때 렌더링할 fallback UI */
   fallback?: ReactNode;
-  /** 전달되면 이미지 삭제 버튼을 표시하고, 클릭 시 호출됨 */
+  /** 전달되면 이미지 삭제 버튼을 표시하고 클릭 시 호출됨 */
   onRemove?: () => void;
 }
 

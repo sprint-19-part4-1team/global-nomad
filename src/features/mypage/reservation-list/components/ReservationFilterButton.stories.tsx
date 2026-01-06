@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import {
-  RESERVATION_STATUSES,
-  ReservationStatusType,
-} from '@/features/mypage/reservation-list/constants/common';
+import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
+import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationFilterButton from './ReservationFilterButton';
 
 const meta: Meta<typeof ReservationFilterButton> = {
@@ -32,7 +30,7 @@ type Story = StoryObj<typeof ReservationFilterButton>;
  */
 export const Default: Story = {
   args: {
-    status: 'pending',
+    status: ReservationStatus.Pending,
     isActive: false,
   },
 };
@@ -44,7 +42,7 @@ export const Default: Story = {
  */
 export const Interactive: Story = {
   render: () => {
-    const [selectedStatus, setSelectedStatus] = useState<ReservationStatusType | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
 
     return (
       <div className='flex gap-8'>

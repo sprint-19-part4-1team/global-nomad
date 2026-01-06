@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { RESERVATION_STATUSES, ReservationStatusType } from '../constants/common';
+import { ReservationStatus } from '@/shared/types/myReservations';
+import { RESERVATION_STATUSES } from '../constants/common';
 import { ReservationStatusBadge } from './ReservationStatusBadge';
 
 const meta: Meta<typeof ReservationStatusBadge> = {
   title: 'Features/Mypage/Reservation-List/ReservationStatusBadge',
   component: ReservationStatusBadge,
   args: {
-    status: 'pending',
+    status: ReservationStatus.Pending,
   },
   argTypes: {
     status: {
@@ -26,7 +27,7 @@ export const AllStatuses: Story = {
   render: () => (
     <div className='flex flex-wrap gap-8'>
       {RESERVATION_STATUSES.map((status) => (
-        <ReservationStatusBadge key={status} status={status as ReservationStatusType} />
+        <ReservationStatusBadge key={status} status={status} />
       ))}
     </div>
   ),

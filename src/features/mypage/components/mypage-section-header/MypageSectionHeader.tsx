@@ -1,3 +1,4 @@
+import Button from '@/shared/components/button/Button';
 import Title from '@/shared/components/title/Title';
 import { cn } from '@/shared/utils/cn';
 
@@ -53,8 +54,14 @@ export default function MypageSectionHeader({ title, description, btn }: MypageS
       <p className='mt-10 body-14 font-medium whitespace-pre-line text-gray-600 sm:body-16'>
         {description}
       </p>
-      {/* TODO: 버튼 기능 추가 */}
-      {btn && <div className='absolute top-0 right-0 hidden w-135 border-1 sm:block'>button</div>}
+      {btn && (
+        <Button
+          href='/activity/new'
+          size='lg'
+          className='absolute top-0 right-0 hidden w-135 sm:block'>
+          체험 등록하기
+        </Button>
+      )}
     </div>
   );
 }

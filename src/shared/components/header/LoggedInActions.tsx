@@ -49,9 +49,11 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
             </Avatar>
             <span className='ml-10 body-14 font-medium text-gray-950'>{user.nickname}</span>
           </ActionDropdownTrigger>
-          <ActionDropdownContent>
-            <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
-            <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
+          <ActionDropdownContent className='right-0 left-auto w-full min-w-96'>
+            <ActionDropdownItem onClick={handleLogout} className='min-w-full'>
+              로그아웃
+            </ActionDropdownItem>
+            <ActionDropdownItem onClick={() => router.push('/mypage/info')} className='min-w-full'>
               마이페이지
             </ActionDropdownItem>
           </ActionDropdownContent>

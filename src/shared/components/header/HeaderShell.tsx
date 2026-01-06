@@ -25,7 +25,7 @@ interface HeaderShellProps {
  * ```
  */
 
-const headerVariants = cva('fixed top-0 z-5 w-full transition-bg duration-200', {
+const headerVariants = cva('fixed top-0 z-7 w-full transition-bg duration-200', {
   variants: {
     scrolled: {
       true: 'bg-white shadow-sm',

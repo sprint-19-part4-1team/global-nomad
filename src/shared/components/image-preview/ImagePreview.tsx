@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Icons from '@/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
@@ -51,31 +51,27 @@ export default function ImagePreview({
   fallback,
   onRemove,
 }: ImagePreviewProps) {
-  const objectUrlRef = useRef<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   /** URL.createObjectURL 자원 정리 */
   useEffect(() => {
     if (!file) {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-        objectUrlRef.current = null;
-      }
+      setPreviewUrl(null);
       return;
     }
 
     const url = URL.createObjectURL(file);
-    objectUrlRef.current = url;
+    setPreviewUrl(url);
 
     return () => {
       URL.revokeObjectURL(url);
-      objectUrlRef.current = null;
     };
   }, [file]);
 
   let imageSrc: string;
 
-  if (file && objectUrlRef.current) {
-    imageSrc = objectUrlRef.current;
+  if (file && previewUrl) {
+    imageSrc = previewUrl;
   } else if (src) {
     imageSrc = src;
   } else {

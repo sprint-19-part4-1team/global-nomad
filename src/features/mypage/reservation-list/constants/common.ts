@@ -1,44 +1,35 @@
-import { cva } from 'class-variance-authority';
+import { ReservationStatus } from '@/shared/types/myReservations';
 
 export const RESERVATION_STATUSES = [
-  'pending',
-  'canceled',
-  'declined',
-  'confirmed',
-  'completed',
+  ReservationStatus.Pending,
+  ReservationStatus.Canceled,
+  ReservationStatus.Declined,
+  ReservationStatus.Confirmed,
+  ReservationStatus.Completed,
 ] as const;
-export type ReservationStatusType = (typeof RESERVATION_STATUSES)[number];
 
-export const RESERVATION_STATUS_LABEL: Record<ReservationStatusType, string> = {
-  pending: '예약 완료',
-  canceled: '예약 취소',
-  declined: '예약 거절',
-  confirmed: '예약 승인',
-  completed: '체험 완료',
+export const RESERVATION_STATUS_LABEL: Record<ReservationStatus, string> = {
+  [ReservationStatus.Pending]: '예약 완료',
+  [ReservationStatus.Canceled]: '예약 취소',
+  [ReservationStatus.Declined]: '예약 거절',
+  [ReservationStatus.Confirmed]: '예약 승인',
+  [ReservationStatus.Completed]: '체험 완료',
 };
 
 /** 공통: 상태별 배경색 */
-export const statusBackgroundVariants = cva('', {
-  variants: {
-    status: {
-      pending: 'bg-green-100',
-      canceled: 'bg-gray-100',
-      declined: 'bg-red-100',
-      confirmed: 'bg-dark-green-100',
-      completed: 'bg-primary-200',
-    },
-  },
-});
+export const statusBackgroundVariants: Record<ReservationStatus, string> = {
+  [ReservationStatus.Pending]: 'bg-green-100',
+  [ReservationStatus.Canceled]: 'bg-gray-100',
+  [ReservationStatus.Declined]: 'bg-red-100',
+  [ReservationStatus.Confirmed]: 'bg-dark-green-100',
+  [ReservationStatus.Completed]: 'bg-primary-200',
+};
 
 /** 공통: 상태별 글자색 */
-export const statusTextVariants = cva('', {
-  variants: {
-    status: {
-      pending: 'text-green-500',
-      canceled: 'text-gray-500',
-      declined: 'text-red-500',
-      confirmed: 'text-dark-green-500',
-      completed: 'text-primary-600',
-    },
-  },
-});
+export const statusTextVariants: Record<ReservationStatus, string> = {
+  [ReservationStatus.Pending]: 'text-green-500',
+  [ReservationStatus.Canceled]: 'text-gray-500',
+  [ReservationStatus.Declined]: 'text-red-500',
+  [ReservationStatus.Confirmed]: 'text-dark-green-500',
+  [ReservationStatus.Completed]: 'text-primary-600',
+};

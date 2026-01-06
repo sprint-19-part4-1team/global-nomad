@@ -1,15 +1,15 @@
 import {
   RESERVATION_STATUS_LABEL,
-  ReservationStatusType,
   statusBackgroundVariants,
   statusTextVariants,
 } from '@/features/mypage/reservation-list/constants/common';
+import { ReservationStatus } from '@/shared/types/myReservations';
 import { cn } from '@/shared/utils/cn';
 
 interface ReservationFilterButtonProps {
-  status: ReservationStatusType;
+  status: ReservationStatus;
   isActive: boolean;
-  onSelect: (status: ReservationStatusType) => void;
+  onSelect: (status: ReservationStatus) => void;
 }
 
 /**
@@ -33,8 +33,8 @@ export default function ReservationFilterButton({
   isActive,
   onSelect,
 }: ReservationFilterButtonProps) {
-  const selectedButtonStyle = cn('border-transparent', statusBackgroundVariants({ status }));
-  const selectedLabelStyle = statusTextVariants({ status });
+  const selectedButtonStyle = cn('border-transparent', statusBackgroundVariants[status]);
+  const selectedLabelStyle = statusTextVariants[status];
 
   return (
     <button

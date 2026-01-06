@@ -5,12 +5,8 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import Icons from '@/assets/icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
-import { UserServiceResponseDto } from '@/shared/types/user';
+import { useUserStore } from '@/shared/stores/userStore';
 import { cn } from '@/shared/utils/cn';
-
-interface SidemenuProps {
-  user: UserServiceResponseDto;
-}
 
 const MYPAGE_MENUS = [
   {
@@ -52,36 +48,45 @@ const mypageLinkClass = cn(
 const activeLinkClass = 'bg-primary-100 text-primary-500';
 
 /**
- * 마이페이지 사이드 메뉴 컴포넌트
+ * ## 마이페이지 사이드 메뉴 컴포넌트
  *
- * 사용자 프로필 아바타와 마이페이지 내 주요 메뉴 링크들을 세로 목록으로 렌더링합니다.
- * 현재 URL 경로(`usePathname`)를 기준으로 활성화된 메뉴에 스타일을 적용합니다.
+ * 마이페이지 레이아웃의 좌측에 위치하는 사이드바로,
+ * 사용자 아바타와 마이페이지 관련 주요 메뉴 링크를 세로 목록으로 렌더링합니다.
  *
- * ### 주요 기능
- * - 사용자 아바타 표시
- * - 마이페이지 관련 메뉴 리스트 렌더링
- * - 현재 경로와 일치하는 메뉴에 active 스타일 적용
+ * 현재 URL 경로(`usePathname`)를 기준으로
+ * 활성화된 메뉴에 강조 스타일을 적용합니다.
  *
- * ### 사용 대상
- * - 마이페이지 레이아웃의 좌측 사이드바
- * - 태블릿(md) 이상 화면에서만 노출 (모바일에서는 숨김)
+ * ---
+ *
+ * ### 주요 역할
+ * - 사용자 프로필 아바타 표시
+ * - 마이페이지 내 고정 메뉴 목록 렌더링
+ * - 현재 경로와 일치하는 메뉴 활성화 처리
+ *
+ * ### UI / 노출 조건
+ * - 모바일에서는 숨김 처리 (`sm` 이상에서만 노출)
+ * - 카드 형태의 사이드바 UI
  *
  * ### 구현 포인트
- * - 메뉴 정의를 `mypageMenus` 배열로 분리해 확장성 확보
- * - `cn` 유틸을 사용해 기본/활성 클래스 조건부 병합
- * - 아이콘 컴포넌트를 데이터로 전달해 map 렌더링 단순화
+ * - 메뉴 정의를 `MYPAGE_MENUS` 상수로 분리해 확장성과 가독성 확보
+ * - `usePathname`를 활용한 현재 경로 기반 active 스타일 처리
+ * - `cn` 유틸로 기본/활성 클래스 조건부 병합
+ * - 아이콘 컴포넌트를 데이터로 관리해 map 렌더링 단순화
  *
- * @param {SidemenuProps} props
- * @param {User} props.user - 아바타에 표시할 사용자 정보
+ * ### 상태 의존성
+ * - `useUserStore`를 통해 사용자 정보 조회
+ * - 사용자 정보는 아바타 컴포넌트에 전달
  *
  * @example
  * ```tsx
- * <Sidemenu user={user} />
+ * <Sidemenu />
  * ```
  */
 
-export default function Sidemenu({ user }: SidemenuProps) {
+export default function Sidemenu() {
   const pathname = usePathname();
+  const user = useUserStore((state) => state.user);
+
   return (
     <aside
       className='hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290'

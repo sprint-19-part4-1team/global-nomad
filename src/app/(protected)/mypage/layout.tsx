@@ -7,7 +7,6 @@ interface MypageLayoutProps {
   children: ReactNode;
 }
 
-/* TODO: user 연결 */
 export default function MypageLayout({ children }: MypageLayoutProps) {
   return (
     <main
@@ -20,16 +19,7 @@ export default function MypageLayout({ children }: MypageLayoutProps) {
         <MypageTabs />
       </div>
       <div className='flex shrink-0 justify-between gap-0 pt-48 sm:gap-30 sm:pt-0 md:gap-48'>
-        <Sidemenu
-          user={{
-            createdAt: '2025-12-24T08:50:57.848Z',
-            email: 'test@example.com',
-            id: 1,
-            nickname: '테스트',
-            profileImageUrl: null,
-            updatedAt: '2025-12-24T08:50:57.848Z',
-          }}
-        />
+        <Sidemenu />
         <div className='min-w-0 flex-1'>{children}</div>
       </div>
     </main>

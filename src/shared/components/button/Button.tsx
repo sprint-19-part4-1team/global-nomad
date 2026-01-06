@@ -8,7 +8,7 @@ import { cn } from '@/shared/utils/cn';
 
 /** 공통 스타일 */
 const buttonVariants = cva(
-  'block cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25',
+  'block w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25 disabled:border-none',
   {
     variants: {
       /**
@@ -139,11 +139,15 @@ export default function Button(props: ButtonProps) {
   const isDisabled = isLoading || disabled;
 
   /** 버튼 커서 스타일 */
-  const cursorClass = isLoading ? 'cursor-wait' : disabled ? 'cursor-default' : '';
+  const cursorClass = isLoading
+    ? 'cursor-wait'
+    : disabled
+      ? 'cursor-not-allowed'
+      : 'cursor-pointer';
 
   return (
     <ButtonBase
-      className={cn(classes, cursorClass, isLoading && 'relative')}
+      className={cn(classes, isLoading && 'relative', cursorClass)}
       type={type}
       disabled={isDisabled}
       aria-busy={isLoading || undefined}

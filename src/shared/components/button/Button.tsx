@@ -139,11 +139,15 @@ export default function Button(props: ButtonProps) {
   const isDisabled = isLoading || disabled;
 
   /** 버튼 커서 스타일 */
-  const cursorClass = isLoading ? 'cursor-wait' : disabled ? 'cursor-not-allowed' : '';
+  const cursorClass = isLoading
+    ? 'cursor-wait'
+    : disabled
+      ? 'cursor-not-allowed'
+      : 'cursor-pointer';
 
   return (
     <ButtonBase
-      className={cn(classes, isLoading && 'relative', 'cursor-pointer', cursorClass)}
+      className={cn(classes, isLoading && 'relative', cursorClass)}
       type={type}
       disabled={isDisabled}
       aria-busy={isLoading || undefined}

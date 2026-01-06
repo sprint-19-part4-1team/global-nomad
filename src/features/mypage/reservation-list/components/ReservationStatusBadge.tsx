@@ -14,6 +14,14 @@ interface RerservationStatusProps {
   status: ReservationStatusType;
 }
 
+/**
+ * @description
+ * 예약 상태를 표시하는 배지 컴포넌트입니다.
+ * - 상태(`status`)에 따라 배경색과 글자색이 변경됩니다.
+ * - 카드 UI 등 “표시 목적”으로만 사용됩니다.
+ *
+ * @param status - 예약 상태 값
+ */
 export function ReservationStatusBadge({ status }: RerservationStatusProps) {
   return (
     <div className={cn(BADGE_CONTAINER_BASE, statusBackgroundVariants({ status }))}>

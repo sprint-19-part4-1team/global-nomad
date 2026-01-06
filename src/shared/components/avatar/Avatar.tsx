@@ -54,7 +54,7 @@ export default function Avatar({ size, className, user, children }: AvatarProps)
   const [imageError, setImageError] = useState(false);
 
   if (!user) {
-    return <Skeleton className={cn(avatarVariants({ size }), 'rounded-full')} />;
+    return <Skeleton className={cn(avatarVariants({ size }))} />;
   }
 
   return (

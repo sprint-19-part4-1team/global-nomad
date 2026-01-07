@@ -67,8 +67,6 @@ export const useMonthlyReservations = ({ activityId, params }: UseMonthlyReserva
     enabled: enabled,
   });
 
-  console.log(data);
-
   return {
     reservations: data || [],
     isLoading,

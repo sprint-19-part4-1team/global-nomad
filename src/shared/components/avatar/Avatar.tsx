@@ -28,6 +28,7 @@ const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative'
  * @property {string} [className] - 추가 CSS 클래스
  */
 interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatarVariants> {
+  size?: 'sm' | 'md' | 'lg';
   user?: UserServiceResponseDto;
   children: ReactNode;
 }
@@ -58,7 +59,7 @@ export default function Avatar({ size = 'sm', className, user, children }: Avata
   }
 
   return (
-    <AvatarContext value={{ user, size: size ?? 'sm', imageError, setImageError }}>
+    <AvatarContext value={{ user, size, imageError, setImageError }}>
       <div className={cn(avatarVariants({ size }), className)}>{children}</div>
     </AvatarContext>
   );

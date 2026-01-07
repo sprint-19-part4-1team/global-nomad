@@ -1,5 +1,5 @@
 import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
-import ReservationSelector from '@/features/mypage/reservation-status/components/calendar/ReservationSelector';
+import ReservationSelector from '@/features/mypage/reservation-status/components/ReservationSelector';
 
 export default function MypageReservationStatus() {
   return (

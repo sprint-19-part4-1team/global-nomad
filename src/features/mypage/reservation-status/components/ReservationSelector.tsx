@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ReservationCalendar from '@/features/mypage/reservation-status/components/calendar/ReservationCalendar';
+import ReservationCalendar from '@/features/mypage/reservation-status/components/ReservationCalendar';
 import {
   SelectDropdown,
   SelectDropdownContent,

@@ -1,12 +1,10 @@
 import {
-  GetActivitiesParams,
-  GetActivityReviewsParams,
-  GetActivitySchedulesParams,
-} from '@/shared/types/activities';
-import {
-  GetMyActivitiesParams,
-  GetMyActivityReservationDashboardParams,
-} from '@/shared/types/myActivities';
+  ActivityCategory,
+  ActivityListMethod,
+  ActivitySortOption,
+} from '@/shared/constants/activities';
+import { GetActivityReviewsParams, GetActivitySchedulesParams } from '@/shared/types/activities';
+import { GetMyActivityReservationDashboardParams } from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 /**
@@ -18,7 +16,24 @@ import { ReservationStatus } from '@/shared/types/myReservations';
  */
 export const QUERY_KEYS = {
   /** 체험 리스트 조회 */
-  ACTIVITIES: (params: GetActivitiesParams) => ['activities', params],
+  ACTIVITIES: (params: {
+    method: ActivityListMethod;
+    category?: ActivityCategory;
+    keyword?: string;
+    sort?: ActivitySortOption;
+    page?: number;
+    size?: number;
+  }) => [
+    'activities',
+    {
+      method: params.method,
+      category: params?.category,
+      keyword: params?.keyword,
+      sort: params?.sort,
+      page: params?.page,
+      size: params?.size,
+    },
+  ],
   /** 체험 상세 조회 */
   ACTIVITY_DETAIL: (activityId: number) => ['activityDetail', activityId],
   /** 체험 예약 가능일 조회 */
@@ -34,11 +49,12 @@ export const QUERY_KEYS = {
     params,
   ],
   /** 내 체험 리스트 조회 */
-  MY_ACTIVITIES: (params?: GetMyActivitiesParams, userId?: number) => [
-    'myActivities',
-    params,
-    userId,
-  ],
+  MY_ACTIVITIES: (
+    params?: {
+      size?: number;
+    },
+    userId?: number
+  ) => ['myActivities', { size: params?.size }, userId],
   /** 내 체험 월별 예약 현황 조회 */
   MY_ACTIVITY_RESERVATION_DASHBOARD: (
     activityId: number,
@@ -56,8 +72,8 @@ export const QUERY_KEYS = {
   MY_ACTIVITY_RESERVATIONS: (
     activityId: number,
     params: {
-      scheduledId: number;
-      status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Pending;
+      scheduleId: number;
+      status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
       size?: number;
     },
     userId?: number
@@ -65,7 +81,7 @@ export const QUERY_KEYS = {
     'myActivityReservations',
     activityId,
     {
-      scheduledId: params.scheduledId,
+      scheduleId: params.scheduleId,
       status: params.status,
       size: params.size,
     },
@@ -73,11 +89,11 @@ export const QUERY_KEYS = {
   ],
   /** 내 알림 리스트 조회 */
   MY_NOTIFICATIONS: (
-    userId?: number,
     params?: {
       size?: number;
-    }
-  ) => ['myNotifications', userId, { size: params?.size }],
+    },
+    userId?: number
+  ) => ['myNotifications', { size: params?.size }, userId],
   /** 내 예약 리스트 조회 */
   MY_RESERVATIONS: (
     userId?: number,

@@ -129,7 +129,7 @@ export default function ImageUploadField({
         {Array.isArray(value) && (
           <>
             {value.map((img, index) => (
-              <ImageItem key={index}>
+              <ImageItem key={img instanceof File ? `${img.name}-${img.lastModified}` : img}>
                 <ImageActionSlot ariaLabel={`${label} 등록`} onClick={handleClick}>
                   <ImageSlotContent
                     value={img}

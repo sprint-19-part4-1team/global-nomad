@@ -17,7 +17,7 @@ export default function BannerSlide() {
 
   return (
     <div
-      className='relative mx-auto w-full'
+      className='mx-auto w-full'
       onMouseEnter={() => autoplay.current.stop()}
       onMouseLeave={() => autoplay.current.play()}>
       <div className='overflow-hidden' ref={emblaRef}>

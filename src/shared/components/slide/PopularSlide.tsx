@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
 import Icons from '@/assets/icons';
 
-type Props = {
+type PopularSlideProps = {
   slides: number[];
 };
 
@@ -28,7 +28,7 @@ export const carouselButtonVariants = cva(
   }
 );
 
-export default function PopularSlide({ slides }: Props) {
+export default function PopularSlide({ slides }: PopularSlideProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     slidesToScroll: 1,
@@ -72,6 +72,7 @@ export default function PopularSlide({ slides }: Props) {
 
       <div className='absolute top-0 hidden h-full w-full items-center justify-between sm:flex'>
         <button
+          aria-label='이전 슬라이드로 이동'
           onClick={() => emblaApi?.scrollPrev()}
           disabled={prevDisabled}
           aria-hidden={prevDisabled}
@@ -83,6 +84,7 @@ export default function PopularSlide({ slides }: Props) {
         </button>
 
         <button
+          aria-label='다음 슬라이드로 이동'
           onClick={() => emblaApi?.scrollNext()}
           disabled={nextDisabled}
           aria-hidden={nextDisabled}

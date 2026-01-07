@@ -3,8 +3,8 @@
 import { useEffect, useRef } from 'react';
 import ExperienceCard from '@/features/mypage/activity/components/ExperienceCard/ExperienceCard';
 import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
-import MypageListSkeleton from '@/features/mypage/components/skeleton/MypageListSkeleton';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
+import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import Button from '@/shared/components/button/Button';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
 

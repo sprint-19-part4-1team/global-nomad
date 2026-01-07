@@ -12,6 +12,13 @@ interface AvatarImageProps {
   className?: string;
 }
 
+// size별 sizes prop 매핑
+const SIZE_MAP = {
+  sm: '30px',
+  md: '(max-width: 768px) 70px, 120px',
+  lg: '120px',
+} as const;
+
 /**
  * Avatar 내부에서 사용되는 프로필 이미지 컴포넌트
  *
@@ -31,7 +38,7 @@ interface AvatarImageProps {
  * </Avatar>
  */
 export default function AvatarImage({ loading = 'eager', className }: AvatarImageProps) {
-  const { user, imageError, setImageError } = useAvatarContext();
+  const { user, size, imageError, setImageError } = useAvatarContext();
 
   if (!user.profileImageUrl || imageError) {
     return null;
@@ -42,6 +49,7 @@ export default function AvatarImage({ loading = 'eager', className }: AvatarImag
       src={user.profileImageUrl}
       alt={`${user.nickname}님의 프로필`}
       fill
+      sizes={SIZE_MAP[size]}
       loading={loading}
       className={cn('object-cover', className)}
       onError={() => setImageError(true)}

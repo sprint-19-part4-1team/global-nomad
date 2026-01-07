@@ -1,6 +1,6 @@
 'use client';
 
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import ChangePasswordForm from '@/features/mypage/info/components/change-password/ChangePasswordForm';
 import { useUserStore } from '@/shared/stores/userStore';
 

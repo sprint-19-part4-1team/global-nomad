@@ -1,18 +1,21 @@
 'use client';
 
 import { ChangeEvent, useRef } from 'react';
+import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
+import { ProfileImageState } from '@/features/mypage/info/hooks/useProfileForm';
 import Button from '@/shared/components/button/Button';
 import ImagePreview from '@/shared/components/image-preview/ImagePreview';
 import Label from '@/shared/components/label/Label';
+import { ALLOWED_IMAGE_TYPES, MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants/imageUpload';
 import { UserServiceResponseDto } from '@/shared/types/user';
 
-interface ProfileImageFormProps {
-  user: UserServiceResponseDto | undefined;
-  profileImg: File | null;
+interface ProfileImageSectionProps {
+  user: UserServiceResponseDto;
+  previewImage: string | File | null;
   onSelect: (file: File) => void;
   onReset: () => void;
+  imageState: ProfileImageState;
 }
 
 /**
@@ -25,13 +28,15 @@ interface ProfileImageFormProps {
  * @param profileImg - 사용자가 새로 선택한 프로필 이미지 파일
  * @param onSelect - 프로필 이미지 파일 선택 시 호출되는 콜백 함수
  * @param onReset - 기본 이미지로 변경 버튼 클릭 시 호출되는 콜백 함수
+ * @param ProfileImageState - 프로필 이미지 변경 상태
  */
 export default function ProfileImageSection({
   user,
-  profileImg,
+  previewImage,
   onSelect,
   onReset,
-}: ProfileImageFormProps) {
+  imageState,
+}: ProfileImageSectionProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
@@ -40,9 +45,35 @@ export default function ProfileImageSection({
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      onSelect(file);
+    if (!file) {
+      return;
     }
+
+    if (file.size > MAX_PROFILE_IMAGE_SIZE) {
+      toast.error('이미지 파일은 3MB 이하만 업로드할 수 있어요.');
+      e.target.value = '';
+      return;
+    }
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      toast.error('jpg, png, webp 형식만 업로드할 수 있어요.');
+      e.target.value = '';
+      return;
+    }
+
+    if (
+      imageState.type === 'upload'
+      && imageState.file.name === file.name
+      && imageState.file.size === file.size
+      && imageState.file.lastModified === file.lastModified
+    ) {
+      toast.info('이미 선택한 이미지입니다.');
+      return;
+    }
+
+    onSelect(file);
+
+    e.target.value = '';
   };
 
   return (
@@ -65,14 +96,13 @@ export default function ProfileImageSection({
         className='relative mx-6 my-8 h-120 w-120 cursor-pointer'
         onClick={handleClick}>
         <ImagePreview
-          src={user?.profileImageUrl}
           className='rounded-full'
-          file={profileImg}
+          src={typeof previewImage === 'string' ? previewImage : null}
+          file={previewImage instanceof File ? previewImage : null}
           fallback={
-            <Avatar user={user} size='lg'>
-              <AvatarFallback />
-              <AvatarImage />
-            </Avatar>
+            <span role='img' aria-label={`${user.nickname}님의 프로필`}>
+              <Icons.Avatar />
+            </span>
           }
         />
         <span className='absolute right-2 bottom-2 flex h-32 w-32 items-center justify-center rounded-full bg-gray-300'>
@@ -83,7 +113,7 @@ export default function ProfileImageSection({
         type='button'
         variant='secondary'
         size='sm'
-        disabled={user?.profileImageUrl === null && profileImg === null}
+        disabled={previewImage === null}
         onClick={onReset}>
         기본 이미지로 변경
       </Button>

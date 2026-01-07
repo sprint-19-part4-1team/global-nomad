@@ -20,6 +20,10 @@ export const useNicknameValidation = (initialNickname: string) => {
   const isValid = !!nickname && !validators.nickname(nickname);
 
   const handleChange = (value: string) => {
+    if (value === undefined || value === null) {
+      return;
+    }
+
     setNickname(value);
     if (error) {
       setError('');

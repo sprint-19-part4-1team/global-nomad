@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 
 /**
  * 마이페이지 섹션 상단에 사용되는 헤더 컴포넌트

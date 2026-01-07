@@ -2,10 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import AuthCheckbox from '@/features/auth/components/AuthCheckbox';
-import AuthForm from '@/features/auth/components/AuthForm';
-import KakaoButton from '@/features/auth/components/KakaoButton';
-import useAuthForm from '@/features/auth/hooks/useAuthForm';
+import AuthCheckbox from '@/features/auth/common/components/AuthCheckbox';
+import AuthForm from '@/features/auth/common/components/AuthForm';
+import KakaoButton from '@/features/auth/common/components/KakaoButton';
+import useAuthForm from '@/features/auth/common/hooks/useAuthForm';
 import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';

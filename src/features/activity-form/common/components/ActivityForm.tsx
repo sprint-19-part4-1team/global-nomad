@@ -9,6 +9,18 @@ export default function ActivityForm() {
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [introImages, setIntroImages] = useState<(File | string)[]>([]);
 
+  const handleBannerChange = (value: File | (File | string)[]) => {
+    if (value instanceof File) {
+      setBannerImage(value);
+    }
+  };
+
+  const handleIntroImagesChange = (value: File | (File | string)[]) => {
+    if (Array.isArray(value)) {
+      setIntroImages(value);
+    }
+  };
+
   return (
     <form className='mt-24 sm:mt-32'>
       {/* TODO: 내부 UI 추가 예정, 전체 UI는 이후 이슈에서 진행할 예정입니다. */}
@@ -19,7 +31,7 @@ export default function ActivityForm() {
           label='배너 이미지'
           maxCount={1}
           value={bannerImage}
-          onChange={(file) => setBannerImage(file as File)}
+          onChange={handleBannerChange}
           onRemove={() => setBannerImage(null)}
         />
 
@@ -28,7 +40,7 @@ export default function ActivityForm() {
           maxCount={4}
           helperText='* 최소 1장 등록'
           value={introImages}
-          onChange={(images) => setIntroImages(images as (File | string)[])}
+          onChange={handleIntroImagesChange}
           onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
         />
       </section>

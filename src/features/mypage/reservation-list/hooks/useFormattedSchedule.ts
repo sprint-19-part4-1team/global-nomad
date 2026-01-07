@@ -10,12 +10,12 @@
  *
  * @returns UI에 표시할 스케줄 문자열
  */
-export function useFormattedSchedule(date: string, startTime: string, endTime: string) {
+export const useFormattedSchedule = (date: string, startTime: string, endTime: string) => {
   const formattedDate = formatDate(date);
   return `${formattedDate} · ${startTime} ~ ${endTime}`;
-}
+};
 
-function formatDate(date: string) {
+const formatDate = (date: string) => {
   // Already formatted: "YYYY. MM. DD"
   if (/^\d{4}\.\s\d{2}\.\s\d{2}$/.test(date)) {
     return date;
@@ -38,4 +38,4 @@ function formatDate(date: string) {
   const mo = String(parsed.getMonth() + 1).padStart(2, '0');
   const d = String(parsed.getDate()).padStart(2, '0');
   return `${y}. ${mo}. ${d}`;
-}
+};

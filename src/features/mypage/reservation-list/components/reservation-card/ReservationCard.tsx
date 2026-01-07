@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
+import ReservationCardActionButton from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardActionButton';
+import ReservationCardImage from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardImage';
 import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
 import { useMediaQuery } from '@/features/mypage/reservation-list/hooks/useMediaQuery';
-import Button from '@/shared/components/button/Button';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -18,6 +18,8 @@ interface ReservationCardProps {
   headCount: number;
   imageUrl: string;
   reviewSubmitted: boolean;
+  onCancel?: () => void;
+  onWriteReview?: () => void;
 }
 
 export default function ReservationCard({
@@ -30,6 +32,8 @@ export default function ReservationCard({
   headCount,
   imageUrl,
   reviewSubmitted,
+  onCancel,
+  onWriteReview,
 }: ReservationCardProps) {
   const isMobile = useMediaQuery('(max-width: 639px)');
   const schedule = useFormattedSchedule(date, startTime, endTime);
@@ -50,20 +54,14 @@ export default function ReservationCard({
             <span className='body-14 font-normal text-gray-400 md:body-16'>{headCount}명</span>
           </p>
         </div>
-        {status === ReservationStatus.Pending && (
-          <Button size='sm' onClick={() => {}} variant='negative'>
-            예약 취소
-          </Button>
-        )}
-        {status === ReservationStatus.Completed && !reviewSubmitted && (
-          <Button size='sm' onClick={() => {}} variant='primary'>
-            후기 작성
-          </Button>
-        )}
+        <ReservationCardActionButton
+          status={status}
+          reviewSubmitted={reviewSubmitted}
+          onCancel={onCancel}
+          onWriteReview={onWriteReview}
+        />
       </RoundBox>
-      <div className='absolute inset-y-0 right-0 w-[38%] overflow-hidden bg-primary-200'>
-        <Image src={imageUrl} alt='썸네일 이미지' fill className='object-cover' />
-      </div>
+      <ReservationCardImage imageUrl={imageUrl} status={status} reviewSubmitted={reviewSubmitted} />
     </RoundBox>
   );
 }

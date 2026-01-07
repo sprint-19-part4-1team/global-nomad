@@ -26,9 +26,9 @@ export default function ReservationCardImage({
   const isReviewCompleted = status === ReservationStatus.Completed && reviewSubmitted;
 
   return (
-    <div className='absolute inset-y-0 right-0 w-[38%] overflow-hidden bg-primary-200'>
+    <div className='absolute inset-y-0 right-0 w-[40%] overflow-hidden bg-primary-200'>
       <div className='relative h-full w-full'>
-        <Image src={imageUrl} alt='썸네일 이미지' fill className='object-cover' />
+        <Image src={imageUrl} alt='썸네일 이미지' fill sizes='40vw' className='object-cover' />
 
         {isReviewCompleted && (
           <>

@@ -28,7 +28,7 @@ export default function MypageReservationList() {
           />
         ))}
       </section>
-      <section className='flex h-full w-full flex-col gap-24'>
+      <section className='flex w-full flex-col gap-24'>
         {/* TODO: 예약 내역 카드 표시 */}
         <ReservationCard
           status={ReservationStatus.Pending}

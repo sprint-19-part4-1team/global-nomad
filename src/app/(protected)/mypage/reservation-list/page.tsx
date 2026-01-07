@@ -32,53 +32,36 @@ export default function MypageReservationList() {
         {/* TODO: 예약 내역 카드 표시 */}
         <ReservationCard
           status={ReservationStatus.Pending}
-          title='함께'
+          title='취소할 수 있는 게시물'
           date='2023-02-14'
           startTime='11:00'
           endTime='12:30'
           totalPrice={10000}
           headCount={10}
           imageUrl='/og-default.png'
-        />
-        <ReservationCard
-          status={ReservationStatus.Canceled}
-          title='함께 배우면'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:31'
-          totalPrice={20000}
-          headCount={20}
-          imageUrl='/og-default.png'
-        />
-        <ReservationCard
-          status={ReservationStatus.Declined}
-          title='함께 배우면 즐거운'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:32'
-          totalPrice={30000}
-          headCount={30}
-          imageUrl='/og-default.png'
-        />
-        <ReservationCard
-          status={ReservationStatus.Confirmed}
-          title='함께 배우면 즐거운 스트릿'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:33'
-          totalPrice={40000}
-          headCount={40}
-          imageUrl='/og-default.png'
+          reviewSubmitted={false}
         />
         <ReservationCard
           status={ReservationStatus.Completed}
-          title='함께 배우면 즐거운 스트릿 댄스'
+          title='후기 안남긴 게시물'
           date='2023-02-14'
           startTime='11:00'
           endTime='12:34'
           totalPrice={50000}
           headCount={50}
           imageUrl='/og-default.png'
+          reviewSubmitted={false}
+        />
+        <ReservationCard
+          status={ReservationStatus.Completed}
+          title='후기 남긴 게시물'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:34'
+          totalPrice={50000}
+          headCount={50}
+          imageUrl='/og-default.png'
+          reviewSubmitted={true}
         />
       </section>
     </>

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
@@ -15,6 +17,7 @@ interface ReservationCardProps {
   totalPrice: number;
   headCount: number;
   imageUrl: string;
+  reviewSubmitted: boolean;
 }
 
 export default function ReservationCard({
@@ -26,6 +29,7 @@ export default function ReservationCard({
   totalPrice,
   headCount,
   imageUrl,
+  reviewSubmitted,
 }: ReservationCardProps) {
   const isMobile = useMediaQuery('(max-width: 639px)');
   const schedule = useFormattedSchedule(date, startTime, endTime);
@@ -46,9 +50,16 @@ export default function ReservationCard({
             <span className='body-14 font-normal text-gray-400 md:body-16'>{headCount}명</span>
           </p>
         </div>
-        <Button onClick={() => {}} variant='negative'>
-          예약 취소
-        </Button>
+        {status === ReservationStatus.Pending && (
+          <Button size='sm' onClick={() => {}} variant='negative'>
+            예약 취소
+          </Button>
+        )}
+        {status === ReservationStatus.Completed && !reviewSubmitted && (
+          <Button size='sm' onClick={() => {}} variant='primary'>
+            후기 작성
+          </Button>
+        )}
       </RoundBox>
       <div className='absolute inset-y-0 right-0 w-[38%] overflow-hidden bg-primary-200'>
         <Image src={imageUrl} alt='썸네일 이미지' fill className='object-cover' />

@@ -81,8 +81,6 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
   const { Icon, extraClassName } = EMPTY_STATE_VARIANTS[type];
   const iconClassName = cn('h-182 w-182', extraClassName);
 
-  const canShowButton = type === 'experience' && Boolean(button?.href) && Boolean(button?.text);
-
   return (
     <div className='flex flex-col items-center justify-center'>
       <div className='mb-16 flex flex-col items-center justify-center body-16 font-medium text-gray-500'>
@@ -90,9 +88,9 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
         <span>{mainText}</span>
       </div>
 
-      {canShowButton && (
-        <Button href={button!.href} variant='primary'>
-          {button!.text}
+      {type === 'experience' && button?.href && button.text && (
+        <Button href={button.href} variant='primary'>
+          {button.text}
         </Button>
       )}
     </div>

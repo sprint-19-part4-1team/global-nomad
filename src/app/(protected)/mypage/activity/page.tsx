@@ -1,8 +1,41 @@
-import ExperienceCard from '@/features/mypage/activity/ExperienceCard/ExperienceCard';
+'use client';
+
+import { useEffect, useRef } from 'react';
+import ExperienceCard from '@/features/mypage/activity/components/ExperienceCard/ExperienceCard';
+import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
 import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageListSkeleton from '@/features/mypage/components/skeleton/MypageListSkeleton';
 import Button from '@/shared/components/button/Button';
+import EmptyState from '@/shared/components/empty-state/EmptyState';
 
 export default function MypageActivity() {
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useMyActivitiesInfiniteQuery(5);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    const currentRef = observerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  // 데이터 없을 때
+  const isEmpty = !data?.pages[0]?.activities.length;
+
   return (
     <>
       <MypageSectionHeader
@@ -12,39 +45,40 @@ export default function MypageActivity() {
         btn
       />
       <div className='mt-24 sm:mt-32'>
-        <ul>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-        </ul>
+        {isLoading ? (
+          <MypageListSkeleton variant='activity' count={5} />
+        ) : isEmpty ? (
+          <EmptyState mainText='체험이 없습니다.' type='experience' />
+        ) : (
+          <>
+            <ul>
+              {data?.pages.map((page) =>
+                page.activities.map((activity) => (
+                  <li className='mt-20 sm:mt-24' key={activity.id}>
+                    <ExperienceCard
+                      id={activity.id}
+                      title={activity.title}
+                      rating={activity.rating}
+                      price={activity.price}
+                      reviewCount={activity.reviewCount}
+                      bannerImageUrl={activity.bannerImageUrl}
+                    />
+                  </li>
+                ))
+              )}
+            </ul>
+
+            <div ref={observerRef} className='h-10' />
+
+            {isFetchingNextPage && <MypageListSkeleton variant='activity' count={2} />}
+          </>
+        )}
       </div>
+
+      <div ref={observerRef} className='h-10' />
+
+      {isFetchingNextPage && <MypageListSkeleton variant='activity' count={2} />}
+
       <Button
         full
         href='/activity/new'

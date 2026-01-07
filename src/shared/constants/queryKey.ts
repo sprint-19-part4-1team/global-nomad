@@ -8,4 +8,6 @@
 export const QUERY_KEYS = {
   /** 내 정보 조회 */
   MY_INFO: ['myInfo'],
+  /** 내 체험 관리 조회 */
+  MY_ACTIVITY: ['myActivity'],
 } as const;

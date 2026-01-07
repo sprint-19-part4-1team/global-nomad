@@ -1,3 +1,5 @@
+import BannerSlide from '@/shared/components/slide/BannerSlide';
+import PopularSlide from '@/shared/components/slide/PopularSlide';
 import { layoutContainer } from '@/shared/constants/';
 
 export default function Home() {
@@ -15,6 +17,9 @@ export default function Home() {
           paddingTop: 'md',
         })}>
         메인 내용
+        <BannerSlide />
+        <div className='h-40' />
+        <PopularSlide slides={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} />
       </div>
     </main>
   );

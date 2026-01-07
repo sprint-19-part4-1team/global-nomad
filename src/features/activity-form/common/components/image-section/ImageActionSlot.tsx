@@ -1,3 +1,5 @@
+'use client';
+
 import { KeyboardEvent, ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 

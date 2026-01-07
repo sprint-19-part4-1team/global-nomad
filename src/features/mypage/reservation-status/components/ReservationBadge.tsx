@@ -5,11 +5,11 @@ import {
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
 
 /**
- * ReservationStatus 컴포넌트의 Props
+ * ReservationBadge 컴포넌트의 Props
  *
  * @property {FindReservationsByMonthResponseDto} reservation - 날짜별 예약 상태 및 건수를 포함한 예약 데이터
  */
-interface ReservationStatusProps {
+interface ReservationBadgeProps {
   reservation: FindReservationsByMonthResponseDto;
 }
 
@@ -22,7 +22,7 @@ interface ReservationStatusProps {
  *
  * @example
  * ```tsx
- * <ReservationStatus
+ * <ReservationBadge
  *   reservation={{
  *     date: '2026-01-05',
  *     reservations: { completed: 1, confirmed: 2, pending: 1 }
@@ -30,16 +30,14 @@ interface ReservationStatusProps {
  * />
  * ```
  *
- * @param props - ReservationStatus 컴포넌트의 props
+ * @param props - ReservationBadge 컴포넌트의 props
  * @returns 렌더링된 예약 상태 뱃지 목록
  */
-export default function ReservationBadge({ reservation }: ReservationStatusProps) {
-  // 화면에 표시할 예약 상태 타입 목록
-  const statusTypes: Array<keyof FindReservationsByMonthResponseDto['reservations']> = [
-    'completed',
-    'pending',
-    'confirmed',
-  ];
+export default function ReservationBadge({ reservation }: ReservationBadgeProps) {
+  // RESERVATION_STATUS_CONFIG로부터 동적으로 상태 타입 목록 생성
+  const statusTypes = Object.keys(RESERVATION_STATUS_CONFIG) as Array<
+    keyof FindReservationsByMonthResponseDto['reservations']
+  >;
 
   return (
     <div className='flex flex-col gap-6 sm:gap-5'>

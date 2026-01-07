@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import ReservationCalendar from '@/features/mypage/reservation-status/components/ReservationCalendar';
 import {
   SelectDropdown,
@@ -233,10 +233,22 @@ export default function ReservationSelector() {
     title: activity.title,
   }));
 
+  // ID→제목 매핑을 위한 Map (O(1) 조회 성능)
+  // activityOptions가 변경될 때만 재생성하여 불필요한 계산 방지
+  const activityMap = useMemo(
+    () => new Map(activityOptions.map((opt) => [opt.id.toString(), opt.title])),
+    [activityOptions]
+  );
+
+  // 현재 선택된 체험 ID (드롭다운 value)
   const [selectedActivityId, setSelectedActivityId] = useState<string>(
     activityOptions[0]?.id.toString() || ''
   );
+
+  // 달력에 표시할 현재 월 (년/월 정보 포함)
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  // 선택된 체험의 월별 예약 현황 데이터
   const [reservations, setReservations] = useState<FindReservationsByMonthResponseDto[]>([]);
 
   // 체험 ID 또는 월이 바뀔 때마다 API 호출
@@ -267,10 +279,7 @@ export default function ReservationSelector() {
         triggerId='activity-select'
         value={selectedActivityId}>
         <SelectDropdownTrigger>
-          <SelectDropdownValue
-            placeholder='체험 선택'
-            render={(value) => activityOptions.find((opt) => opt.id.toString() === value)?.title}
-          />
+          <SelectDropdownValue placeholder='체험 선택' render={(value) => activityMap.get(value)} />
         </SelectDropdownTrigger>
 
         <SelectDropdownContent>

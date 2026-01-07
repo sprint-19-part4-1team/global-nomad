@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import AuthBackButton from '@/features/auth/components/terms/AuthBackButton';
+import AuthBackButton from '@/features/auth/terms/AuthBackButton';
 import Title from '@/shared/components/title/Title';
 
 type TermsSection =

@@ -4,7 +4,6 @@ import ReservationCardActionButton from '@/features/mypage/reservation-list/comp
 import ReservationCardImage from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardImage';
 import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
-import { useMediaQuery } from '@/features/mypage/reservation-list/hooks/useMediaQuery';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -53,14 +52,13 @@ export default function ReservationCard({
   onCancel,
   onWriteReview,
 }: ReservationCardProps) {
-  const isMobile = useMediaQuery('(max-width: 639px)');
   const schedule = useFormattedSchedule(date, startTime, endTime);
 
   return (
-    <RoundBox radius={isMobile ? '24' : '32'} className='relative min-h-154 shadow-card'>
+    <RoundBox radius='24' className='relative min-h-154 shadow-card sm:rounded-32'>
       <RoundBox
-        radius={isMobile ? '24' : '32'}
-        className='relative z-5 flex w-[66%] flex-col gap-12 bg-white px-16 py-20 md:px-24 md:py-28 lg:px-28 lg:py-32'>
+        radius='24'
+        className='relative z-5 flex w-[66%] flex-col gap-12 bg-white px-16 py-20 sm:rounded-32 md:px-24 md:py-28 lg:px-28 lg:py-32'>
         <ReservationStatusBadge status={status} />
         <div className='flex flex-col gap-4 md:gap-6 lg:gap-8'>
           <p className='body-14 font-bold text-gray-950 md:body-16 lg:body-18'>{title}</p>

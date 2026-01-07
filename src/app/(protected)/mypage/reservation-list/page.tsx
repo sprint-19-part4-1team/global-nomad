@@ -30,9 +30,56 @@ export default function MypageReservationList() {
       </section>
       <section className='flex h-full w-full flex-col gap-24'>
         {/* TODO: 예약 내역 카드 표시 */}
-        <ReservationCard />
-        <ReservationCard />
-        <ReservationCard />
+        <ReservationCard
+          status={ReservationStatus.Pending}
+          title='함께'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:30'
+          totalPrice={10000}
+          headCount={10}
+          imageUrl='/og-default.png'
+        />
+        <ReservationCard
+          status={ReservationStatus.Canceled}
+          title='함께 배우면'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:31'
+          totalPrice={20000}
+          headCount={20}
+          imageUrl='/og-default.png'
+        />
+        <ReservationCard
+          status={ReservationStatus.Declined}
+          title='함께 배우면 즐거운'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:32'
+          totalPrice={30000}
+          headCount={30}
+          imageUrl='/og-default.png'
+        />
+        <ReservationCard
+          status={ReservationStatus.Confirmed}
+          title='함께 배우면 즐거운 스트릿'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:33'
+          totalPrice={40000}
+          headCount={40}
+          imageUrl='/og-default.png'
+        />
+        <ReservationCard
+          status={ReservationStatus.Completed}
+          title='함께 배우면 즐거운 스트릿 댄스'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:34'
+          totalPrice={50000}
+          headCount={50}
+          imageUrl='/og-default.png'
+        />
       </section>
     </>
   );

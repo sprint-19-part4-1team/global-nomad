@@ -1,4 +1,4 @@
-import MypageCardSkeleton from '@/features/mypage/components/skeleton/MypageCardSkeleton';
+import MypageCardSkeleton from '@/features/mypage/common/components/skeleton/MypageCardSkeleton';
 import { cn } from '@/shared/utils/cn';
 
 /**

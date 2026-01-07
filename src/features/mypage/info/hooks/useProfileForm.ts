@@ -3,6 +3,17 @@ import { useNicknameValidation } from '@/features/mypage/info/hooks/useNicknameV
 import { UserServiceResponseDto } from '@/shared/types/user';
 
 /**
+ * 프로필 이미지 변경 상태
+ * - keep: 변경 없음
+ * - upload: 새 이미지 업로드
+ * - remove: 기본 이미지로 리셋
+ */
+export type ProfileImageState =
+  | { type: 'keep' }
+  | { type: 'upload'; file: File }
+  | { type: 'remove' };
+
+/**
  * ## useProfileForm
  *
  * @description
@@ -14,49 +25,66 @@ import { UserServiceResponseDto } from '@/shared/types/user';
  *
  * @returns 프로필 수정 폼 상태 및 핸들러 객체
  */
-
 export const useProfileForm = (user: UserServiceResponseDto) => {
-  const [profileImg, setProfileImg] = useState<File | null>(null);
-  const [isImageDirty, setIsImageDirty] = useState(false);
+  const [imageState, setImageState] = useState<ProfileImageState>({
+    type: 'keep',
+  });
 
   const {
     nickname,
-    error: nicknameError,
+    setNickname,
     handleChange,
     handleBlur,
+    error: nicknameError,
     isValid: isNicknameValid,
   } = useNicknameValidation(user.nickname);
+
+  const resetForm = (nextUser: UserServiceResponseDto) => {
+    setNickname(nextUser.nickname);
+    setImageState({ type: 'keep' });
+  };
 
   /**
    * 새 이미지 선택
    */
   const handleImageSelect = (file: File) => {
-    setProfileImg(file);
-    setIsImageDirty(true);
+    setImageState({ type: 'upload', file });
   };
 
   /**
    * 기본 이미지로 변경 (이미지 제거)
    */
   const handleImageReset = () => {
-    setProfileImg(null);
-    setIsImageDirty(Boolean(user.profileImageUrl));
+    setImageState({ type: 'remove' });
   };
 
-  // 닉네임 검증
   const isNicknameDirty = nickname !== user.nickname;
-
-  // 전체 폼 검증
+  const isImageDirty = imageState.type !== 'keep';
   const canSubmit = isNicknameValid && (isNicknameDirty || isImageDirty);
+
+  /**
+   * 미리보기용 이미지 값
+   * - upload → File
+   * - remove → null (fallback 이미지)
+   * - keep   → 기존 이미지 URL
+   */
+  const previewImage =
+    imageState.type === 'upload'
+      ? imageState.file
+      : imageState.type === 'remove'
+        ? null
+        : user.profileImageUrl;
 
   return {
     nickname,
     nicknameError,
-    profileImg,
-    handleImageSelect,
-    handleImageReset,
-    canSubmit,
     handleChange,
     handleBlur,
+    canSubmit,
+    imageState,
+    previewImage,
+    handleImageSelect,
+    handleImageReset,
+    resetForm,
   };
 };

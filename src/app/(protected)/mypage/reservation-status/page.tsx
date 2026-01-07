@@ -1,4 +1,4 @@
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import ReservationSelector from '@/features/mypage/reservation-status/components/ReservationSelector';
 
 export default function MypageReservationStatus() {

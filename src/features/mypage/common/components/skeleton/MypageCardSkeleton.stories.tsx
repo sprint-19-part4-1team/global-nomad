@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
-import MypageCardSkeleton from '@/features/mypage/components/skeleton/MypageCardSkeleton';
+import MypageCardSkeleton from '@/features/mypage/common/components/skeleton/MypageCardSkeleton';
 
 /**
  * MypageCardSkeleton 컴포넌트 스토리 가이드

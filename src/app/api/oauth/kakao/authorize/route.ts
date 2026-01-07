@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/shared/constants/oauthMode';
-import type { OAuthMode } from '@/shared/constants/oauthMode';
+import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/shared/constants';
+import type { OAuthMode } from '@/shared/constants';
 
 const KAKAO_OAUTH_AUTHORIZE_URL = 'https://kauth.kakao.com/oauth/authorize';
 

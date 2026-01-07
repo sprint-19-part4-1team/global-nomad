@@ -7,7 +7,7 @@ interface ProfileInfoSectionProps {
   user: UserServiceResponseDto | undefined;
   nickname: string;
   onChange: (nickname: string) => void;
-  onBlur: (nickname: string) => void;
+  onBlur: () => void;
   errorMessage: string;
 }
 
@@ -62,7 +62,7 @@ export default function ProfileInfoSection({
         autoComplete='nickname'
         value={nickname}
         onChange={(e) => onChange(e.target.value)}
-        onBlur={(e) => onBlur(e.target.value)}
+        onBlur={onBlur}
         errorMessage={errorMessage}
         placeholder='닉네임을 입력해 주세요.'
       />

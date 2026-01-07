@@ -28,6 +28,7 @@ const avatarVariants = cva('aspect-square rounded-full overflow-hidden relative'
  * @property {string} [className] - 추가 CSS 클래스
  */
 interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof avatarVariants> {
+  size?: 'sm' | 'md' | 'lg';
   user?: UserServiceResponseDto;
   children: ReactNode;
 }
@@ -49,7 +50,7 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeo
  *   <AvatarFallback />
  * </Avatar>
  */
-export default function Avatar({ size, className, user, children }: AvatarProps) {
+export default function Avatar({ size = 'sm', className, user, children }: AvatarProps) {
   // 이미지 로딩 실패 상태
   const [imageError, setImageError] = useState(false);
 
@@ -58,7 +59,7 @@ export default function Avatar({ size, className, user, children }: AvatarProps)
   }
 
   return (
-    <AvatarContext value={{ user, imageError, setImageError }}>
+    <AvatarContext value={{ user, size, imageError, setImageError }}>
       <div className={cn(avatarVariants({ size }), className)}>{children}</div>
     </AvatarContext>
   );

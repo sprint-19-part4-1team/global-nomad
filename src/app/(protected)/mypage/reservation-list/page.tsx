@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
 import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';

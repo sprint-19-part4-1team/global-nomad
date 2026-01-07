@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import Sidemenu from '@/features/mypage/components/sidemenu/Sidemenu';
+import Sidemenu from '@/features/mypage/common/components/side-menu/Sidemenu';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**

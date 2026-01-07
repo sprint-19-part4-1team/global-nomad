@@ -16,7 +16,9 @@ import {
 import { ko } from 'date-fns/locale';
 import { useMemo } from 'react';
 import Icons from '@/assets/icons';
+import Title from '@/shared/components/title/Title';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
+import { ReservationStatus as ReservationStatusEnum } from '@/shared/types/myReservations';
 
 /**
  * ReservationCalendar 컴포넌트의 Props
@@ -46,26 +48,29 @@ const CALENDAR_STYLE = {
     'flex h-16 items-center justify-between rounded-4 px-8 py-2 text-[10px] tracking-[-0.25px] whitespace-nowrap sm:h-21 sm:text-[14px] sm:tracking-[-0.35px]',
 };
 
-/** 예약 상태 유형 */
-type ReservationStatusType = 'completed' | 'pending' | 'confirmed';
+/** 달력에 표시할 예약 상태 타입 */
+type CalendarReservationStatus =
+  | ReservationStatusEnum.Completed
+  | ReservationStatusEnum.Pending
+  | ReservationStatusEnum.Confirmed;
 
 /** 예약 상태 설정 */
 const RESERVATION_STATUS_CONFIG: Record<
-  ReservationStatusType,
+  CalendarReservationStatus,
   {
     label: string;
     style: string;
   }
 > = {
-  completed: {
+  [ReservationStatusEnum.Completed]: {
     label: '완료',
     style: 'gap-3 bg-gray-50 text-gray-500',
   },
-  pending: {
+  [ReservationStatusEnum.Pending]: {
     label: '예약',
     style: 'gap-2 bg-primary-100 text-primary-500',
   },
-  confirmed: {
+  [ReservationStatusEnum.Confirmed]: {
     label: '승인',
     style: 'gap-2 bg-orange-100 text-orange-500',
   },
@@ -77,7 +82,7 @@ const RESERVATION_STATUS_CONFIG: Record<
  * @description
  * - 월 단위로 예약 현황을 시각적으로 표시
  * - 각 날짜별로 완료/승인/예약 건수 표시
- * - 이전/다음 달 네비게이션 지원 (현재 달 ~ 현재 달 +4개월)
+ * - 이전/다음 달 네비게이션 지원 (2026년 1월 ~ 현재 달 +4개월)
  * - 예약이 있는 날짜는 클릭 가능 (hover 효과)
  * - 오늘 날짜는 노란색 배경으로 표시
  *
@@ -126,14 +131,14 @@ export default function ReservationCalendar({
    *
    * @returns 날짜 계산에 필요한 설정 객체
    * - today: 오늘 날짜 (시간 제거)
-   * - minDate: 선택 가능한 최소 월
+   * - minDate: 선택 가능한 최소 월 (2026년 1월로 고정)
    * - maxDate: 선택 가능한 최대 월
    * - monthStart: 현재 표시 중인 월의 시작 날짜
    * - startDate: 캘린더에 표시될 시작 날짜
    */
   const dateConfig = useMemo(() => {
     const today = startOfDay(new Date());
-    const minDate = startOfMonth(today);
+    const minDate = startOfMonth(new Date(2026, 0, 1)); // 2026년 1월로 고정
     const maxDate = startOfMonth(addMonths(today, 4));
     const monthStart = startOfMonth(currentMonth);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -237,7 +242,11 @@ export default function ReservationCalendar({
     reservation: FindReservationsByMonthResponseDto;
   }) => {
     // 화면에 표시할 예약 상태 타입 목록
-    const statusTypes: ReservationStatusType[] = ['completed', 'pending', 'confirmed'];
+    const statusTypes: CalendarReservationStatus[] = [
+      ReservationStatusEnum.Completed,
+      ReservationStatusEnum.Pending,
+      ReservationStatusEnum.Confirmed,
+    ];
 
     return (
       <div className='flex flex-col gap-6 sm:gap-5'>
@@ -276,9 +285,9 @@ export default function ReservationCalendar({
             className={`w-full ${canGoPrevMonth ? 'text-gray-950' : 'text-gray-300'}`}
           />
         </button>
-        <h2 className='body-18 font-bold text-gray-950 sm:heading-20'>
+        <Title responsive='md' className='text-gray-950'>
           {format(currentMonth, 'yyyy년 M월', { locale: ko })}
-        </h2>
+        </Title>
         <button
           onClick={() => canGoNextMonth && onMonthChange(addMonths(currentMonth, 1))}
           className={CALENDAR_STYLE.MONTH_BTN}
@@ -305,26 +314,25 @@ export default function ReservationCalendar({
           {calendarDays.map((day, index) => {
             const reservation = getReservationForDate(day);
             const isCurrentMonthDay = isSameMonth(day, currentMonth);
-            const isPastDate = isBefore(startOfDay(day), today);
             const isToday = isSameDay(day, today);
             const hasReservation = reservation && isCurrentMonthDay;
 
             return (
               <div
                 key={index}
-                onClick={() => hasReservation && !isPastDate && handleDateClick(day)}
+                onClick={() => hasReservation && handleDateClick(day)}
                 className={`flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-5 sm:px-12 sm:pt-18 sm:pb-10 ${index < 7 ? 'border-gray-100' : 'border-gray-50'} ${isToday && 'bg-green-100'} ${hasReservation && 'cursor-pointer'}`}>
                 <div className='relative flex'>
                   <span
                     className={`body-12 sm:body-16 ${!isCurrentMonthDay ? 'text-gray-300' : 'text-gray-800'}`}>
                     {format(day, 'd')}
                   </span>
-                  {hasReservation && !isPastDate && (
+                  {hasReservation && (
                     <div className='absolute left-12 size-4 rounded-full bg-red-500 sm:left-20 sm:size-6' />
                   )}
                 </div>
 
-                {hasReservation && !isPastDate && <ReservationStatus reservation={reservation} />}
+                {hasReservation && <ReservationStatus reservation={reservation} />}
               </div>
             );
           })}

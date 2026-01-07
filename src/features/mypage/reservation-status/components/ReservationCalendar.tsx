@@ -11,6 +11,7 @@ import {
 import { useReservationCalendar } from '@/features/mypage/reservation-status/hooks/useReservationCalendar';
 import Title from '@/shared/components/title/Title';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * ReservationCalendar 컴포넌트의 Props
@@ -135,7 +136,11 @@ export default function ReservationCalendar({
                 role='gridcell'
                 aria-label={format(day, 'yyyy년 M월 d일', { locale: ko })}
                 onClick={() => hasReservation && handleDateClick(day)}
-                className={`flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-5 sm:px-12 sm:pt-18 sm:pb-10 ${index < 7 ? 'border-gray-100' : 'border-gray-50'} ${isToday && 'bg-green-100'} ${hasReservation && 'cursor-pointer'}`}>
+                className={cn(
+                  'flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-5 sm:px-12 sm:pt-18 sm:pb-10',
+                  index < 7 ? 'border-gray-100' : 'border-gray-50',
+                  { 'bg-green-100': isToday, 'cursor-pointer': hasReservation }
+                )}>
                 <div className='relative flex'>
                   <span
                     className={`body-12 sm:body-16 ${!isCurrentMonthDay ? 'text-gray-300' : 'text-gray-800'}`}>

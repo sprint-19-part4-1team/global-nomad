@@ -22,7 +22,7 @@ import { useUserStore } from '@/shared/stores/userStore';
 export const useMyActivities = () => {
   const userId = useUserStore((s) => s.user?.id);
 
-  const { data, isLoading, isError, isFetched, isRefetching } = useQuery({
+  const { data, isLoading, isError, isFetched, isRefetching, refetch } = useQuery({
     queryKey: QUERY_KEYS.MY_ACTIVITIES({}, userId),
     queryFn: () => getMyActivities({}),
     enabled: !!userId,
@@ -42,5 +42,6 @@ export const useMyActivities = () => {
     isError,
     isFetched,
     isRefetching,
+    refetch,
   };
 };

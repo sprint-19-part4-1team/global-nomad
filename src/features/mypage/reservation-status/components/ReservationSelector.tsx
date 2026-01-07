@@ -38,7 +38,7 @@ export default function ReservationSelector() {
   const [selectedActivityId, setSelectedActivityId] = useState<string>('');
 
   // 내 체험 목록 조회
-  const { activityOptions, activityMap, isLoading, isError, isFetched, isRefetching } =
+  const { activityOptions, activityMap, isLoading, isError, isFetched, isRefetching, refetch } =
     useMyActivities();
 
   // 월별 예약 현황 조회 (selectedActivityId와 currentMonth가 변경될 때 자동 재조회)
@@ -74,7 +74,7 @@ export default function ReservationSelector() {
         <EmptyState
           type='error'
           mainText='체험 목록을 불러오는데 실패했어요.'
-          button={{ text: '다시 시도하기', onClick: () => window.location.reload() }}
+          button={{ text: '다시 시도하기', onClick: refetch }}
         />
       </div>
     );

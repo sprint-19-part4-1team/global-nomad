@@ -1,5 +1,5 @@
 import ExperienceCard from '@/features/mypage/activity/ExperienceCard/ExperienceCard';
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';
 
 export default function MypageActivity() {

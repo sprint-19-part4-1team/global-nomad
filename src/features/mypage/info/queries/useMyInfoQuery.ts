@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getMyInfo } from '@/shared/apis/feature/users';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { QUERY_KEYS } from '@/shared/constants';
 
 /**
  * ## useMyInfoQuery

@@ -7,7 +7,7 @@ import { ProfileImageState } from '@/features/mypage/info/hooks/useProfileForm';
 import Button from '@/shared/components/button/Button';
 import ImagePreview from '@/shared/components/image-preview/ImagePreview';
 import Label from '@/shared/components/label/Label';
-import { ALLOWED_IMAGE_TYPES, MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants/imageUpload';
+import { ALLOWED_IMAGE_TYPES, MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
 import { UserServiceResponseDto } from '@/shared/types/user';
 
 interface ProfileImageSectionProps {

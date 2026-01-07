@@ -3,7 +3,7 @@ import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
 import { cn } from '@/shared/utils/cn';
 
-type EmptyType = 'experience' | 'review';
+type EmptyType = 'experience' | 'review' | 'error';
 type ReviewProps = {
   type: 'review';
   mainText: string;
@@ -14,8 +14,15 @@ type ExperienceProps = {
   mainText: string;
   button?: { href: string; text: string };
 };
+type ErrorProps = {
+  type: 'error';
+  mainText: string;
+  button?:
+    | { text: string; href: string; onClick?: never }
+    | { text: string; onClick: () => void; href?: never };
+};
 
-type EmptyStateProps = ReviewProps | ExperienceProps;
+type EmptyStateProps = ReviewProps | ExperienceProps | ErrorProps;
 
 const EMPTY_STATE_VARIANTS: Record<
   EmptyType,
@@ -30,6 +37,9 @@ const EMPTY_STATE_VARIANTS: Record<
   review: {
     Icon: Icons.SpeechBubble,
     extraClassName: 'text-primary-100',
+  },
+  error: {
+    Icon: Icons.SurprisedEarth,
   },
 };
 
@@ -76,10 +86,43 @@ const EMPTY_STATE_VARIANTS: Record<
  *   mainText="아직 작성된 리뷰가 없습니다."
  * />
  * ```
+ *
+ * @example
+ * ```tsx
+ * <EmptyState
+ *   type="error"
+ *   mainText="체험 목록을 불러오는데 실패했어요."
+ *   button={{ text: '다시 시도하기', onClick: () => window.location.reload() }}
+ * />
+ * ```
  */
 export default function EmptyState({ type, mainText, button }: EmptyStateProps) {
   const { Icon, extraClassName } = EMPTY_STATE_VARIANTS[type];
   const iconClassName = cn('h-182 w-182', extraClassName);
+
+  const renderButton = () => {
+    if (!button?.text) {
+      return null;
+    }
+
+    if (button.href) {
+      return (
+        <Button href={button.href} variant='primary'>
+          {button.text}
+        </Button>
+      );
+    }
+
+    if (type === 'error' && button.onClick) {
+      return (
+        <Button onClick={button.onClick} variant='primary'>
+          {button.text}
+        </Button>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -88,11 +131,7 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
         <span>{mainText}</span>
       </div>
 
-      {type === 'experience' && button?.href && button.text && (
-        <Button href={button.href} variant='primary'>
-          {button.text}
-        </Button>
-      )}
+      {renderButton()}
     </div>
   );
 }

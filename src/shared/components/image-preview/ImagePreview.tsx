@@ -92,7 +92,10 @@ export default function ImagePreview({
       {onRemove && (
         <button
           type='button'
-          onClick={onRemove}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
           aria-label='이미지 삭제'
           className='absolute -top-6 -right-4 z-10 flex h-26 w-26 cursor-pointer items-center justify-center rounded-full bg-gray-950 text-white'>
           <Icons.Close aria-hidden={'true'} className='h-20 w-20' />

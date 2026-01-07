@@ -49,7 +49,7 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeo
  *   <AvatarFallback />
  * </Avatar>
  */
-export default function Avatar({ size, className, user, children }: AvatarProps) {
+export default function Avatar({ size = 'sm', className, user, children }: AvatarProps) {
   // 이미지 로딩 실패 상태
   const [imageError, setImageError] = useState(false);
 
@@ -58,7 +58,7 @@ export default function Avatar({ size, className, user, children }: AvatarProps)
   }
 
   return (
-    <AvatarContext value={{ user, imageError, setImageError }}>
+    <AvatarContext value={{ user, size: size ?? 'sm', imageError, setImageError }}>
       <div className={cn(avatarVariants({ size }), className)}>{children}</div>
     </AvatarContext>
   );

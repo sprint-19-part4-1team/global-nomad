@@ -41,7 +41,7 @@ const meta: Meta<typeof ReservationCard> = {
     },
     status: {
       control: { type: 'select' },
-      options: [...Object.values(ReservationStatus), 'canceled'],
+      options: [...Object.values(ReservationStatus)],
       description: '예약 상태',
     },
   },
@@ -64,7 +64,7 @@ const baseArgs = {
 export const Canceled: Story = {
   args: {
     ...baseArgs,
-    status: 'canceled' as ReservationStatus,
+    status: ReservationStatus.Canceled,
     reviewSubmitted: false,
   },
 };

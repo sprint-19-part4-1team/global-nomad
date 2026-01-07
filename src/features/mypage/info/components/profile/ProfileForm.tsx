@@ -1,10 +1,15 @@
 'use client';
 
 import { FormEvent } from 'react';
+import { toast } from 'react-toastify';
 import ProfileImageSection from '@/features/mypage/info/components/profile/ProfileImageSection';
 import ProfileInfoSection from '@/features/mypage/info/components/profile/ProfileInfoSection';
 import ProfileFormSkeleton from '@/features/mypage/info/components/skeleton/ProfileFormSkeleton';
 import { useProfileForm } from '@/features/mypage/info/hooks/useProfileForm';
+import {
+  useCreateProfileImageUrlMutation,
+  useUpdateMyInfoMutation,
+} from '@/features/mypage/info/mutations/useProfileMutations';
 import { useMyInfoQuery } from '@/features/mypage/info/queries/useMyInfoQuery';
 import Button from '@/shared/components/button/Button';
 import { UserServiceResponseDto } from '@/shared/types/user';
@@ -28,29 +33,67 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
   const {
     nickname,
     nicknameError,
-    profileImg,
+    imageState,
+    previewImage,
     handleImageSelect,
     handleImageReset,
     canSubmit,
     handleChange,
     handleBlur,
+    resetForm,
   } = useProfileForm(user);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const createProfileImageUrlMutation = useCreateProfileImageUrlMutation();
+  const updateMyInfoMutation = useUpdateMyInfoMutation();
+  const isLoading = createProfileImageUrlMutation.isPending || updateMyInfoMutation.isPending;
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: 수정, 프로필 이미지 API 연결하기 (mutation 사용)
-    console.log('nickname: ', nickname, 'profileImg: ', profileImg);
-    console.log('폼 제출');
+
+    if (!imageState.type) {
+      return null;
+    }
+
+    try {
+      let profileImageUrl: string | null | undefined;
+
+      if (imageState.type === 'upload') {
+        const res = await createProfileImageUrlMutation.mutateAsync(imageState.file);
+        profileImageUrl = res.profileImageUrl;
+      }
+
+      if (imageState.type === 'remove') {
+        profileImageUrl = null;
+      }
+
+      await updateMyInfoMutation.mutateAsync({
+        nickname,
+        profileImageUrl,
+      });
+
+      resetForm({
+        ...user,
+        nickname,
+        profileImageUrl:
+          imageState.type === 'remove' ? null : (profileImageUrl ?? user.profileImageUrl),
+      });
+
+      toast.success('정보 수정이 완료되었습니다!');
+    } catch (error) {
+      console.error('정보 수정 실패: ', error);
+      toast.error('정보 수정에 실패했습니다');
+    }
   };
 
   return (
     <form className='mt-24 sm:mt-32' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-24 sm:gap-32 md:flex-row'>
         <ProfileImageSection
+          previewImage={previewImage}
           user={user}
-          profileImg={profileImg}
           onSelect={handleImageSelect}
           onReset={handleImageReset}
+          imageState={imageState}
         />
         <ProfileInfoSection
           user={user}
@@ -60,7 +103,11 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
           errorMessage={nicknameError}
         />
       </div>
-      <Button type='submit' className='mx-auto mt-24 w-160' disabled={!canSubmit}>
+      <Button
+        type='submit'
+        className='mx-auto mt-24 w-160'
+        isLoading={isLoading}
+        disabled={!canSubmit}>
         수정하기
       </Button>
     </form>

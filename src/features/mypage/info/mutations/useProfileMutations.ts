@@ -33,8 +33,10 @@ export const useUpdateMyInfoMutation = () => {
   return useMutation({
     mutationFn: updateMyInfo,
     onSuccess: (updateUser) => {
-      queryClient.setQueryData(QUERY_KEYS.MY_INFO, updateUser);
-      setUser(updateUser);
+      queryClient.setQueryData(QUERY_KEYS.MY_INFO(updateUser.id), updateUser);
+      if (useUserStore.getState().user?.id === updateUser.id) {
+        setUser(updateUser);
+      }
     },
   });
 };

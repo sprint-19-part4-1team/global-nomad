@@ -10,13 +10,13 @@ import EmptyState from './EmptyState';
  * ## Props
  * - `type`
  *   - 빈 상태의 사용 목적
- *   - `'experience' | 'review'`
+ *   - `'experience' | 'review'` | `'error'`
  *
  * - `mainText`
  *   - 아이콘 하단에 표시되는 안내 문구
  *
  * - `button` (선택)
- *   - `experience` 타입에서만 사용할 수 있는 액션 버튼
+ *   - `experience` 또는 `error` 타입에서 사용할 수 있는 액션 버튼
  *   - `href`: 버튼 클릭 시 이동할 경로
  *   - `text`: 버튼에 표시될 텍스트
  *
@@ -28,6 +28,10 @@ import EmptyState from './EmptyState';
  * - `review`
  *   - 리뷰 데이터가 없을 때 사용
  *   - 버튼은 표시되지 않음
+ *
+ * - `error`
+ *   - 에러가 발생했을 떄 사용
+ *   - 버튼을 선택적으로 표시할 수 있음
  *
  * ## 사용 예시
  * ```tsx
@@ -46,6 +50,12 @@ import EmptyState from './EmptyState';
  *   type="review"
  *   mainText="리뷰가 없습니다."
  * />
+ *
+ * <EmptyState
+ *   type="error"
+ *   mainText="체험 목록을 불러오는데 실패했어요."
+ *   button={{ text: '다시 시도하기', onClick: () => window.location.reload() }}
+ * />
  * ```
  */
 
@@ -56,8 +66,8 @@ const meta: Meta<typeof EmptyState> = {
   argTypes: {
     type: {
       control: { type: 'select' },
-      options: ['experience', 'review'],
-      description: '빈 상태 유형 (experience | review)',
+      options: ['experience', 'review', 'error'],
+      description: '빈 상태 유형 (experience | review | error)',
     },
   },
 };
@@ -91,5 +101,37 @@ export const Review: Story = {
   args: {
     type: 'review',
     mainText: '리뷰가 없습니다.',
+  },
+};
+
+export const ErrorWithLinkButton: Story = {
+  name: 'error(링크 버튼 있음)',
+  args: {
+    type: 'error',
+    mainText: '체험 목록을 불러오는데 실패했어요.',
+    button: {
+      href: '/',
+      text: '체험 목록 확인하기',
+    },
+  },
+};
+
+export const ErrorWithButton: Story = {
+  name: 'error(버튼 있음)',
+  args: {
+    type: 'error',
+    mainText: '체험 목록을 불러오는데 실패했어요.',
+    button: {
+      text: '다시 시도하기',
+      onClick: () => window.location.reload(),
+    },
+  },
+};
+
+export const ErrorWithoutButton: Story = {
+  name: 'error(버튼 없음)',
+  args: {
+    type: 'error',
+    mainText: '체험 목록을 불러오는데 실패했어요.(버튼 없음)',
   },
 };

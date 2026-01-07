@@ -1,9 +1,9 @@
-import { VALIDATION_MESSAGES } from '@/shared/constants/validationMessages';
 import {
+  VALIDATION_MESSAGES,
   NICKNAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   VALIDATION_PATTERNS,
-} from '@/shared/constants/validationPatterns';
+} from '@/shared/constants';
 
 /**
  * 필수 입력 검사

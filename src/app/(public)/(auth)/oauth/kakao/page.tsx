@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
 import { signInWithOauth, signUpWithOauth } from '@/shared/apis/feature/oauth';
 import Spinner from '@/shared/components/spinner/Spinner';
-import type { OAuthMode } from '@/shared/constants/oauthMode';
+import type { OAuthMode } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isRecord } from '@/shared/utils/errorGuards';
 

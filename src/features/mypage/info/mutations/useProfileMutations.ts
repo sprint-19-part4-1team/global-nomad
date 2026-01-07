@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProfileImageUrl, updateMyInfo } from '@/shared/apis/feature/users';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { QUERY_KEYS } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**

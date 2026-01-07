@@ -28,12 +28,13 @@ export const useCreateProfileImageUrlMutation = () =>
  */
 export const useUpdateMyInfoMutation = () => {
   const queryClient = useQueryClient();
+  const userId = useUserStore((s) => s.user?.id);
   const setUser = useUserStore((s) => s.setUser);
 
   return useMutation({
     mutationFn: updateMyInfo,
     onSuccess: (updateUser) => {
-      queryClient.setQueryData(QUERY_KEYS.MY_INFO, updateUser);
+      queryClient.setQueryData(QUERY_KEYS.MY_INFO(userId), updateUser);
       setUser(updateUser);
     },
   });

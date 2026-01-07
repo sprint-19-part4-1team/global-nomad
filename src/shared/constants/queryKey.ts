@@ -7,7 +7,7 @@
  */
 export const QUERY_KEYS = {
   /** 내 정보 조회 */
-  MY_INFO: ['myInfo'],
+  MY_INFO: (userId?: number) => ['myInfo', userId],
   /** 체험 상세 조회 */
   ACTIVITY_DETAIL: (activityId: number) => ['activityDetail', activityId],
 } as const;

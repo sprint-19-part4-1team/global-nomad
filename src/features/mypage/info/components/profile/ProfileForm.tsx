@@ -81,9 +81,5 @@ export default function ProfileForm() {
     return <ProfileFormSkeleton />;
   }
 
-  return (
-    <>
-      <ProfileFormInner user={user} />
-    </>
-  );
+  return <ProfileFormInner user={user} />;
 }

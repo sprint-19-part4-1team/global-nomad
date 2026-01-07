@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-const labelVariants = cva('text-gray-950', {
+const labelVariants = cva('w-fit text-gray-950', {
   variants: {
     variant: {
       authForm: 'body-14 sm:body-16 text-left font-medium',

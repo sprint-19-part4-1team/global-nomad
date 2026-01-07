@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import ReservationCard from '@/features/mypage/reservation-list/components/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
-import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -31,7 +31,7 @@ export default function MypageReservationList() {
       <section className='h-full w-full bg-gray-25'>
         {/* TODO: 예약 내역 카드 표시 */}
         예약 내역 카드 표시 영역
-        <ReservationStatusBadge status={ReservationStatus.Declined} />
+        <ReservationCard />
       </section>
     </>
   );

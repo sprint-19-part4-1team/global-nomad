@@ -8,6 +8,16 @@ interface ReservationCardImageProps {
   reviewSubmitted: boolean;
 }
 
+/**
+ * @description
+ * - 예약 카드 우측에 노출되는 이미지 영역 컴포넌트입니다.
+ * - 체험 완료 + 후기 작성 완료 상태일 경우,
+ *   이미지 위에 어두운 오버레이와 완료 아이콘을 표시합니다.
+ *
+ * @param imageUrl - 체험 썸네일 이미지 URL
+ * @param status - 예약 상태
+ * @param reviewSubmitted - 후기 작성 완료 여부
+ */
 export default function ReservationCardImage({
   imageUrl,
   status,

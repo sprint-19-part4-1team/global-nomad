@@ -3,7 +3,7 @@
 import { format, addMonths, subMonths, isSameMonth, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Icons from '@/assets/icons';
-import ReservationStatus from '@/features/mypage/reservation-status/components/ReservationStatus';
+import ReservationBadge from '@/features/mypage/reservation-status/components/ReservationBadge';
 import {
   CALENDAR_STYLE,
   WEEK_DAYS,
@@ -146,7 +146,7 @@ export default function ReservationCalendar({
                   )}
                 </div>
 
-                {hasReservation && <ReservationStatus reservation={reservation} />}
+                {hasReservation && <ReservationBadge reservation={reservation} />}
               </div>
             );
           })}

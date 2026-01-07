@@ -1,5 +1,4 @@
 import type { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
-import { ReservationStatus as ReservationStatusEnum } from '@/shared/types/myReservations';
 
 /** 요일 헤더 배열 (일요일부터 토요일까지) */
 export const WEEK_DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as const;
@@ -26,23 +25,23 @@ export const CALENDAR_STYLE = {
  * @property {Object} pending - 예약 대기 상태 (파랑)
  * @property {Object} confirmed - 승인 상태 (주황)
  */
-export const RESERVATION_STATUS_CONFIG = {
-  [ReservationStatusEnum.Completed]: {
-    label: '완료',
-    style: 'gap-3 bg-gray-50 text-gray-500',
-  },
-  [ReservationStatusEnum.Pending]: {
-    label: '예약',
-    style: 'gap-2 bg-primary-100 text-primary-500',
-  },
-  [ReservationStatusEnum.Confirmed]: {
-    label: '승인',
-    style: 'gap-2 bg-orange-100 text-orange-500',
-  },
-} satisfies Record<
+export const RESERVATION_STATUS_CONFIG: Record<
   keyof FindReservationsByMonthResponseDto['reservations'],
   {
     label: string;
     style: string;
   }
->;
+> = {
+  completed: {
+    label: '완료',
+    style: 'gap-3 bg-gray-50 text-gray-500',
+  },
+  pending: {
+    label: '예약',
+    style: 'gap-2 bg-primary-100 text-primary-500',
+  },
+  confirmed: {
+    label: '승인',
+    style: 'gap-2 bg-orange-100 text-orange-500',
+  },
+};

@@ -3,7 +3,6 @@ import {
   RESERVATION_STATUS_CONFIG,
 } from '@/features/mypage/reservation-status/constants/reservationStatus';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
-import { ReservationStatus as ReservationStatusEnum } from '@/shared/types/myReservations';
 
 /**
  * ReservationStatus 컴포넌트의 Props
@@ -34,13 +33,13 @@ interface ReservationStatusProps {
  * @param props - ReservationStatus 컴포넌트의 props
  * @returns 렌더링된 예약 상태 뱃지 목록
  */
-export default function ReservationStatus({ reservation }: ReservationStatusProps) {
+export default function ReservationBadge({ reservation }: ReservationStatusProps) {
   // 화면에 표시할 예약 상태 타입 목록
-  const statusTypes = [
-    ReservationStatusEnum.Completed,
-    ReservationStatusEnum.Pending,
-    ReservationStatusEnum.Confirmed,
-  ] as const;
+  const statusTypes: Array<keyof FindReservationsByMonthResponseDto['reservations']> = [
+    'completed',
+    'pending',
+    'confirmed',
+  ];
 
   return (
     <div className='flex flex-col gap-6 sm:gap-5'>

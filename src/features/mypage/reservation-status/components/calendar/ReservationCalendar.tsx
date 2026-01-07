@@ -300,17 +300,20 @@ export default function ReservationCalendar({
         </button>
       </div>
 
-      <div className='flex flex-col gap-4 sm:gap-12'>
+      <div role='grid' aria-label='예약 현황 표시 달력' className='flex flex-col gap-4 sm:gap-12'>
         {/* 요일 헤더 */}
-        <div className='grid grid-cols-7'>
+        <div role='row' className='grid grid-cols-7'>
           {WEEK_DAYS.map((day, idx) => (
-            <div key={idx} className='p-12 text-center body-13 font-bold text-gray-900 sm:body-16'>
+            <div
+              key={idx}
+              role='columnheader'
+              className='p-12 text-center body-13 font-bold text-gray-900 sm:body-16'>
               {day}
             </div>
           ))}
         </div>
 
-        <div className='grid grid-cols-7'>
+        <div role='row' className='grid grid-cols-7'>
           {calendarDays.map((day, index) => {
             const reservation = getReservationForDate(day);
             const isCurrentMonthDay = isSameMonth(day, currentMonth);
@@ -320,6 +323,8 @@ export default function ReservationCalendar({
             return (
               <div
                 key={index}
+                role='gridcell'
+                aria-label={format(day, 'yyyy년 M월 d일', { locale: ko })}
                 onClick={() => hasReservation && handleDateClick(day)}
                 className={`flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-5 sm:px-12 sm:pt-18 sm:pb-10 ${index < 7 ? 'border-gray-100' : 'border-gray-50'} ${isToday && 'bg-green-100'} ${hasReservation && 'cursor-pointer'}`}>
                 <div className='relative flex'>

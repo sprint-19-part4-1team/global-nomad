@@ -50,10 +50,6 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!imageState.type) {
-      return null;
-    }
-
     try {
       let profileImageUrl: string | null | undefined;
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProfileImageUrl, updateMyInfo } from '@/shared/apis/feature/users';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { QUERY_KEYS } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**
@@ -33,8 +33,10 @@ export const useUpdateMyInfoMutation = () => {
   return useMutation({
     mutationFn: updateMyInfo,
     onSuccess: (updateUser) => {
-      queryClient.setQueryData(QUERY_KEYS.MY_INFO, updateUser);
-      setUser(updateUser);
+      queryClient.setQueryData(QUERY_KEYS.MY_INFO(updateUser.id), updateUser);
+      if (useUserStore.getState().user?.id === updateUser.id) {
+        setUser(updateUser);
+      }
     },
   });
 };

@@ -8,7 +8,9 @@ import ImageSlotContent from '@/features/activity-form/common/components/image-s
 import Label from '@/shared/components/label/Label';
 import { MAX_ACTIVITY_IMAGE_SIZE } from '@/shared/constants';
 import { cn } from '@/shared/utils/cn';
-import { isSameFile, validateImageFile } from '@/shared/utils/fileUpload';
+import { isDuplicateImageFile, validateImageFile } from '@/shared/utils/fileUpload';
+
+export type value = File | string | null | (File | string)[];
 
 interface ImageUploadFieldProps {
   /** 라벨 텍스트 */
@@ -18,7 +20,7 @@ interface ImageUploadFieldProps {
   /** 라벨 옆에 표시될 보조 안내 문구 */
   helperText?: string;
   /** 현재 선택된 이미지 값 */
-  value: File | string | null | (File | string)[];
+  value: value;
   /** 이미지 추가 시 호출되는 콜백 */
   onChange: (value: File | (File | string)[]) => void;
   /** 이미지 삭제 시 호출되는 콜백 */
@@ -60,32 +62,20 @@ export default function ImageUploadField({
       return;
     }
 
+    if (isDuplicateImageFile(value, file)) {
+      toast.info('이미 선택한 이미지입니다.');
+      e.target.value = '';
+      return;
+    }
+
     if (Array.isArray(value)) {
-      const hasDuplicate = value.some((img) => {
-        if (img instanceof File) {
-          return isSameFile(img, file);
-        }
-        return false;
-      });
-
-      if (hasDuplicate) {
-        toast.info('이미 선택한 이미지입니다.');
-        e.target.value = '';
-        return;
-      }
-
       if (value.length >= maxCount) {
+        e.target.value = '';
         return;
       }
 
       onChange([...value, file]);
     } else {
-      if (value instanceof File && isSameFile(value, file)) {
-        toast.info('이미 선택한 이미지입니다.');
-        e.target.value = '';
-        return;
-      }
-
       onChange(file);
     }
 

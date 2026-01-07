@@ -95,7 +95,7 @@ export default function ReservationCalendar({
             className={`w-full ${canGoPrevMonth ? 'text-gray-950' : 'text-gray-300'}`}
           />
         </button>
-        <Title responsive='md' className='text-gray-950'>
+        <Title as='h3' responsive='md' className='text-gray-950'>
           {format(currentMonth, 'yyyy년 M월', { locale: ko })}
         </Title>
         <button

@@ -9,5 +9,5 @@ export const QUERY_KEYS = {
   /** 내 정보 조회 */
   MY_INFO: ['myInfo'],
   /** 체험 상세 조회 */
-  ACTIVITY_DETAIL: (activityId: number | string) => ['activityDetail', activityId],
+  ACTIVITY_DETAIL: (activityId: number) => ['activityDetail', activityId],
 } as const;

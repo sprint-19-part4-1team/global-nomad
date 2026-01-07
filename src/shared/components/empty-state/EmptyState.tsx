@@ -17,7 +17,9 @@ type ExperienceProps = {
 type ErrorProps = {
   type: 'error';
   mainText: string;
-  button?: { text: string; href?: string; onClick?: () => void };
+  button?:
+    | { text: string; href: string; onClick?: never }
+    | { text: string; onClick: () => void; href?: never };
 };
 
 type EmptyStateProps = ReviewProps | ExperienceProps | ErrorProps;
@@ -98,6 +100,30 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
   const { Icon, extraClassName } = EMPTY_STATE_VARIANTS[type];
   const iconClassName = cn('h-182 w-182', extraClassName);
 
+  const renderButton = () => {
+    if (!button?.text) {
+      return null;
+    }
+
+    if (button.href) {
+      return (
+        <Button href={button.href} variant='primary'>
+          {button.text}
+        </Button>
+      );
+    }
+
+    if (type === 'error' && button.onClick) {
+      return (
+        <Button onClick={button.onClick} variant='primary'>
+          {button.text}
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className='flex flex-col items-center justify-center'>
       <div className='mb-16 flex flex-col items-center justify-center body-16 font-medium text-gray-500'>
@@ -105,16 +131,7 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
         <span>{mainText}</span>
       </div>
 
-      {button?.text
-        && (button?.href ? (
-          <Button href={button.href} variant='primary'>
-            {button.text}
-          </Button>
-        ) : type === 'error' && button?.onClick ? (
-          <Button variant='primary' onClick={button.onClick}>
-            {button.text}
-          </Button>
-        ) : null)}
+      {renderButton()}
     </div>
   );
 }

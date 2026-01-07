@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
+import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
-import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -28,10 +28,41 @@ export default function MypageReservationList() {
           />
         ))}
       </section>
-      <section className='h-full w-full bg-gray-25'>
+      <section className='flex w-full flex-col gap-24'>
         {/* TODO: 예약 내역 카드 표시 */}
-        예약 내역 카드 표시 영역
-        <ReservationStatusBadge status={ReservationStatus.Declined} />
+        <ReservationCard
+          status={ReservationStatus.Pending}
+          title='취소할 수 있는 게시물'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:30'
+          totalPrice={10000}
+          headCount={10}
+          imageUrl='/og-default.png'
+          reviewSubmitted={false}
+        />
+        <ReservationCard
+          status={ReservationStatus.Completed}
+          title='후기 안남긴 게시물'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:34'
+          totalPrice={50000}
+          headCount={50}
+          imageUrl='/og-default.png'
+          reviewSubmitted={false}
+        />
+        <ReservationCard
+          status={ReservationStatus.Completed}
+          title='후기 남긴 게시물'
+          date='2023-02-14'
+          startTime='11:00'
+          endTime='12:34'
+          totalPrice={50000}
+          headCount={50}
+          imageUrl='/og-default.png'
+          reviewSubmitted={true}
+        />
       </section>
     </>
   );

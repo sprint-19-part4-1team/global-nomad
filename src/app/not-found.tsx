@@ -4,6 +4,9 @@ import Button from '@/shared/components/button/Button';
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found',
+  icons: {
+    icon: '/favicons/error.ico',
+  },
 };
 
 /**

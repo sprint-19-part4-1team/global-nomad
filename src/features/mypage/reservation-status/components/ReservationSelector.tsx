@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import ReservationCalendar from '@/features/mypage/reservation-status/components/ReservationCalendar';
+import ReservationCalendarSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationCalendarSkeleton';
+import ReservationSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationSkeleton';
+import { useMonthlyReservations } from '@/features/mypage/reservation-status/hooks/useMonthlyReservations';
+import { useMyActivities } from '@/features/mypage/reservation-status/hooks/useMyActivities';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -9,208 +13,7 @@ import {
   SelectDropdownTrigger,
   SelectDropdownValue,
 } from '@/shared/components/dropdown/select';
-import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
-
-// TODO: 더미 데이터, API 연동 후 지우기
-// 내 체험 조회 더미 데이터
-export const DUMMY_MY_ACTIVITIES = {
-  activities: [
-    {
-      id: 6575,
-      userId: 2927,
-      title: '함께 배우면 즐거운 스트릿댄스',
-    },
-    {
-      id: 6580,
-      userId: 2927,
-      title: '제주도 바다 스노쿨링 체험',
-    },
-  ],
-  totalCount: 2,
-  cursorId: null,
-} as const;
-
-// 2025년 1월 예약 현황 더미 데이터
-export const DUMMY_RESERVATION_DATA_JAN = [
-  {
-    date: '2026-01-05',
-    reservations: {
-      completed: 1,
-      confirmed: 2,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-01-08',
-    reservations: {
-      completed: 3,
-      confirmed: 1,
-      pending: 0,
-    },
-  },
-  {
-    date: '2026-01-12',
-    reservations: {
-      completed: 2,
-      confirmed: 2,
-      pending: 2,
-    },
-  },
-  {
-    date: '2026-01-15',
-    reservations: {
-      completed: 0,
-      confirmed: 3,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-01-18',
-    reservations: {
-      completed: 1,
-      confirmed: 1,
-      pending: 0,
-    },
-  },
-  {
-    date: '2026-01-22',
-    reservations: {
-      completed: 2,
-      confirmed: 0,
-      pending: 3,
-    },
-  },
-  {
-    date: '2026-01-25',
-    reservations: {
-      completed: 4,
-      confirmed: 2,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-01-28',
-    reservations: {
-      completed: 1,
-      confirmed: 3,
-      pending: 0,
-    },
-  },
-] as const;
-
-// 2026년 2월 예약 현황 더미 데이터
-export const DUMMY_RESERVATION_DATA_FEB = [
-  {
-    date: '2026-02-03',
-    reservations: {
-      completed: 2,
-      confirmed: 1,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-02-07',
-    reservations: {
-      completed: 1,
-      confirmed: 2,
-      pending: 0,
-    },
-  },
-  {
-    date: '2026-02-09',
-    reservations: {
-      completed: 2,
-      confirmed: 1,
-      pending: 0,
-    },
-  },
-  {
-    date: '2026-02-10',
-    reservations: {
-      completed: 0,
-      confirmed: 3,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-02-11',
-    reservations: {
-      completed: 1,
-      confirmed: 2,
-      pending: 2,
-    },
-  },
-  {
-    date: '2026-02-12',
-    reservations: {
-      completed: 3,
-      confirmed: 0,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-02-15',
-    reservations: {
-      completed: 1,
-      confirmed: 1,
-      pending: 0,
-    },
-  },
-  {
-    date: '2026-02-18',
-    reservations: {
-      completed: 2,
-      confirmed: 2,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-02-20',
-    reservations: {
-      completed: 0,
-      confirmed: 1,
-      pending: 3,
-    },
-  },
-  {
-    date: '2026-02-23',
-    reservations: {
-      completed: 3,
-      confirmed: 1,
-      pending: 1,
-    },
-  },
-  {
-    date: '2026-02-25',
-    reservations: {
-      completed: 4,
-      confirmed: 1,
-      pending: 0,
-    },
-  },
-] as const;
-
-// TODO: API 연동 시 실제 데이터로 교체
-// 현재는 체험별, 월별로 다른 더미 데이터를 보여주기 위한 임시 로직
-const getReservationData = (
-  activityId: string,
-  month: Date
-): FindReservationsByMonthResponseDto[] => {
-  const monthNumber = month.getMonth() + 1; // 0-based → 1-based
-
-  // 체험 6575: 1월 데이터만 있음
-  if (activityId === '6575') {
-    return monthNumber === 1 ? [...DUMMY_RESERVATION_DATA_JAN] : [];
-  }
-
-  // 체험 6580: 2월 데이터만 있음
-  if (activityId === '6580') {
-    return monthNumber === 2 ? [...DUMMY_RESERVATION_DATA_FEB] : [];
-  }
-
-  // 그 외 체험은 빈 배열
-  return [];
-};
+import EmptyState from '@/shared/components/empty-state/EmptyState';
 
 /**
  * 체험 선택 및 예약 현황 조회 컴포넌트
@@ -228,48 +31,67 @@ const getReservationData = (
  * @returns 렌더링된 예약 선택 컴포넌트
  */
 export default function ReservationSelector() {
-  const activityOptions = DUMMY_MY_ACTIVITIES.activities.map((activity) => ({
-    id: activity.id,
-    title: activity.title,
-  }));
-
-  // ID→제목 매핑을 위한 Map (O(1) 조회 성능)
-  // activityOptions가 변경될 때만 재생성하여 불필요한 계산 방지
-  const activityMap = useMemo(
-    () => new Map(activityOptions.map((opt) => [opt.id.toString(), opt.title])),
-    [activityOptions]
-  );
-
-  // 현재 선택된 체험 ID (드롭다운 value)
-  const [selectedActivityId, setSelectedActivityId] = useState<string>(
-    activityOptions[0]?.id.toString() || ''
-  );
-
   // 달력에 표시할 현재 월 (년/월 정보 포함)
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // 선택된 체험의 월별 예약 현황 데이터
-  const [reservations, setReservations] = useState<FindReservationsByMonthResponseDto[]>([]);
+  // 현재 선택된 체험 ID (드롭다운 value)
+  const [selectedActivityId, setSelectedActivityId] = useState<string>('');
 
-  // 체험 ID 또는 월이 바뀔 때마다 API 호출
+  // 내 체험 목록 조회
+  const { activityOptions, activityMap, isLoading, isError, isFetched, isRefetching } =
+    useMyActivities();
+
+  // 월별 예약 현황 조회 (selectedActivityId와 currentMonth가 변경될 때 자동 재조회)
+  const {
+    reservations,
+    isLoading: isLoadingReservations,
+    isFetched: isFetchedReservations,
+  } = useMonthlyReservations({
+    activityId: Number(selectedActivityId),
+    params: {
+      year: currentMonth.getFullYear().toString(),
+      month: (currentMonth.getMonth() + 1).toString(),
+    },
+  });
+
+  // 체험 목록이 로드되면 첫 번째 체험을 자동 선택
   useEffect(() => {
-    const fetchReservations = async () => {
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth() + 1;
+    if (activityOptions.length > 0 && !selectedActivityId) {
+      const firstActivityId = activityOptions[0].id.toString();
+      setSelectedActivityId(firstActivityId);
+    }
+  }, [activityOptions, selectedActivityId]);
 
-      console.log(`API 호출: 체험 ${selectedActivityId}, ${year}년 ${month}월`);
+  // 초기 로딩 또는 refetch 중일 때 스켈레톤 표시
+  if (isLoading || isRefetching) {
+    return <ReservationSkeleton />;
+  }
 
-      // TODO: 실제 API 호출로 교체
-      // const data = await api.getReservationsByMonth(selectedActivityId, year, month);
-      // setReservations(data);
+  // 에러일 때 안내 메시지 표시
+  if (isError) {
+    return (
+      <div className='mb-80 sm:mb-100 lg:mb-0'>
+        <EmptyState
+          type='error'
+          mainText='체험 목록을 불러오는데 실패했어요.'
+          button={{ text: '다시 시도하기', onClick: () => window.location.reload() }}
+        />
+      </div>
+    );
+  }
 
-      // TODO: 임시 더미 데이터 사용
-      const data = getReservationData(selectedActivityId, currentMonth);
-      setReservations(data);
-    };
-
-    fetchReservations();
-  }, [selectedActivityId, currentMonth]);
+  // 체험이 없을 때 안내 메시지 표시
+  if (isFetched && activityOptions.length === 0) {
+    return (
+      <div className='mb-80 sm:mb-100 lg:mb-0'>
+        <EmptyState
+          type='experience'
+          mainText='아직 등록한 체험이 없어요.'
+          button={{ text: '체험 등록하기', href: '/activities' }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col gap-28 sm:gap-24 lg:gap-32'>
@@ -292,11 +114,15 @@ export default function ReservationSelector() {
       </SelectDropdown>
 
       {/* 선택된 체험의 월별 예약 현황 표시 달력 */}
-      <ReservationCalendar
-        reservations={reservations}
-        currentMonth={currentMonth}
-        onMonthChange={setCurrentMonth}
-      />
+      {!isFetchedReservations && isLoadingReservations ? (
+        <ReservationCalendarSkeleton />
+      ) : (
+        <ReservationCalendar
+          reservations={reservations}
+          currentMonth={currentMonth}
+          onMonthChange={setCurrentMonth}
+        />
+      )}
     </div>
   );
 }

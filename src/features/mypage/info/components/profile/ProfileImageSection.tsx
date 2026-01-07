@@ -7,8 +7,9 @@ import { ProfileImageState } from '@/features/mypage/info/hooks/useProfileForm';
 import Button from '@/shared/components/button/Button';
 import ImagePreview from '@/shared/components/image-preview/ImagePreview';
 import Label from '@/shared/components/label/Label';
-import { ALLOWED_IMAGE_TYPES, MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
+import { MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
 import { UserServiceResponseDto } from '@/shared/types/user';
+import { isSameFile, validateImageFile } from '@/shared/utils/fileUpload';
 
 interface ProfileImageSectionProps {
   user: UserServiceResponseDto;
@@ -49,30 +50,17 @@ export default function ProfileImageSection({
       return;
     }
 
-    if (file.size > MAX_PROFILE_IMAGE_SIZE) {
-      toast.error('이미지 파일은 3MB 이하만 업로드할 수 있어요.');
+    if (!validateImageFile(file, MAX_PROFILE_IMAGE_SIZE)) {
       e.target.value = '';
       return;
     }
 
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-      toast.error('jpg, png, webp 형식만 업로드할 수 있어요.');
-      e.target.value = '';
-      return;
-    }
-
-    if (
-      imageState.type === 'upload'
-      && imageState.file.name === file.name
-      && imageState.file.size === file.size
-      && imageState.file.lastModified === file.lastModified
-    ) {
+    if (imageState.type === 'upload' && isSameFile(imageState.file, file)) {
       toast.info('이미 선택한 이미지입니다.');
       return;
     }
 
     onSelect(file);
-
     e.target.value = '';
   };
 

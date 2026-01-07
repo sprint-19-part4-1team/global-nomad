@@ -6,6 +6,7 @@ import { ReservationStatusBadge } from '@/features/mypage/reservation-list/compo
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationStatus } from '@/shared/types/myReservations';
+import { formatValue } from '@/shared/utils/formatValue';
 
 interface ReservationCardProps {
   status: ReservationStatus;
@@ -65,7 +66,7 @@ export default function ReservationCard({
           <p className='body-14 font-medium text-gray-500 md:body-16'>{schedule}</p>
           <p className='flex gap-8'>
             <span className='body-16 font-bold text-gray-950 md:body-18'>
-              ₩{totalPrice.toLocaleString('ko-KR')}
+              ₩{formatValue(totalPrice)}
             </span>
             <span className='body-14 font-normal text-gray-400 md:body-16'>{headCount}명</span>
           </p>

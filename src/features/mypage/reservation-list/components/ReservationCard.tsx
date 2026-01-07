@@ -11,7 +11,7 @@ export default function ReservationCard() {
     <RoundBox radius={isMobile ? '24' : '32'} className='relative min-h-154 shadow-card'>
       <RoundBox
         radius={isMobile ? '24' : '32'}
-        className='relative z-10 w-[66%] bg-white px-16 py-20 md:px-24 md:py-28 lg:px-28 lg:py-32'>
+        className='relative z-5 w-[66%] bg-white px-16 py-20 md:px-24 md:py-28 lg:px-28 lg:py-32'>
         <ReservationStatusBadge status={ReservationStatus.Canceled} />
         <div className='mt-8 flex flex-col gap-4 md:mt-12 md:gap-6 lg:gap-8'>
           <p className='body-14 font-bold text-gray-950 md:body-16 lg:body-18'>

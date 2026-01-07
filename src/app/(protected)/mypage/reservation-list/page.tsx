@@ -28,9 +28,10 @@ export default function MypageReservationList() {
           />
         ))}
       </section>
-      <section className='h-full w-full bg-gray-25'>
+      <section className='flex h-full w-full flex-col gap-24'>
         {/* TODO: 예약 내역 카드 표시 */}
-        예약 내역 카드 표시 영역
+        <ReservationCard />
+        <ReservationCard />
         <ReservationCard />
       </section>
     </>

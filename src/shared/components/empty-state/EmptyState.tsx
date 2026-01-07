@@ -3,7 +3,7 @@ import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
 import { cn } from '@/shared/utils/cn';
 
-type EmptyType = 'experience' | 'review';
+type EmptyType = 'experience' | 'review' | 'error';
 type ReviewProps = {
   type: 'review';
   mainText: string;
@@ -14,8 +14,13 @@ type ExperienceProps = {
   mainText: string;
   button?: { href: string; text: string };
 };
+type ErrorProps = {
+  type: 'error';
+  mainText: string;
+  button?: { text: string; href?: string; onClick?: () => void };
+};
 
-type EmptyStateProps = ReviewProps | ExperienceProps;
+type EmptyStateProps = ReviewProps | ExperienceProps | ErrorProps;
 
 const EMPTY_STATE_VARIANTS: Record<
   EmptyType,
@@ -30,6 +35,9 @@ const EMPTY_STATE_VARIANTS: Record<
   review: {
     Icon: Icons.SpeechBubble,
     extraClassName: 'text-primary-100',
+  },
+  error: {
+    Icon: Icons.SurprisedEarth,
   },
 };
 
@@ -76,6 +84,15 @@ const EMPTY_STATE_VARIANTS: Record<
  *   mainText="아직 작성된 리뷰가 없습니다."
  * />
  * ```
+ *
+ * @example
+ * ```tsx
+ * <EmptyState
+ *   type="error"
+ *   mainText="체험 목록을 불러오는데 실패했어요."
+ *   button={{ text: '다시 시도하기', onClick: () => window.location.reload() }}
+ * />
+ * ```
  */
 export default function EmptyState({ type, mainText, button }: EmptyStateProps) {
   const { Icon, extraClassName } = EMPTY_STATE_VARIANTS[type];
@@ -88,11 +105,16 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
         <span>{mainText}</span>
       </div>
 
-      {type === 'experience' && button?.href && button.text && (
-        <Button href={button.href} variant='primary'>
-          {button.text}
-        </Button>
-      )}
+      {button?.text
+        && (button?.href ? (
+          <Button href={button.href} variant='primary'>
+            {button.text}
+          </Button>
+        ) : type === 'error' && button?.onClick ? (
+          <Button variant='primary' onClick={button.onClick}>
+            {button.text}
+          </Button>
+        ) : null)}
     </div>
   );
 }

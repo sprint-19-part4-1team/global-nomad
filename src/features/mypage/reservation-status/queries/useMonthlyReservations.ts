@@ -31,13 +31,13 @@ type UseMonthlyReservationsParams = {
  * @param params.params.month - 조회할 월 문자열 (예: "1", "2", ..., "12")
  * @returns 예약 현황 데이터 및 로딩 상태
  * @returns reservations - 날짜별 예약 현황 배열 (빈 배열이 기본값)
- * @returns isLoading - API 호출 중 여부
+ * @returns isPending - API 호출 중 여부
  * @returns isFetched - 데이터가 한 번 이상 fetch 되었는지 여부
  *
  * @example
  * ```tsx
  * // 2026년 1월 예약 현황 조회
- * const { reservations, isLoading, isFetched } = useMonthlyReservations({
+ * const { reservations, isPending, isFetched } = useMonthlyReservations({
  *   activityId: 123,
  *   params: {
  *     year: "2026",
@@ -46,7 +46,7 @@ type UseMonthlyReservationsParams = {
  * });
  *
  * // activityId가 0이면 API 호출 안함
- * const { reservations, isLoading } = useMonthlyReservations({
+ * const { reservations, isPending } = useMonthlyReservations({
  *   activityId: 0,  // enabled: false로 동작
  *   params: {
  *     year: "2026",

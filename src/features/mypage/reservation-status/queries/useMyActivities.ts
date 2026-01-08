@@ -16,7 +16,7 @@ import { useUserStore } from '@/shared/stores/userStore';
  * @returns 체험 목록 데이터 및 상태
  * @returns activityOptions - 체험 목록 배열 (id, title 등 포함)
  * @returns activityMap - activityId(문자열)를 키로 title을 값으로 하는 Map 객체
- * @returns isLoading - 초기 로딩 중 여부
+ * @returns isPending - 초기 로딩 중 여부
  * @returns isError - 에러 발생 여부
  * @returns isFetched - 데이터가 한 번 이상 fetch 되었는지 여부
  * @returns isRefetching - 백그라운드에서 재조회 중 여부
@@ -27,7 +27,7 @@ import { useUserStore } from '@/shared/stores/userStore';
  * const {
  *   activityOptions,
  *   activityMap,
- *   isLoading,
+ *   isPending,
  *   isError,
  *   refetch
  * } = useMyActivities();

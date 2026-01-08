@@ -12,7 +12,7 @@ const useScheduleDateAccordionContext = () => {
   const context = useContext(ScheduleDateAccordionContext);
 
   if (!context) {
-    throw new Error('ScheduleDateAccordionContextt 내부에서 사용하세요.');
+    throw new Error('ScheduleDateAccordionContext 내부에서 사용하세요.');
   }
 
   return context;

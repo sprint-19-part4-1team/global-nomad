@@ -8,4 +8,7 @@ export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
  */
 export const MAX_PROFILE_IMAGE_SIZE = 3 * 1024 * 1024;
 
-// TODO: 체험 등록 이미지 사이즈 제한 추가하기
+/**
+ * 체험 이미지 업로드 사이즈 제한 (5MB)
+ */
+export const MAX_ACTIVITY_IMAGE_SIZE = 5 * 1024 * 1024;

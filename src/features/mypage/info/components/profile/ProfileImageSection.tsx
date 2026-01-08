@@ -1,14 +1,15 @@
 'use client';
 
-import { ChangeEvent, useRef } from 'react';
 import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import { ProfileImageState } from '@/features/mypage/info/hooks/useProfileForm';
 import Button from '@/shared/components/button/Button';
 import ImagePreview from '@/shared/components/image-preview/ImagePreview';
 import Label from '@/shared/components/label/Label';
-import { ALLOWED_IMAGE_TYPES, MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
+import { MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
+import { useFileInput } from '@/shared/hooks/useFileInput';
 import { UserServiceResponseDto } from '@/shared/types/user';
+import { isSameFile, validateImageFile } from '@/shared/utils/fileUpload';
 
 interface ProfileImageSectionProps {
   user: UserServiceResponseDto;
@@ -37,44 +38,18 @@ export default function ProfileImageSection({
   onReset,
   imageState,
 }: ProfileImageSectionProps) {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) {
+  const { fileInputRef, open, handleChange } = useFileInput((file) => {
+    if (!validateImageFile(file, MAX_PROFILE_IMAGE_SIZE)) {
       return;
     }
 
-    if (file.size > MAX_PROFILE_IMAGE_SIZE) {
-      toast.error('이미지 파일은 3MB 이하만 업로드할 수 있어요.');
-      e.target.value = '';
-      return;
-    }
-
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-      toast.error('jpg, png, webp 형식만 업로드할 수 있어요.');
-      e.target.value = '';
-      return;
-    }
-
-    if (
-      imageState.type === 'upload'
-      && imageState.file.name === file.name
-      && imageState.file.size === file.size
-      && imageState.file.lastModified === file.lastModified
-    ) {
+    if (imageState.type === 'upload' && isSameFile(imageState.file, file)) {
       toast.info('이미 선택한 이미지입니다.');
       return;
     }
 
     onSelect(file);
-
-    e.target.value = '';
-  };
+  });
 
   return (
     <div className='flex flex-col'>
@@ -94,7 +69,7 @@ export default function ProfileImageSection({
         type='button'
         aria-label='프로필 이미지 수정'
         className='relative mx-6 my-8 h-120 w-120 cursor-pointer'
-        onClick={handleClick}>
+        onClick={open}>
         <ImagePreview
           className='rounded-full'
           src={typeof previewImage === 'string' ? previewImage : null}

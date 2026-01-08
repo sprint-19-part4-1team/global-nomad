@@ -16,6 +16,8 @@ interface ImagePreviewProps {
   className?: string;
   /** 이미지가 없을 때 렌더링할 fallback UI */
   fallback?: ReactNode;
+  /** 이미지 사이즈 기본값 (120px) */
+  sizes?: string;
   /** 전달되면 이미지 삭제 버튼을 표시하고 클릭 시 호출됨 */
   onRemove?: () => void;
 }
@@ -50,6 +52,7 @@ export default function ImagePreview({
   className,
   fallback,
   onRemove,
+  sizes = '120px',
 }: ImagePreviewProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -84,15 +87,18 @@ export default function ImagePreview({
   return (
     <div className='relative h-full w-full'>
       <div className={cn('relative h-full w-full overflow-hidden', className)}>
-        <Image fill src={imageSrc} alt={alt} className='object-cover' sizes='120px' />
+        <Image fill src={imageSrc} alt={alt} className='object-cover' sizes={sizes} />
       </div>
       {onRemove && (
         <button
           type='button'
-          onClick={onRemove}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
           aria-label='이미지 삭제'
           className='absolute -top-6 -right-4 z-10 flex h-26 w-26 cursor-pointer items-center justify-center rounded-full bg-gray-950 text-white'>
-          <Icons.Close aria-hidden={'true'} className='h-20 w-20' />
+          <Icons.Close aria-hidden='true' className='h-20 w-20' />
         </button>
       )}
     </div>

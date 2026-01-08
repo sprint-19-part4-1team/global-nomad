@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
+import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
 import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
+import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
@@ -14,7 +16,11 @@ export default function MypageReservationList() {
     setSelectedStatus(status);
   };
 
-  // TODO: 마이페이지 예약 내역 리스트 페이지 구현
+  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useMyReservationsQuery({ status: selectedStatus ?? undefined });
+
+  const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
+
   return (
     <>
       <MypageSectionHeader title='예약 내역' description='체험 예약을 변경/취소할 수 있습니다.' />
@@ -29,40 +35,35 @@ export default function MypageReservationList() {
         ))}
       </section>
       <section className='flex w-full flex-col gap-24'>
-        {/* TODO: 예약 내역 카드 표시 */}
-        <ReservationCard
-          status={ReservationStatus.Pending}
-          title='취소할 수 있는 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:30'
-          totalPrice={10000}
-          headCount={10}
-          imageUrl='/og-default.png'
-          reviewSubmitted={false}
-        />
-        <ReservationCard
-          status={ReservationStatus.Completed}
-          title='후기 안남긴 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:34'
-          totalPrice={50000}
-          headCount={50}
-          imageUrl='/og-default.png'
-          reviewSubmitted={false}
-        />
-        <ReservationCard
-          status={ReservationStatus.Completed}
-          title='후기 남긴 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:34'
-          totalPrice={50000}
-          headCount={50}
-          imageUrl='/og-default.png'
-          reviewSubmitted={true}
-        />
+        {isPending && <MypageListSkeleton variant='reservation' />}
+        {isError && <p>예약 내역을 불러오지 못했습니다.</p>}
+
+        {!isPending && !isError && reservations.length === 0 && <p>예약 내역이 없습니다.</p>}
+
+        {!isPending && !isError && reservations.length > 0 && (
+          <>
+            {reservations.map((r) => (
+              <ReservationCard
+                key={r.id}
+                status={r.status}
+                title={r.activity.title}
+                date={r.date}
+                startTime={r.startTime}
+                endTime={r.endTime}
+                totalPrice={r.totalPrice}
+                headCount={r.headCount}
+                imageUrl={r.activity.bannerImageUrl}
+                reviewSubmitted={r.reviewSubmitted}
+              />
+            ))}
+
+            {hasNextPage && (
+              <button type='button' disabled={isFetchingNextPage} onClick={() => fetchNextPage()}>
+                {isFetchingNextPage ? '불러오는 중...' : '더보기'}
+              </button>
+            )}
+          </>
+        )}
       </section>
     </>
   );

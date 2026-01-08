@@ -15,7 +15,7 @@ interface UseMyReservationsQueryParams {
  * - cursorId 기반으로 다음 페이지를 불러옵니다.
  * - status/size가 바뀌면 캐시가 분리됩니다.
  */
-export const useMyReservationsQuery = ({ status, size = 10 }: UseMyReservationsQueryParams) => {
+export const useMyReservationsQuery = ({ status, size = 4 }: UseMyReservationsQueryParams) => {
   const userId = useUserStore((s) => s.user?.id);
 
   return useInfiniteQuery<GetMyReservationsResponse>({

@@ -29,7 +29,7 @@ import ExperienceCard from './ExperienceCard';
  */
 
 const meta: Meta<typeof ExperienceCard> = {
-  title: 'Features/Mypage/Activity/ExperienceCard',
+  title: 'Features/Mypage/Activity/experienceCard',
   component: ExperienceCard,
   tags: ['autodocs'],
   args: {

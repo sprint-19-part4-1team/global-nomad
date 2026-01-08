@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { deleteMyActivity } from '@/shared/apis/feature/myActivities';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 
 /**
@@ -6,13 +7,18 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  *
  * @description
  * - 활동 삭제 API 호출 로직을 캡슐화
- * - 삭제 확인 다이얼로그 표시는 컴포넌트에서 처리
- * - 삭제 성공/실패 시 토스트 알림 처리
- * - UI 컴포넌트와 비즈니스 로직 분리를 위해 사용
+ * - 삭제 확인 다이얼로그를 overlay로 표시하는 헬퍼 함수 제공
+ * - 삭제 성공/실패 시 토스트 알림 및 overlay 정리 처리
+ * - UI 렌더링은 컴포넌트에 위임하고, 삭제 플로우 제어만 담당
  *
- * @param onDelete - 삭제 성공 후 실행할 콜백 함수 (목록 새로고침 등)
- * @returns deleteActivity - 실제 삭제를 수행하는 함수
- * @returns showDeleteConfirm - 삭제 확인 함수 (렌더링 함수를 받음)
+ * @param onDelete - 삭제 성공 후 실행할 콜백 함수 (목록 갱신 등)
+ *
+ * @returns deleteActivity
+ *  - 다이얼로그 없이 바로 삭제를 수행하는 함수
+ *
+ * @returns showDeleteConfirm
+ *  - 삭제 확인 다이얼로그를 overlay에 표시하는 함수
+ *  - 다이얼로그 렌더링 함수(renderDialog)를 인자로 받음
  *
  * @example
  * ```tsx
@@ -20,25 +26,23 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  *   const { showDeleteConfirm } = useActivityDelete(onRefresh);
  *
  *   return (
- *     <button onClick={() => showDeleteConfirm(activityId, (onConfirm) => (
- *       <Dialog onConfirm={onConfirm} />
- *     ))}>
+ *     <button
+ *       onClick={() =>
+ *         showDeleteConfirm(activityId, (onConfirm) => (
+ *           <Dialog onConfirm={onConfirm} />
+ *         ))
+ *       }
+ *     >
  *       삭제하기
  *     </button>
  *   );
  * }
  * ```
  */
-export function useActivityDelete(onDelete: () => void) {
+export const useActivityDelete = (onDelete: () => void) => {
   const deleteActivity = async (id: number) => {
     try {
-      const response = await fetch(`/api/my-activities/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('삭제에 실패했습니다.');
-      }
+      await deleteMyActivity(id);
 
       onDelete();
       overlayStore.pop();
@@ -58,4 +62,4 @@ export function useActivityDelete(onDelete: () => void) {
   };
 
   return { deleteActivity, showDeleteConfirm };
-}
+};

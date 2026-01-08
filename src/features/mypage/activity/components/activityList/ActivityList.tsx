@@ -38,7 +38,7 @@ export default function ActivityList({
     <>
       <ul>
         {data.pages.map((page) =>
-          page.activities.map((activity: any) => (
+          page.activities.map((activity: ActivityBasicDto) => (
             <li key={activity.id} className='mt-20 sm:mt-24'>
               <ExperienceCard {...activity} onDelete={onDelete} />
             </li>

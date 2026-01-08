@@ -4,7 +4,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getMyActivities } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
-// import { GetMyActivitiesParams } from '@/shared/types/myActivities';
 
 /**
  * ## useMyActivitiesInfiniteQuery

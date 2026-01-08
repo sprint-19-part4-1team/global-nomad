@@ -7,8 +7,9 @@ import MypageSectionHeader from '@/features/mypage/common/components/mypage-sect
 import Button from '@/shared/components/button/Button';
 
 export default function MypageActivity() {
+  const PAGE_SIZE = 5;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
-    useMyActivitiesInfiniteQuery(5);
+    useMyActivitiesInfiniteQuery(PAGE_SIZE);
 
   const observerRef = useInfiniteScroll({
     enabled: hasNextPage && !isFetchingNextPage,

@@ -18,7 +18,7 @@ interface ScheduleTimeChipProps {
  * @example
  * ```tsx
  * <ScheduleTimeChip
- *   time="10:00 ~ 11:00"
+ *   startTime="10:00" endTime="11:00"
  *   onRemove={() => removeTime("10:00 ~ 11:00")}
  * />
  * ```

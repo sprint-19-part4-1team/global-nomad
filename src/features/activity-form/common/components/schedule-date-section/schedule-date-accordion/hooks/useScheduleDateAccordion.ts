@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ScheduleDateAccordionContext } from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion.context';
+import { ScheduleDateAccordionContext } from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/context/ScheduleDateAccordion';
 
 /**
  * ## useScheduleDateAccordionContext

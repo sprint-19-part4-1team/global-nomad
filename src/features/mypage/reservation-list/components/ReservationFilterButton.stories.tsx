@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
+import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
 import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationFilterButton from './ReservationFilterButton';
 

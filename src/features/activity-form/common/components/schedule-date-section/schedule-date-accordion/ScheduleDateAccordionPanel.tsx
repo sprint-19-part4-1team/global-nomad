@@ -65,7 +65,7 @@ export default function ScheduleDateAccordionPanel() {
         시작 시간
       </Label>
       <SelectDropdown value={startTime} onChangeValue={setStartTime}>
-        <SelectDropdownTrigger ariaLabelledby='start-time' ref={dropdownTriggerRef}>
+        <SelectDropdownTrigger ariaLabelledBy='start-time' ref={dropdownTriggerRef}>
           <SelectDropdownValue placeholder='시작 시간을 선택해 주세요.' />
         </SelectDropdownTrigger>
         <SelectDropdownContent>

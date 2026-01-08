@@ -1,10 +1,16 @@
 @import 'tailwindcss';
 
-@import './base/tokens.css';
+/* Color, Token, Typography */
 @import './base/colors.css';
+@import './base/tokens.css';
 @import './base/fontFace.css';
 @import './base/fontUtils.css';
-@import './base/hiddenScrollbar.css';
-@import './base/customScrollbar.css';
+
+/* Form Elements */
 @import './base/field.css';
+@import './base/formSection.css';
 @import './base/input.css';
+
+/* Scrollbar */
+@import './base/customScrollbar.css';
+@import './base/hiddenScrollbar.css';

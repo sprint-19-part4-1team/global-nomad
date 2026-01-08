@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
+import { useActivityDelete } from '@/features/mypage/activity/hooks/useActivityDelete';
 import Button from '@/shared/components/button/Button';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -43,7 +43,6 @@ export type ActivitySummaryDto = Pick<
  * />
  * ```
  */
-
 export default function ExperienceCard({
   id,
   title,
@@ -53,35 +52,19 @@ export default function ExperienceCard({
   bannerImageUrl,
   onDelete,
 }: ActivitySummaryDto & { onDelete: () => void }) {
-  const deleteActivity = async (id: number) => {
-    try {
-      const response = await fetch(`/api/my-activities/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('삭제에 실패했습니다.');
-      }
-      onDelete();
-      overlayStore.pop();
-      toast.success('삭제에 성공했습니다.');
-    } catch (error) {
-      console.error('삭제 중 오류 발생:', error);
-      toast.error('삭제에 실패했습니다.');
-    }
-  };
+  const { showDeleteConfirm } = useActivityDelete(onDelete);
 
   const handleClickDelete = (id: number) => {
-    overlayStore.push(
+    showDeleteConfirm(id, (onConfirm) => (
       <Dialog
-        message={`체험을 삭제하시겠습니까?${id}`}
+        message='체험을 삭제하시겠습니까?'
         cancelLabel='취소하기'
         confirmLabel='삭제하기'
         variant='confirm'
         onCancel={overlayStore.pop}
-        onConfirm={() => deleteActivity(id)}
+        onConfirm={onConfirm}
       />
-    );
+    ));
   };
 
   return (

@@ -92,7 +92,7 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
             direction: 'next',
             disabled: nextDisabled,
           })}>
-          <Icons.ArrowRight className='uration-300 w-24 text-gray-950 transition-colors group-hover:text-primary-600' />
+          <Icons.ArrowRight className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
         </button>
       </div>
     </div>

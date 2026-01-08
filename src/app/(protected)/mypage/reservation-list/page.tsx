@@ -83,7 +83,7 @@ export default function MypageReservationList() {
           reservations={reservations}
           emptyText={emptyText}
           setCancelTarget={setCancelTarget}
-          hasNextPage={!!hasNextPage}
+          hasNextPage={hasNextPage}
           isFetchingNextPage={isFetchingNextPage}
           fetchNextPage={fetchNextPage}
         />

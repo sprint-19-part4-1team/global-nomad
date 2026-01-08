@@ -18,6 +18,21 @@ interface ReservationListProps {
   fetchNextPage: () => void;
 }
 
+/**
+ * @description
+ * - 마이페이지 예약 내역 목록을 렌더링하는 컴포넌트입니다.
+ * - 로딩, 에러, 빈 상태, 목록 상태를 하나의 흐름으로 처리합니다.
+ * - 네트워크 에러 발생 시 토스트 메시지를 표시합니다.
+ *
+ * @param isPending - 예약 목록 조회 로딩 여부
+ * @param isError - 예약 목록 조회 에러 여부
+ * @param reservations - 예약 내역 목록 데이터
+ * @param emptyText - 예약 내역이 없을 때 표시할 문구
+ * @param setCancelTarget - 예약 취소 모달을 열기 위한 예약 ID 설정 함수
+ * @param hasNextPage - 추가 페이지 존재 여부
+ * @param isFetchingNextPage - 추가 페이지 조회 중 여부
+ * @param fetchNextPage - 다음 페이지를 불러오는 함수
+ */
 export default function ReservationList({
   isPending,
   isError,

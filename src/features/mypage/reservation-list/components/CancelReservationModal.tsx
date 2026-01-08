@@ -10,6 +10,17 @@ interface CancelReservationModalProps {
   onConfirm: () => void;
 }
 
+/**
+ * @description
+ * - 예약 취소 여부를 사용자에게 확인하는 모달 컴포넌트입니다.
+ * - 모달이 렌더링되는 동안 배경 스크롤을 잠급니다.
+ * - 실제 예약 취소 로직은 수행하지 않으며,
+ *   확인/닫기 이벤트를 상위 컴포넌트로 전달합니다.
+ *
+ * @param isPending - 예약 취소 요청 진행 여부 (버튼 비활성화 및 로딩 텍스트 처리)
+ * @param onClose - 모달을 닫는 콜백
+ * @param onConfirm - 예약 취소를 실행하는 콜백
+ */
 export default function CancelReservationModal({
   isPending,
   onClose,

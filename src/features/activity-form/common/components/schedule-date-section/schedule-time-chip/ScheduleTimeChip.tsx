@@ -24,16 +24,16 @@ interface ScheduleTimeChipProps {
  * ```
  */
 export default function ScheduleTimeChip({ startTime, endTime, onRemove }: ScheduleTimeChipProps) {
-  const label = `${startTime} ~ ${endTime}`;
-
   return (
-    <span className='inline-flex gap-10 rounded-full bg-gray-25 p-8 pl-12 body-13 font-semibold text-gray-800 sm:body-14'>
-      <time dateTime={`${startTime}/${endTime}`}>{label}</time>
+    <span className='inline-flex rounded-full bg-gray-25 p-8 pl-12 body-13 font-semibold text-gray-800 sm:body-14'>
+      <time dateTime={startTime}>{startTime}</time>
+      <span className='mx-4'>~</span>
+      <time dateTime={endTime}>{endTime}</time>
       <button
         type='button'
-        aria-label={`등록한 ${label} 시간 삭제`}
+        aria-label={`예약 시간 ${startTime}부터 ${endTime}까지 삭제`}
         onClick={onRemove}
-        className='h-24 w-24 cursor-pointer text-gray-400'>
+        className='ml-10 h-24 w-24 cursor-pointer text-gray-400'>
         <Icons.Close aria-hidden='true' />
       </button>
     </span>

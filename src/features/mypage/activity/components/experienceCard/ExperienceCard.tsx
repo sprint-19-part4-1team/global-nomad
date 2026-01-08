@@ -40,6 +40,7 @@ export type ActivitySummaryDto = Pick<
  *   rating={4.8}
  *   reviewCount={128}
  *   bannerImageUrl="/images/surfing.jpg"
+ *   onDelete={onDelete}
  * />
  * ```
  */

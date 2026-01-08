@@ -109,13 +109,13 @@ export default function MypageReservationList() {
           <Backdrop />
           <OverlaySurface variant='dialog' position='center' className='px-30 py-28'>
             <div className='flex flex-col items-center justify-center gap-24'>
-              <div className='flex flex-col items-center justify-center'>
-                <Icons.SurprisedEarth className='h-88 w-88' />
+              <div className='flex flex-col items-center justify-center gap-2'>
+                <Icons.SurprisedEarth className='h-49 w-49 sm:h-88 sm:w-88' />
                 <span className='body-16 font-bold text-gray-950 sm:body-18'>
                   예약을 취소하시겠어요?
                 </span>
               </div>
-              <div className='grid w-full grid-cols-2 gap-12 px-24'>
+              <div className='grid w-full grid-cols-2 gap-12 sm:px-24'>
                 <Button
                   full
                   variant='secondary'

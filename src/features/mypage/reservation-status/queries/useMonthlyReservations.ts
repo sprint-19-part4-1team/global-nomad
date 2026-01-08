@@ -31,7 +31,7 @@ type UseMonthlyReservationsParams = {
  * @param params.params.month - 조회할 월 문자열 (예: "1", "2", ..., "12")
  * @returns 예약 현황 데이터 및 로딩 상태
  * @returns reservations - 날짜별 예약 현황 배열 (빈 배열이 기본값)
- * @returns isPending - API 호출 중 여부
+ * @returns isPending - 데이터 로딩 중이며 아직 데이터가 없는 상태
  * @returns isFetched - 데이터가 한 번 이상 fetch 되었는지 여부
  *
  * @example

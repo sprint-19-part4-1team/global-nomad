@@ -121,7 +121,7 @@ export default function ImageUploadField({
             {value.map((img, index) => (
               <ImageItem
                 key={img instanceof File ? `${img.name}-${img.size}-${img.lastModified}` : img}>
-                <ImageActionSlot ariaLabel={`${label} 등록`} onClick={handleClick}>
+                <ImageActionSlot ariaLabel={`${label} ${index + 1} 변경`} onClick={handleClick}>
                   <ImageSlotContent
                     value={img}
                     onRemove={() => onRemove(index)}

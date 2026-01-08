@@ -5,7 +5,7 @@ import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationFilterButton from './ReservationFilterButton';
 
 const meta: Meta<typeof ReservationFilterButton> = {
-  title: 'Features/Mypage/Reservation-List/ReservationFilterButton',
+  title: 'Features/Mypage/ReservationList/ReservationFilterButton',
   component: ReservationFilterButton,
   argTypes: {
     status: {

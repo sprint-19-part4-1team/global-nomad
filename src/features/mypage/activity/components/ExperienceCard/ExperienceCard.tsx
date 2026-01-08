@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ActivityBasicDto } from '@/shared/types/activities';
 import { formatValue } from '@/shared/utils/formatValue';
@@ -48,7 +51,39 @@ export default function ExperienceCard({
   rating,
   reviewCount,
   bannerImageUrl,
-}: ActivitySummaryDto) {
+  onDelete,
+}: ActivitySummaryDto & { onDelete: () => void }) {
+  const deleteActivity = async (id: number) => {
+    try {
+      const response = await fetch(`/api/my-activities/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('삭제에 실패했습니다.');
+      }
+      onDelete();
+      overlayStore.pop();
+      toast.success('삭제에 성공했습니다.');
+    } catch (error) {
+      console.error('삭제 중 오류 발생:', error);
+      toast.error('삭제에 실패했습니다.');
+    }
+  };
+
+  const handleClickDelete = (id: number) => {
+    overlayStore.push(
+      <Dialog
+        message={`체험을 삭제하시겠습니까?${id}`}
+        cancelLabel='취소하기'
+        confirmLabel='삭제하기'
+        variant='confirm'
+        onCancel={overlayStore.pop}
+        onConfirm={() => deleteActivity(id)}
+      />
+    );
+  };
+
   return (
     <RoundBox className='flex w-full justify-between gap-24 bg-white px-16 py-24 shadow-card sm:px-20 sm:py-28 md:px-24 md:py-32'>
       <div className='min-w-0 flex-1'>
@@ -74,12 +109,12 @@ export default function ExperienceCard({
           <Button size='sm' href={`/activity/${id}/edit`} variant='secondary'>
             수정하기
           </Button>
-          <Button size='sm' variant='negative'>
+          <Button size='sm' variant='negative' onClick={() => handleClickDelete(id)}>
             삭제하기
           </Button>
         </div>
       </div>
-      <div className='relative h-72 w-72 shrink-0 overflow-hidden rounded-16 border-1 sm:h-140 sm:w-140 sm:rounded-24 md:h-152 md:w-152'>
+      <div className='relative h-72 w-72 shrink-0 overflow-hidden rounded-16 sm:h-140 sm:w-140 sm:rounded-24 md:h-152 md:w-152'>
         <Image
           src={bannerImageUrl}
           alt={title}

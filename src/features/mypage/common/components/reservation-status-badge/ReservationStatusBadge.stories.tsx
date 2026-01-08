@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { ReservationStatusBadge } from '@/features/mypage/common/components/reservation-status-badge/ReservationStatusBadge';
+import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
 import { ReservationStatus } from '@/shared/types/myReservations';
-import { RESERVATION_STATUSES } from '../constants/common';
-import { ReservationStatusBadge } from './ReservationStatusBadge';
 
 const meta: Meta<typeof ReservationStatusBadge> = {
   title: 'Features/Mypage/Reservation-List/ReservationStatusBadge',

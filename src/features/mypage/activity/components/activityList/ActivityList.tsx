@@ -31,7 +31,7 @@ export default function ActivityList({
   }
 
   if (isEmpty) {
-    return <EmptyState mainText='체험이 없습니다.' type='experience' />;
+    return <EmptyState mainText='아직 등록한 체험이 없어요.' type='experience' />;
   }
 
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useRef } from 'react';
+import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import ImageActionSlot from '@/features/activity-form/common/components/image-section/ImageActionSlot';
 import ImageItem from '@/features/activity-form/common/components/image-section/ImageItem';
@@ -9,6 +9,7 @@ import type { ImageValue } from '@/features/activity-form/common/types/image';
 import { isDuplicateImageFile } from '@/features/activity-form/common/utils/isDuplicateImageFile';
 import Label from '@/shared/components/label/Label';
 import { MAX_ACTIVITY_IMAGE_SIZE } from '@/shared/constants';
+import { useFileInput } from '@/shared/hooks/useFileInput';
 import { cn } from '@/shared/utils/cn';
 import { validateImageFile } from '@/shared/utils/fileUpload';
 
@@ -43,44 +44,39 @@ export default function ImageUploadField({
   onChange,
   onRemove,
 }: ImageUploadFieldProps) {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const activeIndexRef = useRef<number | null>(null);
 
   const count = Array.isArray(value) ? value.length : value ? 1 : 0;
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) {
-      return;
-    }
-
+  const { fileInputRef, open, handleChange } = useFileInput((file) => {
     if (!validateImageFile(file, MAX_ACTIVITY_IMAGE_SIZE)) {
-      e.target.value = '';
       return;
     }
 
     if (isDuplicateImageFile(value, file)) {
       toast.info('이미 선택한 이미지입니다.');
-      e.target.value = '';
       return;
     }
 
     if (Array.isArray(value)) {
-      if (value.length >= maxCount) {
-        e.target.value = '';
-        return;
-      }
+      const targetIndex = activeIndexRef.current;
 
-      onChange([...value, file]);
+      if (typeof targetIndex === 'number') {
+        const next = [...value];
+        next[targetIndex] = file;
+        onChange(next);
+      } else {
+        if (value.length >= maxCount) {
+          return;
+        }
+        onChange([...value, file]);
+      }
     } else {
       onChange(file);
     }
 
-    e.target.value = '';
-  };
+    activeIndexRef.current = null;
+  });
 
   return (
     <div className='flex flex-col gap-8 sm:gap-10'>
@@ -106,9 +102,7 @@ export default function ImageUploadField({
       <div className='grid grid-cols-2 gap-14 sm:flex sm:gap-16'>
         {!Array.isArray(value) && (
           <ImageItem>
-            <ImageActionSlot
-              ariaLabel={value ? `${label} 변경` : `${label} 등록`}
-              onClick={handleClick}>
+            <ImageActionSlot ariaLabel={value ? `${label} 변경` : `${label} 등록`} onClick={open}>
               <ImageSlotContent
                 value={value}
                 onRemove={value ? () => onRemove() : undefined}
@@ -125,7 +119,12 @@ export default function ImageUploadField({
                 key={img instanceof File ? `${img.name}-${img.size}-${img.lastModified}` : img}
                 aria-posinset={index + 1}
                 aria-setsize={value.length}>
-                <ImageActionSlot ariaLabel={`${label} ${index + 1} 변경`} onClick={handleClick}>
+                <ImageActionSlot
+                  ariaLabel={`${label} ${index + 1} 변경`}
+                  onClick={() => {
+                    activeIndexRef.current = index;
+                    open();
+                  }}>
                   <ImageSlotContent
                     value={img}
                     onRemove={() => onRemove(index)}
@@ -137,7 +136,7 @@ export default function ImageUploadField({
 
             {value.length < maxCount && (
               <ImageItem>
-                <ImageActionSlot ariaLabel={`${label} 등록`} onClick={handleClick}>
+                <ImageActionSlot ariaLabel={`${label} 등록`} onClick={open}>
                   <ImageSlotContent value={null} />
                 </ImageActionSlot>
               </ImageItem>

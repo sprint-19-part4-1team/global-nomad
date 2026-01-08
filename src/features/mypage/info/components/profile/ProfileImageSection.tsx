@@ -1,6 +1,5 @@
 'use client';
 
-import { ChangeEvent, useRef } from 'react';
 import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import { ProfileImageState } from '@/features/mypage/info/hooks/useProfileForm';
@@ -8,6 +7,7 @@ import Button from '@/shared/components/button/Button';
 import ImagePreview from '@/shared/components/image-preview/ImagePreview';
 import Label from '@/shared/components/label/Label';
 import { MAX_PROFILE_IMAGE_SIZE } from '@/shared/constants';
+import { useFileInput } from '@/shared/hooks/useFileInput';
 import { UserServiceResponseDto } from '@/shared/types/user';
 import { isSameFile, validateImageFile } from '@/shared/utils/fileUpload';
 
@@ -38,20 +38,8 @@ export default function ProfileImageSection({
   onReset,
   imageState,
 }: ProfileImageSectionProps) {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) {
-      return;
-    }
-
+  const { fileInputRef, open, handleChange } = useFileInput((file) => {
     if (!validateImageFile(file, MAX_PROFILE_IMAGE_SIZE)) {
-      e.target.value = '';
       return;
     }
 
@@ -61,8 +49,7 @@ export default function ProfileImageSection({
     }
 
     onSelect(file);
-    e.target.value = '';
-  };
+  });
 
   return (
     <div className='flex flex-col'>
@@ -82,7 +69,7 @@ export default function ProfileImageSection({
         type='button'
         aria-label='프로필 이미지 수정'
         className='relative mx-6 my-8 h-120 w-120 cursor-pointer'
-        onClick={handleClick}>
+        onClick={open}>
         <ImagePreview
           className='rounded-full'
           src={typeof previewImage === 'string' ? previewImage : null}

@@ -137,9 +137,12 @@ export default function ReservationCalendar({
                 aria-label={format(day, 'yyyy년 M월 d일', { locale: ko })}
                 onClick={() => hasReservation && handleDateClick(day)}
                 className={cn(
-                  'flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-5 sm:px-12 sm:pt-18 sm:pb-10',
+                  'flex h-104 flex-col items-center gap-6 border-t px-4 pt-10 pb-6 sm:h-124 sm:gap-4 sm:px-12 sm:pt-14 sm:pb-10',
                   index < 7 ? 'border-gray-100' : 'border-gray-50',
-                  { 'bg-green-100': isToday, 'cursor-pointer': hasReservation }
+                  {
+                    'outline-2 -outline-offset-2 outline-primary-500': isToday,
+                    'cursor-pointer': hasReservation,
+                  }
                 )}>
                 <div className='relative flex'>
                   <span

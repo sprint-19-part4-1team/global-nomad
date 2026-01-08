@@ -55,7 +55,7 @@ export default function ScheduleDurationRadio({
         disabled={disabled}
         className='peer sr-only'
       />
-      <span className='flex w-100 cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white px-16 py-9 peer-checked:border-primary-500 peer-checked:bg-primary-100 peer-disabled:cursor-not-allowed peer-disabled:border-0 peer-disabled:bg-gray-50 sm:py-11'>
+      <span className='flex w-100 cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white px-16 py-9 peer-checked:border-primary-500 peer-checked:bg-primary-100 peer-disabled:cursor-not-allowed peer-disabled:border-0 peer-disabled:bg-gray-100 sm:py-11'>
         <span className={cn('body-14 font-semibold text-gray-700 sm:body-16', itemStyle)}>
           {label}
         </span>

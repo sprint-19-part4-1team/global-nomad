@@ -5,9 +5,9 @@ import { cn } from '@/shared/utils/cn';
 const labelVariants = cva('w-fit text-gray-950', {
   variants: {
     variant: {
-      authForm: 'body-14 sm:body-16 text-left font-medium',
-      form: 'body-14 sm:body-16 text-left font-bold',
-      review: 'body-16 sm:body-18 text-center font-bold',
+      authForm: 'body-14 sm:body-16 font-medium',
+      form: 'form-title',
+      review: 'w-full body-16 sm:body-18 text-center font-bold',
     },
   },
   defaultVariants: {

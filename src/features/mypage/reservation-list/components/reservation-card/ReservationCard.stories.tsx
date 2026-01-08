@@ -3,7 +3,7 @@ import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationCard from './ReservationCard';
 
 const meta: Meta<typeof ReservationCard> = {
-  title: 'features/mypage/reservation-list/ReservationCard',
+  title: 'Features/Mypage/reservation-list/ReservationCard',
   component: ReservationCard,
   parameters: {
     layout: 'centered',

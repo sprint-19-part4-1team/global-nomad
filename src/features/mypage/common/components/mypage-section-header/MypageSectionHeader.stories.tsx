@@ -22,7 +22,7 @@ import MypageSectionHeader from '@/features/mypage/common/components/mypage-sect
  */
 
 const meta: Meta<typeof MypageSectionHeader> = {
-  title: 'Features/Mypage/MypageSectionHeader',
+  title: 'Features/Mypage/Common/MypageSectionHeader',
   component: MypageSectionHeader,
   parameters: {
     layout: 'padded',

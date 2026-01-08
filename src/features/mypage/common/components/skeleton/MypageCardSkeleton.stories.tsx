@@ -18,7 +18,7 @@ import MypageCardSkeleton from '@/features/mypage/common/components/skeleton/Myp
  * - `className`: 추가 CSS 클래스명 (선택)
  */
 const meta: Meta<typeof MypageCardSkeleton> = {
-  title: 'Features/Mypage/MypageCardSkeleton',
+  title: 'Features/Mypage/Common/MypageCardSkeleton',
   component: MypageCardSkeleton,
   render: (args) => (
     <div className='w-327 bg-gray-500 px-20 py-20 sm:w-486 lg:w-642'>

@@ -2,7 +2,7 @@ import {
   RESERVATION_STATUS_LABEL,
   statusBackgroundVariants,
   statusTextVariants,
-} from '@/features/mypage/reservation-list/constants/common';
+} from '@/features/mypage/common/constants/reservationStatus';
 import { ReservationStatus } from '@/shared/types/myReservations';
 import { cn } from '@/shared/utils/cn';
 

@@ -9,7 +9,7 @@ import ScheduleTimeChip from '@/features/activity-form/common/components/schedul
  * - 시간 텍스트와 함께 삭제 버튼을 제공합니다.
  */
 const meta: Meta<typeof ScheduleTimeChip> = {
-  title: 'features/activity-form/ScheduleTimeChip',
+  title: 'Features/ActivityForm/ScheduleTimeChip',
   component: ScheduleTimeChip,
   argTypes: {
     onRemove: {

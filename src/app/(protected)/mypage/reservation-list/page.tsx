@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
+import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
 import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
-import { RESERVATION_STATUSES } from '@/features/mypage/reservation-list/constants/common';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {

@@ -25,7 +25,7 @@ interface ScheduleTimeChipProps {
  */
 export default function ScheduleTimeChip({ startTime, endTime, onRemove }: ScheduleTimeChipProps) {
   return (
-    <span className='inline-flex rounded-full bg-gray-25 p-8 pl-12 body-13 font-semibold text-gray-800 sm:body-14'>
+    <li className='inline-flex rounded-full bg-gray-25 p-8 pl-12 body-13 font-semibold text-gray-800 sm:body-14'>
       <time dateTime={startTime}>{startTime}</time>
       <span className='mx-4'>~</span>
       <time dateTime={endTime}>{endTime}</time>
@@ -36,6 +36,6 @@ export default function ScheduleTimeChip({ startTime, endTime, onRemove }: Sched
         className='ml-10 h-24 w-24 cursor-pointer text-gray-400'>
         <Icons.Close aria-hidden='true' />
       </button>
-    </span>
+    </li>
   );
 }

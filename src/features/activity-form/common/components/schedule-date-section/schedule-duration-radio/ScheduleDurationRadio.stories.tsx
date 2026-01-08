@@ -20,8 +20,8 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     value: { control: 'number' },
     label: { control: 'text' },
+    onChange: { action: 'changed' },
   },
-
   args: {
     label: '1시간',
     name: 'duration',

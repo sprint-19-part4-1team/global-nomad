@@ -10,7 +10,7 @@ type PopularSlideProps = {
 };
 
 export const carouselButtonVariants = cva(
-  'relative flex h-54 w-54 cursor-pointer items-center justify-center rounded-full border bg-white duration-300',
+  'group relative flex h-54 w-54 cursor-pointer items-center justify-center rounded-full border bg-white duration-300',
   {
     variants: {
       direction: {
@@ -80,7 +80,7 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
             direction: 'prev',
             disabled: prevDisabled,
           })}>
-          <Icons.ArrowLeft className='transition-color w-24 text-gray-950 transition duration-300 group-hover:text-primary-600' />
+          <Icons.ArrowLeft className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
         </button>
 
         <button
@@ -92,7 +92,7 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
             direction: 'next',
             disabled: nextDisabled,
           })}>
-          <Icons.ArrowRight className='transition-color w-24 text-gray-950 transition duration-300 group-hover:text-primary-600' />
+          <Icons.ArrowRight className='uration-300 w-24 text-gray-950 transition-colors group-hover:text-primary-600' />
         </button>
       </div>
     </div>

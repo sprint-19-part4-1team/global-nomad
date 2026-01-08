@@ -22,8 +22,8 @@ interface ScheduleTimeSectionProps {
  * @example
  * ```tsx
  * const times = [
- *   { startTime: '10:00', endTime: '11:00' },
- *   { startTime: '14:00', endTime: '15:00' },
+ *   { date: '2026-01-01', startTime: '10:00', endTime: '11:00' },
+ *   { date: '2026-01-01', startTime: '14:00', endTime: '15:00' },
  * ];
  *
  * <ScheduleTimeSection
@@ -44,9 +44,9 @@ export default function ScheduleTimeSection({ times, onRemoveTime }: ScheduleTim
   return (
     <ScheduleTimeFieldSet>
       <ul className='mt-6 flex flex-wrap gap-12 sm:mt-8'>
-        {times.map(({ startTime, endTime }, index) => (
+        {times.map(({ date, startTime, endTime }, index) => (
           <ScheduleTimeChip
-            key={`${startTime}-${endTime}`}
+            key={`${date}-${startTime}-${endTime}`}
             startTime={startTime}
             endTime={endTime}
             onRemove={() => onRemoveTime(index)}

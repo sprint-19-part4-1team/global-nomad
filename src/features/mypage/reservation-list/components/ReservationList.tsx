@@ -13,7 +13,7 @@ interface ReservationListProps {
   reservations: GetMyReservationsResponse['reservations'];
   emptyText: string;
   setCancelTarget: (id: number) => void;
-  hasNextPage: boolean;
+  hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
   fetchNextPage: () => void;
 }

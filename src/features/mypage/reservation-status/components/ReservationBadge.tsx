@@ -1,7 +1,7 @@
 import {
   CALENDAR_STYLE,
   RESERVATION_STATUS_CONFIG,
-} from '@/features/mypage/reservation-status/constants/reservationStatus';
+} from '@/features/mypage/reservation-status/constants/calendarConfig';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
 
 /**

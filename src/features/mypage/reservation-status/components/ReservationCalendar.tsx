@@ -7,7 +7,7 @@ import ReservationBadge from '@/features/mypage/reservation-status/components/Re
 import {
   CALENDAR_STYLE,
   WEEK_DAYS,
-} from '@/features/mypage/reservation-status/constants/reservationStatus';
+} from '@/features/mypage/reservation-status/constants/calendarConfig';
 import { useReservationCalendar } from '@/features/mypage/reservation-status/hooks/useReservationCalendar';
 import Title from '@/shared/components/title/Title';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';

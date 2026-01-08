@@ -29,6 +29,7 @@ export default function ActivityForm() {
         <h3 className='sr-only'>이미지</h3>
 
         <ImageUploadField
+          id='banner-image'
           label='배너 이미지'
           maxCount={1}
           value={bannerImage}
@@ -37,6 +38,7 @@ export default function ActivityForm() {
         />
 
         <ImageUploadField
+          id='intro-image'
           label='소개 이미지'
           maxCount={4}
           helperText='* 최소 1장 등록'

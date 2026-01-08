@@ -7,13 +7,14 @@ import ImageItem from '@/features/activity-form/common/components/image-section/
 import ImageSlotContent from '@/features/activity-form/common/components/image-section/ImageSlotContent';
 import type { ImageValue } from '@/features/activity-form/common/types/image';
 import { isDuplicateImageFile } from '@/features/activity-form/common/utils/isDuplicateImageFile';
-import Label from '@/shared/components/label/Label';
 import { MAX_ACTIVITY_IMAGE_SIZE } from '@/shared/constants';
 import { useFileInput } from '@/shared/hooks/useFileInput';
 import { cn } from '@/shared/utils/cn';
 import { validateImageFile } from '@/shared/utils/fileUpload';
 
 interface ImageUploadFieldProps {
+  /** 필드 식별 id */
+  id: string;
   /** 라벨 텍스트 */
   label: string;
   /** 업로드 가능한 최대 이미지 개수 */
@@ -37,6 +38,7 @@ interface ImageUploadFieldProps {
  * - 이미지 추가, 삭제, 중복 검사, 업로드 제한 검증 로직을 포함합니다.
  */
 export default function ImageUploadField({
+  id,
   label,
   maxCount,
   helperText,
@@ -79,19 +81,23 @@ export default function ImageUploadField({
   });
 
   return (
-    <div className='flex flex-col gap-8 sm:gap-10'>
-      <Label variant='form' className='flex'>
-        {label} (
-        <span className={cn(count > 0 ? 'text-primary-500' : 'text-red-500')}>{count}</span>/
-        {maxCount})
+    <fieldset>
+      <legend id={`${id}-legend`} className='flex body-14 font-bold text-gray-950 sm:body-16'>
+        {label} <span className='pl-2 font-normal'>(</span>
+        <span className={cn(count > 0 ? 'text-primary-500' : 'text-red-500')}>{count}</span>
+        <span className='font-normal'>/</span>
+        {maxCount}
+        <span className='font-normal'>)</span>
         {helperText && (
           <small className='inline-block pl-4 body-12 font-semibold text-red-500'>
             {helperText}
           </small>
         )}
-      </Label>
+      </legend>
 
       <input
+        id={id}
+        name={id}
         ref={fileInputRef}
         type='file'
         accept='image/*'
@@ -99,7 +105,7 @@ export default function ImageUploadField({
         onChange={handleChange}
       />
 
-      <div className='grid grid-cols-2 gap-14 sm:flex sm:gap-16'>
+      <div className='mt-8 grid grid-cols-2 gap-14 sm:mt-10 sm:flex sm:gap-16'>
         {!Array.isArray(value) && (
           <ImageItem>
             <ImageActionSlot ariaLabel={value ? `${label} 변경` : `${label} 등록`} onClick={open}>
@@ -144,6 +150,6 @@ export default function ImageUploadField({
           </>
         )}
       </div>
-    </div>
+    </fieldset>
   );
 }

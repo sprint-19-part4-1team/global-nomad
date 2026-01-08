@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
+import type { ImageValue } from '@/features/activity-form/common/types/image';
 
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityForm() {
@@ -9,13 +10,13 @@ export default function ActivityForm() {
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [introImages, setIntroImages] = useState<(File | string)[]>([]);
 
-  const handleBannerChange = (value: File | (File | string)[]) => {
+  const handleBannerChange = (value: ImageValue) => {
     if (value instanceof File) {
       setBannerImage(value);
     }
   };
 
-  const handleIntroImagesChange = (value: File | (File | string)[]) => {
+  const handleIntroImagesChange = (value: ImageValue) => {
     if (Array.isArray(value)) {
       setIntroImages(value);
     }

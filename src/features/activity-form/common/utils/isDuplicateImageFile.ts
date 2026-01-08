@@ -1,4 +1,4 @@
-import { ImageValue } from '@/features/activity-form/common/types/image';
+import type { ImageValue } from '@/features/activity-form/common/types/image';
 import { isSameFile } from '@/shared/utils/fileUpload';
 
 /**

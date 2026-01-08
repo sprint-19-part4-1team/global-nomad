@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import ImageActionSlot from '@/features/activity-form/common/components/image-section/ImageActionSlot';
 import ImageItem from '@/features/activity-form/common/components/image-section/ImageItem';
 import ImageSlotContent from '@/features/activity-form/common/components/image-section/ImageSlotContent';
-import { ImageValue } from '@/features/activity-form/common/types/image';
+import type { ImageValue } from '@/features/activity-form/common/types/image';
 import { isDuplicateImageFile } from '@/features/activity-form/common/utils/isDuplicateImageFile';
 import Label from '@/shared/components/label/Label';
 import { MAX_ACTIVITY_IMAGE_SIZE } from '@/shared/constants';

@@ -87,7 +87,7 @@ export default function ReservationSelector() {
         <EmptyState
           type='experience'
           mainText='아직 등록한 체험이 없어요.'
-          button={{ text: '체험 등록하기', href: '/activities' }}
+          button={{ text: '체험 등록하기', href: '/activity/new' }}
         />
       </div>
     );

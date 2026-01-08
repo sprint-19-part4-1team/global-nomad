@@ -80,7 +80,10 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
             direction: 'prev',
             disabled: prevDisabled,
           })}>
-          <Icons.ArrowLeft className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
+          <Icons.ArrowLeft
+            className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600'
+            aria-hidden
+          />
         </button>
 
         <button
@@ -92,7 +95,10 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
             direction: 'next',
             disabled: nextDisabled,
           })}>
-          <Icons.ArrowRight className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
+          <Icons.ArrowRight
+            className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600'
+            aria-hidden
+          />
         </button>
       </div>
     </div>

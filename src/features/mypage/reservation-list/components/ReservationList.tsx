@@ -7,7 +7,7 @@ import ReservationCard from '@/features/mypage/reservation-list/components/reser
 import EmptyState from '@/shared/components/empty-state/EmptyState';
 import type { GetMyReservationsResponse } from '@/shared/types/myReservations';
 
-interface ReservationListParams {
+interface ReservationListProps {
   isPending: boolean;
   isError: boolean;
   reservations: GetMyReservationsResponse['reservations'];
@@ -27,7 +27,7 @@ export default function ReservationList({
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
-}: ReservationListParams) {
+}: ReservationListProps) {
   useEffect(() => {
     if (!isError) {
       return;

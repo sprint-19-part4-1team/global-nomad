@@ -5,12 +5,12 @@ import { toast } from 'react-toastify';
 import ImageActionSlot from '@/features/activity-form/common/components/image-section/ImageActionSlot';
 import ImageItem from '@/features/activity-form/common/components/image-section/ImageItem';
 import ImageSlotContent from '@/features/activity-form/common/components/image-section/ImageSlotContent';
+import { ImageValue } from '@/features/activity-form/common/types/image';
+import { isDuplicateImageFile } from '@/features/activity-form/common/utils/isDuplicateImageFile';
 import Label from '@/shared/components/label/Label';
 import { MAX_ACTIVITY_IMAGE_SIZE } from '@/shared/constants';
 import { cn } from '@/shared/utils/cn';
-import { isDuplicateImageFile, validateImageFile } from '@/shared/utils/fileUpload';
-
-export type value = File | string | null | (File | string)[];
+import { validateImageFile } from '@/shared/utils/fileUpload';
 
 interface ImageUploadFieldProps {
   /** 라벨 텍스트 */
@@ -20,9 +20,9 @@ interface ImageUploadFieldProps {
   /** 라벨 옆에 표시될 보조 안내 문구 */
   helperText?: string;
   /** 현재 선택된 이미지 값 */
-  value: value;
+  value: ImageValue;
   /** 이미지 추가 시 호출되는 콜백 */
-  onChange: (value: File | (File | string)[]) => void;
+  onChange: (value: ImageValue) => void;
   /** 이미지 삭제 시 호출되는 콜백 */
   onRemove: (index?: number) => void;
 }
@@ -119,7 +119,8 @@ export default function ImageUploadField({
         {Array.isArray(value) && (
           <>
             {value.map((img, index) => (
-              <ImageItem key={img instanceof File ? `${img.name}-${img.lastModified}` : img}>
+              <ImageItem
+                key={img instanceof File ? `${img.name}-${img.size}-${img.lastModified}` : img}>
                 <ImageActionSlot ariaLabel={`${label} 등록`} onClick={handleClick}>
                   <ImageSlotContent
                     value={img}

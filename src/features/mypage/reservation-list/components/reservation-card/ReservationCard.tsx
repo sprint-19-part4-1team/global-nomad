@@ -1,8 +1,8 @@
 'use client';
 
+import { ReservationStatusBadge } from '@/features/mypage/common/components/reservation-status-badge/ReservationStatusBadge';
 import ReservationCardActionButton from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardActionButton';
 import ReservationCardImage from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardImage';
-import { ReservationStatusBadge } from '@/features/mypage/reservation-list/components/ReservationStatusBadge';
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationStatus } from '@/shared/types/myReservations';

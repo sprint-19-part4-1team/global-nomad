@@ -22,7 +22,7 @@ import { useUserStore } from '@/shared/stores/userStore';
  */
 
 const meta: Meta<typeof Sidemenu> = {
-  title: 'Features/Mypage/Sidemenu',
+  title: 'Features/Mypage/Common/Sidemenu',
   component: Sidemenu,
   argTypes: {
     user: {

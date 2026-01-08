@@ -12,7 +12,7 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
  */
 export const useMyActivitiesInfiniteQuery = (size: number = 10) => {
   return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.MY_ACTIVITY, size],
+    queryKey: [QUERY_KEYS.MY_ACTIVITIES, size],
     queryFn: ({ pageParam }) =>
       getMyActivities({
         cursorId: pageParam,

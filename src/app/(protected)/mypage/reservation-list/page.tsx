@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import Icons from '@/assets/icons';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
@@ -8,22 +10,47 @@ import ReservationCard from '@/features/mypage/reservation-list/components/reser
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
+import Button from '@/shared/components/button/Button';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
+import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLock';
+import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
+import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
+  const [cancelTarget, setCancelTarget] = useState<number | null>(null);
+  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useMyReservationsQuery({ status: selectedStatus ?? undefined });
+  const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
+  const emptyText =
+    selectedStatus === null ? '아직 예약한 체험이 없어요.' : RESERVATION_EMPTY_TEXT[selectedStatus];
 
   const handleStatusSelect = (status: ReservationStatus) => {
     setSelectedStatus((prev) => (prev === status ? null : status));
   };
 
-  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useMyReservationsQuery({ status: selectedStatus ?? undefined });
+  const handleCloseCancelModal = () => {
+    setCancelTarget(null);
+  };
 
-  const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
-  const emptyText =
-    selectedStatus === null ? '아직 예약한 체험이 없어요.' : RESERVATION_EMPTY_TEXT[selectedStatus];
+  const handleCancelReservation = async () => {
+    if (cancelTarget === null) {
+      return;
+    }
+
+    // TODO: 여기서 예약 취소 mutation 연결 (updateMyReservation 등)
+    toast.info('예약 취소 API 연결 전입니다.');
+    handleCloseCancelModal();
+  };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('네트워크 연결이 끊어졌습니다. 다시 시도해주세요.');
+    }
+  }, [isError]);
+
+  useBodyScrollLock(cancelTarget !== null);
 
   return (
     <>
@@ -41,8 +68,6 @@ export default function MypageReservationList() {
       </section>
       <section className='flex w-full flex-col gap-24'>
         {isPending && <MypageListSkeleton variant='reservation' />}
-
-        {isError && <p>예약 내역을 불러오지 못했습니다.</p>}
 
         {!isPending && !isError && reservations.length === 0 && (
           <EmptyState
@@ -66,6 +91,7 @@ export default function MypageReservationList() {
                 headCount={r.headCount}
                 imageUrl={r.activity.bannerImageUrl}
                 reviewSubmitted={r.reviewSubmitted}
+                onCancel={() => setCancelTarget(r.id)}
               />
             ))}
 
@@ -77,6 +103,35 @@ export default function MypageReservationList() {
           </>
         )}
       </section>
+
+      {cancelTarget !== null && (
+        <>
+          <Backdrop />
+          <OverlaySurface variant='dialog' position='center' className='px-30 py-28'>
+            <div className='flex flex-col items-center justify-center gap-24'>
+              <div className='flex flex-col items-center justify-center'>
+                <Icons.SurprisedEarth className='h-88 w-88' />
+                <span className='body-16 font-bold text-gray-950 sm:body-18'>
+                  예약을 취소하시겠어요?
+                </span>
+              </div>
+              <div className='grid w-full grid-cols-2 gap-12 px-24'>
+                <Button
+                  full
+                  variant='secondary'
+                  size='lg'
+                  className='font-semibold'
+                  onClick={handleCloseCancelModal}>
+                  닫기
+                </Button>
+                <Button full size='lg' className='font-semibold' onClick={handleCancelReservation}>
+                  취소하기
+                </Button>
+              </div>
+            </div>
+          </OverlaySurface>
+        </>
+      )}
     </>
   );
 }

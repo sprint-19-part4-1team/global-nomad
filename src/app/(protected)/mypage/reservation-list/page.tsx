@@ -34,11 +34,8 @@ export default function MypageReservationList() {
   };
 
   const cancelReservationMutation = useMutation({
-    mutationFn: async () => {
-      if (cancelTarget === null) {
-        throw new Error('취소 대상 예약이 없습니다.');
-      }
-      return updateMyReservation(cancelTarget, {
+    mutationFn: async (reservationId: number) => {
+      return updateMyReservation(reservationId, {
         status: ReservationStatus.Canceled,
       });
     },
@@ -56,7 +53,12 @@ export default function MypageReservationList() {
     if (cancelReservationMutation.isPending) {
       return;
     }
-    cancelReservationMutation.mutate();
+    if (cancelTarget === null) {
+      toast.error('취소 대상 예약이 없습니다.');
+      return;
+    }
+
+    cancelReservationMutation.mutate(cancelTarget);
   };
 
   return (
@@ -75,7 +77,7 @@ export default function MypageReservationList() {
         ))}
       </section>
 
-      {/* 예약 내역 리스트 색션 */}
+      {/* 예약 내역 리스트 섹션 */}
       <section className='flex w-full flex-col gap-24'>
         <ReservationList
           isPending={isPending}

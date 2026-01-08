@@ -81,8 +81,7 @@ export interface ReservationWithUserResponseDto {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  // TODO: API 연동 시 리스폰스 타입 확인해서 status 타입 변경 필요.
-  status: ReservationStatus;
+  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

@@ -106,7 +106,9 @@ export default function ImageUploadField({
       <div className='grid grid-cols-2 gap-14 sm:flex sm:gap-16'>
         {!Array.isArray(value) && (
           <ImageItem>
-            <ImageActionSlot ariaLabel={`${label} 등록`} onClick={handleClick}>
+            <ImageActionSlot
+              ariaLabel={value ? `${label} 변경` : `${label} 등록`}
+              onClick={handleClick}>
               <ImageSlotContent
                 value={value}
                 onRemove={value ? () => onRemove() : undefined}
@@ -120,7 +122,9 @@ export default function ImageUploadField({
           <>
             {value.map((img, index) => (
               <ImageItem
-                key={img instanceof File ? `${img.name}-${img.size}-${img.lastModified}` : img}>
+                key={img instanceof File ? `${img.name}-${img.size}-${img.lastModified}` : img}
+                aria-posinset={index + 1}
+                aria-setsize={value.length}>
                 <ImageActionSlot ariaLabel={`${label} ${index + 1} 변경`} onClick={handleClick}>
                   <ImageSlotContent
                     value={img}

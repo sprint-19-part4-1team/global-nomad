@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import ReservationCalendar from '@/features/mypage/reservation-status/components/ReservationCalendar';
 import ReservationCalendarSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationCalendarSkeleton';
 import ReservationSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationSkeleton';
-import { useMonthlyReservations } from '@/features/mypage/reservation-status/hooks/useMonthlyReservations';
-import { useMyActivities } from '@/features/mypage/reservation-status/hooks/useMyActivities';
+import { useMonthlyReservations } from '@/features/mypage/reservation-status/queries/useMonthlyReservations';
+import { useMyActivities } from '@/features/mypage/reservation-status/queries/useMyActivities';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -38,13 +38,13 @@ export default function ReservationSelector() {
   const [selectedActivityId, setSelectedActivityId] = useState<string>('');
 
   // 내 체험 목록 조회
-  const { activityOptions, activityMap, isLoading, isError, isFetched, isRefetching, refetch } =
+  const { activityOptions, activityMap, isPending, isError, isFetched, isRefetching, refetch } =
     useMyActivities();
 
   // 월별 예약 현황 조회 (selectedActivityId와 currentMonth가 변경될 때 자동 재조회)
   const {
     reservations,
-    isLoading: isLoadingReservations,
+    isPending: isPendingReservations,
     isFetched: isFetchedReservations,
   } = useMonthlyReservations({
     activityId: Number(selectedActivityId),
@@ -63,7 +63,7 @@ export default function ReservationSelector() {
   }, [activityOptions, selectedActivityId]);
 
   // 초기 로딩 또는 refetch 중일 때 스켈레톤 표시
-  if (isLoading || isRefetching) {
+  if (isPending || isRefetching) {
     return <ReservationSkeleton />;
   }
 
@@ -114,7 +114,7 @@ export default function ReservationSelector() {
       </SelectDropdown>
 
       {/* 선택된 체험의 월별 예약 현황 표시 달력 */}
-      {!isFetchedReservations && isLoadingReservations ? (
+      {!isFetchedReservations && isPendingReservations ? (
         <ReservationCalendarSkeleton />
       ) : (
         <ReservationCalendar

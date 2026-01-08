@@ -66,7 +66,7 @@ export const useMonthlyReservations = ({ activityId, params }: UseMonthlyReserva
   // userId가 없거나 activityId가 null일 때 쿼리 비활성화
   const enabled = !!userId && !!activityId;
 
-  const { data, isLoading, isFetched } = useQuery({
+  const { data, isPending, isFetched } = useQuery({
     queryKey: QUERY_KEYS.MY_ACTIVITY_RESERVATION_DASHBOARD(activityId, queryParams, userId),
     queryFn: () => getMyActivityReservationDashboard(activityId, queryParams),
     enabled: enabled,
@@ -74,7 +74,7 @@ export const useMonthlyReservations = ({ activityId, params }: UseMonthlyReserva
 
   return {
     reservations: data || [],
-    isLoading,
+    isPending,
     isFetched,
   };
 };

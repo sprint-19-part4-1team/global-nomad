@@ -25,24 +25,25 @@ type useDailyReservationsParams = {
  *
  * @param params - 체험 ID와 날짜 쿼리 파라미터
  * @param params.activityId - 조회할 체험의 ID
- * @param params.params - 날짜별 예약 스케줄 조회를 위한 쿼리 파라미터
- * @returns 스케줄 목록 및 쿼리 상태를 포함하는 객체
- * - `reservations`: 예약 스케줄 목록 (빈 배열 기본값)
+ * @param params.params.date - 조회할 날짜 (YYYY-MM-DD 형식)
+ * @returns 스케줄 목록 및 로딩 상태를 포함하는 객체
+ * - `schedules`: 예약 스케줄 목록 (빈 배열 기본값)
  * - `isPending`: 데이터 로딩 중 여부
- * - `isFetched`: 데이터 조회 완료 여부
  *
  * @example
  * ```tsx
- * const { reservations, isPending } = useDailyReservations({
+ * const { schedules, isPending } = useDailyReservations({
  *   activityId: 123,
  *   params: { date: '2023-02-10' }
  * });
+ *
+ * if (isPending) return <ReservationDropdownSkeleton />;
  * ```
  */
 export const useDailyReservations = ({ activityId, params }: useDailyReservationsParams) => {
   const userId = useUserStore((s) => s.user?.id);
 
-  const { data, isPending, isFetched } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: QUERY_KEYS.MY_ACTIVITY_RESERVED_SCHEDULE(activityId, params, userId),
     queryFn: () => getMyActivityReservedSchedules(activityId, params),
     enabled: !!userId,
@@ -51,6 +52,5 @@ export const useDailyReservations = ({ activityId, params }: useDailyReservation
   return {
     schedules: data || [],
     isPending,
-    isFetched,
   };
 };

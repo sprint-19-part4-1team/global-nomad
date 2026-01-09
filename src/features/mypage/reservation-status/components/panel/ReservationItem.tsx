@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ReservationStatusBadge } from '@/features/mypage/common/components/reservation-status-badge/ReservationStatusBadge';
 import { useUpdateReservationStatusMutation } from '@/features/mypage/reservation-status/mutations/useReservationStatusMutations';
 import Button from '@/shared/components/button/Button';
+import { ActivityReservationStatus } from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 /**
@@ -11,7 +12,7 @@ import { ReservationStatus } from '@/shared/types/myReservations';
  * @property {number} reservationId - 예약 ID
  * @property {string} nickname - 예약자 닉네임
  * @property {number} headCount - 예약 인원 수
- * @property {ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed} status - 예약 상태
+ * @property {ActivityReservationStatus} status - 예약 상태
  * @property {number} scheduleId - 스케줄 ID
  * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
  * @property {Array<{ id: number; status: ReservationStatus }>} [allReservationsInSchedule] - 동일 스케줄의 모든 예약 목록
@@ -21,7 +22,7 @@ interface ReservationItemProps {
   reservationId: number;
   nickname: string;
   headCount: number;
-  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+  status: ActivityReservationStatus;
   scheduleId: number;
   date: string;
   allReservationsInSchedule?: Array<{ id: number; status: ReservationStatus }>;

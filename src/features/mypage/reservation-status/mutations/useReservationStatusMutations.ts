@@ -3,14 +3,14 @@ import { toast } from 'react-toastify';
 import { updateMyActivityReservationStatus } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import { UpdatableReservationStatus } from '@/shared/types/myActivities';
 
 /**
  * 예약 상태 업데이트 파라미터 타입
  *
  * @property {number} activityId - 액티비티 ID
  * @property {number} reservationId - 예약 ID
- * @property {ReservationStatus.Confirmed | ReservationStatus.Declined} status - 변경할 예약 상태 (승인 또는 거절)
+ * @property {UpdatableReservationStatus} status - 변경할 예약 상태 (승인 또는 거절)
  * @property {number} scheduleId - 스케줄 ID
  * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
  * @property {string} year - 예약 연도
@@ -19,7 +19,7 @@ import { ReservationStatus } from '@/shared/types/myReservations';
 interface UpdateReservationParams {
   activityId: number;
   reservationId: number;
-  status: ReservationStatus.Confirmed | ReservationStatus.Declined;
+  status: UpdatableReservationStatus;
   scheduleId: number;
   date: string;
   year: string;

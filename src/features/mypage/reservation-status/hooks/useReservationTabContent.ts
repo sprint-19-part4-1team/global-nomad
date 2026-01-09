@@ -1,18 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { useScheduledReservations } from '@/features/mypage/reservation-status/queries/useScheduledReservations';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import { ActivityReservationStatus } from '@/shared/types/myActivities';
 
 /**
  * 예약 탭 컨텐츠 훅의 매개변수 타입
  *
  * @property {string} activityId - 조회할 활동의 ID
  * @property {string} scheduleId - 조회할 스케줄의 ID
- * @property {ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined} currentTab - 현재 활성화된 탭 상태 (신청/승인/거절)
+ * @property {ActivityReservationStatus} currentTab - 현재 활성화된 탭 상태 (신청/승인/거절)
  */
 interface UseReservationTabContentProps {
   activityId: string;
   scheduleId: string;
-  currentTab: ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined;
+  currentTab: ActivityReservationStatus;
 }
 
 /**

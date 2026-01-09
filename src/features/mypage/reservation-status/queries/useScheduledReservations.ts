@@ -2,20 +2,20 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getMyActivityReservations } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import { ActivityReservationStatus } from '@/shared/types/myActivities';
 
 /**
  * useScheduledReservations 훅의 매개변수 타입
  *
  * @property {number} activityId - 조회할 체험의 ID
  * @property {number} scheduleId - 조회할 스케줄의 ID
- * @property {ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed} status - 예약 상태 (거절/대기/승인)
+ * @property {ActivityReservationStatus} status - 예약 상태 (거절/대기/승인)
  * @property {number} [size=10] - 한 페이지당 조회할 예약 개수 (기본값: 10)
  */
 interface UseScheduledReservationsParams {
   activityId: number;
   scheduleId: number;
-  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+  status: ActivityReservationStatus;
   size?: number;
 }
 

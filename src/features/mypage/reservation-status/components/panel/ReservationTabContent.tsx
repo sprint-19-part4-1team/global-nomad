@@ -1,7 +1,7 @@
 import ReservationList from '@/features/mypage/reservation-status/components/panel/ReservationList';
 import ReservationItemSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationItemSkeleton';
 import { useReservationTabContent } from '@/features/mypage/reservation-status/hooks/useReservationTabContent';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import { ActivityReservationStatus } from '@/shared/types/myActivities';
 
 /**
  * 예약 탭 컨텐츠 컴포넌트의 Props 타입
@@ -9,13 +9,13 @@ import { ReservationStatus } from '@/shared/types/myReservations';
  * @property {string} activityId - 체험 ID
  * @property {string} scheduleId - 스케줄 ID
  * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
- * @property {ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined} currentTab - 현재 선택된 탭 상태
+ * @property {ActivityReservationStatus} currentTab - 현재 선택된 탭 상태
  */
 interface ReservationTabContentProps {
   activityId: string;
   scheduleId: string;
   date: string;
-  currentTab: ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined;
+  currentTab: ActivityReservationStatus;
 }
 
 /**

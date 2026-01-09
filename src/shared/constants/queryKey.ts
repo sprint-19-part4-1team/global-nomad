@@ -5,6 +5,7 @@ import {
 } from '@/shared/constants/activities';
 import { GetActivityReviewsParams, GetActivitySchedulesParams } from '@/shared/types/activities';
 import {
+  ActivityReservationStatus,
   GetMyActivityReservationDashboardParams,
   GetMyActivityReservedSchedulesParams,
 } from '@/shared/types/myActivities';
@@ -75,7 +76,7 @@ export const QUERY_KEYS = {
     activityId: number,
     params: {
       scheduleId: number;
-      status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+      status: ActivityReservationStatus;
       size?: number;
     },
     userId?: number

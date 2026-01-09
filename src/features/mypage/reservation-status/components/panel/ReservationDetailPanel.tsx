@@ -9,6 +9,7 @@ import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { Tabs, TabsContent } from '@/shared/components/tabs';
 import Title from '@/shared/components/title/Title';
+import { ActivityReservationStatus } from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationTabButtons from './ReservationTabButtons';
 import ReservationTabContent from './ReservationTabContent';
@@ -26,16 +27,6 @@ interface ReservationDetailPanelProps {
   date: Date;
   onClose: () => void;
 }
-
-/**
- * 예약 스케줄 상태 타입
- *
- * 신청, 승인, 거절 상태만을 포함합니다.
- */
-type ReservationScheduleStatus =
-  | ReservationStatus.Pending
-  | ReservationStatus.Confirmed
-  | ReservationStatus.Declined;
 
 /**
  * 예약 상세 패널 컴포넌트
@@ -67,7 +58,7 @@ export default function ReservationDetailPanel({
   onClose,
 }: ReservationDetailPanelProps) {
   const [selectedScheduleId, setSelectedScheduleId] = useState<string>('');
-  const [tabValue, setTabValue] = useState<ReservationScheduleStatus>(ReservationStatus.Pending);
+  const [tabValue, setTabValue] = useState<ActivityReservationStatus>(ReservationStatus.Pending);
 
   const formattedDate = format(date, 'yyyy-MM-dd');
 
@@ -132,7 +123,7 @@ export default function ReservationDetailPanel({
 
             <Tabs
               value={tabValue}
-              onChangeValue={(value) => setTabValue(value as ReservationScheduleStatus)}>
+              onChangeValue={(value) => setTabValue(value as ActivityReservationStatus)}>
               <div className='flex flex-col gap-20 sm:gap-32'>
                 {/* 예약 상태별 탭 버튼 (신청/승인/거절) */}
                 <ReservationTabButtons scheduleCount={scheduleCount} />

@@ -58,7 +58,7 @@ export default function ActivityForm() {
         {/* TODO: 추가 시 해당 날짜로 포커스, 날짜별 정렬 추가 */}
         <div className='mt-16 flex flex-col gap-16'>
           {scheduledDates.map((date) => (
-            <ScheduleDateAccordion key={date.toISOString()} defaultOpen>
+            <ScheduleDateAccordion key={date.toDateString()} defaultOpen>
               <ScheduleDateAccordionHeader date={date} onDelete={() => handleDeleteDate(date)} />
               <ScheduleDateAccordionPanel />
             </ScheduleDateAccordion>

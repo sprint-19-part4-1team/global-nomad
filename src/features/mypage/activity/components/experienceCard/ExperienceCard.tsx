@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Icons from '@/assets/icons';
+import { useActivityDelete } from '@/features/mypage/activity/hooks/useActivityDelete';
 import Button from '@/shared/components/button/Button';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ActivityBasicDto } from '@/shared/types/activities';
 import { formatValue } from '@/shared/utils/formatValue';
@@ -37,10 +40,10 @@ export type ActivitySummaryDto = Pick<
  *   rating={4.8}
  *   reviewCount={128}
  *   bannerImageUrl="/images/surfing.jpg"
+ *   onDelete={onDelete}
  * />
  * ```
  */
-
 export default function ExperienceCard({
   id,
   title,
@@ -48,7 +51,23 @@ export default function ExperienceCard({
   rating,
   reviewCount,
   bannerImageUrl,
-}: ActivitySummaryDto) {
+  onDelete,
+}: ActivitySummaryDto & { onDelete: () => void }) {
+  const { showDeleteConfirm } = useActivityDelete(onDelete);
+
+  const handleClickDelete = (id: number) => {
+    showDeleteConfirm(id, (onConfirm) => (
+      <Dialog
+        message='체험을 삭제하시겠습니까?'
+        cancelLabel='취소하기'
+        confirmLabel='삭제하기'
+        variant='confirm'
+        onCancel={overlayStore.pop}
+        onConfirm={onConfirm}
+      />
+    ));
+  };
+
   return (
     <RoundBox className='flex w-full justify-between gap-24 bg-white px-16 py-24 shadow-card sm:px-20 sm:py-28 md:px-24 md:py-32'>
       <div className='min-w-0 flex-1'>
@@ -74,17 +93,18 @@ export default function ExperienceCard({
           <Button size='sm' href={`/activity/${id}/edit`} variant='secondary'>
             수정하기
           </Button>
-          <Button size='sm' variant='negative'>
+          <Button size='sm' variant='negative' onClick={() => handleClickDelete(id)}>
             삭제하기
           </Button>
         </div>
       </div>
-      <div className='relative h-72 w-72 shrink-0 overflow-hidden rounded-16 border-1 sm:h-140 sm:w-140 sm:rounded-24 md:h-152 md:w-152'>
+      <div className='relative h-72 w-72 shrink-0 overflow-hidden rounded-16 sm:h-140 sm:w-140 sm:rounded-24 md:h-152 md:w-152'>
         <Image
           src={bannerImageUrl}
           alt={title}
           fill
           sizes='(min-width: 768px) 152px, (min-width: 640px) 140px, 72px'
+          className='object-cover'
         />
       </div>
     </RoundBox>

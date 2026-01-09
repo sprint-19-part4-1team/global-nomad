@@ -24,6 +24,7 @@ import ExperienceCard from './ExperienceCard';
  *   rating={4.8}
  *   reviewCount={128}
  *   bannerImageUrl="/images/surfing.jpg"
+ *   onDelete={onDelete}
  * />
  * ```
  */
@@ -39,6 +40,7 @@ const meta: Meta<typeof ExperienceCard> = {
     rating: 4.8,
     reviewCount: 128,
     bannerImageUrl: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f',
+    onDelete: () => {},
   },
   parameters: {
     layout: 'centered',

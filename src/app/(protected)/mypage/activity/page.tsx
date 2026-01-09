@@ -1,8 +1,21 @@
-import ExperienceCard from '@/features/mypage/activity/ExperienceCard/ExperienceCard';
+'use client';
+
+import ActivityList from '@/features/mypage/activity/components/activityList/ActivityList';
+import { useInfiniteScroll } from '@/features/mypage/activity/hooks/useInfiniteScroll';
+import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';
 
 export default function MypageActivity() {
+  const PAGE_SIZE = 5;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
+    useMyActivitiesInfiniteQuery(PAGE_SIZE);
+
+  const observerRef = useInfiniteScroll({
+    enabled: hasNextPage && !isFetchingNextPage,
+    onIntersect: fetchNextPage,
+  });
+
   return (
     <>
       <MypageSectionHeader
@@ -11,40 +24,17 @@ export default function MypageActivity() {
 단, 체험 승인/대기 중일 때는 삭제를 할 수 없습니다.`}
         btn
       />
+
       <div className='mt-24 sm:mt-32'>
-        <ul>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-          <li className='mt-20 sm:mt-24'>
-            <ExperienceCard
-              id={123}
-              title='제목'
-              rating={3.2}
-              price={11223}
-              reviewCount={3}
-              bannerImageUrl=''
-            />
-          </li>
-        </ul>
+        <ActivityList
+          data={data}
+          isLoading={isLoading}
+          isFetchingNextPage={isFetchingNextPage}
+          observerRef={observerRef}
+          onDelete={refetch}
+        />
       </div>
+
       <Button
         full
         href='/activity/new'

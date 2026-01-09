@@ -1,19 +1,3 @@
-/* 오늘 */
-.custom-day-picker .rdp-today {
-  position: relative;
-  font-weight: 600;
-  color: var(--color-primary-500);
-}
-
-.custom-day-picker .rdp-today::after {
-  content: '오늘';
-  font-size: 11px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 /* 일요일 */
 .custom-day-picker .rdp-weekday:first-child,
 .custom-day-picker .rdp-week .rdp-day:first-child .rdp-day_button {
@@ -24,6 +8,22 @@
 .custom-day-picker .rdp-weekday:last-child,
 .custom-day-picker .rdp-week .rdp-day:last-child .rdp-day_button {
   color: var(--color-primary-600);
+}
+
+/* 오늘 */
+.custom-day-picker .rdp-today .rdp-day_button {
+  position: relative;
+}
+
+.custom-day-picker .rdp-today .rdp-day_button::after {
+  content: '오늘';
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* 월 이동 버튼 */
@@ -42,6 +42,8 @@
 /* 선택된 값 */
 .custom-day-picker .rdp-week .rdp-day.rdp-selected .rdp-day_button {
   border: 0;
+  width: 44px;
+  height: 44px;
   background-color: var(--color-primary-500);
   color: var(--color-white);
 }

@@ -104,6 +104,7 @@ export default function ExperienceCard({
           alt={title}
           fill
           sizes='(min-width: 768px) 152px, (min-width: 640px) 140px, 72px'
+          className='object-cover'
         />
       </div>
     </RoundBox>

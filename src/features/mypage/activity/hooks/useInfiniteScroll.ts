@@ -5,7 +5,7 @@ type Params = {
   enabled?: boolean;
 };
 
-export function useInfiniteScroll({ onIntersect, enabled = true }: Params) {
+export const useInfiniteScroll = ({ onIntersect, enabled = true }: Params) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,4 +32,4 @@ export function useInfiniteScroll({ onIntersect, enabled = true }: Params) {
   }, [onIntersect, enabled]);
 
   return ref;
-}
+};

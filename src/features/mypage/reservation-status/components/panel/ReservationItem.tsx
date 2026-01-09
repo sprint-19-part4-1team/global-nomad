@@ -86,7 +86,7 @@ export default function ReservationItem({
    * 현재 예약을 승인 상태로 변경하고,
    * 동일 스케줄의 다른 신청 상태 예약들을 자동으로 거절 처리합니다.
    */
-  const handleApprove = async () => {
+  const handleApprove = () => {
     // 중복 처리 방지
     if (isProcessing) {
       return;

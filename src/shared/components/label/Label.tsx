@@ -18,6 +18,7 @@ const labelVariants = cva('w-fit', {
 type LabelVariantsProps = VariantProps<typeof labelVariants>;
 
 interface LabelProps extends LabelVariantsProps {
+  id?: string;
   htmlFor?: string;
   children: ReactNode;
   className?: string;
@@ -44,7 +45,9 @@ interface LabelProps extends LabelVariantsProps {
  *   - 리뷰 폼에서 사용되는 라벨
  *   - `lg` 사이즈, 중앙 정렬, bold weight
  *
+ * @param id - 다른 컴포넌트에서 라벨을 참조하기 위한 식별자
  * @param htmlFor - 연결될 form control의 `id` 값
+ * @param children - 라벨에 표시될 텍스트
  * @param variant - 라벨의 스타일 `'authForm' | 'form' | 'review'`
  * @param className - 추가적인 스타일 확장을 위한 클래스
  * @param onClick - selectDropdown 포커스 트리거를 위한 onClick 함수
@@ -62,9 +65,10 @@ interface LabelProps extends LabelVariantsProps {
  * </Label>
  * ```
  */
-export default function Label({ htmlFor, children, className, variant, onClick }: LabelProps) {
+export default function Label({ id, htmlFor, children, className, variant, onClick }: LabelProps) {
   return (
     <label
+      id={id}
       htmlFor={htmlFor}
       className={cn(labelVariants({ variant }), className)}
       onClick={onClick}>

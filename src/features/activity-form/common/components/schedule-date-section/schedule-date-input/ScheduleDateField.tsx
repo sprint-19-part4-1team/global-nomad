@@ -59,17 +59,14 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
       </div>
       <div className='relative' ref={containerRef}>
         <div className='flex items-center gap-16'>
-          <div className='input-box border-field-default' onClick={handleToggle}>
+          <div className='input-box cursor-pointer border-field-default' onClick={handleToggle}>
             <input
               readOnly
               value={date ? format(date, 'yyyy. MM. dd.') : ''}
               placeholder='날짜를 선택해 주세요.'
               className='input-base cursor-pointer'
             />
-            <Icons.Calendar
-              aria-hidden='true'
-              className='input-icon cursor-pointer text-gray-300'
-            />
+            <Icons.Calendar aria-hidden='true' className='input-icon text-gray-300' />
           </div>
           <ScheduleDateAddButton disabled={!date} onAdd={handleAddDate} />
         </div>

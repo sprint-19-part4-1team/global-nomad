@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { updateMyActivityReservationStatus } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
@@ -84,6 +85,11 @@ export const useUpdateReservationStatusMutation = () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.MY_ACTIVITY_RESERVATION_DASHBOARD(activityId, { year, month }, userId),
       });
+    },
+    onError: (error) => {
+      // 에러 로깅
+      console.error('예약 상태 업데이트 실패:', error);
+      toast.error('예약 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };

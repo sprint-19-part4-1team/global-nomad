@@ -24,6 +24,7 @@ interface SelectDropdownTriggerProps extends VariantProps<typeof selectDropdownT
   children: ReactNode;
   className?: string;
   ref?: RefObject<HTMLButtonElement | null>;
+  ariaLabelledBy?: string;
 }
 
 /**
@@ -39,6 +40,7 @@ interface SelectDropdownTriggerProps extends VariantProps<typeof selectDropdownT
  * @param children - SelectDropdownValue 등 트리거 내부에 표시될 콘텐츠
  * @param ref - Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용
  * @param className - variants shadow 타입일 경우 적용할 추가 스타일
+ * @param ariaLabelledBy - 외부 label과 연결하는 접근성 식별자
  *
  * @example
  * ```tsx
@@ -51,6 +53,7 @@ export default function SelectDropdownTrigger({
   children,
   ref,
   className,
+  ariaLabelledBy,
 }: SelectDropdownTriggerProps) {
   const { isOpen, setIsOpen } = useDropdownBaseContext();
   const { triggerId, variants } = useSelectContext();
@@ -59,6 +62,7 @@ export default function SelectDropdownTrigger({
     <button
       ref={ref}
       id={triggerId}
+      aria-labelledby={ariaLabelledBy}
       type='button'
       aria-haspopup='listbox'
       aria-expanded={isOpen}

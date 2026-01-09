@@ -23,11 +23,14 @@ type ScheduleDateRangePolicy = {
  *   `startMonth`, `endMonth`를 계산합니다.
  *
  * @param days - 오늘 기준으로 선택 가능한 최대 일 수
+ * @param baseDate - 기준이 되는 날짜 (기본값: 현재 시간)
  *
  * @returns 일정 선택에 사용되는 날짜 범위 정책 객체
  */
-export const getScheduleDateRange = (days: number): ScheduleDateRangePolicy => {
-  const baseDate = new Date();
+export const getScheduleDateRange = (
+  days: number,
+  baseDate: Date = new Date()
+): ScheduleDateRangePolicy => {
   const today = startOfDay(baseDate);
 
   const minDate = today;

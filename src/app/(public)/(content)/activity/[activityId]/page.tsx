@@ -1,6 +1,12 @@
 import { layoutContainer } from '@/shared/constants/';
 
-export default function ActivityDetail() {
+export default async function ActivityDetail({
+  params,
+}: {
+  params: Promise<{ activityId: string }>;
+}) {
+  const { activityId } = await params;
+
   return (
     <main
       className={layoutContainer({
@@ -8,7 +14,7 @@ export default function ActivityDetail() {
         paddingX: 'wide',
         paddingTop: 'lg',
       })}>
-      체험 상세 페이지
+      activityId : {activityId}
     </main>
   );
 }

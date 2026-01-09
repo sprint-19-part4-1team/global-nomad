@@ -36,6 +36,7 @@ export default function ScheduleDateAccordionHeader({
   onDelete,
 }: ScheduleDateAccordionHeaderProps) {
   const { isOpen, setIsOpen, triggerId, panelId } = useScheduleDateAccordionContext();
+  const formatDate = format(date, 'yyyy년 MM월 dd일 EEEE', { locale: ko });
 
   return (
     <legend
@@ -54,14 +55,12 @@ export default function ScheduleDateAccordionHeader({
           aria-hidden='true'
           className={cn('h-24 w-24 transition duration-300', isOpen && 'rotate-90')}
         />
-        <span className='body-14 font-bold text-gray-900 sm:body-16'>
-          {format(date, 'yyyy년 MM월 dd일 EEEE', { locale: ko })}
-        </span>
+        <span className='body-14 font-bold text-gray-900 sm:body-16'>{formatDate}</span>
       </button>
       <button
         type='button'
         className='cursor-pointer text-gray-300'
-        aria-label={`${date} 일정 삭제`}
+        aria-label={`${formatDate} 일정 삭제`}
         onClick={onDelete}>
         <Icons.Trash aria-hidden='true' className='h-24 w-24' />
       </button>

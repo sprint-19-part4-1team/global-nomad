@@ -47,12 +47,12 @@ interface UseInfiniteScrollProps {
  * );
  * ```
  */
-export function useInfiniteScroll({
+const useInfiniteScroll = ({
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
   threshold = 0.1,
-}: UseInfiniteScrollProps) {
+}: UseInfiniteScrollProps) => {
   const observerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -82,4 +82,6 @@ export function useInfiniteScroll({
   }, [hasNextPage, isFetchingNextPage, fetchNextPage, threshold]);
 
   return observerRef;
-}
+};
+
+export default useInfiniteScroll;

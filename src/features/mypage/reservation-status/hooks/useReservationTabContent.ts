@@ -1,5 +1,5 @@
 import { useScheduledReservations } from '@/features/mypage/reservation-status/queries/useScheduledReservations';
-import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll';
 import { ActivityReservationStatus } from '@/shared/types/myActivities';
 
 /**
@@ -39,11 +39,11 @@ interface UseReservationTabContentProps {
  * });
  * ```
  */
-export function useReservationTabContent({
+export const useReservationTabContent = ({
   activityId,
   scheduleId,
   currentTab,
-}: UseReservationTabContentProps) {
+}: UseReservationTabContentProps) => {
   // 현재 탭의 데이터만 조회
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useScheduledReservations({
@@ -69,4 +69,4 @@ export function useReservationTabContent({
     isFetchingNextPage,
     observerRef,
   };
-}
+};

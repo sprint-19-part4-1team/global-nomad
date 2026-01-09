@@ -4,7 +4,11 @@ import {
   ActivitySortOption,
 } from '@/shared/constants/activities';
 import { GetActivityReviewsParams, GetActivitySchedulesParams } from '@/shared/types/activities';
-import { GetMyActivityReservationDashboardParams } from '@/shared/types/myActivities';
+import {
+  ActivityReservationStatus,
+  GetMyActivityReservationDashboardParams,
+  GetMyActivityReservedSchedulesParams,
+} from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 /**
@@ -62,18 +66,17 @@ export const QUERY_KEYS = {
     userId?: number
   ) => ['myActivityReservationDashboard', activityId, params, userId],
   /** 내 체험 날짜별 예약 정보가 있는 스케줄 조회 */
-  MY_ACTIVITY_RESERVED_SCHEDULE: (activityId: number, date: string, userId?: number) => [
-    'myActivityReservedSchedule',
-    activityId,
-    date,
-    userId,
-  ],
+  MY_ACTIVITY_RESERVED_SCHEDULE: (
+    activityId: number,
+    params: GetMyActivityReservedSchedulesParams,
+    userId?: number
+  ) => ['myActivityReservedSchedule', activityId, params, userId],
   /** 내 체험 예약 시간대별 예약 내역 조회 */
   MY_ACTIVITY_RESERVATIONS: (
     activityId: number,
     params: {
       scheduleId: number;
-      status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+      status: ActivityReservationStatus;
       size?: number;
     },
     userId?: number

@@ -73,10 +73,10 @@ interface UseReservationCalendarReturn {
  * });
  * ```
  */
-export function useReservationCalendar({
+export const useReservationCalendar = ({
   reservations,
   currentMonth,
-}: UseReservationCalendarParams): UseReservationCalendarReturn {
+}: UseReservationCalendarParams): UseReservationCalendarReturn => {
   /**
    * 예약 데이터를 날짜(date)를 key로 하는 Map 형태로 변환
    */
@@ -130,4 +130,4 @@ export function useReservationCalendar({
     calendarDays,
     getReservationForDateMemo,
   };
-}
+};

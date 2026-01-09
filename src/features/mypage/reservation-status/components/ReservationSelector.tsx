@@ -18,17 +18,25 @@ import EmptyState from '@/shared/components/empty-state/EmptyState';
 /**
  * 체험 선택 및 예약 현황 조회 컴포넌트
  *
+ * 사용자의 체험 목록을 드롭다운으로 표시하고,
+ * 선택된 체험의 월별 예약 현황을 달력으로 표시합니다.
+ *
  * @description
  * - 사용자의 체험 목록을 드롭다운으로 표시
  * - 선택된 체험의 월별 예약 현황을 달력으로 표시
  * - 체험 변경 또는 월 변경 시 자동으로 예약 데이터 조회
+ * - 첫 번째 체험을 자동으로 선택
+ *
+ * @returns {JSX.Element} 다음 중 하나를 반환합니다:
+ * - 로딩 중: ReservationSkeleton
+ * - 에러 발생: 에러 메시지 및 재시도 버튼
+ * - 체험 없음: 체험 등록 안내 메시지
+ * - 정상: 체험 선택 드롭다운 및 예약 달력
  *
  * @example
  * ```tsx
  * <ReservationSelector />
  * ```
- *
- * @returns 렌더링된 예약 선택 컴포넌트
  */
 export default function ReservationSelector() {
   // 달력에 표시할 현재 월 (년/월 정보 포함)
@@ -118,6 +126,7 @@ export default function ReservationSelector() {
         <ReservationCalendarSkeleton />
       ) : (
         <ReservationCalendar
+          selectedActivityId={selectedActivityId}
           reservations={reservations}
           currentMonth={currentMonth}
           onMonthChange={setCurrentMonth}

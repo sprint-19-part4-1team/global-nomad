@@ -1,10 +1,12 @@
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import Icons from '@/assets/icons';
 import useScheduleDateAccordionContext from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/hooks/useScheduleDateAccordion';
 import { cn } from '@/shared/utils/cn';
 
 interface ScheduleDateAccordionHeaderProps {
   /** 아코디언 헤더에 표시될 문자열 */
-  date: string;
+  date: Date;
   /** 아코디언 제거용 콜백 함수 */
   onDelete: () => void;
 }
@@ -52,8 +54,9 @@ export default function ScheduleDateAccordionHeader({
           aria-hidden='true'
           className={cn('h-24 w-24 transition duration-300', isOpen && 'rotate-90')}
         />
-        {/* TODO: 날짜 포맷 유틸함수 구현 예정 ex) 2026년 1월 9일 금요일 */}
-        <span className='body-14 font-bold text-gray-900 sm:body-16'>{date}</span>
+        <span className='body-14 font-bold text-gray-900 sm:body-16'>
+          {format(date, 'yyyy년 MM월 dd일 EEEE', { locale: ko })}
+        </span>
       </button>
       <button
         type='button'

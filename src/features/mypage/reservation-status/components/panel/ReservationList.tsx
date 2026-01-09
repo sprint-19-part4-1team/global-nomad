@@ -55,6 +55,7 @@ export default function ReservationList({
           nickname={reservation.nickname}
           headCount={reservation.headCount}
           status={reservation.status}
+          allReservationsInSchedule={reservations}
         />
       ))}
     </div>

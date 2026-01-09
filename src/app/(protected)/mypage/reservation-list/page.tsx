@@ -1,6 +1,5 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
@@ -9,9 +8,8 @@ import CancelReservationModal from '@/features/mypage/reservation-list/component
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
 import ReservationList from '@/features/mypage/reservation-list/components/ReservationList';
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
+import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
-import { updateMyReservation } from '@/shared/apis/feature/myReservations';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -23,7 +21,6 @@ export default function MypageReservationList() {
     useMyReservationsQuery({ status: selectedStatus ?? undefined });
 
   const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
-  const queryClient = useQueryClient();
   const userId = useUserStore((s) => s.user?.id);
   const emptyText =
     selectedStatus === null ? '아직 예약한 체험이 없어요.' : RESERVATION_EMPTY_TEXT[selectedStatus];
@@ -36,28 +33,11 @@ export default function MypageReservationList() {
     setCancelTarget(null);
   };
 
-  const cancelReservationMutation = useMutation({
-    mutationFn: async (reservationId: number) => {
-      return updateMyReservation(reservationId, {
-        status: ReservationStatus.Canceled,
-      });
-    },
-
-    onSuccess: () => {
-      toast.success('예약이 취소되었습니다.');
-      handleCloseCancelModal();
-
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.MY_RESERVATIONS(userId, {
-          status: selectedStatus ?? undefined,
-          size: 4,
-        }),
-      });
-    },
-
-    onError: () => {
-      toast.error('예약 취소에 실패했습니다. 잠시 후 다시 시도해주세요.');
-    },
+  const cancelReservationMutation = useCancelReservationMutation({
+    userId,
+    status: selectedStatus ?? undefined,
+    size: 4,
+    onClose: handleCloseCancelModal,
   });
 
   const handleCancelReservation = () => {

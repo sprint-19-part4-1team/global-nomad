@@ -4,22 +4,20 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
-import CancelReservationModal from '@/features/mypage/reservation-list/components/CancelReservationModal';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
 import ReservationList from '@/features/mypage/reservation-list/components/ReservationList';
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
-  const [cancelTarget, setCancelTarget] = useState<number | null>(null);
-
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useMyReservationsQuery({ status: selectedStatus ?? undefined });
-
   const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
   const userId = useUserStore((s) => s.user?.id);
   const emptyText =
@@ -29,27 +27,36 @@ export default function MypageReservationList() {
     setSelectedStatus((prev) => (prev === status ? null : status));
   };
 
-  const handleCloseCancelModal = () => {
-    setCancelTarget(null);
-  };
-
   const cancelReservationMutation = useCancelReservationMutation({
     userId,
     status: selectedStatus ?? undefined,
     size: 4,
-    onClose: handleCloseCancelModal,
+    onClose: () => overlayStore.pop(),
   });
 
-  const handleCancelReservation = () => {
+  const handleCancelReservation = (reservationId: number) => {
     if (cancelReservationMutation.isPending) {
       return;
     }
-    if (cancelTarget === null) {
-      toast.error('취소 대상 예약이 없습니다.');
-      return;
-    }
 
-    cancelReservationMutation.mutate(cancelTarget);
+    cancelReservationMutation.mutate(reservationId, {
+      onSuccess: () => overlayStore.pop(),
+      onError: () => toast.error('예약 취소에 실패했습니다.'),
+    });
+  };
+
+  const showCancelConfirm = (reservationId: number) => {
+    overlayStore.push(
+      <Dialog
+        variant='confirm'
+        message='정말 예약을 취소하시겠습니까?'
+        cancelLabel='취소'
+        confirmLabel='예약 취소'
+        onCancel={() => overlayStore.pop()}
+        isConfirm={cancelReservationMutation.isPending}
+        onConfirm={() => handleCancelReservation(reservationId)}
+      />
+    );
   };
 
   return (
@@ -76,21 +83,12 @@ export default function MypageReservationList() {
           onRetry={refetch}
           reservations={reservations}
           emptyText={emptyText}
-          setCancelTarget={setCancelTarget}
+          setCancelTarget={showCancelConfirm}
           hasNextPage={hasNextPage}
           isFetchingNextPage={isFetchingNextPage}
           fetchNextPage={fetchNextPage}
         />
       </section>
-
-      {/* 취소 모달 */}
-      {cancelTarget !== null && (
-        <CancelReservationModal
-          isPending={cancelReservationMutation.isPending}
-          onClose={handleCloseCancelModal}
-          onConfirm={handleCancelReservation}
-        />
-      )}
     </>
   );
 }

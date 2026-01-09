@@ -1,15 +1,15 @@
 import ReservationCalendarSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationCalendarSkeleton';
-import Skeleton from '@/shared/components/skeleton/Skeleton';
+import ReservationDropdownSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationDropdownSkeleton';
 
 /**
- * 예약 현황 페이지 스켈레톤 컴포넌트
+ * 예약 현황 페이지의 로딩 스켈레톤 컴포넌트
  *
  * @description
- * - 체험 목록을 불러오는 동안 표시되는 로딩 UI
- * - 드롭다운과 달력 형태의 스켈레톤으로 구성
- * - 실제 컴포넌트의 레이아웃과 동일한 높이로 설정하여 레이아웃 시프트 방지
+ * - 드롭다운과 달력으로 구성된 예약 현황 페이지의 로딩 UI를 표시합니다.
+ * - 반응형 간격(gap)을 적용하여 다양한 화면 크기에 대응합니다.
+ * - 실제 컴포넌트와 동일한 구조로 레이아웃 시프트를 방지합니다.
  *
- * @returns {JSX.Element} ReservationSkeleton 컴포넌트
+ * @returns {JSX.Element} 드롭다운과 달력 스켈레톤을 포함한 컨테이너
  *
  * @example
  * ```tsx
@@ -23,7 +23,7 @@ import Skeleton from '@/shared/components/skeleton/Skeleton';
 export default function ReservationSkeleton() {
   return (
     <div className='flex flex-col gap-28 sm:gap-24 lg:gap-32'>
-      <Skeleton className='h-55 w-full rounded-16' />
+      <ReservationDropdownSkeleton />
       <ReservationCalendarSkeleton />
     </div>
   );

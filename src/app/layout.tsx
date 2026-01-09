@@ -52,9 +52,9 @@ export default function RootLayout({
             <SessionWatcher />
             <AuthGuard>{children}</AuthGuard>
           </RefreshProvider>
+          <OverlayRoot />
         </QueryProvider>
         <ToastProvider />
-        <OverlayRoot />
       </body>
     </html>
   );

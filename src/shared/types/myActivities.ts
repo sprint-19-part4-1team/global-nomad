@@ -16,15 +16,22 @@ export interface GetMyActivityReservedSchedulesParams {
   date: string;
 }
 
+export type ActivityReservationStatus =
+  | ReservationStatus.Declined
+  | ReservationStatus.Pending
+  | ReservationStatus.Confirmed;
+
 export interface GetMyActivityReservationsParams {
   cursorId?: number;
   size?: number;
   scheduleId: number;
-  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+  status: ActivityReservationStatus;
 }
 
+export type UpdatableReservationStatus = ReservationStatus.Declined | ReservationStatus.Confirmed;
+
 export interface UpdateMyActivityReservationBodyDto {
-  status: ReservationStatus.Declined | ReservationStatus.Confirmed;
+  status: UpdatableReservationStatus;
 }
 
 export interface CreateScheduleBodyDto {
@@ -81,8 +88,7 @@ export interface ReservationWithUserResponseDto {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  // TODO: API 연동 시 리스폰스 타입 확인해서 status 타입 변경 필요.
-  status: ReservationStatus;
+  status: ActivityReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

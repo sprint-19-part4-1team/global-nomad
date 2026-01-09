@@ -48,9 +48,15 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
 
   return (
     <div className='input-container'>
-      <Label htmlFor='date' variant='form'>
-        날짜
-      </Label>
+      <div className='flex items-center gap-8'>
+        <Label htmlFor='date' variant='form'>
+          날짜
+        </Label>
+
+        <span className='inline-block rounded-8 bg-gray-25 px-4 py-2 text-center body-12 font-medium text-gray-600 select-none sm:body-14'>
+          선택 가능한 날짜는 내일부터 최대 60일 이후까지입니다.
+        </span>
+      </div>
       <div className='relative' ref={containerRef}>
         <div className='flex items-center gap-16'>
           <div className='input-box border-field-default' onClick={handleToggle}>

@@ -33,10 +33,10 @@ interface ReservationItemProps {
  *
  * 닉네임 및 인원 정보를 표시하는 필드의 스타일을 정의합니다.
  */
-const INFO_FIELD_STYLES = {
-  CONTAINER: 'flex items-center body-14 sm:body-16',
-  LABEL: 'font-bold text-gray-500',
-  VALUE: 'font-medium text-gray-950',
+const infoFieldStyles = {
+  container: 'flex items-center body-14 sm:body-16',
+  label: 'font-bold text-gray-500',
+  value: 'font-medium text-gray-950',
 };
 
 /**
@@ -170,14 +170,14 @@ export default function ReservationItem({
       {/* 예약 정보 영역 */}
       <div className='flex flex-col gap-8 sm:gap-10'>
         {/* 닉네임 필드 */}
-        <div className={`${INFO_FIELD_STYLES.CONTAINER} gap-8`}>
-          <span className={INFO_FIELD_STYLES.LABEL}>닉네임</span>
-          <span className={INFO_FIELD_STYLES.VALUE}>{nickname}</span>
+        <div className={`${infoFieldStyles.container} gap-8`}>
+          <span className={infoFieldStyles.label}>닉네임</span>
+          <span className={infoFieldStyles.value}>{nickname}</span>
         </div>
         {/* 인원 필드 */}
-        <div className={`${INFO_FIELD_STYLES.CONTAINER} gap-22`}>
-          <span className={INFO_FIELD_STYLES.LABEL}>인원</span>
-          <span className={INFO_FIELD_STYLES.VALUE}>{headCount}명</span>
+        <div className={`${infoFieldStyles.container} gap-22`}>
+          <span className={infoFieldStyles.label}>인원</span>
+          <span className={infoFieldStyles.value}>{headCount}명</span>
         </div>
       </div>
 

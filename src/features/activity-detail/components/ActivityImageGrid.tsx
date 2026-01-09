@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { SubImagesType } from '@/shared/types/activities';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * 체험 상세 이미지 그리드 컴포넌트의 Props
@@ -68,15 +69,15 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
 
   return (
     <div className='h-245 w-full overflow-hidden rounded-24 sm:h-400'>
-      <div className={`grid h-full gap-6 sm:gap-12 ${config.grid}`}>
+      <div className={cn('grid h-full gap-6 sm:gap-12', config.grid)}>
         {subImages.map((image, index) => {
           const isFirstInThreeLayout = count === 3 && index === 0;
 
           return (
-            <div key={image.id} className={`relative ${isFirstInThreeLayout ? 'row-span-2' : ''}`}>
+            <div key={image.id} className={cn('relative', isFirstInThreeLayout && 'row-span-2')}>
               <Image
                 src={image.imageUrl}
-                alt={`체험 상세 이미지 ${image.id}`}
+                alt={`체험 상세 이미지 ${index}`}
                 fill
                 sizes={config.sizes}
                 className='object-cover'

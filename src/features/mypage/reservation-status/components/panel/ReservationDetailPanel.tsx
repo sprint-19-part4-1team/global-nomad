@@ -110,7 +110,7 @@ export default function ReservationDetailPanel({
           <div className='flex h-full w-full flex-col gap-12 px-24 py-30 sm:gap-16 sm:p-32 sm:pb-48'>
             {/* 헤더: 날짜 표시 및 닫기 버튼 */}
             <div className='flex w-full items-center justify-between'>
-              <Title as='h3' responsive='md' className='text-gray-950'>
+              <Title as='h3' size='18' className='text-gray-950 sm:heading-20'>
                 {displayDate}
               </Title>
               <button

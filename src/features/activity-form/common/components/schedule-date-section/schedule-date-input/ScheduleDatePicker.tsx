@@ -11,6 +11,8 @@ interface ScheduleDatePickerProps {
   value?: Date;
   /** 날짜 선택 시 호출되는 핸들러 */
   onChange: (date: Date | undefined) => void;
+  /** 열림 여부 */
+  isOpen: boolean;
 }
 
 /**
@@ -27,21 +29,27 @@ interface ScheduleDatePickerProps {
  * <ScheduleDatePicker />
  * ```
  */
-export default function ScheduleDatePicker({ value, onChange }: ScheduleDatePickerProps) {
+export default function ScheduleDatePicker({ value, onChange, isOpen }: ScheduleDatePickerProps) {
   const { minDate, maxDate, startMonth, endMonth } = getScheduleDateRange(
     DEFAULT_SCHEDULE_RANGE_DAYS
   );
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <DayPicker
-      className='custom-day-picker min-h-348 w-fit rounded-16 bg-white p-16 font-sans text-gray-950 shadow-card sm:p-24'
-      mode='single'
-      locale={ko}
-      selected={value}
-      onSelect={onChange}
-      disabled={{ before: minDate, after: maxDate }}
-      startMonth={startMonth}
-      endMonth={endMonth}
-    />
+    <div className='absolute top-full left-0 z-3 mt-4'>
+      <DayPicker
+        className='custom-day-picker min-h-348 w-fit rounded-16 bg-white p-16 font-sans text-gray-950 shadow-card sm:p-24'
+        mode='single'
+        locale={ko}
+        selected={value}
+        onSelect={onChange}
+        disabled={{ before: minDate, after: maxDate }}
+        startMonth={startMonth}
+        endMonth={endMonth}
+      />
+    </div>
   );
 }

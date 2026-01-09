@@ -3,7 +3,7 @@ import { SubImagesType } from '@/shared/types/activities';
 
 /**
  * 체험 상세 이미지 그리드 컴포넌트의 Props
- * @property {SubImagesType[]} subImages - 표시할 이미지 배열 (최대 4개까지 지원)
+ * @property {SubImagesType[]} subImages - 표시할 이미지 배열 (1~4개)
  */
 interface ActivityImageGridProps {
   subImages: SubImagesType[];
@@ -39,7 +39,8 @@ const layoutConfig = {
  * 체험 상세 이미지를 그리드 레이아웃으로 표시하는 컴포넌트
  *
  * Next.js Image 컴포넌트를 사용하여 반응형 이미지 최적화를 제공하며,
- * 단일 이미지의 경우 LCP(Largest Contentful Paint) 최적화를 위해 priority 속성을 적용합니다.
+ * 1개 또는 3개 이미지 레이아웃의 경우 LCP(Largest Contentful Paint) 최적화를 위해
+ * 첫 번째 이미지에 priority 속성을 적용합니다.
  *
  * @description
  * 이미지 개수에 따라 자동으로 최적의 그리드 레이아웃을 적용합니다.
@@ -60,8 +61,10 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
   const count = subImages.length;
   const config = layoutConfig[count as keyof typeof layoutConfig];
 
-  // LCP 최적화: 첫 번째 이미지에 priority 추가
-  const isFirstImageLCP = count === 1;
+  // 지원하지 않는 이미지 개수인 경우 렌더링하지 않음
+  if (!config) {
+    return null;
+  }
 
   return (
     <div className='h-245 w-full overflow-hidden rounded-24 sm:h-400'>
@@ -77,7 +80,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
                 fill
                 sizes={config.sizes}
                 className='object-cover'
-                priority={isFirstImageLCP && index === 0}
+                priority={index === 0 && (count === 1 || count === 3)}
               />
             </div>
           );

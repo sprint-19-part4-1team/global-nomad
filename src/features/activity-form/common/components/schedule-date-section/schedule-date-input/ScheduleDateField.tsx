@@ -60,7 +60,10 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
               placeholder='날짜를 선택해 주세요.'
               className='input-base cursor-pointer'
             />
-            <Icons.Calendar aria-hidden='true' className='input-icon text-gray-300' />
+            <Icons.Calendar
+              aria-hidden='true'
+              className='input-icon cursor-pointer text-gray-300'
+            />
           </div>
           <ScheduleDateAddButton disabled={!date} onAdd={handleAddDate} />
         </div>

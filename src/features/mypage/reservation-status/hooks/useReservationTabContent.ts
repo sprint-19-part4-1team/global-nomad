@@ -1,0 +1,87 @@
+import { useEffect, useRef } from 'react';
+import { useScheduledReservations } from '@/features/mypage/reservation-status/queries/useScheduledReservations';
+import { ReservationStatus } from '@/shared/types/myReservations';
+
+/**
+ * 예약 탭 컨텐츠 훅의 매개변수 타입
+ *
+ * @property {string} activityId - 조회할 활동의 ID
+ * @property {string} scheduleId - 조회할 스케줄의 ID
+ * @property {ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined} currentTab - 현재 활성화된 탭 상태 (신청/승인/거절)
+ */
+interface UseReservationTabContentProps {
+  activityId: string;
+  scheduleId: string;
+  currentTab: ReservationStatus.Pending | ReservationStatus.Confirmed | ReservationStatus.Declined;
+}
+
+/**
+ * 예약 탭 컨텐츠를 관리하는 커스텀 훅
+ *
+ * 현재 선택된 탭에 해당하는 예약 데이터를 조회하고,
+ * 무한 스크롤 기능을 제공합니다.
+ *
+ * @param {UseReservationTabContentProps} props - 훅 설정 객체
+ *
+ * @returns 예약 데이터와 무한 스크롤 관련 상태 및 ref
+ * @returns {Array} reservations - 현재 탭의 예약 목록
+ * @returns {boolean} isPending - 초기 로딩 상태
+ * @returns {boolean} hasNextPage - 다음 페이지 존재 여부
+ * @returns {boolean} isFetchingNextPage - 다음 페이지 로딩 상태
+ * @returns {React.RefObject<HTMLDivElement>} observerRef - 무한 스크롤 옵저버를 연결할 ref
+ *
+ * @example
+ * ```tsx
+ * const { reservations, isPending, observerRef } = useReservationTabContent({
+ *   activityId: '123',
+ *   scheduleId: '456',
+ *   currentTab: ReservationStatus.Pending
+ * });
+ * ```
+ */
+export function useReservationTabContent({
+  activityId,
+  scheduleId,
+  currentTab,
+}: UseReservationTabContentProps) {
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  // 현재 탭의 데이터만 조회
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
+    useScheduledReservations({
+      activityId: Number(activityId),
+      scheduleId: Number(scheduleId),
+      status: currentTab,
+      size: 10,
+    });
+
+  const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
+
+  // 무한 스크롤 observer 설정
+  useEffect(() => {
+    if (!observerRef.current || !hasNextPage || isFetchingNextPage) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  return {
+    reservations,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    observerRef,
+  };
+}

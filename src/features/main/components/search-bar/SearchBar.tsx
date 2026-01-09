@@ -47,19 +47,23 @@ export default function SearchBar() {
       className='flex items-center justify-between rounded-16 bg-white py-6 pr-8 pl-20 shadow-card sm:rounded-24 sm:py-10 sm:pr-12 sm:pl-32'>
       <div className='flex min-w-0 flex-1 items-center'>
         <Icons.Search aria-hidden className='mr-4 h-24 w-24 sm:mr-10' />
+        <label htmlFor='search-bar-input' className='sr-only'>
+          체험 검색
+        </label>
         <input
+          id='search-bar-input'
           name='search'
           type='text'
           placeholder='내가 원하는 체험은'
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className='w-[calc(100%-24px-4px)] body-14 font-medium outline-0 sm:w-[calc(100%-24px-10px)] sm:body-18'
+          className='w-full body-14 font-medium outline-0 sm:body-18'
         />
       </div>
       <Button
         type='submit'
         size='md'
-        className='ms:h-50 ml-5 h-42 w-105 shrink-0 sm:ml-10 sm:w-120'>
+        className='ml-5 h-42 w-105 shrink-0 sm:ml-10 sm:h-50 sm:w-120'>
         검색하기
       </Button>
     </form>

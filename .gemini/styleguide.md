@@ -13,7 +13,12 @@
 
 - **컴포넌트 (Components)**: `PascalCase` (예: `NoticeCard`, `ShopDetailPage`)
 - **함수/변수 (Functions/Variables)**: `camelCase` (예: `handleSubmit`, `userData`)
-- **상수 (Constants)**: `UPPER_SNAKE_CASE` (예: `API_BASE_URL`, `MAX_PAGE_SIZE`)
+- **상수 (Constants)**: `UPPER_SNAKE_CASE`
+  - 예: `API_BASE_URL`, `MAX_PAGE_SIZE`
+  - **예외**:
+    - 스타일/디자인 목적의 상수 (예: `cva`, `class-variance-authority`, Tailwind variants, 스타일 토큰 객체 등)는 **카멜케이스(camelCase)** 사용을 허용합니다.
+    - 해당 상수는 *비즈니스 상수*가 아닌 *스타일 설정 객체*로 간주합니다.
+    - 예: `buttonVariants`, `titleVariants`, `cardStyleMap`
 - **타입/인터페이스 (Types/Interfaces)**: `PascalCase` (예: `NoticeType`, `ShopFormData`)
 - **폴더명 (Folders)**: `kebab-case` (예: `notice-list`, `shop-detail`)
 

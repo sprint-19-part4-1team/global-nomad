@@ -1,23 +1,69 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
-import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
+import ReservationList from '@/features/mypage/reservation-list/components/ReservationList';
+import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
+import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
+import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { useUserStore } from '@/shared/stores/userStore';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
+  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useMyReservationsQuery({ status: selectedStatus ?? undefined });
+  const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
+  const userId = useUserStore((s) => s.user?.id);
+  const emptyText =
+    selectedStatus === null ? '아직 예약한 체험이 없어요.' : RESERVATION_EMPTY_TEXT[selectedStatus];
 
   const handleStatusSelect = (status: ReservationStatus) => {
-    setSelectedStatus(status);
+    setSelectedStatus((prev) => (prev === status ? null : status));
   };
 
-  // TODO: 마이페이지 예약 내역 리스트 페이지 구현
+  const cancelReservationMutation = useCancelReservationMutation({
+    userId,
+    status: selectedStatus ?? undefined,
+    size: 4,
+    onClose: () => overlayStore.pop(),
+  });
+
+  const handleCancelReservation = (reservationId: number) => {
+    if (cancelReservationMutation.isPending) {
+      return;
+    }
+
+    cancelReservationMutation.mutate(reservationId, {
+      onSuccess: () => overlayStore.pop(),
+      onError: () => toast.error('예약 취소에 실패했습니다.'),
+    });
+  };
+
+  const showCancelConfirm = (reservationId: number) => {
+    overlayStore.push(
+      <Dialog
+        variant='confirm'
+        message='정말 예약을 취소하시겠습니까?'
+        cancelLabel='취소'
+        confirmLabel='예약 취소'
+        onCancel={() => overlayStore.pop()}
+        isConfirm={cancelReservationMutation.isPending}
+        onConfirm={() => handleCancelReservation(reservationId)}
+      />
+    );
+  };
+
   return (
     <>
       <MypageSectionHeader title='예약 내역' description='체험 예약을 변경/취소할 수 있습니다.' />
+
+      {/* 필터 버튼 섹션 */}
       <section className='my-24 scrollbar-hidden flex w-full gap-8 overflow-x-auto sm:my-32'>
         {RESERVATION_STATUSES.map((status) => (
           <ReservationFilterButton
@@ -28,40 +74,19 @@ export default function MypageReservationList() {
           />
         ))}
       </section>
+
+      {/* 예약 내역 리스트 섹션 */}
       <section className='flex w-full flex-col gap-24'>
-        {/* TODO: 예약 내역 카드 표시 */}
-        <ReservationCard
-          status={ReservationStatus.Pending}
-          title='취소할 수 있는 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:30'
-          totalPrice={10000}
-          headCount={10}
-          imageUrl='/og-default.png'
-          reviewSubmitted={false}
-        />
-        <ReservationCard
-          status={ReservationStatus.Completed}
-          title='후기 안남긴 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:34'
-          totalPrice={50000}
-          headCount={50}
-          imageUrl='/og-default.png'
-          reviewSubmitted={false}
-        />
-        <ReservationCard
-          status={ReservationStatus.Completed}
-          title='후기 남긴 게시물'
-          date='2023-02-14'
-          startTime='11:00'
-          endTime='12:34'
-          totalPrice={50000}
-          headCount={50}
-          imageUrl='/og-default.png'
-          reviewSubmitted={true}
+        <ReservationList
+          isPending={isPending}
+          isError={isError}
+          onRetry={refetch}
+          reservations={reservations}
+          emptyText={emptyText}
+          setCancelTarget={showCancelConfirm}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
         />
       </section>
     </>

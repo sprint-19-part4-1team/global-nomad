@@ -82,6 +82,7 @@ export default function MypageReservationList() {
         <ReservationList
           isPending={isPending}
           isError={isError}
+          onRetry={refetch}
           reservations={reservations}
           emptyText={emptyText}
           setCancelTarget={setCancelTarget}

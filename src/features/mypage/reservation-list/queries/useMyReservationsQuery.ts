@@ -32,5 +32,7 @@ export const useMyReservationsQuery = ({ status, size = 4 }: UseMyReservationsQu
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
     enabled: !!userId,
+    networkMode: 'always',
+    retry: 1,
   });
 };

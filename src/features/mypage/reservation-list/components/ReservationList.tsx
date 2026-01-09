@@ -10,6 +10,7 @@ import type { GetMyReservationsResponse } from '@/shared/types/myReservations';
 interface ReservationListProps {
   isPending: boolean;
   isError: boolean;
+  onRetry: () => void;
   reservations: GetMyReservationsResponse['reservations'];
   emptyText: string;
   setCancelTarget: (id: number) => void;
@@ -26,6 +27,7 @@ interface ReservationListProps {
  *
  * @param isPending - 예약 목록 조회 로딩 여부
  * @param isError - 예약 목록 조회 에러 여부
+ * @param onRetry - 예약 목록 재조회 함수
  * @param reservations - 예약 내역 목록 데이터
  * @param emptyText - 예약 내역이 없을 때 표시할 문구
  * @param setCancelTarget - 예약 취소 모달을 열기 위한 예약 ID 설정 함수
@@ -36,6 +38,7 @@ interface ReservationListProps {
 export default function ReservationList({
   isPending,
   isError,
+  onRetry,
   reservations,
   emptyText,
   setCancelTarget,
@@ -55,7 +58,14 @@ export default function ReservationList({
 
   return (
     <>
-      {isPending && <MypageListSkeleton variant='reservation' />}
+      {isError && (
+        <EmptyState
+          type='error'
+          mainText='예약 내역을 불러오지 못했어요.'
+          button={{ text: '다시 시도하기', onClick: onRetry }}
+        />
+      )}
+      {isPending && !isError && <MypageListSkeleton variant='reservation' />}
 
       {!isPending && !isError && reservations.length === 0 && (
         <EmptyState

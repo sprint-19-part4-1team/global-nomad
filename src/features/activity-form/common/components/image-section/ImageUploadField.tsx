@@ -82,7 +82,7 @@ export default function ImageUploadField({
 
   return (
     <fieldset>
-      <legend id={`${id}-legend`} className='flex body-14 font-bold text-gray-950 sm:body-16'>
+      <legend id={`${id}-legend`} className='flex form-title'>
         {label} <span className='pl-2 font-normal'>(</span>
         <span className={cn(count > 0 ? 'text-primary-500' : 'text-red-500')}>{count}</span>
         <span className='font-normal'>/</span>

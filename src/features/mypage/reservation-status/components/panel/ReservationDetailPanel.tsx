@@ -84,11 +84,21 @@ export default function ReservationDetailPanel({
     setTabValue(ReservationStatus.Pending);
   }, []);
 
-  // 스케줄 목록이 로드되면 첫 번째 스케줄을 자동 선택
+  // 스케줄 목록이 로드되거나 변경되면 선택된 스케줄의 유효성 검증
   useEffect(() => {
-    if (schedules.length > 0 && !selectedScheduleId) {
-      const firstScheduleId = schedules[0].scheduleId.toString();
-      setSelectedScheduleId(firstScheduleId);
+    if (schedules.length > 0) {
+      // 현재 선택된 스케줄이 목록에 있는지 확인
+      const isSelectedScheduleValid = schedules.some(
+        (s) => s.scheduleId.toString() === selectedScheduleId
+      );
+
+      // 유효하지 않으면 첫 번째 스케줄로 설정
+      if (!isSelectedScheduleValid) {
+        setSelectedScheduleId(schedules[0].scheduleId.toString());
+      }
+    } else {
+      // 스케줄이 없으면 선택 해제
+      setSelectedScheduleId('');
     }
   }, [schedules, selectedScheduleId]);
 

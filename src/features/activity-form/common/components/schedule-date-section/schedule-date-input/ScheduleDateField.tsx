@@ -31,8 +31,11 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEscape(() => setIsOpen(false));
-  useOutsideClick(containerRef, () => setIsOpen(false), isOpen);
+  const handleClose = () => setIsOpen(false);
+  const handleToggle = () => setIsOpen((prev) => !prev);
+
+  useEscape(handleClose, isOpen);
+  useOutsideClick(containerRef, handleClose, isOpen);
 
   const handleAddDate = () => {
     if (!date) {
@@ -50,9 +53,7 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
       </Label>
       <div className='relative' ref={containerRef}>
         <div className='flex items-center gap-16'>
-          <div
-            className='input-box border-field-default'
-            onClick={() => setIsOpen((prev) => !prev)}>
+          <div className='input-box border-field-default' onClick={handleToggle}>
             <input
               readOnly
               value={date ? format(date, 'yyyy. MM. dd.') : ''}

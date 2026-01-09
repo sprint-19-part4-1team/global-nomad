@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import ReservationCard from '@/features/mypage/reservation-list/components/reservation-card/ReservationCard';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll';
 import type { GetMyReservationsResponse } from '@/shared/types/myReservations';
 
 interface ReservationListProps {
@@ -56,6 +57,12 @@ export default function ReservationList({
     });
   }, [isError]);
 
+  const observerRef = useInfiniteScroll({
+    hasNextPage: Boolean(hasNextPage),
+    isFetchingNextPage,
+    fetchNextPage,
+  });
+
   return (
     <>
       {isError && (
@@ -94,9 +101,10 @@ export default function ReservationList({
           ))}
 
           {hasNextPage && (
-            <button type='button' disabled={isFetchingNextPage} onClick={() => fetchNextPage()}>
-              {isFetchingNextPage ? '불러오는 중...' : '더보기'}
-            </button>
+            <>
+              <div ref={observerRef} aria-hidden='true' />
+              {isFetchingNextPage && <MypageListSkeleton variant='reservation' count={2} />}
+            </>
           )}
         </>
       )}

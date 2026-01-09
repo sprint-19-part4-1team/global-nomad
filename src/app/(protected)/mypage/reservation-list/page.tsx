@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
@@ -11,6 +11,8 @@ import ReservationList from '@/features/mypage/reservation-list/components/Reser
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
 import { updateMyReservation } from '@/shared/apis/feature/myReservations';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { useUserStore } from '@/shared/stores/userStore';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
@@ -21,7 +23,8 @@ export default function MypageReservationList() {
     useMyReservationsQuery({ status: selectedStatus ?? undefined });
 
   const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
-
+  const queryClient = useQueryClient();
+  const userId = useUserStore((s) => s.user?.id);
   const emptyText =
     selectedStatus === null ? '아직 예약한 체험이 없어요.' : RESERVATION_EMPTY_TEXT[selectedStatus];
 
@@ -39,11 +42,19 @@ export default function MypageReservationList() {
         status: ReservationStatus.Canceled,
       });
     },
-    onSuccess: async () => {
+
+    onSuccess: () => {
       toast.success('예약이 취소되었습니다.');
       handleCloseCancelModal();
-      await refetch();
+
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.MY_RESERVATIONS(userId, {
+          status: selectedStatus ?? undefined,
+          size: 4,
+        }),
+      });
     },
+
     onError: () => {
       toast.error('예약 취소에 실패했습니다. 잠시 후 다시 시도해주세요.');
     },

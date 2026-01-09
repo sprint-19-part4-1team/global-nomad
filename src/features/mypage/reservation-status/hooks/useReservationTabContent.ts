@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { useScheduledReservations } from '@/features/mypage/reservation-status/queries/useScheduledReservations';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { ActivityReservationStatus } from '@/shared/types/myActivities';
 
 /**
@@ -44,8 +44,6 @@ export function useReservationTabContent({
   scheduleId,
   currentTab,
 }: UseReservationTabContentProps) {
-  const observerRef = useRef<HTMLDivElement>(null);
-
   // 현재 탭의 데이터만 조회
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useScheduledReservations({
@@ -57,25 +55,12 @@ export function useReservationTabContent({
 
   const reservations = data?.pages.flatMap((page) => page.reservations) ?? [];
 
-  // 무한 스크롤 observer 설정
-  useEffect(() => {
-    if (!observerRef.current || !hasNextPage || isFetchingNextPage) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(observerRef.current);
-
-    return () => observer.disconnect();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  // 무한 스크롤 훅 사용
+  const observerRef = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   return {
     reservations,

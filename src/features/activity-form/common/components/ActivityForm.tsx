@@ -37,7 +37,7 @@ export default function ActivityForm() {
       return;
     }
 
-    setScheduledDates((prev) => [...prev, date]);
+    setScheduledDates((prev) => [...prev, date].sort((a, b) => a.getTime() - b.getTime()));
   };
 
   const handleDeleteDate = (target: Date) => {
@@ -55,7 +55,7 @@ export default function ActivityForm() {
           setDate={setSelectedDate}
           onAddDate={handleAddDate}
         />
-        {/* TODO: 추가 시 해당 날짜로 포커스, 날짜별 정렬 추가 */}
+        {/* TODO: 날짜 추가 시 해당하는 아코디언으로 포커스 */}
         <div className='mt-16 flex flex-col gap-16'>
           {scheduledDates.map((date) => (
             <ScheduleDateAccordion key={date.toDateString()} defaultOpen>

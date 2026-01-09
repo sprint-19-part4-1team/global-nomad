@@ -88,7 +88,7 @@ export interface ReservationWithUserResponseDto {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  status: ReservationStatus.Declined | ReservationStatus.Pending | ReservationStatus.Confirmed;
+  status: ActivityReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;

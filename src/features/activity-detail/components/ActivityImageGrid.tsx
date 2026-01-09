@@ -73,7 +73,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
             <div key={image.id} className={`relative ${isFirstInThreeLayout ? 'row-span-2' : ''}`}>
               <Image
                 src={image.imageUrl}
-                alt={`Image ${image.id}`}
+                alt={`체험 상세 이미지 ${image.id}`}
                 fill
                 sizes={config.sizes}
                 className='object-cover'

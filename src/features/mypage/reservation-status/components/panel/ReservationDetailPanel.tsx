@@ -7,7 +7,7 @@ import { useDailyReservations } from '@/features/mypage/reservation-status/queri
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
-import { Tabs } from '@/shared/components/tabs';
+import { Tabs, TabsContent } from '@/shared/components/tabs';
 import Title from '@/shared/components/title/Title';
 import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationTabButtons from './ReservationTabButtons';
@@ -100,7 +100,8 @@ export default function ReservationDetailPanel({
       // 스케줄이 없으면 선택 해제
       setSelectedScheduleId('');
     }
-  }, [schedules, selectedScheduleId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [schedules]);
 
   // 화면에 표시할 날짜 포맷 (예: 24년 01월 15일)
   const displayDate = format(date, 'yy년 MM월 dd일');
@@ -129,39 +130,57 @@ export default function ReservationDetailPanel({
               </button>
             </div>
 
-            <div className='flex flex-col gap-20 sm:gap-32'>
-              {/* 예약 상태별 탭 버튼 (신청/승인/거절) */}
-              <Tabs
-                value={tabValue}
-                onChangeValue={(value) => setTabValue(value as ReservationScheduleStatus)}>
+            <Tabs
+              value={tabValue}
+              onChangeValue={(value) => setTabValue(value as ReservationScheduleStatus)}>
+              <div className='flex flex-col gap-20 sm:gap-32'>
+                {/* 예약 상태별 탭 버튼 (신청/승인/거절) */}
                 <ReservationTabButtons scheduleCount={scheduleCount} />
-              </Tabs>
 
-              {/* 시간대 선택 드롭다운 */}
-              <ReservationTimeDropdown
-                schedules={schedules}
-                selectedScheduleId={selectedScheduleId}
-                onChangeSchedule={setSelectedScheduleId}
-                isPending={isSchedulesPending}
-              />
+                {/* 시간대 선택 드롭다운 */}
+                <ReservationTimeDropdown
+                  schedules={schedules}
+                  selectedScheduleId={selectedScheduleId}
+                  onChangeSchedule={setSelectedScheduleId}
+                  isPending={isSchedulesPending}
+                />
 
-              {/* 예약 내역 섹션 */}
-              <div className='flex flex-col gap-12'>
-                <Title as='h4' responsive='sm' className='text-gray-950'>
-                  예약 내역
-                </Title>
-                <Tabs
-                  value={tabValue}
-                  onChangeValue={(value) => setTabValue(value as ReservationScheduleStatus)}>
-                  <ReservationTabContent
-                    activityId={activityId}
-                    scheduleId={selectedScheduleId}
-                    date={formattedDate}
-                    currentTab={tabValue}
-                  />
-                </Tabs>
+                {/* 예약 내역 섹션 */}
+                <div className='flex flex-col gap-12'>
+                  <Title as='h4' responsive='sm' className='text-gray-950'>
+                    예약 내역
+                  </Title>
+
+                  {/* 각 탭의 독립적인 컨텐츠 */}
+                  <TabsContent value={ReservationStatus.Pending} className='mt-0 sm:mt-0'>
+                    <ReservationTabContent
+                      activityId={activityId}
+                      scheduleId={selectedScheduleId}
+                      date={formattedDate}
+                      currentTab={ReservationStatus.Pending}
+                    />
+                  </TabsContent>
+
+                  <TabsContent value={ReservationStatus.Confirmed} className='mt-0 sm:mt-0'>
+                    <ReservationTabContent
+                      activityId={activityId}
+                      scheduleId={selectedScheduleId}
+                      date={formattedDate}
+                      currentTab={ReservationStatus.Confirmed}
+                    />
+                  </TabsContent>
+
+                  <TabsContent value={ReservationStatus.Declined} className='mt-0 sm:mt-0'>
+                    <ReservationTabContent
+                      activityId={activityId}
+                      scheduleId={selectedScheduleId}
+                      date={formattedDate}
+                      currentTab={ReservationStatus.Declined}
+                    />
+                  </TabsContent>
+                </div>
               </div>
-            </div>
+            </Tabs>
           </div>
         </OverlaySurface>
       </div>

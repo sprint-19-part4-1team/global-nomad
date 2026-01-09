@@ -1,3 +1,4 @@
+import Card from '@/features/main/components/card/Card';
 import BannerSlide from '@/shared/components/slide/BannerSlide';
 import PopularSlide from '@/shared/components/slide/PopularSlide';
 import { layoutContainer } from '@/shared/constants/';
@@ -20,6 +21,16 @@ export default function Home() {
         <BannerSlide />
         <div className='h-40' />
         <PopularSlide slides={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} />
+        <div className='w-262'>
+          <Card
+            id={123}
+            bannerImageUrl='/abc'
+            title='aaa'
+            rating={2}
+            reviewCount={33}
+            price={39990}
+          />
+        </div>
       </div>
     </main>
   );

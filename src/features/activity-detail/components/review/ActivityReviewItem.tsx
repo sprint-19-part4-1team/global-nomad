@@ -39,8 +39,12 @@ interface ActivityReviewItemProps {
  * ```
  */
 export default function ActivityReviewItem({ review }: ActivityReviewItemProps) {
-  const { user, rating, content, createdAt } = review;
-  const { nickname } = user;
+  const {
+    user: { nickname },
+    rating,
+    content,
+    createdAt,
+  } = review;
 
   const date = format(new Date(createdAt), 'yyyy.MM.dd');
 

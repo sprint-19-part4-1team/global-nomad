@@ -1,0 +1,119 @@
+'use client';
+
+import { useRef, useState } from 'react';
+import Icons from '@/assets/icons';
+import Button from '@/shared/components/button/Button';
+import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
+import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
+import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import Textarea from '@/shared/components/textarea/Textarea';
+
+interface ReviewModalProps {
+  activityTitle: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  headCount: number;
+  onSubmit: (content: string, rating: number) => Promise<void>;
+}
+
+export default function ReviewModal({
+  activityTitle,
+  date,
+  startTime,
+  endTime,
+  headCount,
+  onSubmit,
+}: ReviewModalProps) {
+  const [content, setContent] = useState('');
+  const [rating, setRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const surfaceRef = useRef<HTMLDivElement>(null);
+
+  const handleClose = () => {
+    overlayStore.pop();
+  };
+
+  const handleSubmit = async () => {
+    if (!content.trim() || rating === 0 || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onSubmit(content, rating);
+      overlayStore.pop();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleStarClick = (score: number) => {
+    setRating(score);
+  };
+
+  return (
+    <OverlayPortal>
+      <Backdrop />
+      <OverlaySurface
+        position='center'
+        variant='dialog'
+        ref={surfaceRef}
+        className='flex flex-col gap-24 px-16 pt-16 pb-24 sm:gap-32 sm:px-24 sm:pt-24 sm:pb-36'>
+        <div>
+          <section className='flex flex-col gap-4'>
+            <button
+              type='button'
+              onClick={handleClose}
+              className='ml-auto flex cursor-pointer justify-end'
+              aria-label='모달 닫기'>
+              <Icons.Close className='h-24 w-24 text-gray-900' />
+            </button>
+            <div className='flex flex-col items-center justify-center gap-4'>
+              <p className='body-16 font-bold sm:body-18'>{activityTitle}</p>
+              <p className='body-14 font-medium text-gray-500'>
+                {date} / {startTime} - {endTime} ({headCount}명)
+              </p>
+            </div>
+          </section>
+          <section className='mt-12 flex items-center justify-center gap-12'>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type='button'
+                onClick={() => handleStarClick(star)}
+                className='cursor-pointer'
+                aria-label={`${star}점`}>
+                <Icons.Star
+                  className={`h-42 w-42 ${star <= rating ? 'text-yellow-500' : 'text-gray-100'}`}
+                />
+              </button>
+            ))}
+          </section>
+        </div>
+        <Textarea
+          variant='review'
+          label='소중한 경험을 들려주세요'
+          name='content'
+          placeholder='체험에서 느낀 경험을 자유롭게 남겨주세요.'
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onBlur={(e) => e.target.value}
+          maxLength={100}
+        />
+        <Button
+          type='submit'
+          size='lg'
+          isLoading={isSubmitting}
+          disabled={!content.trim() || rating === 0}
+          full
+          onClick={handleSubmit}>
+          작성하기
+        </Button>
+      </OverlaySurface>
+    </OverlayPortal>
+  );
+}

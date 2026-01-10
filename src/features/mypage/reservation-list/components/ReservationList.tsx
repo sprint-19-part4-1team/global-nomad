@@ -15,6 +15,7 @@ interface ReservationListProps {
   reservations: GetMyReservationsResponse['reservations'];
   emptyText: string;
   setCancelTarget: (id: number) => void;
+  setReviewTarget: (reservation: GetMyReservationsResponse['reservations'][number]) => void;
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
   fetchNextPage: () => void;
@@ -32,6 +33,7 @@ interface ReservationListProps {
  * @param reservations - 예약 내역 목록 데이터
  * @param emptyText - 예약 내역이 없을 때 표시할 문구
  * @param setCancelTarget - 예약 취소 모달을 열기 위한 예약 ID 설정 함수
+ * @param setReviewTarget - 후기 작성 모달을 열기 위한 예약 정보 설정 함수
  * @param hasNextPage - 추가 페이지 존재 여부
  * @param isFetchingNextPage - 추가 페이지 조회 중 여부
  * @param fetchNextPage - 다음 페이지를 불러오는 함수
@@ -43,6 +45,7 @@ export default function ReservationList({
   reservations,
   emptyText,
   setCancelTarget,
+  setReviewTarget,
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
@@ -97,6 +100,7 @@ export default function ReservationList({
               imageUrl={r.activity.bannerImageUrl}
               reviewSubmitted={r.reviewSubmitted}
               onCancel={() => setCancelTarget(r.id)}
+              onWriteReview={() => setReviewTarget(r)}
             />
           ))}
 

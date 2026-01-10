@@ -5,6 +5,7 @@ import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddressField from '@/features/activity-form/common/components/address-section/AddressSection';
 import BasicInfoSection from '@/features/activity-form/common/components/basic-info-section/BasicInfoSection';
+import { useBasicInfoForm } from '@/features/activity-form/common/components/basic-info-section/hooks/useBasicInfoForm';
 import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
@@ -17,10 +18,13 @@ import { ScheduleTimeSlot } from '@/shared/types/activities';
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityForm() {
   // TODO: 훅으로 분리 예정
-  const [title, setTitle] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const {
+    formData,
+    updateFormData,
+    isValid: isBasicFormValid,
+    validateField: validateBasicFormField,
+    errors: basicFormErrors,
+  } = useBasicInfoForm();
   const [address, setAddress] = useState<string>('');
   const [detailAddress, setDetailAddress] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -60,10 +64,14 @@ export default function ActivityForm() {
     e.preventDefault();
 
     console.log(
-      title,
-      category,
-      price,
-      description,
+      'title: ',
+      formData.title,
+      'category: ',
+      formData.category,
+      'decription: ',
+      formData.description,
+      'price: ',
+      formData.price,
       address,
       detailAddress,
       selectedDate,
@@ -78,14 +86,10 @@ export default function ActivityForm() {
       className='mt-24 flex flex-col gap-24 sm:mt-32 sm:gap-28 md:gap-32'
       onSubmit={handleSubmit}>
       <BasicInfoSection
-        title={title}
-        setTitle={setTitle}
-        category={category}
-        setCategory={setCategory}
-        price={price}
-        setPrice={setPrice}
-        description={description}
-        setDescription={setDescription}
+        formData={formData}
+        onChange={updateFormData}
+        validateField={validateBasicFormField}
+        errors={basicFormErrors}
       />
       <AddressField
         address={address}
@@ -136,7 +140,7 @@ export default function ActivityForm() {
         onChange={handleIntroImagesChange}
         onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
       />
-      <Button type='submit' className='mx-auto mt-0 sm:mt-4 md:mt-0'>
+      <Button type='submit' disabled={!isBasicFormValid} className='mx-auto mt-0 sm:mt-4 md:mt-0'>
         체험 등록하기
       </Button>
     </form>

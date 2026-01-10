@@ -40,6 +40,7 @@ interface ActivityReviewItemProps {
  */
 export default function ActivityReviewItem({ review }: ActivityReviewItemProps) {
   const {
+    id,
     user: { nickname },
     rating,
     content,
@@ -57,7 +58,11 @@ export default function ActivityReviewItem({ review }: ActivityReviewItemProps) 
         </div>
         <div className='flex items-center'>
           {Array.from({ length: rating }).map((_, index) => (
-            <Icons.Star key={index} aria-hidden='true' className='h-16 w-16 text-yellow-500' />
+            <Icons.Star
+              key={`${id}-star-${index}`}
+              aria-hidden='true'
+              className='h-16 w-16 text-yellow-500'
+            />
           ))}
         </div>
       </div>

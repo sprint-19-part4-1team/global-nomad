@@ -18,6 +18,18 @@ interface ReviewModalProps {
   onSubmit: (content: string, rating: number) => Promise<void>;
 }
 
+/**
+ * @description
+ * - 예약 완료된 체험에 대해 후기를 작성하는 모달 컴포넌트입니다.
+ * - 별점(1~5)과 후기 내용을 입력받아 제출합니다.
+ *
+ * @param activityTitle - 체험 제목
+ * @param date - 예약 날짜
+ * @param startTime - 체험 시작 시간
+ * @param endTime - 체험 종료 시간
+ * @param headCount - 예약 인원 수
+ * @param onSubmit - 후기 제출 시 호출되는 콜백 함수
+ */
 export default function ReviewModal({
   activityTitle,
   date,

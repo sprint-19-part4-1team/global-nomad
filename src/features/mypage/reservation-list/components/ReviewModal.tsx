@@ -8,6 +8,7 @@ import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import Textarea from '@/shared/components/textarea/Textarea';
+import { cn } from '@/shared/utils/cn';
 
 interface ReviewModalProps {
   activityTitle: string;
@@ -98,7 +99,7 @@ export default function ReviewModal({
                 className='cursor-pointer'
                 aria-label={`${star}점`}>
                 <Icons.Star
-                  className={`h-42 w-42 ${star <= rating ? 'text-yellow-500' : 'text-gray-100'}`}
+                  className={cn('h-42 w-42', star <= rating ? 'text-yellow-500' : 'text-gray-100')}
                 />
               </button>
             ))}

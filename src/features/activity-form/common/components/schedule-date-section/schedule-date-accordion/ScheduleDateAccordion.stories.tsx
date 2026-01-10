@@ -44,7 +44,7 @@ export const Default: Story = {
     return (
       <div className='w-500'>
         <ScheduleDateAccordion>
-          <ScheduleDateAccordionHeader date='2026-01-09' onDelete={fn()} />
+          <ScheduleDateAccordionHeader date={new Date('2026-01-10')} onDelete={fn()} />
           <ScheduleDateAccordionPanel />
         </ScheduleDateAccordion>
       </div>
@@ -62,7 +62,7 @@ export const DefaultOpen: Story = {
     return (
       <div className='w-500'>
         <ScheduleDateAccordion defaultOpen>
-          <ScheduleDateAccordionHeader date='2026-01-09' onDelete={fn()} />
+          <ScheduleDateAccordionHeader date={new Date('2026-01-10')} onDelete={fn()} />
           <ScheduleDateAccordionPanel />
         </ScheduleDateAccordion>
       </div>
@@ -77,12 +77,12 @@ export const DefaultOpen: Story = {
  */
 export const MultipleAccordions: Story = {
   render: () => {
-    const [dates, setDates] = useState(['2026-01-09', '2026-01-10']);
+    const [dates, setDates] = useState([new Date('2026-01-09'), new Date('2026-01-10')]);
 
     return (
       <div className='flex w-500 flex-col gap-16'>
         {dates.map((date) => (
-          <ScheduleDateAccordion key={date}>
+          <ScheduleDateAccordion key={date.toDateString()}>
             <ScheduleDateAccordionHeader
               date={date}
               onDelete={() => setDates((prev) => prev.filter((d) => d !== date))}

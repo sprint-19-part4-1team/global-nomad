@@ -5,7 +5,6 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { CreateReviewBodyDto, ReservationStatus } from '@/shared/types/myReservations';
 
 interface UseCreateReviewMutationParams {
-  userId?: number;
   status?: ReservationStatus;
   size?: number;
   onClose?: () => void;
@@ -16,7 +15,6 @@ interface CreateReviewVariables extends CreateReviewBodyDto {
 }
 
 export const useCreateReviewMutation = ({
-  userId,
   status,
   size = 4,
   onClose,
@@ -28,16 +26,16 @@ export const useCreateReviewMutation = ({
       return createReview(reservationId, { rating, content });
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success('리뷰가 작성되었습니다.');
       onClose?.();
 
-      if (!userId) {
+      if (!data.userId) {
         return;
       }
 
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.MY_RESERVATIONS(userId, { status, size }),
+        queryKey: QUERY_KEYS.MY_RESERVATIONS(data.userId, { status, size }),
       });
     },
 

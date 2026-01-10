@@ -86,10 +86,9 @@ export default function ActivityTitle({
         <div className='flex flex-col gap-10 body-14 text-gray-700'>
           <div className='flex items-center gap-6'>
             <Icons.Star className='h-16 w-16 text-yellow-500' />
-            <div className='flex gap-2'>
-              <span>{rating}</span>
-              <span>({reviewCount})</span>
-            </div>
+            <span>
+              {rating} ({reviewCount})
+            </span>
           </div>
           <div className='flex items-center gap-2'>
             <Icons.Location className='h-16 w-16 text-gray-700' />

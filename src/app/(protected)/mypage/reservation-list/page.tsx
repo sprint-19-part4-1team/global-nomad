@@ -9,7 +9,6 @@ import ReservationList from '@/features/mypage/reservation-list/components/Reser
 import ReviewModal from '@/features/mypage/reservation-list/components/ReviewModal';
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
-import { useCreateReviewMutation } from '@/features/mypage/reservation-list/mutations/useCreateReviewMutation';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -33,13 +32,6 @@ export default function MypageReservationList() {
   };
 
   const cancelReservationMutation = useCancelReservationMutation({
-    userId,
-    status: selectedStatus ?? undefined,
-    size: 4,
-    onClose: () => overlayStore.pop(),
-  });
-
-  const createReviewMutation = useCreateReviewMutation({
     userId,
     status: selectedStatus ?? undefined,
     size: 4,
@@ -74,18 +66,14 @@ export default function MypageReservationList() {
   const showReviewModal = (reservation: ReservationWithActivityResponseDto) => {
     overlayStore.push(
       <ReviewModal
+        reservationId={reservation.id}
+        status={selectedStatus ?? undefined}
+        size={4}
         activityTitle={reservation.activity.title}
         date={reservation.date}
         startTime={reservation.startTime}
         endTime={reservation.endTime}
         headCount={reservation.headCount}
-        onSubmit={async (content, rating) => {
-          await createReviewMutation.mutateAsync({
-            reservationId: reservation.id,
-            content,
-            rating,
-          });
-        }}
       />
     );
   };

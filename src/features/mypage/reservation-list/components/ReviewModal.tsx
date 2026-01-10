@@ -2,21 +2,25 @@
 
 import { useRef, useState } from 'react';
 import Icons from '@/assets/icons';
+import { useCreateReviewMutation } from '@/features/mypage/reservation-list/mutations/useCreateReviewMutation';
 import Button from '@/shared/components/button/Button';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import Textarea from '@/shared/components/textarea/Textarea';
+import type { ReservationStatus } from '@/shared/types/myReservations';
 import { cn } from '@/shared/utils/cn';
 
 interface ReviewModalProps {
+  reservationId: number;
+  status?: ReservationStatus;
+  size?: number;
   activityTitle: string;
   date: string;
   startTime: string;
   endTime: string;
   headCount: number;
-  onSubmit: (content: string, rating: number) => Promise<void>;
 }
 
 /**
@@ -24,42 +28,45 @@ interface ReviewModalProps {
  * - 예약 완료된 체험에 대해 후기를 작성하는 모달 컴포넌트입니다.
  * - 별점(1~5)과 후기 내용을 입력받아 제출합니다.
  *
+ * @param reservationId - 예약 ID
+ * @param status - 예약 상태 (캐시 무효화용)
+ * @param size - 페이지 사이즈 (캐시 무효화용)
  * @param activityTitle - 체험 제목
  * @param date - 예약 날짜
  * @param startTime - 체험 시작 시간
  * @param endTime - 체험 종료 시간
  * @param headCount - 예약 인원 수
- * @param onSubmit - 후기 제출 시 호출되는 콜백 함수
  */
 export default function ReviewModal({
+  reservationId,
+  status,
+  size,
   activityTitle,
   date,
   startTime,
   endTime,
   headCount,
-  onSubmit,
 }: ReviewModalProps) {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const surfaceRef = useRef<HTMLDivElement>(null);
+
+  const { mutate, isPending } = useCreateReviewMutation({
+    status,
+    size,
+    onClose: () => overlayStore.pop(),
+  });
 
   const handleClose = () => {
     overlayStore.pop();
   };
 
-  const handleSubmit = async () => {
-    if (!content.trim() || rating === 0 || isSubmitting) {
+  const handleSubmit = () => {
+    if (!content.trim() || rating === 0 || isPending) {
       return;
     }
 
-    setIsSubmitting(true);
-    try {
-      await onSubmit(content, rating);
-    } catch {
-    } finally {
-      setIsSubmitting(false);
-    }
+    mutate({ reservationId, content, rating });
   };
 
   const handleStarClick = (score: number) => {
@@ -117,7 +124,7 @@ export default function ReviewModal({
         <Button
           type='submit'
           size='lg'
-          isLoading={isSubmitting}
+          isLoading={isPending}
           disabled={!content.trim() || rating === 0}
           full
           onClick={handleSubmit}>

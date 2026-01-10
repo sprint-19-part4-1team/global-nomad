@@ -1,22 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { format } from 'date-fns';
+import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import AddressField from '@/features/activity-form/common/components/address-section/AddressField';
+import AddressField from '@/features/activity-form/common/components/address-section/AddressSection';
+import BasicInfoSection from '@/features/activity-form/common/components/basic-info-section/BasicInfoSection';
 import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
 import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
 import ScheduleDateField from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/ScheduleDateField';
 import type { ImageValue } from '@/features/activity-form/common/types/image';
+import Button from '@/shared/components/button/Button';
+import { ScheduleTimeSlot } from '@/shared/types/activities';
 
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityForm() {
   // TODO: 훅으로 분리 예정
+  const [title, setTitle] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [detailAddress, setDetailAddress] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const [scheduledDates, setScheduledDates] = useState<Date[]>([]);
+  const [accordionDates, setAccordionDates] = useState<string[]>([]);
+  const [scheduleDates, setScheduleDates] = useState<ScheduleTimeSlot[]>([]);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   const [introImages, setIntroImages] = useState<(File | string)[]>([]);
 
@@ -33,23 +42,51 @@ export default function ActivityForm() {
   };
 
   const handleAddDate = (date: Date) => {
-    const isDuplicate = scheduledDates.some((d) => d.toDateString() === date.toDateString());
+    const dateString = format(date, 'yyyy-MM-dd');
+
+    const isDuplicate = accordionDates.includes(dateString);
 
     if (isDuplicate) {
       toast.error('이미 추가된 날짜입니다.');
       return;
     }
 
-    setScheduledDates((prev) => [...prev, date].sort((a, b) => a.getTime() - b.getTime()));
+    setAccordionDates((prev) =>
+      [...prev, dateString].sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+    );
   };
 
-  const handleDeleteDate = (target: Date) => {
-    setScheduledDates((prev) => prev.filter((d) => d.getTime() !== target.getTime()));
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    console.log(
+      title,
+      category,
+      price,
+      description,
+      address,
+      detailAddress,
+      selectedDate,
+      scheduleDates,
+      bannerImage,
+      introImages
+    );
   };
 
   return (
-    <form className='mt-24 flex flex-col gap-24 sm:gap-28 md:gap-32'>
-      {/* TODO: 내부 UI 추가 예정, 전체 UI는 이후 이슈에서 진행할 예정입니다. */}
+    <form
+      className='mt-24 flex flex-col gap-24 sm:mt-32 sm:gap-28 md:gap-32'
+      onSubmit={handleSubmit}>
+      <BasicInfoSection
+        title={title}
+        setTitle={setTitle}
+        category={category}
+        setCategory={setCategory}
+        price={price}
+        setPrice={setPrice}
+        description={description}
+        setDescription={setDescription}
+      />
       <AddressField
         address={address}
         setAddress={setAddress}
@@ -65,9 +102,18 @@ export default function ActivityForm() {
         />
         {/* TODO: 날짜 추가 시 해당하는 아코디언으로 포커스 */}
         <div className='mt-16 flex flex-col gap-16'>
-          {scheduledDates.map((date) => (
-            <ScheduleDateAccordion key={date.getTime()} defaultOpen>
-              <ScheduleDateAccordionHeader date={date} onDelete={() => handleDeleteDate(date)} />
+          {accordionDates.map((date) => (
+            <ScheduleDateAccordion key={date} defaultOpen>
+              <ScheduleDateAccordionHeader
+                date={new Date(date)}
+                onDelete={() => {
+                  // 날짜 제거
+                  setAccordionDates((prev) => prev.filter((d) => d !== date));
+
+                  // 해당 날짜의 시간 슬롯도 제거
+                  setScheduleDates((prev) => prev.filter((s) => s.date !== date));
+                }}
+              />
               <ScheduleDateAccordionPanel />
             </ScheduleDateAccordion>
           ))}
@@ -90,6 +136,9 @@ export default function ActivityForm() {
         onChange={handleIntroImagesChange}
         onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
       />
+      <Button type='submit' className='mx-auto mt-0 sm:mt-4 md:mt-0'>
+        체험 등록하기
+      </Button>
     </form>
   );
 }

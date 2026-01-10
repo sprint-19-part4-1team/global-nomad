@@ -42,7 +42,7 @@ export default function AddressField({
     // 도로명 주소(R)인 경우에만 부가 정보 자동 생성
     if (addressType === 'R') {
       const addrDetails = [bname, buildingName].filter(Boolean);
-      autoDetailAddress = addrDetails.length > 0 ? `(${addrDetails.join(', ')})` : '';
+      autoDetailAddress = addrDetails.length > 0 ? `${addrDetails.join(', ')}` : '';
     }
 
     setAddress(`[${zonecode}] ${address}`);

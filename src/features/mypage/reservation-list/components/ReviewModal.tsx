@@ -55,9 +55,7 @@ export default function ReviewModal({
     setIsSubmitting(true);
     try {
       await onSubmit(content, rating);
-      overlayStore.pop();
-    } catch (error) {
-      console.error(error);
+    } catch {
     } finally {
       setIsSubmitting(false);
     }

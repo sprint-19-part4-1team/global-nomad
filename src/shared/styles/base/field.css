@@ -3,8 +3,11 @@
 }
 
 @utility field-box {
- @apply flex w-full rounded-12 border body-14 sm:body-16 focus-within:border-primary-500;
-  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  @apply flex w-full rounded-12 border body-14 has-[input:focus]:border-primary-500 sm:body-16;
+  transition:
+    color 0.15s,
+    background-color 0.15s,
+    border-color 0.15s;
 }
 
 @utility border-field-default {

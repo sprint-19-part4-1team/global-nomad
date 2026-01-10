@@ -5,19 +5,18 @@ import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import AddressField from '@/features/activity-form/common/components/address-section/AddressSection';
 import BasicInfoSection from '@/features/activity-form/common/components/basic-info-section/BasicInfoSection';
-import { useBasicInfoForm } from '@/features/activity-form/common/components/basic-info-section/hooks/useBasicInfoForm';
 import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
 import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
 import ScheduleDateField from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/ScheduleDateField';
-import type { ImageValue } from '@/features/activity-form/common/types/image';
+import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
+import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
 import Button from '@/shared/components/button/Button';
 import { ScheduleTimeSlot } from '@/shared/types/activities';
 
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityForm() {
-  // TODO: 훅으로 분리 예정
   const {
     formData,
     updateFormData,
@@ -30,20 +29,15 @@ export default function ActivityForm() {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [accordionDates, setAccordionDates] = useState<string[]>([]);
   const [scheduleDates, setScheduleDates] = useState<ScheduleTimeSlot[]>([]);
-  const [bannerImage, setBannerImage] = useState<File | null>(null);
-  const [introImages, setIntroImages] = useState<(File | string)[]>([]);
-
-  const handleBannerChange = (value: ImageValue) => {
-    if (value instanceof File) {
-      setBannerImage(value);
-    }
-  };
-
-  const handleIntroImagesChange = (value: ImageValue) => {
-    if (Array.isArray(value)) {
-      setIntroImages(value);
-    }
-  };
+  const {
+    bannerImage,
+    introImages,
+    handleBannerChange,
+    handleBannerRemove,
+    handleIntroImagesChange,
+    handleIntroImageRemove,
+    isImageValid,
+  } = useImageUploadForm();
 
   const handleAddDate = (date: Date) => {
     const dateString = format(date, 'yyyy-MM-dd');
@@ -129,7 +123,7 @@ export default function ActivityForm() {
         maxCount={1}
         value={bannerImage}
         onChange={handleBannerChange}
-        onRemove={() => setBannerImage(null)}
+        onRemove={handleBannerRemove}
       />
       <ImageUploadField
         id='intro-image'
@@ -138,9 +132,12 @@ export default function ActivityForm() {
         helperText='* 최소 1장 등록'
         value={introImages}
         onChange={handleIntroImagesChange}
-        onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
+        onRemove={handleIntroImageRemove}
       />
-      <Button type='submit' disabled={!isBasicFormValid} className='mx-auto mt-0 sm:mt-4 md:mt-0'>
+      <Button
+        type='submit'
+        disabled={!isBasicFormValid || !isImageValid}
+        className='mx-auto mt-0 sm:mt-4 md:mt-0'>
         체험 등록하기
       </Button>
     </form>

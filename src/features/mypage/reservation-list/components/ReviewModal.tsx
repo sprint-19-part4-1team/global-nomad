@@ -113,7 +113,6 @@ export default function ReviewModal({
           placeholder='체험에서 느낀 경험을 자유롭게 남겨주세요.'
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          onBlur={(e) => e.target.value}
           maxLength={100}
         />
         <Button

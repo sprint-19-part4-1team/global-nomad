@@ -11,9 +11,11 @@ import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { GetActivityReviewsResponse } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
 import { formatValue } from '@/shared/utils/formatValue';
+import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
 /**
  * 체험 리뷰 목록 컴포넌트의 Props
+ *
  * @property {GetActivityReviewsResponse} reviewData - 리뷰 데이터 (평균 평점, 총 개수, 리뷰 목록)
  * @property {string} [className] - 추가 CSS 클래스명
  */
@@ -34,11 +36,21 @@ const ITEMS_PER_PAGE = 3;
  * 평균 평점, 총 리뷰 개수, 만족도 평가를 포함합니다.
  *
  * @description
- * 컴포넌트는 다음과 같은 기능을 제공합니다:
+ * **주요 기능**
  * - 평균 평점: 숫자와 만족도 텍스트(예: "매우 만족")로 표시
  * - 총 리뷰 개수: 포맷팅된 숫자로 표시
  * - 리뷰 목록: 페이지당 3개씩 표시
- * - 페이지네이션: URL 쿼리 파라미터를 통한 페이지 관리
+ * - 페이지네이션: URL 쿼리 파라미터 `page`를 통한 페이지 관리
+ *
+ * **상태 관리 패턴**
+ * - 페이지 상태를 이 컴포넌트에서 관리하고 `Pagination` 컴포넌트에 props로 전달
+ * - 단일 진실 공급원(Single Source of Truth): URL 상태를 한 곳에서만 읽고 관리
+ * - 1페이지일 경우 URL에 쿼리 파라미터를 표시하지 않음 (`/activity/123` 형태)
+ * - 2페이지 이상일 경우에만 표시 (`/activity/123?page=2` 형태)
+ *
+ * **클라이언트 측 페이지네이션**
+ * - 모든 리뷰 데이터를 한 번에 받아와 클라이언트에서 페이지네이션 처리
+ * - `useMemo`를 사용하여 현재 페이지에 해당하는 리뷰만 필터링
  *
  * @param {ActivityReviewListProps} props - 컴포넌트 props
  * @returns {JSX.Element} 렌더링된 체험 리뷰 목록 섹션
@@ -49,7 +61,10 @@ const ITEMS_PER_PAGE = 3;
  *   reviewData={{
  *     averageRating: 4.5,
  *     totalCount: 128,
- *     reviews: [...]
+ *     reviews: [
+ *       { id: 1, rating: 5, content: '정말 좋았어요!', ... },
+ *       // ...
+ *     ]
  *   }}
  * />
  * ```
@@ -58,16 +73,11 @@ export default function ActivityReviewList({ reviewData, className }: ActivityRe
   const { averageRating, totalCount, reviews } = reviewData;
   const count = formatValue(totalCount);
 
-  const [currentPage] = useQueryParamState<number>('page', {
+  // 페이지 상태를 최상위에서 관리 (Lifting State Up)
+  const [currentPage, setCurrentPage] = useQueryParamState<number>('reviewPage', {
     defaultValue: 1,
-    parse: (v) => {
-      const n = Number(v);
-      if (!Number.isFinite(n) || n <= 0) {
-        return 1;
-      }
-      return Math.floor(n);
-    },
-    removeParam: (v) => v === 1,
+    parse: parsePageQueryParam,
+    removeParam: (v) => v === 1, // 1페이지는 URL에 표시하지 않음
     replace: false,
     scroll: false,
   });
@@ -113,7 +123,12 @@ export default function ActivityReviewList({ reviewData, className }: ActivityRe
         </div>
       </div>
       <div className='flex justify-center'>
-        <Pagination totalCount={totalCount} itemsPerPage={ITEMS_PER_PAGE} />
+        <Pagination
+          totalCount={totalCount}
+          itemsPerPage={ITEMS_PER_PAGE}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </section>
   );

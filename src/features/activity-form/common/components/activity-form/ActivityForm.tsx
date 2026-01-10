@@ -10,6 +10,7 @@ import ScheduleDateAccordion from '@/features/activity-form/common/components/sc
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
 import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
 import ScheduleDateField from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/ScheduleDateField';
+import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
 import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
 import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
 import Button from '@/shared/components/button/Button';
@@ -24,8 +25,15 @@ export default function ActivityForm() {
     validateField: validateBasicFormField,
     errors: basicFormErrors,
   } = useBasicInfoForm();
-  const [address, setAddress] = useState<string>('');
-  const [detailAddress, setDetailAddress] = useState<string>('');
+  const {
+    address,
+    setAddress,
+    detailAddress,
+    setDetailAddress,
+    isAddressValid,
+    addressError,
+    validateAddress,
+  } = useAddressForm();
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [accordionDates, setAccordionDates] = useState<string[]>([]);
   const [scheduleDates, setScheduleDates] = useState<ScheduleTimeSlot[]>([]);
@@ -90,6 +98,8 @@ export default function ActivityForm() {
         setAddress={setAddress}
         detailAddress={detailAddress}
         setDetailAddress={setDetailAddress}
+        addressError={addressError}
+        validateAddress={validateAddress}
       />
       <fieldset>
         <legend className='mb-16 form-title'>예약 가능 시간대</legend>
@@ -136,7 +146,7 @@ export default function ActivityForm() {
       />
       <Button
         type='submit'
-        disabled={!isBasicFormValid || !isImageValid}
+        disabled={!isBasicFormValid || !isImageValid || !isAddressValid}
         className='mx-auto mt-0 sm:mt-4 md:mt-0'>
         체험 등록하기
       </Button>

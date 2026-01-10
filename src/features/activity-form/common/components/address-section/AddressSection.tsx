@@ -15,6 +15,10 @@ interface AddressSectionProps {
   detailAddress: string;
   /** 상세 주소 상태 업데이트 함수 */
   setDetailAddress: (detailAddress: string) => void;
+  /** 주소 유효성 검사 실패 시 표시할 에러 메시지 */
+  addressError: string;
+  /** 주소 필수값 유효성 검사 함수 */
+  validateAddress: (address: string) => void;
 }
 
 /**
@@ -30,6 +34,8 @@ export default function AddressSection({
   setAddress,
   detailAddress,
   setDetailAddress,
+  addressError,
+  validateAddress,
 }: AddressSectionProps) {
   const isPopupOpen = useRef(false);
   const open = useDaumPostcodePopup(SCRIPT_URL);
@@ -45,8 +51,12 @@ export default function AddressSection({
       autoDetailAddress = addrDetails.length > 0 ? `${addrDetails.join(', ')}` : '';
     }
 
-    setAddress(`[${zonecode}] ${address}`);
+    const fullAddress = `[${zonecode}] ${address}`;
+
+    setAddress(fullAddress);
     setDetailAddress(autoDetailAddress);
+
+    validateAddress(fullAddress);
 
     isPopupOpen.current = false;
   };
@@ -60,6 +70,9 @@ export default function AddressSection({
     open({
       onComplete: handleComplete,
       onClose: () => {
+        if (isPopupOpen.current) {
+          validateAddress(address);
+        }
         isPopupOpen.current = false;
       },
       onError: () => {
@@ -88,6 +101,7 @@ export default function AddressSection({
         value={address}
         placeholder='주소를 검색해 주세요.'
         onClick={handleClick}
+        errorMessage={addressError}
       />
       {address && (
         <Input

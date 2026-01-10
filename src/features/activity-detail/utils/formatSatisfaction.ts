@@ -1,5 +1,5 @@
 /**
- * 평균 평점을 기반으로 만족도 문구를 반환합니다
+ * 평균 평점을 기반으로 만족도 문구를 반환
  *
  * @param {number} averageRating - 평균 평점 (0~5)
  * @returns {string} 만족도 문구

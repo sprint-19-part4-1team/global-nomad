@@ -1,6 +1,11 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import AuthBackButton from '@/features/auth/terms/AuthBackButton';
 import Title from '@/shared/components/title/Title';
+
+export const metadata: Metadata = {
+  title: '이용약관',
+};
 
 type TermsSection =
   | {
@@ -82,10 +87,6 @@ const TEAM_MEMBERS = [
   { name: '조대원', github: 'https://github.com/looks32' },
   { name: '최우석', github: 'https://github.com/chldntjr1321' },
 ];
-
-// export const metadata: Metadata = {
-//   title: '이용약관',
-// };
 
 export default function Terms() {
   return (

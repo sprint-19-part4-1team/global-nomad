@@ -1,0 +1,22 @@
+import { PropsWithChildren } from 'react';
+
+/**
+ * 체험 상세 페이지 컨텐츠 영역 타이틀 컴포넌트
+ *
+ * 체험 상세 페이지 내의 각 섹션(체험 설명, 예약 정보, 리뷰 등)을
+ * 구분하는 제목을 표시하는 컴포넌트입니다.
+ *
+ * @param {PropsWithChildren} props - 컴포넌트 props
+ * @param {React.ReactNode} props.children - 표시할 제목 텍스트
+ * @returns {JSX.Element} 렌더링된 체험 상세 페이지 컨텐츠 타이틀
+ *
+ * @example
+ * ```tsx
+ * <ActivityContentTitle>체험 설명</ActivityContentTitle>
+ * <ActivityContentTitle>오시는 길</ActivityContentTitle>
+ * <ActivityContentTitle>체험 후기</ActivityContentTitle>
+ * ```
+ */
+export default function ActivityContentTitle({ children }: PropsWithChildren) {
+  return <div className='body-16 font-bold text-gray-950 sm:heading-18'>{children}</div>;
+}

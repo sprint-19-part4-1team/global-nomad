@@ -24,17 +24,26 @@ export interface ScheduleTimeSlot {
   endTime: string;
 }
 
-/** 체험 생성 타입 */
-export interface CreateActivityBodyDto {
+/**
+ * ## BasicInfoData
+ *
+ * @description
+ * - 체험 등록 / 수정 기본 폼 영역에서 사용하는 타입입니다.
+ */
+export type BasicInfoData = {
   title: string;
   category: ActivityCategory;
   description: string;
   price: number;
+};
+
+/** 체험 생성 타입 */
+export type CreateActivityBodyDto = BasicInfoData & {
   address: string;
   schedules: ScheduleTimeSlot[];
   bannerImageUrl: string;
   subImageUrls: string[];
-}
+};
 
 export interface GetActivitySchedulesParams {
   year: string;

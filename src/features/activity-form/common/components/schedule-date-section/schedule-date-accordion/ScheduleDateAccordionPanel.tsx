@@ -9,7 +9,6 @@ import useScheduleDateAccordionContext from '@/features/activity-form/common/com
 import ScheduleDurationRadio from '@/features/activity-form/common/components/schedule-date-section/schedule-duration-radio/ScheduleDurationRadio';
 import ScheduleDurationRadioGroup from '@/features/activity-form/common/components/schedule-date-section/schedule-duration-radio/ScheduleDurationRadioGroup';
 import ScheduleTimeSection from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeSection';
-import type { ScheduleTimeSlot } from '@/features/activity-form/common/types/schedule';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -18,6 +17,7 @@ import {
   SelectDropdownValue,
 } from '@/shared/components/dropdown/select';
 import Label from '@/shared/components/label/Label';
+import { ScheduleTimeSlot } from '@/shared/types/activities';
 
 /**
  * ## ScheduleDateAccordionPanel

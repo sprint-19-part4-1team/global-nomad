@@ -10,20 +10,32 @@ export interface GetActivitiesParams {
   page?: number;
   size?: number;
 }
+
+/**
+ * ## ScheduleTimeSlot
+ *
+ * @description
+ * - 하나의 예약 가능한 시간 구간(Time Slot)을 표현하는 타입입니다.
+ * - 날짜(`YYYY-MM-DD`)와 시작 시간(`startTime`)과 종료 시간(`endTime`)으로 구성됩니다.
+ */
+export interface ScheduleTimeSlot {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+/** 체험 생성 타입 */
 export interface CreateActivityBodyDto {
   title: string;
   category: ActivityCategory;
   description: string;
   price: number;
   address: string;
-  schedules?: {
-    date: string;
-    startTime: string;
-    endTime: string;
-  }[];
+  schedules: ScheduleTimeSlot[];
   bannerImageUrl: string;
-  subImageUrls?: string[];
+  subImageUrls: string[];
 }
+
 export interface GetActivitySchedulesParams {
   year: string;
   month: string;

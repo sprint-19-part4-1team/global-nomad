@@ -1,7 +1,7 @@
 import ScheduleTimeChip from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeChip';
 import ScheduleTimeEmpty from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeEmpty';
 import ScheduleTimeFieldSet from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeFieldSet';
-import type { ScheduleTimeSlot } from '@/features/activity-form/common/types/schedule';
+import { ScheduleTimeSlot } from '@/shared/types/activities';
 
 interface ScheduleTimeSectionProps {
   /** 등록된 예약 시간대 목록 */

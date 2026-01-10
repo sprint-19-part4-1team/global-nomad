@@ -90,7 +90,7 @@ export default function ReviewModal({
             </div>
           </section>
           <section className='mt-12 flex items-center justify-center gap-12'>
-            {[1, 2, 3, 4, 5].map((star) => (
+            {Array.from({ length: 5 }, (_, i) => i + 1).map((star) => (
               <button
                 key={star}
                 type='button'

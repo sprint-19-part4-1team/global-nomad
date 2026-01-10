@@ -132,7 +132,7 @@ export default async function ActivityDetail({
       })}>
       activityId : {activityId}
       <div className='w-full lg:w-670'>
-        <ActivityReviewList reivewData={DUMMY_REVIEW} />
+        <ActivityReviewList reviewData={DUMMY_REVIEW} />
       </div>
     </main>
   );

@@ -14,11 +14,11 @@ import { formatValue } from '@/shared/utils/formatValue';
 
 /**
  * 체험 리뷰 목록 컴포넌트의 Props
- * @property {GetActivityReviewsResponse} reivewData - 리뷰 데이터 (평균 평점, 총 개수, 리뷰 목록)
+ * @property {GetActivityReviewsResponse} reviewData - 리뷰 데이터 (평균 평점, 총 개수, 리뷰 목록)
  * @property {string} [className] - 추가 CSS 클래스명
  */
 interface ActivityReviewListProps {
-  reivewData: GetActivityReviewsResponse;
+  reviewData: GetActivityReviewsResponse;
   className?: string;
 }
 
@@ -46,7 +46,7 @@ const ITEMS_PER_PAGE = 3;
  * @example
  * ```tsx
  * <ActivityReviewList
- *   reivewData={{
+ *   reviewData={{
  *     averageRating: 4.5,
  *     totalCount: 128,
  *     reviews: [...]
@@ -54,8 +54,8 @@ const ITEMS_PER_PAGE = 3;
  * />
  * ```
  */
-export default function ActivityReviewList({ reivewData, className }: ActivityReviewListProps) {
-  const { averageRating, totalCount, reviews } = reivewData;
+export default function ActivityReviewList({ reviewData, className }: ActivityReviewListProps) {
+  const { averageRating, totalCount, reviews } = reviewData;
   const count = formatValue(totalCount);
 
   const [currentPage] = useQueryParamState<number>('page', {

@@ -54,7 +54,7 @@ export default function ReviewModal({
   const { mutate, isPending } = useCreateReviewMutation({
     status,
     size,
-    onClose: () => overlayStore.pop(),
+    onClose: () => handleClose,
   });
 
   const handleClose = () => {

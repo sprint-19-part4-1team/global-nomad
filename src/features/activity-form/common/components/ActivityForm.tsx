@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import AddressField from '@/features/activity-form/common/components/address-section/AddressField';
 import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
@@ -12,6 +13,8 @@ import type { ImageValue } from '@/features/activity-form/common/types/image';
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityForm() {
   // TODO: 훅으로 분리 예정
+  const [address, setAddress] = useState<string>('');
+  const [detailAddress, setDetailAddress] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [scheduledDates, setScheduledDates] = useState<Date[]>([]);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
@@ -45,11 +48,16 @@ export default function ActivityForm() {
   };
 
   return (
-    <form className='mt-24'>
+    <form className='mt-24 flex flex-col gap-24 sm:gap-28 md:gap-32'>
       {/* TODO: 내부 UI 추가 예정, 전체 UI는 이후 이슈에서 진행할 예정입니다. */}
-      <section className='my-24 sm:my-28 md:my-32'>
-        <h3 className='sr-only'>예약 시간대</h3>
-        <p className='mb-16 form-title'>예약 가능 시간대</p>
+      <AddressField
+        address={address}
+        setAddress={setAddress}
+        detailAddress={detailAddress}
+        setDetailAddress={setDetailAddress}
+      />
+      <fieldset>
+        <legend className='mb-16 form-title'>예약 가능 시간대</legend>
         <ScheduleDateField
           date={selectedDate}
           setDate={setSelectedDate}
@@ -58,35 +66,30 @@ export default function ActivityForm() {
         {/* TODO: 날짜 추가 시 해당하는 아코디언으로 포커스 */}
         <div className='mt-16 flex flex-col gap-16'>
           {scheduledDates.map((date) => (
-            <ScheduleDateAccordion key={date.toDateString()} defaultOpen>
+            <ScheduleDateAccordion key={date.getTime()} defaultOpen>
               <ScheduleDateAccordionHeader date={date} onDelete={() => handleDeleteDate(date)} />
               <ScheduleDateAccordionPanel />
             </ScheduleDateAccordion>
           ))}
         </div>
-      </section>
-      <section className='flex flex-col gap-24 sm:gap-28 md:gap-32'>
-        <h3 className='sr-only'>이미지</h3>
-
-        <ImageUploadField
-          id='banner-image'
-          label='배너 이미지'
-          maxCount={1}
-          value={bannerImage}
-          onChange={handleBannerChange}
-          onRemove={() => setBannerImage(null)}
-        />
-
-        <ImageUploadField
-          id='intro-image'
-          label='소개 이미지'
-          maxCount={4}
-          helperText='* 최소 1장 등록'
-          value={introImages}
-          onChange={handleIntroImagesChange}
-          onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
-        />
-      </section>
+      </fieldset>
+      <ImageUploadField
+        id='banner-image'
+        label='배너 이미지'
+        maxCount={1}
+        value={bannerImage}
+        onChange={handleBannerChange}
+        onRemove={() => setBannerImage(null)}
+      />
+      <ImageUploadField
+        id='intro-image'
+        label='소개 이미지'
+        maxCount={4}
+        helperText='* 최소 1장 등록'
+        value={introImages}
+        onChange={handleIntroImagesChange}
+        onRemove={(index) => setIntroImages((prev) => prev.filter((_, i) => i !== index))}
+      />
     </form>
   );
 }

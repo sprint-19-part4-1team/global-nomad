@@ -66,10 +66,10 @@ export default function ActivityTitle({
         <span className='body-13 text-gray-700 sm:body-14'>{category}</span>
         <ActionDropdown>
           <ActionDropdownTrigger aria-label='공유 메뉴 열기'>
-            <Icons.Share className='h-24 w-24 text-gray-950' />
+            <Icons.Share aria-hidden='true' className='h-24 w-24 text-gray-950' />
           </ActionDropdownTrigger>
 
-          <ActionDropdownContent className='-left-88'>
+          <ActionDropdownContent className='right-0 left-auto'>
             {/** TODO: 실제 기능과 연결하기 */}
             <ActionDropdownItem onClick={() => console.log('카카오톡 공유')}>
               카카오톡 공유
@@ -87,13 +87,13 @@ export default function ActivityTitle({
         </Title>
         <div className='flex flex-col gap-10 body-14 text-gray-700'>
           <div className='flex items-center gap-6'>
-            <Icons.Star className='h-16 w-16 text-yellow-500' />
+            <Icons.Star aria-hidden='true' className='h-16 w-16 text-yellow-500' />
             <span>
               {rating} ({reviewCount})
             </span>
           </div>
           <div className='flex items-center gap-2'>
-            <Icons.Location className='h-16 w-16 text-gray-700' />
+            <Icons.Location aria-hidden='true' className='h-16 w-16 text-gray-700' />
             <span>{address}</span>
           </div>
         </div>

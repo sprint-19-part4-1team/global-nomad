@@ -6,7 +6,7 @@ import Input from '@/shared/components/input/Input';
 /** 다음 주소 검색 API 스크립트 URL */
 const SCRIPT_URL = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-interface AddressFieldProps {
+interface AddressSectionProps {
   /** 선택된 기본 주소 (우편번호 + 주소 문자열) */
   address: string;
   /** 기본 주소 상태 업데이트 함수 */
@@ -25,12 +25,12 @@ interface AddressFieldProps {
  * 기본 주소 + 상세 주소 입력을 처리하는 폼 필드 컴포넌트입니다.
  * - 주소 검색 API 오류 발생 시 토스트 메시지를 통해 사용자에게 안내합니다.
  */
-export default function AddressField({
+export default function AddressSection({
   address,
   setAddress,
   detailAddress,
   setDetailAddress,
-}: AddressFieldProps) {
+}: AddressSectionProps) {
   const isPopupOpen = useRef(false);
   const open = useDaumPostcodePopup(SCRIPT_URL);
 

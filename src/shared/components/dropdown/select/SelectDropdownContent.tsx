@@ -15,7 +15,7 @@ interface SelectDropdownContentProps {
 
 const dropdownContentVariants = {
   basic:
-    'scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 p-12 shadow-input',
+    'scrollbar-hidden max-h-332 w-full overflow-y-scroll rounded-16 border border-gray-100 p-12 shadow-input z-5',
   shadow: dropdownListShadowStyle,
 } as const;
 

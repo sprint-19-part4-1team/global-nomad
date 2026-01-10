@@ -70,9 +70,11 @@ export default function ActivityTitle({
           </ActionDropdownTrigger>
 
           <ActionDropdownContent className='-left-88'>
+            {/** TODO: 실제 기능과 연결하기 */}
             <ActionDropdownItem onClick={() => console.log('카카오톡 공유')}>
               카카오톡 공유
             </ActionDropdownItem>
+            {/** TODO: 실제 기능과 연결하기 */}
             <ActionDropdownItem onClick={() => console.log('URL 복사')}>
               URL 복사
             </ActionDropdownItem>

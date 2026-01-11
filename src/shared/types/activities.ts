@@ -126,7 +126,7 @@ export interface ActivityWithSubImagesAndSchedulesDto {
   userId: number;
   title: string;
   description: string;
-  category: string;
+  category: ActivityCategory;
   price: number;
   address: string;
   bannerImageUrl: string;

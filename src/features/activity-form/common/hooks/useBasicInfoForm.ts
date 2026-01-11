@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { BasicInfo } from '@/features/activity-form/common/types/activityFormType';
 import { VALIDATION_MESSAGES } from '@/shared/constants';
-import type { BasicInfoData } from '@/shared/types/activities';
+import type { BasicInfoDataServer } from '@/shared/types/activities';
 import { isRequired } from '@/shared/utils/validators';
 
 type FormErrors = Partial<Record<keyof BasicInfo, string>>;
@@ -26,7 +26,7 @@ type FormErrors = Partial<Record<keyof BasicInfo, string>>;
  * - `isValid` : 모든 필드가 유효한지 여부
  * - `errors` : 필드별 에러 메시지 객체
  */
-export const useBasicInfoForm = (initialData?: BasicInfoData) => {
+export const useBasicInfoForm = (initialData?: BasicInfoDataServer) => {
   const [formData, setFormData] = useState<BasicInfo>({
     title: initialData?.title ?? '',
     category: initialData?.category ?? '',

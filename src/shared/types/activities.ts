@@ -25,12 +25,12 @@ export interface ScheduleTimeSlot {
 }
 
 /**
- * ## BasicInfoData
+ * ## BasicInfoDataServer
  *
  * @description
  * - 체험 등록 / 수정 기본 폼 영역에서 사용하는 타입입니다.
  */
-export type BasicInfoData = {
+export type BasicInfoDataServer = {
   title: string;
   category: ActivityCategory;
   description: string;
@@ -38,7 +38,7 @@ export type BasicInfoData = {
 };
 
 /** 체험 생성 타입 */
-export type CreateActivityBodyDto = BasicInfoData & {
+export type CreateActivityBodyDto = BasicInfoDataServer & {
   address: string;
   schedules: ScheduleTimeSlot[];
   bannerImageUrl: string;
@@ -101,7 +101,7 @@ export interface ActivityWithSchedulesResponseDto {
   userId: number;
   title: string;
   description: string;
-  category: string;
+  category: ActivityCategory;
   price: number;
   address: string;
   bannerImageUrl: string;

@@ -70,7 +70,7 @@ export interface ScheduleResponseDto {
     endTime: string;
     startTime: string;
     id: number;
-  };
+  }[];
   date: string;
 }
 

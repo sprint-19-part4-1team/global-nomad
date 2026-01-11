@@ -89,7 +89,7 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
             ref={(el) => {
               accordionRefs.current[date] = el;
             }}
-            tabIndex={0}
+            tabIndex={-1}
             className='rounded-18 focus:outline focus:outline-primary-500'>
             <ScheduleDateAccordion key={date} defaultOpen>
               <ScheduleDateAccordionHeader

@@ -1,9 +1,10 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { prefetchActivityDetail } from '@/features/activity-form/edit/queries/prefetchActivityDetail';
 import { validateActivityOwner } from '@/features/activity-form/edit/utils/validateActivityOwner';
 import Title from '@/shared/components/title/Title';
+import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export const metadata: Metadata = {
   title: '내 체험 수정',
@@ -16,7 +17,7 @@ interface ActivityEditProps {
 export default async function ActivityEdit({ params }: ActivityEditProps) {
   const { activityId } = await params;
   const id = Number(activityId);
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   const activity = await prefetchActivityDetail(queryClient, id);
   const isOwner = await validateActivityOwner(activity?.userId);

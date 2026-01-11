@@ -6,13 +6,17 @@ import MypageSectionHeader from '@/features/mypage/common/components/mypage-sect
 import { RESERVATION_STATUSES } from '@/features/mypage/common/constants/reservationStatus';
 import ReservationFilterButton from '@/features/mypage/reservation-list/components/ReservationFilterButton';
 import ReservationList from '@/features/mypage/reservation-list/components/ReservationList';
+import ReviewModal from '@/features/mypage/reservation-list/components/ReviewModal';
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import type {
+  ReservationStatus,
+  ReservationWithActivityResponseDto,
+} from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
@@ -59,6 +63,21 @@ export default function MypageReservationList() {
     );
   };
 
+  const showReviewModal = (reservation: ReservationWithActivityResponseDto) => {
+    overlayStore.push(
+      <ReviewModal
+        reservationId={reservation.id}
+        status={selectedStatus ?? undefined}
+        size={4}
+        activityTitle={reservation.activity.title}
+        date={reservation.date}
+        startTime={reservation.startTime}
+        endTime={reservation.endTime}
+        headCount={reservation.headCount}
+      />
+    );
+  };
+
   return (
     <>
       <MypageSectionHeader title='예약 내역' description='체험 예약을 변경/취소할 수 있습니다.' />
@@ -84,6 +103,7 @@ export default function MypageReservationList() {
           reservations={reservations}
           emptyText={emptyText}
           setCancelTarget={showCancelConfirm}
+          setReviewTarget={showReviewModal}
           hasNextPage={hasNextPage}
           isFetchingNextPage={isFetchingNextPage}
           fetchNextPage={fetchNextPage}

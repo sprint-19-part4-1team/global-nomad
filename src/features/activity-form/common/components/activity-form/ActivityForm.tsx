@@ -1,153 +1,51 @@
 'use client';
 
-import { format } from 'date-fns';
-import { FormEvent, useState } from 'react';
-import { toast } from 'react-toastify';
-import AddressField from '@/features/activity-form/common/components/address-section/AddressSection';
+import { FormEvent } from 'react';
+import AddressSection from '@/features/activity-form/common/components/address-section/AddressSection';
 import BasicInfoSection from '@/features/activity-form/common/components/basic-info-section/BasicInfoSection';
-import ImageUploadField from '@/features/activity-form/common/components/image-section/ImageUploadField';
-import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
-import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
-import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
-import ScheduleDateField from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/ScheduleDateField';
-import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
-import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
-import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
+import ImageSection from '@/features/activity-form/common/components/image-section/ImageSection';
+import ScheduleDateSection from '@/features/activity-form/common/components/schedule-date-section/ScheduleDateSection';
+import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
 import Button from '@/shared/components/button/Button';
-import { ScheduleTimeSlot } from '@/shared/types/activities';
+import { ActivityWithSubImagesAndSchedulesDto } from '@/shared/types/activities';
 
-// TODO: 구현 완료 후 tsDoc 추가 예정
-export default function ActivityForm() {
-  const {
-    formData,
-    updateFormData,
-    isValid: isBasicFormValid,
-    validateField: validateBasicFormField,
-    errors: basicFormErrors,
-  } = useBasicInfoForm();
-  const {
-    address,
-    setAddress,
-    detailAddress,
-    setDetailAddress,
-    isAddressValid,
-    addressError,
-    validateAddress,
-  } = useAddressForm();
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const [accordionDates, setAccordionDates] = useState<string[]>([]);
-  const [scheduleDates, setScheduleDates] = useState<ScheduleTimeSlot[]>([]);
-  const {
-    bannerImage,
-    introImages,
-    handleBannerChange,
-    handleBannerRemove,
-    handleIntroImagesChange,
-    handleIntroImageRemove,
-    isImageValid,
-  } = useImageUploadForm();
+interface ActivityFormProps {
+  /** 폼 초기값 (수정 폼에서 전달) */
+  initialData?: ActivityWithSubImagesAndSchedulesDto;
+}
 
-  const handleAddDate = (date: Date) => {
-    const dateString = format(date, 'yyyy-MM-dd');
-
-    const isDuplicate = accordionDates.includes(dateString);
-
-    if (isDuplicate) {
-      toast.error('이미 추가된 날짜입니다.');
-      return;
-    }
-
-    setAccordionDates((prev) =>
-      [...prev, dateString].sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
-    );
-  };
+/**
+ * ## ActivityForm
+ *
+ * @description
+ * - 체험(Activity) 등록/수정을 위한 메인 폼 컴포넌트입니다.
+ * - `useActivityForm` 훅을 사용하여 폼 상태 및 유효성을 관리합니다.
+ * - 모든 필드가 유효할 경우에만 제출 버튼이 활성화됩니다.
+ */
+export default function ActivityForm({ initialData }: ActivityFormProps) {
+  const { basicInfo, addressInfo, scheduleInfo, imageInfo, isAllValid, getActivityRequest } =
+    useActivityForm(initialData);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!isAllValid) {
+      return;
+    }
 
-    console.log(
-      'title: ',
-      formData.title,
-      'category: ',
-      formData.category,
-      'decription: ',
-      formData.description,
-      'price: ',
-      formData.price,
-      address,
-      detailAddress,
-      selectedDate,
-      scheduleDates,
-      bannerImage,
-      introImages
-    );
+    // TODO: 체험 등록, 수정 API 연결
+    const payload = getActivityRequest();
+    console.log('최종 데이터:', payload);
   };
 
   return (
     <form
       className='mt-24 flex flex-col gap-24 sm:mt-32 sm:gap-28 md:gap-32'
       onSubmit={handleSubmit}>
-      <BasicInfoSection
-        formData={formData}
-        onChange={updateFormData}
-        validateField={validateBasicFormField}
-        errors={basicFormErrors}
-      />
-      <AddressField
-        address={address}
-        setAddress={setAddress}
-        detailAddress={detailAddress}
-        setDetailAddress={setDetailAddress}
-        addressError={addressError}
-        validateAddress={validateAddress}
-      />
-      <fieldset>
-        <legend className='mb-16 form-title'>예약 가능 시간대</legend>
-        <ScheduleDateField
-          date={selectedDate}
-          setDate={setSelectedDate}
-          onAddDate={handleAddDate}
-        />
-        {/* TODO: 날짜 추가 시 해당하는 아코디언으로 포커스 */}
-        <div className='mt-16 flex flex-col gap-16'>
-          {accordionDates.map((date) => (
-            <ScheduleDateAccordion key={date} defaultOpen>
-              <ScheduleDateAccordionHeader
-                date={new Date(date)}
-                onDelete={() => {
-                  // 날짜 제거
-                  setAccordionDates((prev) => prev.filter((d) => d !== date));
-
-                  // 해당 날짜의 시간 슬롯도 제거
-                  setScheduleDates((prev) => prev.filter((s) => s.date !== date));
-                }}
-              />
-              <ScheduleDateAccordionPanel />
-            </ScheduleDateAccordion>
-          ))}
-        </div>
-      </fieldset>
-      <ImageUploadField
-        id='banner-image'
-        label='배너 이미지'
-        maxCount={1}
-        value={bannerImage}
-        onChange={handleBannerChange}
-        onRemove={handleBannerRemove}
-      />
-      <ImageUploadField
-        id='intro-image'
-        label='소개 이미지'
-        maxCount={4}
-        helperText='* 최소 1장 등록'
-        value={introImages}
-        onChange={handleIntroImagesChange}
-        onRemove={handleIntroImageRemove}
-      />
-      <Button
-        type='submit'
-        disabled={!isBasicFormValid || !isImageValid || !isAddressValid}
-        className='mx-auto mt-0 sm:mt-4 md:mt-0'>
+      <BasicInfoSection basicInfo={basicInfo} />
+      <AddressSection addressInfo={addressInfo} />
+      <ScheduleDateSection scheduleInfo={scheduleInfo} />
+      <ImageSection imageInfo={imageInfo} />
+      <Button type='submit' disabled={!isAllValid} className='mx-auto mt-0 sm:mt-4 md:mt-0'>
         체험 등록하기
       </Button>
     </form>

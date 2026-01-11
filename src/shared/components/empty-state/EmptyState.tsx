@@ -128,7 +128,7 @@ export default function EmptyState({ type, mainText, button }: EmptyStateProps) 
     <div className='flex flex-col items-center justify-center'>
       <div className='mb-16 flex flex-col items-center justify-center body-16 font-medium text-gray-500'>
         <Icon className={iconClassName} />
-        <span>{mainText}</span>
+        <span className='text-center whitespace-pre-line'>{mainText}</span>
       </div>
 
       {renderButton()}

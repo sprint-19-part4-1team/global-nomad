@@ -1,6 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { mockNotifications } from '@/features/notification/__mocks__/notifications';
+import type { Notification } from './NotificationItem';
 import NotificationModal from './NotificationModal';
+
+const mockNotifications: Notification[] = [
+  {
+    id: 1,
+    title: '스트릿댄스 체험',
+    date: '2026-01-12 10:00~11:00',
+    status: 'confirmed',
+    updatedAt: '2026-01-12T01:00:00.000Z',
+  },
+  {
+    id: 2,
+    title: '스트릿 댄스 체험험',
+    date: '2026-01-11 10:00~11:00',
+    status: 'declined',
+    updatedAt: '2026-01-11T01:00:00.000Z',
+  },
+];
 
 const meta: Meta<typeof NotificationModal> = {
   title: 'Shared/NotificationModal',
@@ -8,8 +25,8 @@ const meta: Meta<typeof NotificationModal> = {
   parameters: {},
   decorators: [
     (Story) => (
-      <div className='p-24'>
-        <div id='overlay-root'>
+      <div className='relative h-400 w-800 bg-gray-50 p-24'>
+        <div className='absolute top-0 right-0'>
           <Story />
         </div>
       </div>
@@ -23,11 +40,8 @@ type Story = StoryObj<typeof NotificationModal>;
 export const Default: Story = {
   args: {
     notifications: mockNotifications,
-    onDeleteAll: async () => {
-      // storybook debug
-    },
-    onDeleteOne: async (id: number) => {
-      // storybook debug
+    onDeleteAll: async () => {},
+    onDeleteOne: (id: number) => {
       void id;
     },
   },

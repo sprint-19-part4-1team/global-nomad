@@ -145,7 +145,7 @@ export default function ActivityReservation({ activityId, price }: ActivityReser
   } | null>(null);
 
   const schedules = DUMMY_AVAILABLE;
-  const personNumber = reservationInfo?.headCount ? reservationInfo.headCount : 1;
+  const personNumber = reservationInfo?.headCount ?? 1;
   const totalPrice = price * personNumber;
 
   const handleOpenBottomSheet = () => {
@@ -191,7 +191,7 @@ export default function ActivityReservation({ activityId, price }: ActivityReser
         <Button
           full
           onClick={reservationInfo ? handleReservation : handleOpenBottomSheet}
-          disabled={!reservationInfo && false}>
+          disabled={!reservationInfo}>
           예약하기
         </Button>
       </div>

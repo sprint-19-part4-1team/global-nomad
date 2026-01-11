@@ -1,13 +1,14 @@
-/** 카테고리 */
+/** 체험 카테고리 */
 export const ACTIVITY_CATEGORIES = [
-  '문화 · 예술',
-  '식음료',
-  '스포츠',
-  '투어',
-  '관광',
-  '웰빙',
+  { value: '문화 · 예술', label: '🎨 문화 · 예술' },
+  { value: '식음료', label: '🍜 식음료' },
+  { value: '투어', label: '🏙️ 투어' },
+  { value: '관광', label: '🚍 관광' },
+  { value: '웰빙', label: '🌿 웰빙' },
+  { value: '스포츠', label: '⚽️ 스포츠' },
 ] as const;
-export type ActivityCategory = (typeof ACTIVITY_CATEGORIES)[number];
+
+export type ActivityCategory = (typeof ACTIVITY_CATEGORIES)[number]['value'];
 
 /** 조회 방식 */
 export const ACTIVITY_LIST_METHODS = ['offset', 'cursor'] as const;

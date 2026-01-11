@@ -103,19 +103,20 @@ export default function Home() {
               const isActive = activeCategory === category;
 
               return (
-                <div key={category}>
-                  <FilterButton isActive={isActive} onClick={() => setActiveCategory(category)}>
-                    <span>{CATEGORY_ICONS[category]}</span>
-                    <span>{category}</span>
-                  </FilterButton>
-                </div>
+                <FilterButton
+                  key={category}
+                  isActive={isActive}
+                  onClick={() => setActiveCategory(category)}>
+                  <span>{CATEGORY_ICONS[category]}</span>
+                  <span>{category}</span>
+                </FilterButton>
               );
             })}
           </div>
           <div className='absolute top-0 right-0 md:top-auto md:bottom-10'>
             <SelectDropdown
               onChangeValue={() => {}}
-              triggerId='category-filter'
+              triggerId='sort-filter'
               value=''
               variants='shadow'>
               <SelectDropdownTrigger>
@@ -127,10 +128,10 @@ export default function Home() {
                 />
               </SelectDropdownTrigger>
               <SelectDropdownContent className='right-0 left-auto'>
-                <SelectDropdownItem value='문화 · 예술'>최신순</SelectDropdownItem>
-                <SelectDropdownItem value='문화 · 예술'>리뷰 많은순</SelectDropdownItem>
-                <SelectDropdownItem value='식음료'>가격 높은순</SelectDropdownItem>
-                <SelectDropdownItem value='투어'>가격 낮은순</SelectDropdownItem>
+                <SelectDropdownItem value='최신순'>최신순</SelectDropdownItem>
+                <SelectDropdownItem value='리뷰 많은순'>리뷰 많은순</SelectDropdownItem>
+                <SelectDropdownItem value='가격 높은순'>가격 높은순</SelectDropdownItem>
+                <SelectDropdownItem value='가격 낮은순'>가격 낮은순</SelectDropdownItem>
               </SelectDropdownContent>
             </SelectDropdown>
           </div>

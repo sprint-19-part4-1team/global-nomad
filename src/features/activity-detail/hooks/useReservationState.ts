@@ -8,14 +8,14 @@ import { useState } from 'react';
  * @property {number} participantCount - 예약 참여 인원 수
  * @property {boolean} showParticipantSection - 인원 선택 섹션 표시 여부 (바텀시트 모드에서 단계 전환용)
  * @property {Date} currentMonth - 달력에 현재 표시 중인 월
- * @property {Function} setSelectedDate - 선택된 날짜를 설정하는 함수
- * @property {Function} setSelectedScheduleId - 선택된 스케줄 ID를 설정하는 함수
- * @property {Function} setParticipantCount - 참여 인원 수를 설정하는 함수
- * @property {Function} setShowParticipantSection - 인원 선택 섹션 표시 여부를 설정하는 함수
- * @property {Function} setCurrentMonth - 현재 표시 중인 월을 설정하는 함수
- * @property {Function} handleDateSelect - 날짜 선택 시 호출되며, 시간 선택을 초기화하는 핸들러
- * @property {Function} handleMonthChange - 월 변경 시 호출되며, 모든 선택을 초기화하는 핸들러
- * @property {Function} handleBack - 뒤로가기 버튼 클릭 시 호출되는 핸들러 (인원 선택 → 날짜/시간 선택)
+ * @property {(date: Date | undefined) => void} setSelectedDate - 선택된 날짜를 설정하는 함수
+ * @property {(id: number | null) => void} setSelectedScheduleId - 선택된 스케줄 ID를 설정하는 함수
+ * @property {(count: number) => void} setParticipantCount - 참여 인원 수를 설정하는 함수
+ * @property {(show: boolean) => void} setShowParticipantSection - 인원 선택 섹션 표시 여부를 설정하는 함수
+ * @property {(month: Date) => void} setCurrentMonth - 현재 표시 중인 월을 설정하는 함수
+ * @property {(date: Date | undefined) => void} handleDateSelect - 날짜 선택 시 호출되며, 시간 선택을 초기화하는 핸들러
+ * @property {(month: Date) => void} handleMonthChange - 월 변경 시 호출되며, 모든 선택을 초기화하는 핸들러
+ * @property {() => void} handleBack - 뒤로가기 버튼 클릭 시 호출되는 핸들러 (인원 선택 → 날짜/시간 선택)
  * @property {boolean} isDateTimeValid - 날짜와 시간이 모두 선택되었는지 검증
  * @property {boolean} isValid - 예약에 필요한 모든 정보가 유효한지 검증 (날짜, 시간, 인원)
  */

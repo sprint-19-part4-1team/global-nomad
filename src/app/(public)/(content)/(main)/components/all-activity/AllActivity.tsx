@@ -47,11 +47,11 @@ export default function AllActivity() {
                 />
               </SelectDropdownTrigger>
               <SelectDropdownContent>
-                <SelectDropdownItem value='문화 · 예술'>🎨 문화 · 예술</SelectDropdownItem>
-                <SelectDropdownItem value='식음료'>🍜 식음료</SelectDropdownItem>
-                <SelectDropdownItem value='투어'>🏙️ 투어</SelectDropdownItem>
-                <SelectDropdownItem value='관광'>🚍 관광</SelectDropdownItem>
-                <SelectDropdownItem value='웰빙'>🌿 웰빙</SelectDropdownItem>
+                {ACTIVITY_CATEGORIES.map((category) => (
+                  <SelectDropdownItem key={category.value} value={category.value}>
+                    {category.label}
+                  </SelectDropdownItem>
+                ))}
               </SelectDropdownContent>
             </SelectDropdown>
           </div>
@@ -86,10 +86,10 @@ export default function AllActivity() {
               />
             </SelectDropdownTrigger>
             <SelectDropdownContent className='right-0 left-auto'>
-              <SelectDropdownItem value='최신순'>최신순</SelectDropdownItem>
-              <SelectDropdownItem value='리뷰 많은순'>리뷰 많은순</SelectDropdownItem>
-              <SelectDropdownItem value='가격 높은순'>가격 높은순</SelectDropdownItem>
-              <SelectDropdownItem value='가격 낮은순'>가격 낮은순</SelectDropdownItem>
+              <SelectDropdownItem value='latest'>최신순</SelectDropdownItem>
+              <SelectDropdownItem value='most_reviewed'>리뷰 많은순</SelectDropdownItem>
+              <SelectDropdownItem value='price_asc'>가격 높은순</SelectDropdownItem>
+              <SelectDropdownItem value='price_desc'>가격 낮은순</SelectDropdownItem>
             </SelectDropdownContent>
           </SelectDropdown>
         </div>

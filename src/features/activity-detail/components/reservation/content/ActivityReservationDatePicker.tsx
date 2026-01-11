@@ -1,4 +1,5 @@
 import { startOfDay, startOfMonth } from 'date-fns';
+import { useCallback, useMemo } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { ko } from 'react-day-picker/locale';
 import 'react-day-picker/style.css';
@@ -60,6 +61,18 @@ export default function ActivityReservationDatePicker({
 }: ActivityReservationDatePickerProps) {
   const today = startOfDay(new Date());
 
+  const availableDateSet = useMemo(() => {
+    return new Set(availableDates.map((date) => date.toDateString()));
+  }, [availableDates]);
+
+  const isDateDisabled = useCallback(
+    (date: Date) => {
+      const checkDate = startOfDay(date);
+      return checkDate < today || !availableDateSet.has(checkDate.toDateString());
+    },
+    [today, availableDateSet]
+  );
+
   return (
     <DayPicker
       className='custom-day-picker reservation-day-picker'
@@ -69,15 +82,7 @@ export default function ActivityReservationDatePicker({
       onSelect={onSelectDate}
       month={currentMonth}
       onMonthChange={onMonthChange}
-      disabled={(date) => {
-        const checkDate = startOfDay(date);
-        return (
-          checkDate < today
-          || !availableDates.some(
-            (availableDate) => availableDate.toDateString() === checkDate.toDateString()
-          )
-        );
-      }}
+      disabled={isDateDisabled}
       startMonth={startOfMonth('2026/01')}
     />
   );

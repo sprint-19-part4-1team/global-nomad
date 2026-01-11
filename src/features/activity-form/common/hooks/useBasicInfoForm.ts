@@ -76,5 +76,11 @@ export const useBasicInfoForm = (initialData?: BasicInfoData) => {
 
   const isValid = Object.values(formData).every((value) => value.trim() !== '');
 
-  return { formData, updateFormData, isValid, validateField, errors };
+  return {
+    formData,
+    updateFormData,
+    isBasicFormValid: isValid,
+    validateBasicFormField: validateField,
+    basicFormErrors: errors,
+  };
 };

@@ -1,6 +1,6 @@
 import { AUTH_COOKIE_KEYS } from '@/shared/constants';
 import { getAuthCookies } from '@/shared/utils/authCookies';
-import { getJWTUserId } from '@/shared/utils/jwt';
+import { getJwtUserId } from '@/shared/utils/jwt';
 
 /**
  * ## validateActivityOwner
@@ -27,6 +27,6 @@ export const validateActivityOwner = async (activityUserId?: number) => {
     return false;
   }
 
-  const currentUserId = getJWTUserId(accessToken);
+  const currentUserId = getJwtUserId(accessToken);
   return activityUserId === currentUserId;
 };

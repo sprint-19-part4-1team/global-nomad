@@ -50,13 +50,13 @@ export const getJwtExpiresAt = (token: string): number => {
 };
 
 /**
- * ## getJWTUserId
+ * ## getJwtUserId
  * JWT 토큰의 payload를 디코딩하여 유저 id를 반환합니다.
  *
  * @param token - JWT 문자열
  * @returns 유저 ID
  */
-export const getJWTUserId = (token: string): number => {
+export const getJwtUserId = (token: string): number => {
   const { id } = parseJwtPayload(token);
   return id;
 };

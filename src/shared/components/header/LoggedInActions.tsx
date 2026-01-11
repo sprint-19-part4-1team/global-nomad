@@ -66,10 +66,10 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
           onClick={() => setIsModalOpen((prev) => !prev)}>
           {hasNotifications ? (
             <Icons.Alert
-              className={`h-24 w-24 cursor-pointer ${isModalOpen ? 'text-primary-500' : ''}`}
+              className={`h-24 w-24 cursor-pointer text-gray-600 ${isModalOpen ? 'text-primary-500' : ''}`}
             />
           ) : (
-            <Icons.AlertOff className='h-24 w-24' />
+            <Icons.AlertOff className='h-24 w-24 text-gray-600' />
           )}
         </button>
         {isModalOpen && (

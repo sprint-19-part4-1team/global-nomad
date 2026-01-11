@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Icons from '@/assets/icons';
+import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import Button from '@/shared/components/button/Button';
 import { useUserStore } from '@/shared/stores/userStore';
 
@@ -39,7 +40,7 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
   return (
     <div className='mt-8 flex flex-col gap-20 sm:gap-32'>
       <Link
-        href='/mypage/reservation-status'
+        href={ROUTE_PATHS.RESERVATION_STATUS}
         className='flex w-fit items-center gap-4 body-14 font-semibold text-primary-500 sm:body-16'>
         <span>예약 현황 확인</span>
         <Icons.ArrowRight aria-hidden='true' className='h-24 w-24' />
@@ -49,14 +50,17 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
         <Button
           variant='secondary'
           size='lg'
-          href={`/activity/${activityId}/edit`}
+          href={ROUTE_PATHS.ACTIVITY_EDIT(activityId)}
           className='flex-1'>
           체험 수정하기
         </Button>
         <Button
           variant='negative'
           size='lg'
-          onClick={() => console.log('체험 삭제하기')}
+          onClick={() => {
+            // TODO: API 연동 후 실제 체험 삭제 로직 구현
+            console.log('체험 삭제하기');
+          }}
           className='flex-1'>
           체험 삭제하기
         </Button>

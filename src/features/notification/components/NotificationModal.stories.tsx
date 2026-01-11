@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { mockNotifications } from '@/shared/components/notification-modal/__mocks__/notifications';
+import { mockNotifications } from '@/features/notification/__mocks__/notifications';
 import NotificationModal from './NotificationModal';
 
 const meta: Meta<typeof NotificationModal> = {

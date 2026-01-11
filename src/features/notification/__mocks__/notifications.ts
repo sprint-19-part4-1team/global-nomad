@@ -1,4 +1,4 @@
-import { Notification } from '../NotificationItem';
+import { Notification } from '../components/NotificationItem';
 
 export const mockNotifications: Notification[] = [
   {

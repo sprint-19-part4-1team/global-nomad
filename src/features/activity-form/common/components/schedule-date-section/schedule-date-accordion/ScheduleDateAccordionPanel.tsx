@@ -127,12 +127,7 @@ export default function ScheduleDateAccordionPanel({
         ))}
       </ScheduleDurationRadioGroup>
 
-      <ScheduleTimeSection
-        times={times}
-        onRemoveTime={(index) => {
-          onRemoveTime(times[index].startTime);
-        }}
-      />
+      <ScheduleTimeSection times={times} onRemoveTime={onRemoveTime} />
     </div>
   );
 }

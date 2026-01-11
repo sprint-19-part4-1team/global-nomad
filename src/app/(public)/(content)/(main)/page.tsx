@@ -17,19 +17,18 @@ import BannerSlide from '@/shared/components/slide/BannerSlide';
 import PopularSlide from '@/shared/components/slide/PopularSlide';
 import Title from '@/shared/components/title/Title';
 import { ACTIVITY_CATEGORIES, layoutContainer } from '@/shared/constants/';
-
-// 필터 버튼
-const CATEGORY_ICONS: Record<string, string> = {
-  '문화 · 예술': '🎨',
-  식음료: '🍜',
-  투어: '🏙️',
-  관광: '🚍',
-  웰빙: '🌿',
-};
+import useQueryParamState from '@/shared/hooks/useQueryParamState';
+import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
 export default function Home() {
   // 필터버튼
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  // 페이지네이션
+  const [currentPage, setCurrentPage] = useQueryParamState('page', {
+    defaultValue: 1,
+    parse: parsePageQueryParam,
+  });
 
   return (
     <main
@@ -100,15 +99,14 @@ export default function Home() {
 
           <div className='mt-15 hidden gap-10 sm:mt-30 sm:flex md:gap-13 lg:gap-20'>
             {ACTIVITY_CATEGORIES.map((category) => {
-              const isActive = activeCategory === category;
+              const isActive = activeCategory === category.value;
 
               return (
                 <FilterButton
-                  key={category}
+                  key={category.value}
                   isActive={isActive}
-                  onClick={() => setActiveCategory(category)}>
-                  <span>{CATEGORY_ICONS[category]}</span>
-                  <span>{category}</span>
+                  onClick={() => setActiveCategory(category.value)}>
+                  <span>{category.label}</span>
                 </FilterButton>
               );
             })}
@@ -231,7 +229,12 @@ export default function Home() {
         />
 
         <div className='mt-24 flex justify-center sm:mt-30'>
-          <Pagination itemsPerPage={8} totalCount={80} />
+          <Pagination
+            totalCount={100}
+            itemsPerPage={10}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
 
         <div />

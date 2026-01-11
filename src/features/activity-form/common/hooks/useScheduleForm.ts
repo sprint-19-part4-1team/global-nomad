@@ -55,12 +55,8 @@ export const useScheduleForm = (initialSchedules: DetailSchedulesType[] = []) =>
     const isDuplicated = scheduleDates.some(
       (slot) =>
         slot.date === newSlot.date
-        // 새로 만드는 시간대의 시작이 기존 시간에 포함되는지 체크
-        && ((newSlot.startTime >= slot.startTime && newSlot.startTime < slot.endTime)
-          // 새로 만드는 시간대의 종료 시간이 기존 시간에 포함되는지 체크
-          || (newSlot.endTime > slot.startTime && newSlot.endTime <= slot.endTime)
-          // 새로 만드는 시간이 기존 시간대에 완전히 포함되는지 체크
-          || (newSlot.startTime <= slot.startTime && newSlot.endTime >= slot.endTime))
+        && newSlot.startTime < slot.endTime // 새로운 시작 시간이 기존 종료 시간보다 빨라야 함
+        && slot.startTime < newSlot.endTime // 기존 시작이 새 종료보다 빨라야 함
     );
 
     if (isDuplicated) {

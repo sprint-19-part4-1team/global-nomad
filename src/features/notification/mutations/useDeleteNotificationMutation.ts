@@ -10,6 +10,9 @@ interface UseDeleteNotificationMutationParams {
 
 /**
  * 알림 삭제 mutation hook
+ *
+ * @param params.size - 알림 목록 조회 시 사용할 size (캐시 무효화용)
+ * @returns mutate(notificationId) - 알림 삭제 실행 함수
  */
 export const useDeleteNotificationMutation = (params?: UseDeleteNotificationMutationParams) => {
   const queryClient = useQueryClient();

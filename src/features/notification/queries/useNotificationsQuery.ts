@@ -38,6 +38,9 @@ const parseNotificationContent = (notification: NotificationDto): ParsedNotifica
 
 /**
  * 알림 목록을 조회하는 query hook
+ *
+ * @param params.size - 조회할 알림 개수
+ * @returns notifications - 파싱된 알림 목록 (title, date, status, updatedAt)
  */
 export const useNotificationsQuery = (params?: { size?: number }) => {
   const userId = useUserStore((s) => s.user?.id);

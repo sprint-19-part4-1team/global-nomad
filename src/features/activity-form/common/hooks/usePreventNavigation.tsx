@@ -53,6 +53,7 @@ export const usePreventNavigation = (isDirty: boolean) => {
             confirmLabel='이동하기'
             onConfirm={() => {
               window.removeEventListener('beforeunload', handleBeforeUnload);
+              window.removeEventListener('popstate', handlePopState);
               overlayStore.pop();
               router.push(anchor.href);
             }}

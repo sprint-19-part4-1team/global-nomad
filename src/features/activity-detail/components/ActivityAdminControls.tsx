@@ -66,7 +66,7 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
         </Button>
       </div>
 
-      <div className='flex flex-col gap-4 rounded-7 bg-gray-25 p-12'>
+      <div className='flex flex-col gap-4 rounded-7 bg-gray-25 p-12 sm:p-16'>
         <span className='body-13 font-bold text-gray-700 sm:body-14'>확인해주세요!</span>
         <span className='body-12 font-medium text-gray-500 sm:body-14'>
           ・체험 승인/대기 중일 때는 체험을 수정 및 삭제할 수 없습니다.

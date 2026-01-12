@@ -2,11 +2,15 @@ import {
   ActivityCommonKey,
   ActivityRequestData,
 } from '@/features/activity-form/common/types/activityFormType';
-import { ActivityWithSubImagesAndSchedulesDto, ScheduleTimeSlot } from '@/shared/types/activities';
+import {
+  ActivityWithSubImagesAndSchedulesDto,
+  ScheduleTimeSlot,
+  SubImagesType,
+} from '@/shared/types/activities';
 import { UpdateActivityFormPayload } from '@/shared/types/myActivities';
 
 /**
- * ## applyChanges
+ * ## getBasicFieldsDiff
  *
  * @description
  * 두 객체의 특정 키값을 비교하여 변경된 항목만 target 객체에 할당합니다.
@@ -16,7 +20,7 @@ import { UpdateActivityFormPayload } from '@/shared/types/myActivities';
  * @param base - 비교 대상인 초기 데이터 (initialData)
  * @param target - 변경사항을 담을 결과 객체 (changedValues)
  */
-export const applyChanges = (
+export const getBasicFieldsDiff = (
   keys: readonly ActivityCommonKey[],
   source: ActivityRequestData,
   base: ActivityWithSubImagesAndSchedulesDto,
@@ -27,6 +31,37 @@ export const applyChanges = (
       (target as any)[key] = source[key];
     }
   });
+};
+
+/**
+ * ## getSubImageDiff
+ *
+ * @description
+ * - 현재 소개 이미지 목록과 기존 서브 이미지 목록을 비교하여
+ *   삭제할 이미지 ID와 추가할 이미지 파일 목록을 반환합니다.
+ *
+ * @param currentIntroImages - 현재 폼에 존재하는 소개 이미지 목록 (URL 또는 File)
+ * @param baseSubImages - 기존에 저장된 서브 이미지 목록
+ *
+ * @returns
+ * - subImageIdsToRemove: 삭제할 기존 서브 이미지 ID 배열
+ * - subImageUrlsToAdd: 새로 추가할 서브 이미지 파일 배열
+ */
+export const getSubImageDiff = (
+  currentIntroImages: (string | File)[],
+  baseSubImages: SubImagesType[]
+) => {
+  const currentSubUrls = currentIntroImages.filter(
+    (item): item is string => typeof item === 'string'
+  );
+
+  const subImageIdsToRemove = baseSubImages
+    .filter((oldImg) => !currentSubUrls.includes(oldImg.imageUrl))
+    .map((oldImg) => oldImg.id);
+
+  const subImageUrlsToAdd = currentIntroImages.filter((item): item is File => item instanceof File);
+
+  return { subImageIdsToRemove, subImageUrlsToAdd };
 };
 
 /**

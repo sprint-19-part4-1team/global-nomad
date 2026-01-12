@@ -33,7 +33,8 @@ export default function CreateActivityForm() {
           />
         );
       },
-      onError: () => {
+      onError: (error) => {
+        console.error('체험 등록 실패:', error);
         toast.error('등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       },
     });

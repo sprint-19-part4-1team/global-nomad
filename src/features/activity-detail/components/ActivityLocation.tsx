@@ -17,6 +17,23 @@ declare global {
 }
 
 /**
+ * 카카오맵 Geocoder 검색 결과 타입
+ */
+interface KakaoGeocoderResult {
+  /** 위도 (문자열) */
+  y: string;
+  /** 경도 (문자열) */
+  x: string;
+  /** 주소명 */
+  address_name?: string;
+}
+
+/**
+ * 카카오맵 Geocoder 상태 타입
+ */
+type KakaoGeocoderStatus = 'OK' | 'ZERO_RESULT' | 'ERROR';
+
+/**
  * 체험 위치 정보 컴포넌트의 Props
  * @property {string} address - 표시할 주소
  */
@@ -60,55 +77,58 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
 
         const geocoder = new window.kakao.maps.services.Geocoder();
 
-        geocoder.addressSearch(address, (result: any, status: any) => {
-          if (status === window.kakao.maps.services.Status.OK) {
-            const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+        geocoder.addressSearch(
+          address,
+          (result: KakaoGeocoderResult[], status: KakaoGeocoderStatus) => {
+            if (status === window.kakao.maps.services.Status.OK && result.length > 0) {
+              const coords = new window.kakao.maps.LatLng(Number(result[0].y), Number(result[0].x));
 
-            const options = {
-              center: coords,
-              level: 3,
-              draggable: false, // 드래그 방지
-              scrollwheel: false, // 마우스 휠 줌 방지
-              disableDoubleClick: true, // 더블클릭 줌 방지
-              disableDoubleClickZoom: true, // 더블클릭 줌 방지
-            };
+              const options = {
+                center: coords,
+                level: 3,
+                draggable: false, // 드래그 방지
+                scrollwheel: false, // 마우스 휠 줌 방지
+                disableDoubleClick: true, // 더블클릭 줌 방지
+                disableDoubleClickZoom: true, // 더블클릭 줌 방지
+              };
 
-            map = new window.kakao.maps.Map(mapRef.current, options);
-            map.setZoomable(false);
+              map = new window.kakao.maps.Map(mapRef.current, options);
+              map.setZoomable(false);
 
-            const iconHTML = iconRef.current?.innerHTML || '';
+              const iconHTML = iconRef.current?.innerHTML || '';
 
-            const markerContent = `
-            <div class="relative inline-block w-fit">
-              <div class="flex items-center gap-8 rounded-20 border-2 border-primary-600 bg-white p-6 body-14 font-semibold whitespace-nowrap text-gray-900 shadow-card">
-                <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-primary-600 px-6 py-4">
-                  ${iconHTML}
+              const markerContent = `
+                <div class="relative inline-block w-fit">
+                  <div class="flex items-center gap-8 rounded-20 border-2 border-primary-600 bg-white p-6 body-14 font-semibold whitespace-nowrap text-gray-900 shadow-card">
+                    <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-primary-600 px-6 py-4">
+                      ${iconHTML}
+                    </div>
+                    <span>${address}</span>
+                  </div>
+                  <div class="absolute -bottom-7 left-1/2 h-0 w-0 -translate-x-1/2 border-t-8 border-r-8 border-l-8 border-t-primary-600 border-r-transparent border-l-transparent"></div>
+                  <div class="absolute -bottom-4 left-1/2 h-0 w-0 -translate-x-1/2 border-t-7 border-r-7 border-l-7 border-t-white border-r-transparent border-l-transparent"></div>
                 </div>
-                <span>${address}</span>
-              </div>
-              <div class="absolute -bottom-7 left-1/2 h-0 w-0 -translate-x-1/2 border-t-8 border-r-8 border-l-8 border-t-primary-600 border-r-transparent border-l-transparent"></div>
-              <div class="absolute -bottom-4 left-1/2 h-0 w-0 -translate-x-1/2 border-t-7 border-r-7 border-l-7 border-t-white border-r-transparent border-l-transparent"></div>
-            </div>
-          `;
+              `;
 
-            const customOverlay = new window.kakao.maps.CustomOverlay({
-              position: coords,
-              content: markerContent,
-              yAnchor: 1.1,
-            });
+              const customOverlay = new window.kakao.maps.CustomOverlay({
+                position: coords,
+                content: markerContent,
+                yAnchor: 1.1,
+              });
 
-            customOverlay.setMap(map);
+              customOverlay.setMap(map);
 
-            handleResize = () => {
-              map.relayout();
-              map.setCenter(coords);
-            };
+              handleResize = () => {
+                map.relayout();
+                map.setCenter(coords);
+              };
 
-            window.addEventListener('resize', handleResize);
-          } else {
-            toast.error('주소 검색에 실패했습니다');
+              window.addEventListener('resize', handleResize);
+            } else {
+              toast.error('주소 검색에 실패했습니다');
+            }
           }
-        });
+        );
       });
     };
 

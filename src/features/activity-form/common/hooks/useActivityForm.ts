@@ -123,6 +123,7 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
     const d = currentFormData;
     return (
       !!d.title
+      || !!d.category
       || !!d.description
       || d.price > 0
       || !!d.address

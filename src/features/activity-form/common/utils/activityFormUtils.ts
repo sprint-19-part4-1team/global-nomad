@@ -1,6 +1,6 @@
 import {
   ActivityCommonKey,
-  ActivityRequestData,
+  CreateActivityFormPayload,
   UpdateActivityFormPayload,
 } from '@/features/activity-form/common/types/activityFormType';
 import {
@@ -22,7 +22,7 @@ import {
  */
 export const getBasicFieldsDiff = (
   keys: readonly ActivityCommonKey[],
-  source: ActivityRequestData,
+  source: CreateActivityFormPayload,
   base: ActivityWithSubImagesAndSchedulesDto
 ) => {
   const diff: Partial<UpdateActivityFormPayload> = {};

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
-import { ActivityRequestData } from '@/features/activity-form/common/types/activityFormType';
+import { CreateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { createActivity } from '@/shared/apis/feature/activities';
 import { QUERY_KEYS } from '@/shared/constants';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
@@ -23,7 +23,7 @@ export const useCreateActivityMutation = () => {
   const { mutateAsync: uploadImage } = useUploadImageMutation();
 
   return useMutation({
-    mutationFn: async (reqbody: ActivityRequestData) => {
+    mutationFn: async (reqbody: CreateActivityFormPayload) => {
       const { bannerImageUrl: bannerFile, subImageUrls: subImageFiles } = reqbody;
 
       if (!(bannerFile instanceof File)) {

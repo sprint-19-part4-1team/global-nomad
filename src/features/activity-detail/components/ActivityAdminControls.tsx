@@ -32,7 +32,7 @@ interface ActivityAdminControlsProps {
 export default function ActivityAdminControls({ activityId, userId }: ActivityAdminControlsProps) {
   const loginUserId = useUserStore((s) => s.user?.id);
 
-  // 체험 관리자와 로그인 사용자가 다를 경우 렌더링하지 않음
+  // 체험 작성 유저와 로그인한 유저가 다를 경우 렌더링하지 않음
   if (userId !== loginUserId) {
     return null;
   }

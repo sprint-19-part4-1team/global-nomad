@@ -25,14 +25,23 @@
 
 /* 선택된 값 */
 .custom-day-picker .rdp-week .rdp-day.rdp-selected .rdp-day_button {
-  border: 0;
   width: 44px;
   height: 44px;
   background-color: var(--color-primary-500);
   color: var(--color-white);
+  border: 0;
+}
+
+.reservation-day-picker .rdp-week .rdp-day .rdp-day_button {
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-500);
+  border: 0;
 }
 
 /* 비활성화 */
 .custom-day-picker .rdp-week .rdp-day.rdp-disabled .rdp-day_button {
+  background-color: transparent;
   color: var(--color-gray-500);
 }

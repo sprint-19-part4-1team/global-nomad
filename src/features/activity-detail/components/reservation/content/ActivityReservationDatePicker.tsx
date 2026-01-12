@@ -1,4 +1,4 @@
-import { startOfDay, startOfMonth } from 'date-fns';
+import { addMonths, startOfDay, startOfMonth } from 'date-fns';
 import { useCallback, useMemo } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { ko } from 'react-day-picker/locale';
@@ -31,7 +31,7 @@ interface ActivityReservationDatePickerProps {
  * - 한국어 로케일 지원
  * - 오늘 이전 날짜 선택 불가
  * - 예약 가능한 날짜만 활성화
- * - 2026년 1월부터 시작하는 월 선택 범위
+ * - 현재 월부터 3개월까지 이동 가능 (등록 폼의 60일 제한에 맞춤)
  * - 커스텀 스타일 적용 (customDayPicker.css)
  *
  * @param {ActivityReservationDatePickerProps} props - 컴포넌트 props
@@ -61,6 +61,10 @@ export default function ActivityReservationDatePicker({
 }: ActivityReservationDatePickerProps) {
   const today = startOfDay(new Date());
 
+  // 현재 월과 3개월 후 계산
+  const startMonth = useMemo(() => startOfMonth(today), [today]);
+  const endMonth = useMemo(() => addMonths(startMonth, 3), [startMonth]);
+
   const availableDateSet = useMemo(() => {
     return new Set(availableDates.map((date) => date.toDateString()));
   }, [availableDates]);
@@ -75,7 +79,7 @@ export default function ActivityReservationDatePicker({
 
   return (
     <DayPicker
-      className='custom-day-picker reservation-day-picker'
+      className='custom-day-picker reservation-day-picker h-300'
       mode='single'
       locale={ko}
       selected={selectedDate}
@@ -83,7 +87,8 @@ export default function ActivityReservationDatePicker({
       month={currentMonth}
       onMonthChange={onMonthChange}
       disabled={isDateDisabled}
-      startMonth={startOfMonth('2026/01')}
+      startMonth={startMonth}
+      endMonth={endMonth}
     />
   );
 }

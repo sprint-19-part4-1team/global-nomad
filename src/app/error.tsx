@@ -20,6 +20,19 @@ export default function Error({ reset }: { reset: () => void }) {
 
   useEffect(() => {
     document.title = '500 - Internal Server Error';
+
+    const link = document.querySelector<HTMLLinkElement>("link[rel='icon']");
+    const originalHref = link?.href;
+
+    if (link) {
+      link.href = '/favicons/500_error.svg';
+    }
+
+    return () => {
+      if (link && originalHref) {
+        link.href = originalHref;
+      }
+    };
   }, []);
 
   const handleRetry = () => {

@@ -6,12 +6,14 @@ import { createContext } from 'react';
  * @property setValue - 선택 값을 변경하는 함수
  * @property triggerId - 트리거와 리스트를 연결하는 id (접근성)
  * @property variants - SelectDropdown 스타일 변형 (기본값 basic)
+ * @property onBlur - 드롭다운이 포커스를 잃었을 때 호출되는 콜백
  */
 interface SelectContextType {
   value: string;
   setValue: (value: string) => void;
   triggerId: string;
   variants: 'basic' | 'shadow';
+  onBlur?: () => void;
 }
 
 /**

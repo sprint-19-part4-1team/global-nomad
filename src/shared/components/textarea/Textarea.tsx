@@ -93,6 +93,13 @@ export default function Textarea({
   // 최대 글자 수 초과 여부
   const isOverMax = textCount > maxLength;
 
+  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    if (e.target.value.length > maxLength + 1) {
+      return;
+    }
+    onChange(e);
+  };
+
   return (
     <div className={cn('field-container', container)}>
       <Label htmlFor={textareaId} variant={variant}>
@@ -108,7 +115,7 @@ export default function Textarea({
           id={textareaId}
           name={name}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           onBlur={onBlur}
           placeholder={placeholder}
           rows={5}

@@ -1,4 +1,4 @@
-import ActivityForm from '@/features/activity-form/common/components/ActivityForm';
+import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 
 // TODO: 구현 완료 후 tsDoc 추가 예정
 export default function ActivityNewClient() {

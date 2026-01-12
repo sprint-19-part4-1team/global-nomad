@@ -10,20 +10,41 @@ export interface GetActivitiesParams {
   page?: number;
   size?: number;
 }
-export interface CreateActivityBodyDto {
+
+/**
+ * ## ScheduleTimeSlot
+ *
+ * @description
+ * - 하나의 예약 가능한 시간 구간(Time Slot)을 표현하는 타입입니다.
+ * - 날짜(`YYYY-MM-DD`)와 시작 시간(`startTime`)과 종료 시간(`endTime`)으로 구성됩니다.
+ */
+export interface ScheduleTimeSlot {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+/**
+ * ## BasicInfoDataServer
+ *
+ * @description
+ * - 체험 등록 / 수정 기본 폼 영역에서 사용하는 타입입니다.
+ */
+export type BasicInfoDataServer = {
   title: string;
   category: ActivityCategory;
   description: string;
   price: number;
+};
+
+/** 체험 생성 타입 */
+export type CreateActivityBodyDto = BasicInfoDataServer & {
   address: string;
-  schedules?: {
-    date: string;
-    startTime: string;
-    endTime: string;
-  }[];
+  schedules: ScheduleTimeSlot[];
   bannerImageUrl: string;
-  subImageUrls?: string[];
-}
+  subImageUrls: string[];
+};
+
 export interface GetActivitySchedulesParams {
   year: string;
   month: string;
@@ -80,7 +101,7 @@ export interface ActivityWithSchedulesResponseDto {
   userId: number;
   title: string;
   description: string;
-  category: string;
+  category: ActivityCategory;
   price: number;
   address: string;
   bannerImageUrl: string;
@@ -105,7 +126,7 @@ export interface ActivityWithSubImagesAndSchedulesDto {
   userId: number;
   title: string;
   description: string;
-  category: string;
+  category: ActivityCategory;
   price: number;
   address: string;
   bannerImageUrl: string;

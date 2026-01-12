@@ -1,20 +1,23 @@
 import { useRef } from 'react';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import { toast } from 'react-toastify';
+import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
 import Input from '@/shared/components/input/Input';
 
 /** 다음 주소 검색 API 스크립트 URL */
 const SCRIPT_URL = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-interface AddressFieldProps {
-  /** 선택된 기본 주소 (우편번호 + 주소 문자열) */
-  address: string;
-  /** 기본 주소 상태 업데이트 함수 */
-  setAddress: (address: string) => void;
-  /** 상세 주소 (동/건물명 등) */
-  detailAddress: string;
-  /** 상세 주소 상태 업데이트 함수 */
-  setDetailAddress: (detailAddress: string) => void;
+interface AddressSectionProps {
+  /**
+   * useBasicInfoForm의 리턴 타입
+   * address - 선택된 기본 주소 (우편번호 + 주소 문자열)
+   * setAddress - 기본 주소 상태 업데이트 함수
+   * detailAddress - 상세 주소 (동/건물명 등)
+   * setDetailAddress - 상세 주소 상태 업데이트 함수
+   * addressError - 주소 유효성 검사 실패 시 표시할 에러 메시지
+   * validateAddress - 주소 필수값 유효성 검사 함수
+   */
+  addressInfo: ReturnType<typeof useAddressForm>;
 }
 
 /**
@@ -25,12 +28,10 @@ interface AddressFieldProps {
  * 기본 주소 + 상세 주소 입력을 처리하는 폼 필드 컴포넌트입니다.
  * - 주소 검색 API 오류 발생 시 토스트 메시지를 통해 사용자에게 안내합니다.
  */
-export default function AddressField({
-  address,
-  setAddress,
-  detailAddress,
-  setDetailAddress,
-}: AddressFieldProps) {
+export default function AddressSection({ addressInfo }: AddressSectionProps) {
+  const { address, setAddress, detailAddress, setDetailAddress, addressError, validateAddress } =
+    addressInfo;
+
   const isPopupOpen = useRef(false);
   const open = useDaumPostcodePopup(SCRIPT_URL);
 
@@ -45,8 +46,12 @@ export default function AddressField({
       autoDetailAddress = addrDetails.length > 0 ? `${addrDetails.join(', ')}` : '';
     }
 
-    setAddress(`[${zonecode}] ${address}`);
+    const fullAddress = `[${zonecode}] ${address}`;
+
+    setAddress(fullAddress);
     setDetailAddress(autoDetailAddress);
+
+    validateAddress(fullAddress);
 
     isPopupOpen.current = false;
   };
@@ -60,6 +65,9 @@ export default function AddressField({
     open({
       onComplete: handleComplete,
       onClose: () => {
+        if (isPopupOpen.current) {
+          validateAddress(address);
+        }
         isPopupOpen.current = false;
       },
       onError: () => {
@@ -69,6 +77,7 @@ export default function AddressField({
             잠시 후 다시 시도해주세요.
           </>
         );
+        isPopupOpen.current = false;
       },
     });
   };
@@ -87,6 +96,7 @@ export default function AddressField({
         value={address}
         placeholder='주소를 검색해 주세요.'
         onClick={handleClick}
+        errorMessage={addressError}
       />
       {address && (
         <Input

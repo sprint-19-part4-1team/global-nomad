@@ -214,7 +214,7 @@ export default async function ActivityDetail({
         {/* 설명 */}
         <div className='flex flex-col gap-8 border-t border-gray-100 py-20 sm:pt-44 sm:pb-40 lg:border-t-0 lg:py-40'>
           <ActivityContentTitle>체험 설명</ActivityContentTitle>
-          <div className='mb-20 sm:mb-0'>{description}</div>
+          <div className='mb-20 whitespace-pre-wrap sm:mb-0'>{description}</div>
         </div>
 
         {/* 지도 */}

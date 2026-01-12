@@ -108,10 +108,15 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
               const options = {
                 center: coords,
                 level: 3,
+                draggable: true, // 드래그 활성화
+                scrollwheel: true, // 마우스 휠 줌 활성화
               };
 
               map = new window.kakao.maps.Map(mapRef.current, options);
-              map.setZoomable(false);
+
+              // 모바일 터치 이벤트 활성화
+              map.setDraggable(true);
+              map.setZoomable(true);
 
               const iconHTML = iconRef.current?.innerHTML || '';
               const markerContent = createMarkerContent(address, iconHTML);

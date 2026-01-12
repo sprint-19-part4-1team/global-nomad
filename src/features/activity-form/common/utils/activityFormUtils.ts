@@ -4,6 +4,7 @@ import {
 } from '@/features/activity-form/common/types/activityFormType';
 import {
   ActivityWithSubImagesAndSchedulesDto,
+  DetailSchedulesType,
   ScheduleTimeSlot,
   SubImagesType,
 } from '@/shared/types/activities';
@@ -73,6 +74,42 @@ export const getSubImageDiff = (
  * @param s - 타임 슬롯 객체
  * @returns - 문자열로 변환한 객체
  */
-export const getScheduleKey = (s: ScheduleTimeSlot) => {
+const getScheduleKey = (s: ScheduleTimeSlot) => {
   return `${s.date}_${s.startTime}_${s.endTime}`;
+};
+
+/**
+ * ## getScheduleDiff
+ *
+ * @description
+ * - 현재 폼의 예약 일정 목록과 기존 일정 목록을 비교하여
+ *   삭제할 일정 ID와 새로 추가할 일정 데이터를 반환합니다.
+ *
+ * @param currentSchedules - 현재 폼에 입력된 예약 일정 목록
+ * @param baseSchedules - 기존에 저장된 예약 일정 목록
+ *
+ * @returns
+ * - scheduleIdsToRemove: 삭제할 기존 일정 ID 배열
+ * - schedulesToAdd: 새로 추가할 예약 일정 데이터 배열
+ */
+export const getScheduleDiff = (
+  currentSchedules: ScheduleTimeSlot[],
+  baseSchedules: DetailSchedulesType[]
+) => {
+  const currentKeys = currentSchedules.map(getScheduleKey);
+  const oldKeys = baseSchedules.map(getScheduleKey);
+
+  const scheduleIdsToRemove = baseSchedules
+    .filter((old) => !currentKeys.includes(getScheduleKey(old)))
+    .map((old) => old.id);
+
+  const schedulesToAdd = currentSchedules
+    .filter((curr) => !oldKeys.includes(getScheduleKey(curr)))
+    .map((s) => ({
+      date: s.date,
+      startTime: s.startTime,
+      endTime: s.endTime,
+    }));
+
+  return { scheduleIdsToRemove, schedulesToAdd };
 };

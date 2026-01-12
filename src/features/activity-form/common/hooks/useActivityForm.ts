@@ -62,7 +62,12 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
   /** 사용자가 입력한 값이 기존과 달라진게 있는지 검증 */
   const getChangedValues = () => {
     if (!initialData) {
-      return getActivityRequest();
+      const fullRequest = getActivityRequest();
+      return {
+        ...fullRequest,
+        bannerImageUrl: fullRequest.bannerImageUrl ?? undefined,
+        subImageUrlsToAdd: fullRequest.subImageUrls as File[],
+      };
     }
 
     const reqbody = getActivityRequest();

@@ -2,11 +2,12 @@ import {
   ActivityCommonKey,
   ActivityRequestData,
 } from '@/features/activity-form/common/types/activityFormType';
-import { ActivityWithSubImagesAndSchedulesDto } from '@/shared/types/activities';
+import { ActivityWithSubImagesAndSchedulesDto, ScheduleTimeSlot } from '@/shared/types/activities';
 import { UpdateActivityFormPayload } from '@/shared/types/myActivities';
 
 /**
  * ## applyChanges
+ *
  * @description
  * 두 객체의 특정 키값을 비교하여 변경된 항목만 target 객체에 할당합니다.
  *
@@ -26,4 +27,17 @@ export const applyChanges = (
       (target as any)[key] = source[key];
     }
   });
+};
+
+/**
+ * # getScheduleKey
+ *
+ * @description
+ * 스케줄 객체를 식별 가능한 문자열 키로 변환하는 함수
+ *
+ * @param s - 타임 슬롯 객체
+ * @returns - 문자열로 변환한 객체
+ */
+export const getScheduleKey = (s: ScheduleTimeSlot) => {
+  return `${s.date}_${s.startTime}_${s.endTime}`;
 };

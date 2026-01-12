@@ -1,20 +1,13 @@
 import Icons from '@/assets/icons';
+import { ParsedNotification } from '@/features/notification/queries/useNotificationsQuery';
 import { getTimeAgo } from '@/shared/utils/getTimeAgo';
 
-export type NotificationStatus = 'confirmed' | 'declined';
-export interface Notification {
-  id: number;
-  title: string;
-  updatedAt: string;
-  date: string;
-  status: NotificationStatus;
-}
 /**
  * NotificationItem 컴포넌트에서 사용하는 props
  */
-export interface NotificationItemProps extends Notification {
+export interface NotificationItemProps extends ParsedNotification {
   /** 해당 알림을 삭제할 때 호출되는 콜백 */
-  onDelete: (id: number) => Promise<void>;
+  onDelete: (id: number) => void;
 }
 
 const STATUS_OPTIONS = {
@@ -59,7 +52,7 @@ export default function NotificationItem({
             {getTimeAgo(updatedAt)}
           </time>
           <button type='button' className='cursor-pointer' onClick={() => void onDelete(id)}>
-            <Icons.Trash className='h-24 w-24 text-gray-300' />
+            <Icons.Trash className='h-24 w-24 text-gray-300 hover:text-gray-700' />
           </button>
         </div>
       </div>

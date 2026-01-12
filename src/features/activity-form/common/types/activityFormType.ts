@@ -1,5 +1,7 @@
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
 import type { ActivityCategory } from '@/shared/constants';
+import { ActivityWithSubImagesAndSchedulesDto } from '@/shared/types/activities';
+import { UpdateActivityFormPayload } from '@/shared/types/myActivities';
 
 /**
  * ## BasicInfo
@@ -34,4 +36,15 @@ export interface BasicInfo {
  */
 export type ActivityRequestData = ReturnType<
   ReturnType<typeof useActivityForm>['getActivityRequest']
+>;
+
+/**
+ * ## ActivityCommonKey
+ *
+ * @description
+ * - UpdateActivityFormPayload와 ActivityWithSubImagesAndSchedulesDto의 공통 키를 추출합니다.
+ */
+export type ActivityCommonKey = Extract<
+  keyof UpdateActivityFormPayload,
+  keyof ActivityWithSubImagesAndSchedulesDto
 >;

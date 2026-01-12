@@ -21,7 +21,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
   const { data: activity } = useActivityDetailQuery(activityId);
 
   const formState = useActivityForm(activity);
-  const { changedValues, isEditDirty, isAllValid } = formState;
+  const { changedValues, isDirty, isAllValid } = formState;
 
   const { mutate, isPending } = useUpdateActivityMutation(activityId);
 
@@ -55,7 +55,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
       submitButtonText='체험 수정하기'
       onSubmit={handleSubmit}
       isSubmitting={isPending}
-      isDisabled={!isEditDirty || !isAllValid}
+      isDisabled={!isDirty || !isAllValid}
     />
   );
 }

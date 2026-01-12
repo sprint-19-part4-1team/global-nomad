@@ -118,7 +118,24 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
     return changedValues;
   }, [initialData, currentFormData]);
 
-  const isEditDirty = initialData ? Object.keys(changedValues).length > 0 : false;
+  /** 등록 폼에 변경사항이 있는지 확인 */
+  const isCreateDirty = useMemo(() => {
+    const d = currentFormData;
+    return (
+      !!d.title
+      || !!d.description
+      || d.price > 0
+      || !!d.address
+      || d.schedules.length > 0
+      || !!d.bannerImageUrl
+      || d.subImageUrls.length > 0
+    );
+  }, [currentFormData]);
+
+  /** 수정 폼에 변경사항이 있는지 확인 */
+  const isEditDirty = Object.keys(changedValues).length > 0;
+
+  const isDirty = initialData ? isEditDirty : isCreateDirty;
 
   return {
     basicInfo,
@@ -128,6 +145,6 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
     currentFormData,
     changedValues,
     isAllValid,
-    isEditDirty,
+    isDirty,
   };
 };

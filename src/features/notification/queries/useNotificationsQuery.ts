@@ -4,15 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getMyNotifications } from '@/shared/apis/feature/myNotifications';
 import { QUERY_KEYS } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
+import { UpdatableReservationStatus } from '@/shared/types/myActivities';
 import { NotificationDto } from '@/shared/types/myNotifications';
-
-export type NotificationStatus = 'confirmed' | 'declined';
+import { ReservationStatus } from '@/shared/types/myReservations';
 
 export interface ParsedNotification {
   id: number;
   title: string;
   date: string;
-  status: NotificationStatus;
+  status: UpdatableReservationStatus;
   updatedAt: string;
 }
 
@@ -25,7 +25,9 @@ const parseNotificationContent = (notification: NotificationDto): ParsedNotifica
 
   const match = content.match(/^(.+)\((.+)\)/);
   const [, title = '', date = ''] = match ?? [];
-  const status: NotificationStatus = content.includes('승인') ? 'confirmed' : 'declined';
+  const status: UpdatableReservationStatus = content.includes('승인')
+    ? ReservationStatus.Confirmed
+    : ReservationStatus.Declined;
 
   return {
     id,

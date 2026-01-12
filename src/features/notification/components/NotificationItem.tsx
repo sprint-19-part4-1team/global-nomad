@@ -1,11 +1,6 @@
 import Icons from '@/assets/icons';
-import {
-  ParsedNotification,
-  NotificationStatus,
-} from '@/features/notification/queries/useNotificationsQuery';
+import { ParsedNotification } from '@/features/notification/queries/useNotificationsQuery';
 import { getTimeAgo } from '@/shared/utils/getTimeAgo';
-
-export type { NotificationStatus, ParsedNotification as Notification };
 
 /**
  * NotificationItem 컴포넌트에서 사용하는 props

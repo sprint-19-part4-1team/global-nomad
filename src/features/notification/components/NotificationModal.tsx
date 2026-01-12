@@ -1,9 +1,10 @@
 'use client';
 
-import NotificationItem, { type Notification } from './NotificationItem';
+import { ParsedNotification } from '@/features/notification/queries/useNotificationsQuery';
+import NotificationItem from './NotificationItem';
 
 interface NotificationModalProps {
-  notifications: Notification[];
+  notifications: ParsedNotification[];
   onDeleteAll: () => Promise<void>;
   onDeleteOne: (id: number) => void;
 }

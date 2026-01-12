@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Icons from '@/assets/icons';
 import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
@@ -11,46 +12,36 @@ import ActivityReviewList from '@/features/activity-detail/components/review/Act
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { parseAddress } from '@/features/activity-detail/utils/parseAddress';
+import { getActivityDetail } from '@/shared/apis/feature/activities';
 import { layoutContainer } from '@/shared/constants/';
 import { cn } from '@/shared/utils/cn';
 
-// TODO: API 연동 후 삭제
-const DUMMY_ACTIVITY = {
-  id: 7,
-  userId: 2895,
-  title: '함께 배우면 즐거운 스트릿댄스',
-  description: '둠칫 둠칫 두둠칫',
-  category: '투어',
-  price: 10000,
-  address: '[06236] 서울 강남구 테헤란로26길 14 | 역삼동, 위워크빌딩',
-  bannerImageUrl:
-    'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/globalnomad/activity_registration_image/a.png',
-  subImages: [
-    {
-      id: 1,
-      imageUrl:
-        'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/globalnomad/activity_registration_image/b.png',
+/**
+ * 체험 상세 페이지의 메타데이터를 생성
+ *
+ * SEO 최적화 및 소셜 미디어 공유를 위해 체험 정보를 기반으로 동적 메타데이터를 설정합니다.
+ *
+ * @param params.activityId - 조회할 체험 ID
+ * @returns 페이지 메타데이터 (title, description, openGraph)
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ activityId: string }>;
+}): Promise<Metadata> {
+  const { activityId } = await params;
+  const activity = await getActivityDetail(Number(activityId));
+
+  return {
+    title: activity.title,
+    description: activity.description,
+    openGraph: {
+      title: activity.title,
+      description: activity.description,
+      images: activity.bannerImageUrl,
     },
-  ],
-  schedules: [
-    {
-      id: 1,
-      date: '2023-12-01',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-    {
-      id: 2,
-      date: '2023-12-05',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-  ],
-  reviewCount: 5,
-  rating: 4.74,
-  createdAt: '2023-12-31T21:28:50.589Z',
-  updatedAt: '2023-12-31T21:28:50.589Z',
-};
+  };
+}
 
 // TODO: API 연동 후 삭제
 const DUMMY_REVIEW = {
@@ -174,10 +165,13 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { userId, category, title, description, price, subImages, reviewCount } = DUMMY_ACTIVITY;
+  // 체험 상세 조회
+  const activity = await getActivityDetail(Number(activityId));
 
-  const address = parseAddress(DUMMY_ACTIVITY.address);
-  const rating = formatRating(DUMMY_ACTIVITY.rating);
+  const { userId, category, title, description, price, subImages, reviewCount } = activity;
+
+  const address = parseAddress(activity.address);
+  const rating = formatRating(activity.rating);
 
   return (
     <main

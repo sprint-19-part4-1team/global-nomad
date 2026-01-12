@@ -1,7 +1,7 @@
 import { DayPicker } from 'react-day-picker';
 import { ko } from 'react-day-picker/locale';
 import 'react-day-picker/style.css';
-import './styles/customDayPicker.css';
+import '@/shared/styles/customDayPicker.css';
 import { getScheduleDateRange } from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/utils/getScheduleDateRange';
 
 const DEFAULT_SCHEDULE_RANGE_DAYS = 60;

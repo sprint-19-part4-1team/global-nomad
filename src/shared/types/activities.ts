@@ -85,13 +85,15 @@ export interface SubImagesType {
   id: number;
 }
 
+export interface ScheduleTimeType {
+  id: number;
+  startTime: string;
+  endTime: string;
+}
+
 /** 체험 예약 가능일 조회 리스폰스 */
 export interface ScheduleResponseDto {
-  times: {
-    endTime: string;
-    startTime: string;
-    id: number;
-  };
+  times: ScheduleTimeType[];
   date: string;
 }
 

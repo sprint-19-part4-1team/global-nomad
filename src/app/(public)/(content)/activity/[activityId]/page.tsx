@@ -1,5 +1,6 @@
 import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
 import ActivityTitle from '@/features/activity-detail/components/ActivityTitle';
+import ActivityReservation from '@/features/activity-detail/components/reservation/ActivityReservation';
 import { layoutContainer } from '@/shared/constants/';
 
 // TODO: API 연동 후 삭제
@@ -47,7 +48,7 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { userId, category, title, rating, reviewCount, address } = DUMMY_ACTIVITY;
+  const { userId, category, title, price, address, reviewCount, rating } = DUMMY_ACTIVITY;
 
   return (
     <main
@@ -56,7 +57,11 @@ export default async function ActivityDetail({
         paddingX: 'wide',
         paddingTop: 'lg',
       })}>
-      activityId : {activityId}
+      <div className='flex flex-col gap-24 lg:flex-row'>
+        {/* 왼쪽: 컨텐츠 영역 */}
+        <div className='flex-1 lg:w-670' />
+      </div>
+
       <div className='w-full lg:w-410'>
         <ActivityTitle
           category={category}
@@ -66,6 +71,16 @@ export default async function ActivityDetail({
           address={address}
         />
         <ActivityAdminControls activityId={Number(activityId)} userId={userId} />
+
+        {/* 오른쪽: 예약 영역 (데스크톱에서만 표시) */}
+        <aside className='hidden lg:block lg:w-384'>
+          <ActivityReservation activityId={activityId} userId={userId} price={price} />
+        </aside>
+      </div>
+
+      {/* 모바일: 하단 고정 예약 바 */}
+      <div className='lg:hidden'>
+        <ActivityReservation activityId={activityId} userId={userId} price={price} />
       </div>
     </main>
   );

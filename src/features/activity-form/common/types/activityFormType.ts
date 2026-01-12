@@ -39,8 +39,8 @@ export interface CreateActivityFormPayload extends Omit<
   CreateActivityBodyDto,
   'bannerImageUrl' | 'subImageUrls'
 > {
-  bannerImageUrl: string | File | null;
-  subImageUrls: (string | File)[];
+  bannerImageUrl: File | null;
+  subImageUrls: File[];
 }
 
 /**
@@ -59,8 +59,8 @@ export interface UpdateActivityFormPayload extends Omit<
   UpdateMyActivityBodyDto,
   'bannerImageUrl' | 'subImageUrlsToAdd'
 > {
-  bannerImageUrl?: string | File;
-  subImageUrlsToAdd?: (string | File)[];
+  bannerImageUrl?: File;
+  subImageUrlsToAdd?: File[];
 }
 
 /**

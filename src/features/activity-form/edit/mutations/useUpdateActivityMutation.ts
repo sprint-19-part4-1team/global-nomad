@@ -14,20 +14,14 @@ export const useUpdateActivityMutation = (activityId: number) => {
 
   return useMutation({
     mutationFn: async (payload: UpdateActivityFormPayload) => {
-      let bannerImageUrl: string | undefined = undefined;
+      const bannerImageUrl = payload.bannerImageUrl
+        ? await uploadImage(payload.bannerImageUrl)
+        : undefined;
 
-      if (payload.bannerImageUrl instanceof File) {
-        bannerImageUrl = await uploadImage(payload.bannerImageUrl);
-      } else {
-        bannerImageUrl = payload.bannerImageUrl;
-      }
+      const subImageUrlsToAdd = payload.subImageUrlsToAdd
+        ? await Promise.all(payload.subImageUrlsToAdd.map((file) => uploadImage(file)))
+        : undefined;
 
-      let subImageUrlsToAdd: string[] | undefined = undefined;
-      if (payload.subImageUrlsToAdd && payload.subImageUrlsToAdd.length > 0) {
-        subImageUrlsToAdd = await Promise.all(
-          payload.subImageUrlsToAdd.map((file) => (file instanceof File ? uploadImage(file) : file))
-        );
-      }
       const updateData: UpdateMyActivityBodyDto = {
         ...payload,
         bannerImageUrl,

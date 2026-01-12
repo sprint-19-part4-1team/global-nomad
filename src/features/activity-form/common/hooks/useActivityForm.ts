@@ -54,8 +54,8 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
       price: Number(basicInfo.formData.price),
       address: addressInfo.getFullAddressForSubmit(),
       schedules: scheduleInfo.scheduleDates,
-      bannerImageUrl: imageInfo.bannerImage,
-      subImageUrls: imageInfo.introImages,
+      bannerImageUrl: imageInfo.bannerImage instanceof File ? imageInfo.bannerImage : null,
+      subImageUrls: imageInfo.introImages as File[],
     };
   };
 
@@ -66,7 +66,7 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
       return {
         ...fullRequest,
         bannerImageUrl: fullRequest.bannerImageUrl ?? undefined,
-        subImageUrlsToAdd: fullRequest.subImageUrls as File[],
+        subImageUrlsToAdd: fullRequest.subImageUrls,
       };
     }
 

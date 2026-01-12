@@ -1,9 +1,16 @@
+import Link from 'next/link';
+import Icons from '@/assets/icons';
 import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
+import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
+import ActivityImageGrid from '@/features/activity-detail/components/ActivityImageGrid';
 import ActivityLocation from '@/features/activity-detail/components/ActivityLocation';
+import ActivityNotice from '@/features/activity-detail/components/ActivityNotice';
 import ActivityTitle from '@/features/activity-detail/components/ActivityTitle';
 import ActivityReservation from '@/features/activity-detail/components/reservation/ActivityReservation';
 import ActivityReviewList from '@/features/activity-detail/components/review/ActivityReviewList';
+import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import { layoutContainer } from '@/shared/constants/';
+import { cn } from '@/shared/utils/cn';
 
 // TODO: API 연동 후 삭제
 const DUMMY_ACTIVITY = {
@@ -165,37 +172,61 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { userId, category, title, price, address, reviewCount, rating } = DUMMY_ACTIVITY;
+  const { userId, category, title, description, price, address, subImages, reviewCount, rating } =
+    DUMMY_ACTIVITY;
 
   return (
     <main
-      className={layoutContainer({
-        maxWidth: 1200,
-        paddingX: 'wide',
-        paddingTop: 'lg',
-      })}>
-      <div className='flex flex-col gap-24 lg:flex-row'>
-        {/* 왼쪽: 컨텐츠 영역 */}
-        <div className='flex-1 lg:w-670'>
-          <ActivityLocation address={address} />
-          <ActivityReviewList reviewData={DUMMY_REVIEW} />
+      className={cn(
+        layoutContainer({
+          maxWidth: 1200,
+          paddingX: 'wide',
+          paddingTop: 'lg',
+        }),
+        'flex flex-col gap-16 sm:gap-24 lg:gap-26'
+      )}>
+      <Link
+        href={ROUTE_PATHS.MAIN}
+        className='flex gap-4 body-14 font-semibold text-gray-950 sm:gap-8 sm:body-16'>
+        <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
+        <span>메인으로</span>
+      </Link>
+      <div className='gap-x-40 lg:grid lg:grid-cols-[1fr_410px]'>
+        {/* 이미지 */}
+        <div className=''>
+          <ActivityImageGrid subImages={subImages} />
         </div>
 
-        {/* 오른쪽: 타이틀, 예약 영역 */}
-        <div className='w-full lg:w-410'>
+        {/* 제목 */}
+        <div className='mt-20 mb-24 sm:mt-24 sm:mb-40 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:my-0'>
           <ActivityTitle
             category={category}
             title={title}
+            address={address}
             rating={rating}
             reviewCount={reviewCount}
-            address={address}
           />
           <ActivityAdminControls activityId={Number(activityId)} userId={userId} />
-
-          {/* 예약 영역 (데스크톱에서만 표시) */}
-          <aside className='hidden lg:block lg:w-384'>
+          <ActivityNotice userId={userId} />
+          <aside className='hidden lg:block'>
             <ActivityReservation activityId={activityId} userId={userId} price={price} />
           </aside>
+        </div>
+
+        {/* 설명 */}
+        <div className='flex flex-col gap-8 border-t border-gray-100 py-20 sm:pt-44 sm:pb-40 lg:border-t-0 lg:py-40'>
+          <ActivityContentTitle>체험 설명</ActivityContentTitle>
+          <div className='mb-20 sm:mb-0'>{description}</div>
+        </div>
+
+        {/* 지도 */}
+        <div className=''>
+          <ActivityLocation address={address} />
+        </div>
+
+        {/* 후기 */}
+        <div className=''>
+          <ActivityReviewList reviewData={DUMMY_REVIEW} />
         </div>
       </div>
       {/* 모바일: 하단 고정 예약 바 */}

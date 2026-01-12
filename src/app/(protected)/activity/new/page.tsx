@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ActivityNewClient from '@/features/activity-form/new/ActivityNewClient';
+import CreateActivityForm from '@/features/activity-form/new/components/CreateActivityForm';
 import Title from '@/shared/components/title/Title';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export default function ActivityNew() {
   return (
     <>
       <Title responsive='md'>내 체험 등록</Title>
-      <ActivityNewClient />
+      <CreateActivityForm />
     </>
   );
 }

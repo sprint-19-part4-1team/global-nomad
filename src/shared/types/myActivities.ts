@@ -54,15 +54,6 @@ export interface UpdateMyActivityBodyDto {
   schedulesToAdd?: CreateScheduleBodyDto[];
 }
 
-/** 내 체험 수정 클라이언트 타입 */
-export interface UpdateActivityFormPayload extends Omit<
-  UpdateMyActivityBodyDto,
-  'bannerImageUrl' | 'subImageUrlsToAdd'
-> {
-  bannerImageUrl?: string | File;
-  subImageUrlsToAdd?: (string | File)[];
-}
-
 /** 내 체험 리스트 조회 리스폰스 */
 export interface MyActivitiesResponse {
   cursorId: number | null;

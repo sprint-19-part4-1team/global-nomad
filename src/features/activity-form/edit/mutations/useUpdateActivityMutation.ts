@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
+import { UpdateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { updateMyActivity } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
-import { UpdateActivityFormPayload, UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
+import { UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export const useUpdateActivityMutation = (activityId: number) => {

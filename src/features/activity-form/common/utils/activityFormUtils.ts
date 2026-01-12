@@ -1,6 +1,7 @@
 import {
   ActivityCommonKey,
   ActivityRequestData,
+  UpdateActivityFormPayload,
 } from '@/features/activity-form/common/types/activityFormType';
 import {
   ActivityWithSubImagesAndSchedulesDto,
@@ -8,7 +9,6 @@ import {
   ScheduleTimeSlot,
   SubImagesType,
 } from '@/shared/types/activities';
-import { UpdateActivityFormPayload } from '@/shared/types/myActivities';
 
 /**
  * ## getBasicFieldsDiff

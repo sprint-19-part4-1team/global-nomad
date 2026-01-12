@@ -4,6 +4,7 @@ import { useAddressForm } from '@/features/activity-form/common/hooks/useAddress
 import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
 import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
 import { useScheduleForm } from '@/features/activity-form/common/hooks/useScheduleForm';
+import { UpdateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import {
   getBasicFieldsDiff,
   getScheduleDiff,
@@ -11,7 +12,6 @@ import {
 } from '@/features/activity-form/common/utils/activityFormUtils';
 import type { ActivityCategory } from '@/shared/constants';
 import type { ActivityWithSubImagesAndSchedulesDto } from '@/shared/types/activities';
-import type { UpdateActivityFormPayload } from '@/shared/types/myActivities';
 
 /** 가본 필드 */
 const BASIC_FIELDS = ['title', 'category', 'description', 'price', 'address'] as const;

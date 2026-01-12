@@ -42,6 +42,28 @@ interface ActivityLocationProps {
 }
 
 /**
+ * 카카오맵 커스텀 마커의 HTML 컨텐츠를 생성합니다.
+ *
+ * @param {string} address - 마커에 표시할 주소
+ * @param {string} iconHTML - 마커 아이콘의 HTML 문자열
+ * @returns {string} 마커 HTML 컨텐츠
+ */
+const createMarkerContent = (address: string, iconHTML: string): string => {
+  return `
+    <div class="relative inline-block w-fit">
+      <div class="flex items-center gap-8 rounded-20 border-2 border-primary-600 bg-white p-6 body-14 font-semibold whitespace-nowrap text-gray-900 shadow-card">
+        <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-primary-600 px-6 py-4">
+          ${iconHTML}
+        </div>
+        <span>${address}</span>
+      </div>
+      <div class="absolute -bottom-7 left-1/2 h-0 w-0 -translate-x-1/2 border-t-8 border-r-8 border-l-8 border-t-primary-600 border-r-transparent border-l-transparent"></div>
+      <div class="absolute -bottom-4 left-1/2 h-0 w-0 -translate-x-1/2 border-t-7 border-r-7 border-l-7 border-t-white border-r-transparent border-l-transparent"></div>
+    </div>
+  `;
+};
+
+/**
  * 체험 위치를 카카오맵으로 표시하는 컴포넌트
  *
  * 주소를 기반으로 카카오맵 API를 사용하여 지도를 렌더링하고,
@@ -96,19 +118,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
               map.setZoomable(false);
 
               const iconHTML = iconRef.current?.innerHTML || '';
-
-              const markerContent = `
-                <div class="relative inline-block w-fit">
-                  <div class="flex items-center gap-8 rounded-20 border-2 border-primary-600 bg-white p-6 body-14 font-semibold whitespace-nowrap text-gray-900 shadow-card">
-                    <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-primary-600 px-6 py-4">
-                      ${iconHTML}
-                    </div>
-                    <span>${address}</span>
-                  </div>
-                  <div class="absolute -bottom-7 left-1/2 h-0 w-0 -translate-x-1/2 border-t-8 border-r-8 border-l-8 border-t-primary-600 border-r-transparent border-l-transparent"></div>
-                  <div class="absolute -bottom-4 left-1/2 h-0 w-0 -translate-x-1/2 border-t-7 border-r-7 border-l-7 border-t-white border-r-transparent border-l-transparent"></div>
-                </div>
-              `;
+              const markerContent = createMarkerContent(address, iconHTML);
 
               const customOverlay = new window.kakao.maps.CustomOverlay({
                 position: coords,
@@ -168,7 +178,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
           // TODO: 실제 주소 복사 기능 연결 후 삭제
           console.log('주소 복사');
         }}
-        className='flex w-fit items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
+        className='flex w-fit cursor-pointer items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
         <span>{address}</span>
         <Icons.Copy aria-hidden='true' className='h-24 w-24' />
       </button>

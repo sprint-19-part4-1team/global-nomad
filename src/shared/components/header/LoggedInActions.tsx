@@ -28,7 +28,8 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data } = useNotificationsQuery();
-  const { mutate: deleteNotification } = useDeleteNotificationMutation();
+  const { mutate: deleteNotification, mutateAsync: deleteNotificationAsync } =
+    useDeleteNotificationMutation();
 
   const notifications = data?.notifications ?? [];
   const hasNotifications = notifications.length > 0;
@@ -39,9 +40,9 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
 
   const handleDeleteAll = async () => {
     setIsModalOpen(false);
-    notifications.forEach((notification) => {
-      deleteNotification(notification.id);
-    });
+    await Promise.all(
+      notifications.map((notification) => deleteNotificationAsync(notification.id))
+    );
   };
 
   const handleLogout = async () => {

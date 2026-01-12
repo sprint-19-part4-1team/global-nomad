@@ -11,7 +11,7 @@ const selectDropdownTriggerVariants = cva('cursor-pointer flex', {
   variants: {
     variants: {
       basic:
-        'w-full justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:focus-within:border-primary-500',
+        'w-full justify-between rounded-16 border border-gray-100 bg-white px-16 py-15 shadow-input outline-0 focus-within:border-primary-500',
       shadow: 'gap-4',
     },
   },
@@ -25,6 +25,7 @@ interface SelectDropdownTriggerProps extends VariantProps<typeof selectDropdownT
   className?: string;
   ref?: RefObject<HTMLButtonElement | null>;
   ariaLabelledBy?: string;
+  isError?: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ interface SelectDropdownTriggerProps extends VariantProps<typeof selectDropdownT
  * @param ref - Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용
  * @param className - variants shadow 타입일 경우 적용할 추가 스타일
  * @param ariaLabelledBy - 외부 label과 연결하는 접근성 식별자
+ * @param isError - isError가 `true` 이고 드롭다운이 닫힌 상태일 경우 에러 스타일이 적용됩니다.
  *
  * @example
  * ```tsx
@@ -54,9 +56,10 @@ export default function SelectDropdownTrigger({
   ref,
   className,
   ariaLabelledBy,
+  isError,
 }: SelectDropdownTriggerProps) {
   const { isOpen, setIsOpen } = useDropdownBaseContext();
-  const { triggerId, variants } = useSelectContext();
+  const { triggerId, variants, onBlur } = useSelectContext();
 
   return (
     <button
@@ -66,8 +69,13 @@ export default function SelectDropdownTrigger({
       type='button'
       aria-haspopup='listbox'
       aria-expanded={isOpen}
-      className={cn(selectDropdownTriggerVariants({ variants }), className)}
-      onClick={() => setIsOpen((prev) => !prev)}>
+      className={cn(
+        selectDropdownTriggerVariants({ variants }),
+        isError && !isOpen && 'border-red-500',
+        className
+      )}
+      onClick={() => setIsOpen((prev) => !prev)}
+      onBlur={onBlur}>
       {children}
       <Icons.CaretBottom
         aria-hidden

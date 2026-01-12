@@ -57,6 +57,14 @@ const validateNicknameFormat = (value: string): string => {
 };
 
 /**
+ * 체험 가격 최소 금액 검증 검사
+ * - 1000원 이하일 경우 에러 메세지 표시
+ */
+export const priceMinAmount = (value: number | string, min = 1000) => {
+  return Number(value) < min ? VALIDATION_MESSAGES.PRICE_MIN_AMOUNT : '';
+};
+
+/**
  * 유효성 검사 타입
  *
  * @property {'login'} login - 로그인 페이지용 검사 (필수 입력만 확인)

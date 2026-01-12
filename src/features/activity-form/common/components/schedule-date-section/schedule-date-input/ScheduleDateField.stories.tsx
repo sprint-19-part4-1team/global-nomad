@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { fn } from 'storybook/test';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
-import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
 import ScheduleDateField from '@/features/activity-form/common/components/schedule-date-section/schedule-date-input/ScheduleDateField';
 
 /**
@@ -77,7 +76,6 @@ export const WithAccordion: Story = {
         {dates.map((date) => (
           <ScheduleDateAccordion key={date.toISOString()}>
             <ScheduleDateAccordionHeader date={date} onDelete={() => handleDeleteDate(date)} />
-            <ScheduleDateAccordionPanel />
           </ScheduleDateAccordion>
         ))}
       </div>

@@ -1,13 +1,13 @@
 import ScheduleTimeChip from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeChip';
 import ScheduleTimeEmpty from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeEmpty';
 import ScheduleTimeFieldSet from '@/features/activity-form/common/components/schedule-date-section/schedule-time-chip/ScheduleTimeFieldSet';
-import type { ScheduleTimeSlot } from '@/features/activity-form/common/types/schedule';
+import { ScheduleTimeSlot } from '@/shared/types/activities';
 
 interface ScheduleTimeSectionProps {
   /** 등록된 예약 시간대 목록 */
   times: ScheduleTimeSlot[];
   /** 특정 시간대를 제거할 때 호출되는 콜백 함수 */
-  onRemoveTime: (index: number) => void;
+  onRemoveTime: (startTime: string) => void;
 }
 
 /**
@@ -44,12 +44,12 @@ export default function ScheduleTimeSection({ times, onRemoveTime }: ScheduleTim
   return (
     <ScheduleTimeFieldSet>
       <ul className='mt-6 flex flex-wrap gap-12 sm:mt-8'>
-        {times.map(({ date, startTime, endTime }, index) => (
+        {times.map(({ date, startTime, endTime }) => (
           <ScheduleTimeChip
             key={`${date}-${startTime}-${endTime}`}
             startTime={startTime}
             endTime={endTime}
-            onRemove={() => onRemoveTime(index)}
+            onRemove={() => onRemoveTime(startTime)}
           />
         ))}
       </ul>

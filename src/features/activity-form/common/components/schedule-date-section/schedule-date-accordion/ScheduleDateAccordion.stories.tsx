@@ -4,6 +4,12 @@ import { fn } from 'storybook/test';
 import ScheduleDateAccordion from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordion';
 import ScheduleDateAccordionHeader from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionHeader';
 import ScheduleDateAccordionPanel from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/ScheduleDateAccordionPanel';
+import { ScheduleTimeSlot } from '@/shared/types/activities';
+
+const mockTimes: ScheduleTimeSlot[] = [
+  { date: '2026-01-10', startTime: '10:00', endTime: '12:00' },
+  { date: '2026-01-10', startTime: '14:00', endTime: '16:00' },
+];
 
 /**
  * ScheduleDateAccordion 컴포넌트 스토리 가이드
@@ -20,6 +26,7 @@ import ScheduleDateAccordionPanel from '@/features/activity-form/common/componen
  *   이미 마운트된 컴포넌트의 열림 상태는 변경되지 않습니다.
  * - 실제 열림/닫힘 상태는 사용자 인터랙션(헤더 클릭)에 의해
  *   내부 상태(`isOpen`)로 관리됩니다.
+ * - 스토리는 mock data로 구성되어 있습니다. (UI 확인용)
  */
 const meta: Meta<typeof ScheduleDateAccordion> = {
   title: 'Features/ActivityForm/ScheduleDateAccordion',
@@ -45,7 +52,12 @@ export const Default: Story = {
       <div className='w-500'>
         <ScheduleDateAccordion>
           <ScheduleDateAccordionHeader date={new Date('2026-01-10')} onDelete={fn()} />
-          <ScheduleDateAccordionPanel />
+          <ScheduleDateAccordionPanel
+            date='2026-01-10'
+            times={mockTimes}
+            onAddTime={fn()}
+            onRemoveTime={fn()}
+          />
         </ScheduleDateAccordion>
       </div>
     );
@@ -63,7 +75,12 @@ export const DefaultOpen: Story = {
       <div className='w-500'>
         <ScheduleDateAccordion defaultOpen>
           <ScheduleDateAccordionHeader date={new Date('2026-01-10')} onDelete={fn()} />
-          <ScheduleDateAccordionPanel />
+          <ScheduleDateAccordionPanel
+            date='2026-01-10'
+            times={mockTimes}
+            onAddTime={fn()}
+            onRemoveTime={fn()}
+          />
         </ScheduleDateAccordion>
       </div>
     );
@@ -87,7 +104,12 @@ export const MultipleAccordions: Story = {
               date={date}
               onDelete={() => setDates((prev) => prev.filter((d) => d !== date))}
             />
-            <ScheduleDateAccordionPanel />
+            <ScheduleDateAccordionPanel
+              date='2026-01-10'
+              times={mockTimes}
+              onAddTime={fn()}
+              onRemoveTime={fn()}
+            />
           </ScheduleDateAccordion>
         ))}
       </div>

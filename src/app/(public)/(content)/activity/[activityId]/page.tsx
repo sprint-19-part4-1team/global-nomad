@@ -74,13 +74,13 @@ export default async function ActivityDetail({
 
         {/* 오른쪽: 예약 영역 (데스크톱에서만 표시) */}
         <aside className='hidden lg:block lg:w-384'>
-          <ActivityReservation activityId={activityId} price={price} />
+          <ActivityReservation activityId={activityId} userId={userId} price={price} />
         </aside>
       </div>
 
       {/* 모바일: 하단 고정 예약 바 */}
       <div className='lg:hidden'>
-        <ActivityReservation activityId={activityId} price={price} />
+        <ActivityReservation activityId={activityId} userId={userId} price={price} />
       </div>
     </main>
   );

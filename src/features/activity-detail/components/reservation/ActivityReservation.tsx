@@ -5,6 +5,7 @@ import ActivityReservationBottomSheet from '@/features/activity-detail/component
 import ActivityReservationContent from '@/features/activity-detail/components/reservation/content/ActivityReservationContent';
 import Button from '@/shared/components/button/Button';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { useUserStore } from '@/shared/stores/userStore';
 import { formatValue } from '@/shared/utils/formatValue';
 
 // TODO: API 연동 후 삭제
@@ -99,10 +100,12 @@ const DUMMY_AVAILABLE = [
 /**
  * 체험 예약 컴포넌트의 Props
  * @property {string} activityId - 체험 ID
+ * @property {number} userId - 체험을 작성한 유저ID
  * @property {number} price - 1인당 체험 가격
  */
 interface ActivityReservationProps {
   activityId: string;
+  userId: number;
   price: number;
 }
 
@@ -137,12 +140,23 @@ interface ActivityReservationProps {
  * />
  * ```
  */
-export default function ActivityReservation({ activityId, price }: ActivityReservationProps) {
+export default function ActivityReservation({
+  activityId,
+  userId,
+  price,
+}: ActivityReservationProps) {
+  const loginUserId = useUserStore((s) => s.user?.id);
+
   const [reservationInfo, setReservationInfo] = useState<{
     scheduleId: number;
     headCount: number;
     dateTime: string;
   } | null>(null);
+
+  // 로그인하지 않았거나 체험 작성 유저와 로그인한 유저가 같은 경우 렌더링하지 않음
+  if (loginUserId === undefined || userId === loginUserId) {
+    return null;
+  }
 
   const schedules = DUMMY_AVAILABLE;
   const personNumber = reservationInfo?.headCount ?? 1;
@@ -197,7 +211,7 @@ export default function ActivityReservation({ activityId, price }: ActivityReser
       </div>
 
       {/* 데스크톱: 오른쪽 고정 영역 */}
-      <div className='hidden lg:block'>
+      <div className='mt-48 hidden lg:block'>
         <ActivityReservationContent
           price={price}
           schedules={schedules}

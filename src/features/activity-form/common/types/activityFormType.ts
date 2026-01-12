@@ -44,7 +44,7 @@ export interface CreateActivityFormPayload extends Omit<
 }
 
 /**
- * ## ActivityRequestData
+ * ## UpdateActivityFormPayload
  *
  * @description
  * - 체험(Activity) 수정 API에 전달되는 요청 데이터 타입입니다.

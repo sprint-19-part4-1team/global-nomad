@@ -189,12 +189,14 @@ export default async function ActivityDetail({
         }),
         'flex flex-col gap-16 sm:gap-24 lg:gap-26'
       )}>
-      <Link
-        href={ROUTE_PATHS.MAIN}
-        className='flex gap-4 body-14 font-semibold text-gray-950 sm:gap-8 sm:body-16'>
-        <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
-        <span>메인으로</span>
-      </Link>
+      <div className='w-fit'>
+        <Link
+          href={ROUTE_PATHS.MAIN}
+          className='flex gap-4 body-14 font-semibold text-gray-950 hover:text-primary-600 sm:gap-8 sm:body-16'>
+          <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
+          <span>메인으로</span>
+        </Link>
+      </div>
       <div className='gap-x-40 lg:grid lg:grid-cols-[1fr_410px]'>
         {/* 이미지 */}
         <ActivityImageGrid subImages={subImages} />

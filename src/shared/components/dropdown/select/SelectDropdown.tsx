@@ -11,6 +11,7 @@ interface SelectDropdownProps {
   onChangeValue: (value: string) => void;
   triggerId?: string;
   variants?: 'basic' | 'shadow';
+  onBlur?: () => void;
 }
 
 /**
@@ -29,6 +30,7 @@ interface SelectDropdownProps {
  * @param onChangeValue - 선택 값 변경 핸들러
  * @param triggerId - 트리거 버튼에 사용할 id (미지정 시 자동 생성)
  * @param variants - SelectDropdown 스타일 변형 (기본값: basic)
+ * @param onBlur - 드롭다운이 포커스를 잃을 때 호출되는 콜백
  *
  * @example
  * ```tsx
@@ -58,12 +60,13 @@ export default function SelectDropdown({
   onChangeValue,
   triggerId: triggerIdProp,
   variants = 'basic',
+  onBlur,
 }: SelectDropdownProps) {
   const autoId = useId();
   const triggerId = triggerIdProp ?? `select-trigger-${autoId}`;
 
   return (
-    <SelectContext value={{ value, setValue: onChangeValue, triggerId, variants }}>
+    <SelectContext value={{ value, setValue: onChangeValue, triggerId, variants, onBlur }}>
       <DropdownBaseProvider>
         <DropdownBaseRoot className='w-full'>{children}</DropdownBaseRoot>
       </DropdownBaseProvider>

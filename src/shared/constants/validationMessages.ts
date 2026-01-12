@@ -50,6 +50,8 @@ export const VALIDATION_MESSAGES = {
   DESCRIPTION_REQUIRED: '설명을 입력해 주세요.',
   /** 체험 가격 미입력 시 메시지 */
   PRICE_REQUIRED: '가격을 입력해 주세요.',
+  /** 체험 가격 최소값 안내 메세지 */
+  PRICE_MIN_AMOUNT: '최소 1,000원 이상이어야 합니다.',
   /** 체험 주소 미입력 시 메시지 */
   ADDRESS_REQUIRED: '주소를 입력해 주세요.',
   /** 예약 가능한 날짜 미선택 시 메시지 */

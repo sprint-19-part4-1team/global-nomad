@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { BasicInfo } from '@/features/activity-form/common/types/activityFormType';
 import { VALIDATION_MESSAGES } from '@/shared/constants';
 import type { BasicInfoDataServer } from '@/shared/types/activities';
-import { isRequired } from '@/shared/utils/validators';
+import { isRequired, priceMinAmount } from '@/shared/utils/validators';
 
 type FormErrors = Partial<Record<keyof BasicInfo, string>>;
 
@@ -58,7 +58,9 @@ export const useBasicInfoForm = (initialData?: BasicInfoDataServer) => {
         break;
 
       case 'price':
-        error = isRequired(formData.price, VALIDATION_MESSAGES.PRICE_REQUIRED);
+        error =
+          isRequired(formData.price, VALIDATION_MESSAGES.PRICE_REQUIRED)
+          || priceMinAmount(formData.price);
         break;
 
       case 'description':

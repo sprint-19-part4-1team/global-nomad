@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Card from '@/features/main/components/card/Card';
 import FilterButton from '@/features/main/components/filter-button/FilterButton';
+import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
+// import { useActivities } from '@/features/main/queries/useActivities';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -13,17 +15,62 @@ import {
 import Pagination from '@/shared/components/pagination/Pagination';
 import Title from '@/shared/components/title/Title';
 import { ACTIVITY_CATEGORIES } from '@/shared/constants';
-import useQueryParamState from '@/shared/hooks/useQueryParamState';
-import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
+// import useQueryParamState from '@/shared/hooks/useQueryParamState';
+import { GetActivitiesParams } from '@/shared/types/activities';
+// import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
 export default function AllActivity() {
-  const [currentPage, setCurrentPage] = useQueryParamState('page', {
-    defaultValue: 1,
-    parse: parsePageQueryParam,
-  });
+  const {
+    currentPage,
+    setCurrentPage,
+    sort,
+    setSort,
+    category,
+    setCategory,
+    size,
+    setSize,
+    activities,
+    isLoading,
+  } = useActivityFilters();
 
-  // 필터버튼
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  // 정렬
+  const SORT_LABEL: Record<string, string> = {
+    latest: '최신순',
+    most_reviewed: '리뷰 많은순',
+    price_asc: '가격 높은순',
+    price_desc: '가격 낮은순',
+  };
+
+  // 화면 크기에 따라 size 자동 변경
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+
+    const updateSize = () => {
+      if (mediaQuery.matches) {
+        setSize(8);
+      } else {
+        setSize(4);
+      }
+    };
+
+    updateSize(); // 초기 값 설정
+    mediaQuery.addEventListener('change', updateSize);
+    return () => mediaQuery.removeEventListener('change', updateSize);
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [size]);
+
+  // 페이지 네이션
+  const activitiesList = activities ?? [];
+
+  const pageSize = size ?? 8;
+  const isLastPage = activitiesList.length < pageSize;
+
+  const totalCount = isLastPage
+    ? (currentPage - 1) * pageSize + activitiesList.length
+    : (currentPage + 1) * pageSize;
 
   return (
     <>
@@ -34,15 +81,17 @@ export default function AllActivity() {
           </Title>
           <div className='block sm:hidden'>
             <SelectDropdown
-              onChangeValue={() => {}}
+              onChangeValue={(value) =>
+                setCategory(value as NonNullable<GetActivitiesParams['category']>)
+              }
               triggerId='category-filter'
-              value=''
+              value={category as string}
               variants='shadow'>
               <SelectDropdownTrigger>
                 <SelectDropdownValue
                   placeholder='🛼 모든 체험'
                   placeholderClassName='heading-18 font-bold text-gray-950'
-                  // render={(value) => ACTIVITY_CATEGORIES.find((opt) => opt.value === value)?.label}
+                  render={(value) => ACTIVITY_CATEGORIES.find((opt) => opt.value === value)?.label}
                   valueClassName='heading-18 font-bold text-gray-950'
                 />
               </SelectDropdownTrigger>
@@ -58,30 +107,31 @@ export default function AllActivity() {
         </div>
 
         <div className='mt-15 hidden gap-10 sm:mt-30 sm:flex md:gap-13 lg:gap-20'>
-          {ACTIVITY_CATEGORIES.map((category) => {
-            const isActive = activeCategory === category.value;
+          {ACTIVITY_CATEGORIES.map((item) => {
+            const isActive = category === item.value;
 
             return (
               <FilterButton
-                key={category.value}
+                key={item.value}
                 isActive={isActive}
-                onClick={() => setActiveCategory(category.value)}>
-                <span>{category.label}</span>
+                onClick={() => setCategory(isActive ? undefined : item.value)}>
+                <span>{item.label}</span>
               </FilterButton>
             );
           })}
         </div>
+
         <div className='absolute top-0 right-0 md:top-auto md:bottom-10'>
           <SelectDropdown
-            onChangeValue={() => {}}
+            onChangeValue={(value) => setSort(value as NonNullable<GetActivitiesParams['sort']>)}
             triggerId='sort-filter'
-            value=''
+            value={sort as string}
             variants='shadow'>
             <SelectDropdownTrigger>
               <SelectDropdownValue
-                placeholder='최신순'
+                placeholder={sort}
                 placeholderClassName='text-gray-950'
-                // render={(value) => ACTIVITY_CATEGORIES.find((opt) => opt.value === value)?.label}
+                render={(value) => SORT_LABEL[value] ?? '정렬'}
                 valueClassName='text-gray-950'
               />
             </SelectDropdownTrigger>
@@ -94,57 +144,35 @@ export default function AllActivity() {
           </SelectDropdown>
         </div>
       </div>
-      <div className='flex flex-wrap'>
-        <div className='mt-30 w-1/4'>
-          <Card
-            id={123}
-            bannerImageUrl='/abc'
-            title={`aaa`}
-            rating={2}
-            reviewCount={33}
-            price={39990}
-          />
-        </div>
-        <div className='mt-30 w-1/4'>
-          <Card
-            id={123}
-            bannerImageUrl='/abc'
-            title={`aaa`}
-            rating={2}
-            reviewCount={33}
-            price={39990}
-          />
-        </div>
-        <div className='mt-30 w-1/4'>
-          <Card
-            id={123}
-            bannerImageUrl='/abc'
-            title={`aaa`}
-            rating={2}
-            reviewCount={33}
-            price={39990}
-          />
-        </div>
-        <div className='mt-30 w-1/4'>
-          <Card
-            id={123}
-            bannerImageUrl='/abc'
-            title={`aaa`}
-            rating={2}
-            reviewCount={33}
-            price={39990}
-          />
-        </div>
-      </div>
+      {isLoading ? (
+        <div>모든 체험 로딩중...</div>
+      ) : (
+        <>
+          <div className='-mr-12 flex flex-wrap'>
+            {activities?.slice(0, 8).map((activity) => (
+              <div key={activity.id} className='mt-30 basis-1/4 pr-12'>
+                <Card
+                  id={activity.id}
+                  bannerImageUrl={activity.bannerImageUrl}
+                  title={activity.title}
+                  rating={activity.rating}
+                  reviewCount={activity.reviewCount}
+                  price={activity.price}
+                />
+              </div>
+            ))}
+          </div>
 
-      <div className='mt-24 flex justify-center sm:mt-30'>
-        <Pagination
-          totalCount={100}
-          itemsPerPage={10}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+          <div className='mt-24 flex justify-center sm:mt-30'>
+            <Pagination
+              totalCount={totalCount}
+              itemsPerPage={pageSize}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }

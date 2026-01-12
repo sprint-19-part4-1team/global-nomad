@@ -53,7 +53,7 @@ export default function Card({
       href={`/activity/${id}`}
       title={title}
       className='relative block overflow-hidden rounded-18 shadow-card sm:rounded-32'>
-      <div className='relative min-h-366 rounded-18 sm:rounded-32'>
+      <div className='relative min-h-242 rounded-18 sm:min-h-423 sm:rounded-32 md:min-h-366'>
         <Image
           src={bannerImageUrl}
           fill

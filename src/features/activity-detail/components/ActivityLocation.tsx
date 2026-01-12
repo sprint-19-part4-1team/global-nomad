@@ -51,6 +51,10 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
     script.async = true;
     document.head.appendChild(script);
 
+    // useEffect 스코프로 변수들을 끌어올림
+    let map: any = null;
+    let handleResize: (() => void) | null = null;
+
     script.onload = () => {
       window.kakao.maps.load(() => {
         if (!mapRef.current || !iconRef.current) {
@@ -72,7 +76,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
               disableDoubleClickZoom: true, // 더블클릭 줌 방지
             };
 
-            const map = new window.kakao.maps.Map(mapRef.current, options);
+            map = new window.kakao.maps.Map(mapRef.current, options);
             map.setZoomable(false);
 
             const iconHTML = iconRef.current?.innerHTML || '';
@@ -98,18 +102,13 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
 
             customOverlay.setMap(map);
 
-            // 리사이즈 이벤트 핸들러
-            const handleResize = () => {
-              map.relayout(); // 지도 크기 재계산
-              map.setCenter(coords); // 중심 좌표 재설정
+            // 리사이즈 핸들러 정의
+            handleResize = () => {
+              map.relayout();
+              map.setCenter(coords);
             };
 
             window.addEventListener('resize', handleResize);
-
-            // 클린업 함수에서 이벤트 리스너 제거
-            return () => {
-              window.removeEventListener('resize', handleResize);
-            };
           } else {
             toast.error('주소 검색에 실패했습니다');
           }
@@ -117,7 +116,14 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       });
     };
 
+    // useEffect의 클린업 함수
     return () => {
+      // 리사이즈 이벤트 리스너 제거
+      if (handleResize) {
+        window.removeEventListener('resize', handleResize);
+      }
+
+      // 스크립트 제거
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import NotificationModal from '@/features/notification/components/NotificationModal';
@@ -15,6 +15,7 @@ import {
   ActionDropdownItem,
   ActionDropdownTrigger,
 } from '@/shared/components/dropdown/action';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { useUserStore } from '@/shared/stores/userStore';
 import { UserServiceResponseDto } from '@/shared/types/user';
 
@@ -26,6 +27,9 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
   const router = useRouter();
   const clearSession = useUserStore((state) => state.clearSession);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(notificationRef, () => setIsModalOpen(false), isModalOpen);
 
   const { data } = useNotificationsQuery();
   const { mutate: deleteNotification, mutateAsync: deleteNotificationAsync } =
@@ -59,7 +63,9 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
 
   return (
     <div className='flex items-center'>
-      <div className='relative box-content w-24 pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
+      <div
+        ref={notificationRef}
+        className='relative box-content w-24 pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
         <button
           type='button'
           aria-label='알림'

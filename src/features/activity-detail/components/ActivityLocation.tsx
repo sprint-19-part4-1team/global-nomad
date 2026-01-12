@@ -46,16 +46,13 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
   const iconRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&libraries=services&autoload=false`;
-    script.async = true;
-    document.head.appendChild(script);
+    // 이미 스크립트가 로드되었는지 확인
+    const existingScript = document.querySelector(`script[src^="//dapi.kakao.com/v2/maps/sdk.js"]`);
 
-    // useEffect 스코프로 변수들을 끌어올림
     let map: any = null;
     let handleResize: (() => void) | null = null;
 
-    script.onload = () => {
+    const initializeMap = () => {
       window.kakao.maps.load(() => {
         if (!mapRef.current || !iconRef.current) {
           return;
@@ -102,7 +99,6 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
 
             customOverlay.setMap(map);
 
-            // 리사이즈 핸들러 정의
             handleResize = () => {
               map.relayout();
               map.setCenter(coords);
@@ -116,16 +112,29 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       });
     };
 
-    // useEffect의 클린업 함수
+    // 스크립트가 이미 존재하면 바로 초기화
+    if (existingScript) {
+      // kakao 객체가 이미 로드되었는지 확인
+      if (window.kakao && window.kakao.maps) {
+        initializeMap();
+      } else {
+        // 스크립트는 있지만 아직 로드 중인 경우
+        existingScript.addEventListener('load', initializeMap);
+      }
+    } else {
+      // 스크립트가 없으면 새로 추가
+      const script = document.createElement('script');
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&libraries=services&autoload=false`;
+      script.async = true;
+      document.head.appendChild(script);
+
+      script.onload = initializeMap;
+    }
+
+    // 클린업: 이벤트 리스너만 제거
     return () => {
-      // 리사이즈 이벤트 리스너 제거
       if (handleResize) {
         window.removeEventListener('resize', handleResize);
-      }
-
-      // 스크립트 제거
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
       }
     };
   }, [address]);

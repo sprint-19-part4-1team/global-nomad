@@ -17,7 +17,7 @@ export default function CreateActivityForm() {
 
   const { mutate, isPending } = useCreateActivityMutation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const reqbody = getActivityRequest();
 
     mutate(reqbody, {

@@ -46,7 +46,7 @@ export default function CategorySelect({
             render={(value) => ACTIVITY_CATEGORIES.find((c) => c.value === value)?.label}
           />
         </SelectDropdownTrigger>
-        <SelectDropdownContent>
+        <SelectDropdownContent className='overflow-y-hidden'>
           {ACTIVITY_CATEGORIES.map((c) => (
             <SelectDropdownItem key={c.value} value={c.value}>
               {c.label}

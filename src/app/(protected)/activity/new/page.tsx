@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import CreateActivityForm from '@/features/activity-form/new/CreateActivityForm';
+import CreateActivityForm from '@/features/activity-form/new/components/CreateActivityForm';
 import Title from '@/shared/components/title/Title';
 
 export const metadata: Metadata = {

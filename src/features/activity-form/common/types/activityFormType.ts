@@ -67,9 +67,9 @@ export interface UpdateActivityFormPayload extends Omit<
  * ## ActivityCommonKey
  *
  * @description
- * - UpdateActivityFormPayload와 ActivityWithSubImagesAndSchedulesDto의 공통 키를 추출합니다.
+ * - 두 타입의 공통 키를 추출한 후, 특수 처리가 필요한 'bannerImageUrl'을 제외합니다.
  */
-export type ActivityCommonKey = Extract<
-  keyof UpdateActivityFormPayload,
-  keyof ActivityWithSubImagesAndSchedulesDto
+export type ActivityCommonKey = Exclude<
+  Extract<keyof UpdateActivityFormPayload, keyof ActivityWithSubImagesAndSchedulesDto>,
+  'bannerImageUrl'
 >;

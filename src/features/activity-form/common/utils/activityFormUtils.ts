@@ -28,8 +28,11 @@ export const getBasicFieldsDiff = (
   const diff: Partial<UpdateActivityFormPayload> = {};
 
   keys.forEach((key) => {
-    if (source[key] !== (base as any)[key]) {
-      (diff as any)[key] = source[key];
+    const baseValue = base[key as keyof ActivityWithSubImagesAndSchedulesDto];
+    const sourceValue = source[key as keyof CreateActivityFormPayload];
+
+    if (sourceValue !== baseValue) {
+      Object.assign(diff, { [key]: sourceValue });
     }
   });
 

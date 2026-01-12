@@ -9,6 +9,7 @@ import ActivityTitle from '@/features/activity-detail/components/ActivityTitle';
 import ActivityReservation from '@/features/activity-detail/components/reservation/ActivityReservation';
 import ActivityReviewList from '@/features/activity-detail/components/review/ActivityReviewList';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
+import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { parseAddress } from '@/features/activity-detail/utils/parseAddress';
 import { layoutContainer } from '@/shared/constants/';
 import { cn } from '@/shared/utils/cn';
@@ -173,10 +174,10 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { userId, category, title, description, price, subImages, reviewCount, rating } =
-    DUMMY_ACTIVITY;
+  const { userId, category, title, description, price, subImages, reviewCount } = DUMMY_ACTIVITY;
 
   const address = parseAddress(DUMMY_ACTIVITY.address);
+  const rating = formatRating(DUMMY_ACTIVITY.rating);
 
   return (
     <main

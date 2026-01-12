@@ -25,8 +25,19 @@ export const useCreateActivityMutation = () => {
 
   return useMutation({
     mutationFn: async (reqbody: ActivityRequestData) => {
-      const bannerPromise = uploadImage(reqbody.bannerImageUrl as File);
-      const subImagesPromises = reqbody.subImageUrls.map((file) => uploadImage(file as File));
+      const { bannerImageUrl: bannerFile, subImageUrls: subImageFiles } = reqbody;
+
+      if (!(bannerFile instanceof File)) {
+        throw new Error('유효하지 않은 배너 이미지 파일입니다.');
+      }
+      const bannerPromise = uploadImage(bannerFile);
+
+      const subImagesPromises = subImageFiles.map((file) => {
+        if (!(file instanceof File)) {
+          throw new Error('유효하지 않은 소개 이미지 파일입니다.');
+        }
+        return uploadImage(file);
+      });
 
       const [bannerImageUrl, ...subImageUrls] = await Promise.all([
         bannerPromise,

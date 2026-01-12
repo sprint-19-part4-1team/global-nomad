@@ -9,6 +9,7 @@ import ActivityTitle from '@/features/activity-detail/components/ActivityTitle';
 import ActivityReservation from '@/features/activity-detail/components/reservation/ActivityReservation';
 import ActivityReviewList from '@/features/activity-detail/components/review/ActivityReviewList';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
+import { parseAddress } from '@/features/activity-detail/utils/parseAddress';
 import { layoutContainer } from '@/shared/constants/';
 import { cn } from '@/shared/utils/cn';
 
@@ -20,7 +21,7 @@ const DUMMY_ACTIVITY = {
   description: '둠칫 둠칫 두둠칫',
   category: '투어',
   price: 10000,
-  address: '서울 강남구 테헤란로26길 14 1층',
+  address: '[06236] 서울 강남구 테헤란로26길 14 | 역삼동, 위워크빌딩',
   bannerImageUrl:
     'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/globalnomad/activity_registration_image/a.png',
   subImages: [
@@ -172,8 +173,10 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { userId, category, title, description, price, address, subImages, reviewCount, rating } =
+  const { userId, category, title, description, price, subImages, reviewCount, rating } =
     DUMMY_ACTIVITY;
+
+  const address = parseAddress(DUMMY_ACTIVITY.address);
 
   return (
     <main

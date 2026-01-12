@@ -1,10 +1,12 @@
+import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
+import ActivityTitle from '@/features/activity-detail/components/ActivityTitle';
 import ActivityReservation from '@/features/activity-detail/components/reservation/ActivityReservation';
 import { layoutContainer } from '@/shared/constants/';
 
 // TODO: API 연동 후 삭제
 const DUMMY_ACTIVITY = {
   id: 7,
-  userId: 21,
+  userId: 2895,
   title: '함께 배우면 즐거운 스트릿댄스',
   description: '둠칫 둠칫 두둠칫',
   category: '투어',
@@ -46,7 +48,7 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  const { price } = DUMMY_ACTIVITY;
+  const { userId, category, title, price, address, reviewCount, rating } = DUMMY_ACTIVITY;
 
   return (
     <main
@@ -58,6 +60,17 @@ export default async function ActivityDetail({
       <div className='flex flex-col gap-24 lg:flex-row'>
         {/* 왼쪽: 컨텐츠 영역 */}
         <div className='flex-1 lg:w-670' />
+      </div>
+
+      <div className='w-full lg:w-410'>
+        <ActivityTitle
+          category={category}
+          title={title}
+          rating={rating}
+          reviewCount={reviewCount}
+          address={address}
+        />
+        <ActivityAdminControls activityId={Number(activityId)} userId={userId} />
 
         {/* 오른쪽: 예약 영역 (데스크톱에서만 표시) */}
         <aside className='hidden lg:block lg:w-384'>

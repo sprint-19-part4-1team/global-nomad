@@ -13,12 +13,12 @@ export default function CreateActivityForm() {
   // TODO: 체험 등록 폼에 내용이 있다면 이탈 안내 모달 보여주기
   const router = useRouter();
   const formState = useActivityForm();
-  const { getActivityRequest, isAllValid } = formState;
+  const { currentFormData, isAllValid } = formState;
 
   const { mutate, isPending } = useCreateActivityMutation();
 
   const handleSubmit = () => {
-    const reqbody = getActivityRequest();
+    const reqbody = currentFormData;
 
     mutate(reqbody, {
       onSuccess: (data) => {

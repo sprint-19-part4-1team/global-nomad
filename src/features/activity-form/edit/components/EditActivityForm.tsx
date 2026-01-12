@@ -21,12 +21,12 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
   const { data: activity } = useActivityDetailQuery(activityId);
 
   const formState = useActivityForm(activity);
-  const { getChangedValues, isEditDirty, isAllValid } = formState;
+  const { changedValues, isEditDirty, isAllValid } = formState;
 
   const { mutate, isPending } = useUpdateActivityMutation(activityId);
 
   const handleSubmit = () => {
-    const payload = getChangedValues();
+    const payload = changedValues;
 
     mutate(payload, {
       onSuccess: () => {

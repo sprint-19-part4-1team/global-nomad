@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
 import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
 import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
@@ -26,11 +27,6 @@ const BASIC_FIELDS = ['title', 'category', 'description', 'price', 'address'] as
  *   하나의 폼 상태 및 제출 payload를 제공합니다.
  *
  * @param initialData - 수정 화면에서 사용될 초기 체험 데이터
- *
- * @returns
- * - 각 하위 폼 훅에서 제공하는 상태 및 핸들러
- * - `isAllValid`: 모든 폼 섹션의 유효성 여부
- * - `getActivityRequest`: 체험 등록/수정 API에 전달할 최종 데이터 생성 함수
  */
 export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesDto) => {
   const basicInfo = useBasicInfoForm(initialData);
@@ -45,9 +41,9 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
     && imageInfo.isImageValid
     && scheduleInfo.isScheduleValid;
 
-  /** 사용자가 입력한 값을 서버 타입에 맞게 변경 */
-  const getActivityRequest = () => {
-    return {
+  /** 사용자가 현재 입력한 값을 서버 타입에 맞게 변경 */
+  const currentFormData = useMemo(
+    () => ({
       title: basicInfo.formData.title,
       category: basicInfo.formData.category as ActivityCategory,
       description: basicInfo.formData.description,
@@ -56,21 +52,30 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
       schedules: scheduleInfo.scheduleDates,
       bannerImageUrl: imageInfo.bannerImage instanceof File ? imageInfo.bannerImage : null,
       subImageUrls: imageInfo.introImages as File[],
-    };
-  };
+    }),
+    [
+      basicInfo.formData.title,
+      basicInfo.formData.category,
+      basicInfo.formData.description,
+      basicInfo.formData.price,
+      addressInfo,
+      scheduleInfo.scheduleDates,
+      imageInfo.bannerImage,
+      imageInfo.introImages,
+    ]
+  );
 
   /** 사용자가 입력한 값이 기존과 달라진게 있는지 검증 */
-  const getChangedValues = () => {
+  const changedValues = useMemo(() => {
     if (!initialData) {
-      const fullRequest = getActivityRequest();
       return {
-        ...fullRequest,
-        bannerImageUrl: fullRequest.bannerImageUrl ?? undefined,
-        subImageUrlsToAdd: fullRequest.subImageUrls,
+        ...currentFormData,
+        bannerImageUrl: currentFormData.bannerImageUrl ?? undefined,
+        subImageUrlsToAdd: currentFormData.subImageUrls,
       };
     }
 
-    const reqbody = getActivityRequest();
+    const reqbody = currentFormData;
 
     // 기본 필드 바뀐거 있는지 검증
     const basicDiff = getBasicFieldsDiff(BASIC_FIELDS, reqbody, initialData);
@@ -111,17 +116,17 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
     }
 
     return changedValues;
-  };
+  }, [initialData, currentFormData]);
 
-  const isEditDirty = initialData ? Object.keys(getChangedValues()).length > 0 : false;
+  const isEditDirty = initialData ? Object.keys(changedValues).length > 0 : false;
 
   return {
     basicInfo,
     addressInfo,
     imageInfo,
     scheduleInfo,
-    getActivityRequest,
-    getChangedValues,
+    currentFormData,
+    changedValues,
     isAllValid,
     isEditDirty,
   };

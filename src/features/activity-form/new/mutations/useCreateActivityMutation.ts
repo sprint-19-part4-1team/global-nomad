@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
 import { ActivityRequestData } from '@/features/activity-form/common/types/activityFormType';
 import { createActivity } from '@/shared/apis/feature/activities';
-import { QUERY_KEYS, type ActivityCategory } from '@/shared/constants';
+import { QUERY_KEYS } from '@/shared/constants';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 /**
@@ -45,7 +45,6 @@ export const useCreateActivityMutation = () => {
 
       const finalData = {
         ...reqbody,
-        category: reqbody.category as ActivityCategory,
         bannerImageUrl,
         subImageUrls,
       };

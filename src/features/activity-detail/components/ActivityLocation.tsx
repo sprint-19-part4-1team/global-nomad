@@ -108,10 +108,6 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
               const options = {
                 center: coords,
                 level: 3,
-                draggable: false, // 드래그 방지
-                scrollwheel: false, // 마우스 휠 줌 방지
-                disableDoubleClick: true, // 더블클릭 줌 방지
-                disableDoubleClickZoom: true, // 더블클릭 줌 방지
               };
 
               map = new window.kakao.maps.Map(mapRef.current, options);

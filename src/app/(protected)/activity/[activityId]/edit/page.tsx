@@ -20,9 +20,14 @@ export default async function ActivityEdit({ params }: ActivityEditProps) {
   const queryClient = getQueryClient();
 
   const activity = await prefetchActivityDetail(queryClient, id);
+
+  if (!activity) {
+    notFound();
+  }
+
   const isOwner = await validateActivityOwner(activity?.userId);
 
-  if (!activity || !isOwner) {
+  if (!isOwner) {
     notFound();
   }
 

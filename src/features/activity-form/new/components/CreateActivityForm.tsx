@@ -13,7 +13,7 @@ export default function CreateActivityForm() {
   // TODO: 체험 등록 폼에 내용이 있다면 이탈 안내 모달 보여주기
   const router = useRouter();
   const formState = useActivityForm();
-  const { getActivityRequest } = formState;
+  const { getActivityRequest, isAllValid } = formState;
 
   const { mutate, isPending } = useCreateActivityMutation();
 
@@ -46,6 +46,7 @@ export default function CreateActivityForm() {
       submitButtonText='체험 등록하기'
       onSubmit={handleSubmit}
       isSubmitting={isPending}
+      isDisabled={!isAllValid}
     />
   );
 }

@@ -33,10 +33,17 @@ const MESSAGE = {
  * ```
  */
 export default function ActivityNotice({ userId }: ActivityNoticeProps) {
-  const loginUserId = useUserStore((s) => s.user?.id);
+  const user = useUserStore((s) => s.user);
+
+  // 유저 정보를 불러오는 중일 때는 아무것도 렌더링하지 않음
+  if (user === undefined) {
+    return null;
+  }
+
+  const loginUserId = user?.id;
 
   // 로그인한 유저가 체험 작성 유저가 아닌 경우 렌더링하지 않음
-  if (loginUserId !== undefined && userId !== loginUserId) {
+  if (loginUserId !== undefined && loginUserId !== userId) {
     return null;
   }
 

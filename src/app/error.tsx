@@ -1,7 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Icons from '@/assets/icons';
+import Button from '@/shared/components/button/Button';
 
 /**
  * @description
@@ -14,17 +16,25 @@ import Icons from '@/assets/icons';
  * - Next.js에서 제공
  */
 export default function Error({ reset }: { reset: () => void }) {
+  const router = useRouter();
+
   useEffect(() => {
     document.title = '500 - Internal Server Error';
   }, []);
+
+  const handleRetry = () => {
+    router.refresh();
+    reset();
+  };
+
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <Icons.SurprisedEarth className='h-300 w-300' aria-hidden='true' />
       <div className='flex flex-col items-center justify-center gap-20'>
         <span className='heading-20 font-medium'>500 | 서버 오류가 발생했습니다.</span>
-        <button type='button' onClick={reset}>
+        <Button variant='primary' onClick={handleRetry}>
           다시 시도
-        </button>
+        </Button>
       </div>
     </div>
   );

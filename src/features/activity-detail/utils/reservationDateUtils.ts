@@ -1,55 +1,5 @@
 import { ScheduleResponseDto } from '@/shared/types/activities';
-
-/**
- * Date 객체를 YYYY-MM-DD 형식의 문자열로 변환합니다.
- *
- * API 요청이나 데이터 저장 시 사용되는 표준 날짜 형식으로 변환합니다.
- * 월과 일은 항상 2자리 숫자로 표시됩니다 (예: 01, 02, ..., 12).
- *
- * @param {Date} date - 변환할 Date 객체
- * @returns {string} YYYY-MM-DD 형식의 날짜 문자열
- *
- * @example
- * ```typescript
- * formatDateToString(new Date('2026-01-15T10:30:00'))
- * // returns: '2026-01-15'
- *
- * formatDateToString(new Date('2026-03-05'))
- * // returns: '2026-03-05'
- * ```
- */
-export const formatDateToString = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
-
-/**
- * 날짜를 한국어 표시 형식으로 변환합니다.
- *
- * 사용자에게 보여지는 날짜를 한국 로케일 형식 (YYYY. MM. DD)으로 포맷팅합니다.
- * toLocaleDateString을 사용하여 브라우저의 로케일 설정을 따릅니다.
- *
- * @param {Date} date - 변환할 Date 객체
- * @returns {string} 'YYYY. MM. DD' 형식의 날짜 문자열
- *
- * @example
- * ```typescript
- * formatDateForDisplay(new Date('2026-01-15'))
- * // returns: '2026. 01. 15'
- *
- * formatDateForDisplay(new Date('2026-12-25'))
- * // returns: '2026. 12. 25'
- * ```
- */
-export const formatDateForDisplay = (date: Date): string => {
-  return date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-};
+import { formatDateForDisplay } from '@/shared/utils/dateUtil';
 
 /**
  * 날짜와 시간 정보를 조합하여 표시용 문자열을 생성합니다.

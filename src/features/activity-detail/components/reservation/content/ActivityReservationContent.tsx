@@ -6,12 +6,12 @@ import ActivityReservationHeadCounter from '@/features/activity-detail/component
 import useReservationState from '@/features/activity-detail/hooks/useReservationState';
 import {
   formatDateTimeForDisplay,
-  formatDateToString,
   getSchedulesByDate,
 } from '@/features/activity-detail/utils/reservationDateUtils';
 import Button from '@/shared/components/button/Button';
 import Title from '@/shared/components/title/Title';
 import { CreateReservationBodyDto, ScheduleResponseDto } from '@/shared/types/activities';
+import { formatDateToString } from '@/shared/utils/dateUtil';
 import { formatValue } from '@/shared/utils/formatValue';
 
 /**

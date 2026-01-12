@@ -3,11 +3,11 @@ import ActivityReservationContentTitle from '@/features/activity-detail/componen
 import ActivityReservationDatePicker from '@/features/activity-detail/components/reservation/content/ActivityReservationDatePicker';
 import ActivityReservationTimeSlotSelector from '@/features/activity-detail/components/reservation/content/ActivityReservationTimeSlotSelector';
 import {
-  formatDateToString,
   getAvailableDates,
   getSchedulesByDate,
 } from '@/features/activity-detail/utils/reservationDateUtils';
 import { ScheduleResponseDto } from '@/shared/types/activities';
+import { formatDateToString } from '@/shared/utils/dateUtil';
 
 /**
  * 체험 예약 날짜/시간 선택 섹션 컴포넌트의 Props

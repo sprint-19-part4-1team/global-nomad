@@ -164,6 +164,10 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       <ActivityContentTitle>오시는 길</ActivityContentTitle>
       <button
         aria-label='주소 복사'
+        onClick={() => {
+          // TODO: 실제 주소 복사 기능 연결 후 삭제
+          console.log('주소 복사');
+        }}
         className='flex w-fit items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
         <span>{address}</span>
         <Icons.Copy aria-hidden='true' className='h-24 w-24' />

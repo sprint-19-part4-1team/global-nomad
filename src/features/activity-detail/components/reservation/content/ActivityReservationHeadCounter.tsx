@@ -60,21 +60,21 @@ export default function ActivityReservationHeadCounter({
   return (
     <div className='flex items-center justify-between'>
       <ActivityReservationContentTitle>참여 인원 수</ActivityReservationContentTitle>
-      <div className='flex h-48 w-144 items-center justify-between rounded-12 border border-gray-100 px-10'>
+      <div className='flex h-48 w-144 items-center justify-between rounded-12 border border-gray-100 px-10 text-gray-700'>
         <button
           onClick={handleDecrement}
-          className='p-10'
+          className='cursor-pointer p-10 disabled:cursor-not-allowed disabled:text-gray-100'
           disabled={count <= minCount}
           aria-label='인원 감소'>
-          <Icons.Minus aria-hidden='true' className='text-700 h-20 w-20' />
+          <Icons.Minus aria-hidden='true' className='h-20 w-20' />
         </button>
-        <span className='h-40 w-40 p-8 text-center body-16 font-bold text-gray-700'>{count}</span>
+        <span className='h-40 w-40 p-8 text-center body-16 font-bold'>{count}</span>
         <button
           onClick={handleIncrement}
-          className='p-10'
+          className='cursor-pointer p-10 disabled:cursor-not-allowed disabled:text-gray-100'
           disabled={count >= maxCount}
           aria-label='인원 증가'>
-          <Icons.Plus aria-hidden='true' className='text-700 h-20 w-20' />
+          <Icons.Plus aria-hidden='true' className='h-20 w-20' />
         </button>
       </div>
     </div>

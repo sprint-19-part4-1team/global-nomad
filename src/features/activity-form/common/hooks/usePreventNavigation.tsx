@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -21,6 +22,8 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  * - 본 훅은 클라이언트 환경에서만 동작합니다.
  */
 export const usePreventNavigation = (isDirty: boolean) => {
+  const router = useRouter();
+
   useEffect(() => {
     if (!isDirty) {
       return;
@@ -51,7 +54,7 @@ export const usePreventNavigation = (isDirty: boolean) => {
             onConfirm={() => {
               window.removeEventListener('beforeunload', handleBeforeUnload);
               overlayStore.pop();
-              location.href = anchor.href;
+              router.push(anchor.href);
             }}
             onCancel={() => overlayStore.pop()}
           />

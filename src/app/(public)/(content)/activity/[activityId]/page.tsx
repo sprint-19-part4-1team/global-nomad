@@ -193,9 +193,7 @@ export default async function ActivityDetail({
       </Link>
       <div className='gap-x-40 lg:grid lg:grid-cols-[1fr_410px]'>
         {/* 이미지 */}
-        <div className=''>
-          <ActivityImageGrid subImages={subImages} />
-        </div>
+        <ActivityImageGrid subImages={subImages} />
 
         {/* 제목 */}
         <div className='mt-20 mb-24 sm:mt-24 sm:mb-40 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:my-0'>
@@ -220,14 +218,10 @@ export default async function ActivityDetail({
         </div>
 
         {/* 지도 */}
-        <div className=''>
-          <ActivityLocation address={address} />
-        </div>
+        <ActivityLocation address={address} />
 
         {/* 후기 */}
-        <div className=''>
-          <ActivityReviewList reviewData={DUMMY_REVIEW} />
-        </div>
+        <ActivityReviewList reviewData={DUMMY_REVIEW} />
       </div>
       {/* 모바일: 하단 고정 예약 바 */}
       <div className='lg:hidden'>

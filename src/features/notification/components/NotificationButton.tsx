@@ -27,11 +27,9 @@ export default function NotificationButton() {
 
   const handleDeleteAll = async () => {
     setIsModalOpen(false);
-    try {
-      await Promise.all(
-        notifications.map((notification) => deleteNotificationAsync(notification.id))
-      );
-    } catch {}
+    await Promise.allSettled(
+      notifications.map((notification) => deleteNotificationAsync(notification.id))
+    );
   };
 
   return (

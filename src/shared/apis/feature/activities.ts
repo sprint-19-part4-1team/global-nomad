@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { publicFetch } from '@/shared/apis/base/publicFetch';
 import type {
@@ -48,13 +49,13 @@ export const createActivity = (
  * @param activityId - 조회할 체험 ID
  * @returns 체험 상세 조회 API 응답 Promise
  */
-export const getActivityDetail = (
-  activityId: number
-): Promise<ActivityWithSubImagesAndSchedulesDto> => {
-  return publicFetch<ActivityWithSubImagesAndSchedulesDto>(`/activities/${activityId}`, {
-    method: 'GET',
-  });
-};
+export const getActivityDetail = cache(
+  (activityId: number): Promise<ActivityWithSubImagesAndSchedulesDto> => {
+    return publicFetch<ActivityWithSubImagesAndSchedulesDto>(`/activities/${activityId}`, {
+      method: 'GET',
+    });
+  }
+);
 
 /**
  * 체험 예약 가능일 조회 API

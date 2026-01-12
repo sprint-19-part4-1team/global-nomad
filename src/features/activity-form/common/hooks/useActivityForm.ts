@@ -1,3 +1,5 @@
+'use client';
+
 import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
 import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
 import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';

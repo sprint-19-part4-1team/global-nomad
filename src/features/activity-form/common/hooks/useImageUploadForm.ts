@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { ImageValue } from '@/features/activity-form/common/types/image';
 import { SubImagesType } from '@/shared/types/activities';

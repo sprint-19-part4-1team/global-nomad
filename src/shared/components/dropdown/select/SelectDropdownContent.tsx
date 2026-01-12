@@ -11,6 +11,7 @@ import { cn } from '@/shared/utils/cn';
 
 interface SelectDropdownContentProps {
   children: ReactNode;
+  className?: string;
 }
 
 const dropdownContentVariants = {
@@ -28,8 +29,9 @@ const dropdownContentVariants = {
  * - 닫힌 상태에서는 DOM에 마운트되지 않습니다.
  *
  * @param children -  SelectDropdownItem을 자식으로 전달
+ * @param className - 옵션 리스트 영역에 추가로 적용할 커스텀 클래스
  */
-export default function SelectDropdownContent({ children }: SelectDropdownContentProps) {
+export default function SelectDropdownContent({ children, className }: SelectDropdownContentProps) {
   const { isOpen } = useDropdownBaseContext();
   const { triggerId, variants } = useSelectContext();
 
@@ -41,7 +43,7 @@ export default function SelectDropdownContent({ children }: SelectDropdownConten
     <ul
       role='listbox'
       aria-labelledby={triggerId}
-      className={cn(dropdownListBase, dropdownContentVariants[variants])}>
+      className={cn(dropdownListBase, dropdownContentVariants[variants], className)}>
       {children}
     </ul>
   );

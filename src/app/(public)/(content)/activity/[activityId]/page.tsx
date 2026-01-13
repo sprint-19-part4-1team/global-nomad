@@ -98,6 +98,7 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
         {/* 제목 */}
         <div className='mt-20 mb-24 sm:mt-24 sm:mb-40 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:my-0'>
           <ActivityTitle
+            activityId={activityId}
             title={title}
             category={category}
             address={address}

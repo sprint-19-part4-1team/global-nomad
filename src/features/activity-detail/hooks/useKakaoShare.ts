@@ -7,14 +7,14 @@ import { toast } from 'react-toastify';
  * @property imageUrl - 공유할 콘텐츠의 대표 이미지 URL
  * @property reviewCount - 공유할 콘텐츠의 리뷰 개수
  * @property rating - 공유할 콘텐츠의 평점 (별점)
- * @property url - 공유할 페이지 URL (선택적, 기본값: 현재 페이지 URL)
+ * @property path - 공유할 페이지
  */
 interface ShareKakaoParams {
   title: string;
   imageUrl: string;
   reviewCount: number;
   rating: number;
-  url?: string;
+  path: string;
 }
 
 /** 카카오 공유 SDK 스크립트 URL */
@@ -23,9 +23,6 @@ const KAKAO_SHARE_SDK_URL = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.mi
 /** 카카오 공유 SDK 무결성 해시값 */
 const KAKAO_SHARE_SDK_INTEGRITY =
   'sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4';
-
-/** 카카오톡 공유용 커스텀 템플릿 ID */
-const KAKAO_TEMPLATE_ID = 127930;
 
 /**
  * 카카오 공유 SDK를 초기화하고 공유 기능을 제공하는 커스텀 훅
@@ -103,26 +100,25 @@ export function useKakaoShare() {
    * @param params.imageUrl - 공유할 이미지 URL
    * @param params.reviewCount - 공유할 리뷰 개수
    * @param params.rating - 공유할 평점 (별점)
-   * @param params.url - 공유할 페이지 URL (기본값: 현재 페이지)
+   * @param params.path - 공유할 페이지
    */
-  const shareKakao = ({ title, imageUrl, reviewCount, rating, url }: ShareKakaoParams) => {
+  const shareKakao = ({ title, imageUrl, reviewCount, rating, path }: ShareKakaoParams) => {
     // SDK 로드 여부 확인
     if (!isReady || !window.Kakao) {
       toast.error('공유 기능을 준비 중입니다. 잠시 후 다시 시도해주세요.');
       return;
     }
 
-    const shareUrl = url || window.location.href;
-
     try {
       window.Kakao.Share.sendCustom({
-        templateId: KAKAO_TEMPLATE_ID,
+        templateId: Number(process.env.NEXT_PUBLIC_KAKAO_TEMPLATE_ID),
         templateArgs: {
           TITLE: title,
           BANNER_IMAGE: imageUrl,
           REVIEW_COUNT: reviewCount,
           RATING: rating,
-          url: shareUrl,
+          URL: process.env.NEXT_PUBLIC_SITE_URL,
+          PATH: path,
         },
       });
     } catch (error) {

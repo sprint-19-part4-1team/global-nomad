@@ -14,6 +14,7 @@ import Title from '@/shared/components/title/Title';
 
 /**
  * 체험 타이틀 컴포넌트의 Props
+ * @property activityId - 체험ID
  * @property title - 체험 제목
  * @property category - 체험 카테고리
  * @property address - 체험 장소 주소
@@ -22,6 +23,7 @@ import Title from '@/shared/components/title/Title';
  * @property rating - 평점 (별점)
  */
 interface ActivityTitleProps {
+  activityId: number;
   title: string;
   category: string;
   address: string;
@@ -59,6 +61,7 @@ interface ActivityTitleProps {
  * ```
  */
 export default function ActivityTitle({
+  activityId,
   title,
   category,
   address,
@@ -75,6 +78,7 @@ export default function ActivityTitle({
       imageUrl: bannerImageUrl,
       reviewCount,
       rating: formatRating(rating),
+      path: `activity/${activityId}`,
     });
   };
 

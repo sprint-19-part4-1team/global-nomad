@@ -40,7 +40,7 @@ export default function ActivityNotice({ userId }: ActivityNoticeProps) {
     return null;
   }
 
-  const loginUserId = user?.id;
+  const loginUserId = user.id;
 
   // 로그인한 유저가 체험 작성 유저가 아닌 경우 렌더링하지 않음
   if (loginUserId !== undefined && loginUserId !== userId) {

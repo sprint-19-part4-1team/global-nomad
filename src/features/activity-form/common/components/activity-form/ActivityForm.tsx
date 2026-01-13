@@ -25,6 +25,8 @@ interface ActivityFormProps {
   submitButtonText: string;
   /** 폼 제출 진행 여부 */
   isSubmitting: boolean;
+  /** 폼 버튼 비활성화 여부 */
+  isDisabled: boolean;
 }
 
 /**
@@ -40,13 +42,14 @@ export default function ActivityForm({
   onSubmit,
   submitButtonText,
   isSubmitting,
+  isDisabled,
 }: ActivityFormProps) {
-  const { basicInfo, addressInfo, scheduleInfo, imageInfo, isAllValid } = formState;
+  const { basicInfo, addressInfo, scheduleInfo, imageInfo } = formState;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!isAllValid || isSubmitting) {
+    if (isDisabled || isSubmitting) {
       return;
     }
 
@@ -63,7 +66,7 @@ export default function ActivityForm({
       <ImageSection imageInfo={imageInfo} />
       <Button
         type='submit'
-        disabled={!isAllValid}
+        disabled={isDisabled}
         isLoading={isSubmitting}
         className='mx-auto mt-0 sm:mt-4 md:mt-0'>
         {submitButtonText}

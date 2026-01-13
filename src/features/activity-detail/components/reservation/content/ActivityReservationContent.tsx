@@ -102,7 +102,7 @@ export default function ActivityReservationContent({
   // 체험의 예약 가능일 조회
   const {
     data: schedules,
-    isLoading,
+    isPending,
     isError,
   } = useActivitySchedules({ activityId, currentMonth });
 
@@ -206,7 +206,7 @@ export default function ActivityReservationContent({
         {/* 날짜 & 시간 선택 영역 */}
         {showDateTimeSection && (
           <>
-            {isLoading ? (
+            {isPending ? (
               <Skeleton className='h-396 sm:h-300 lg:h-428' />
             ) : isError ? (
               <div className='mx-auto mb-10 body-16 font-medium tracking-[-0.4px] text-gray-400'>

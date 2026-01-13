@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
-import { useDeleteActivity } from '@/features/activity-detail/mutations/useDeleteActivityMutation';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { useDeleteActivity } from '@/shared/mutations/useDeleteActivityMutation';
 
 /**
  * 체험 삭제 확인 다이얼로그 컴포넌트의 Props

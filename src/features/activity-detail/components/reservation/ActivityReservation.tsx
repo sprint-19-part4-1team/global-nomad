@@ -15,12 +15,12 @@ import { formatValue } from '@/shared/utils/formatValue';
 /**
  * 체험 예약 컴포넌트의 Props
  *
- * @property {string} activityId - 체험 ID
+ * @property {number} activityId - 체험 ID
  * @property {number} userId - 체험을 작성한 유저 ID
  * @property {number} price - 1인당 체험 가격
  */
 interface ActivityReservationProps {
-  activityId: string;
+  activityId: number;
   userId: number;
   price: number;
 }
@@ -56,7 +56,7 @@ interface ActivityReservationProps {
  * @example
  * ```tsx
  * <ActivityReservation
- *   activityId="123"
+ *   activityId={123}
  *   userId={456}
  *   price={50000}
  * />
@@ -80,7 +80,7 @@ export default function ActivityReservation({
   const handleReservation = useCallback(
     async (data: CreateReservationBodyDto) => {
       try {
-        await createActivityReservation(Number(activityId), data);
+        await createActivityReservation(activityId, data);
         overlayStore.push(
           <Dialog
             message={

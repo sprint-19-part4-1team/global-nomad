@@ -5,6 +5,17 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { ScheduleResponseDto } from '@/shared/types/activities';
 
 /**
+ * 체험 예약 가능일 조회 훅의 Props
+ *
+ * @property {number} activityId - 체험 ID
+ * @property {Date} currentMonth - 조회할 월 (Date 객체)
+ */
+type useActivitySchedulesProps = {
+  activityId: number;
+  currentMonth: Date;
+};
+
+/**
  * 체험 예약 가능일 조회 커스텀 훅
  *
  * @description
@@ -24,13 +35,13 @@ import { ScheduleResponseDto } from '@/shared/types/activities';
  * const { data: schedules, isLoading, isError } = useActivitySchedules('123', new Date('2026-01-01'));
  * ```
  */
-export const useActivitySchedules = (activityId: string, currentMonth: Date) => {
+export const useActivitySchedules = ({ activityId, currentMonth }: useActivitySchedulesProps) => {
   const year = String(getYear(currentMonth));
   const month = String(getMonth(currentMonth) + 1).padStart(2, '0');
 
   const { data, isLoading, isError } = useQuery<ScheduleResponseDto[]>({
-    queryKey: QUERY_KEYS.ACTIVITY_AVAILABLE_SCHEDULE(Number(activityId), { year, month }),
-    queryFn: () => getActivitySchedules(Number(activityId), { year, month }),
+    queryKey: QUERY_KEYS.ACTIVITY_AVAILABLE_SCHEDULE(activityId, { year, month }),
+    queryFn: () => getActivitySchedules(activityId, { year, month }),
   });
 
   return {

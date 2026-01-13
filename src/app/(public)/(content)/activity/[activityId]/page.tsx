@@ -48,10 +48,11 @@ export default async function ActivityDetail({
 }: {
   params: Promise<{ activityId: string }>;
 }) {
-  const { activityId } = await params;
+  const { activityId: activityIdString } = await params;
+  const activityId = Number(activityIdString);
 
   // 체험 상세 조회
-  const activity = await getActivityDetail(Number(activityId));
+  const activity = await getActivityDetail(activityId);
 
   const { userId, category, title, description, price, subImages, reviewCount } = activity;
 
@@ -89,7 +90,7 @@ export default async function ActivityDetail({
             rating={rating}
             reviewCount={reviewCount}
           />
-          <ActivityAdminControls activityId={Number(activityId)} userId={userId} />
+          <ActivityAdminControls activityId={activityId} userId={userId} />
           <ActivityNotice userId={userId} />
           <aside className='hidden lg:block'>
             <ActivityReservation activityId={activityId} userId={userId} price={price} />
@@ -106,7 +107,7 @@ export default async function ActivityDetail({
         <ActivityLocation address={address} />
 
         {/* 후기 */}
-        <ActivityReviewList activityId={Number(activityId)} />
+        <ActivityReviewList activityId={activityId} />
       </div>
       {/* 모바일: 하단 고정 예약 바 */}
       <div className='lg:hidden'>

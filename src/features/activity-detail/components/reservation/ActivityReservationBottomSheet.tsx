@@ -9,12 +9,12 @@ import { CreateReservationBodyDto } from '@/shared/types/activities';
 /**
  * 체험 예약 바텀시트 컴포넌트의 Props
  *
- * @property {string} activityId - 체험 ID
+ * @property {number} activityId - 체험 ID
  * @property {number} price - 1인당 체험 가격
  * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} onConfirm - 예약 확인 핸들러
  */
 interface ActivityReservationBottomSheetProps {
-  activityId: string;
+  activityId: number;
   price: number;
   onConfirm: (info: CreateReservationBodyDto & { dateTime: string }) => void;
 }
@@ -41,7 +41,7 @@ interface ActivityReservationBottomSheetProps {
  * @example
  * ```tsx
  * <ActivityReservationBottomSheet
- *   activityId="123"
+ *   activityId={123}
  *   price={50000}
  *   onConfirm={(info) => {
  *     console.log('예약 정보:', info);

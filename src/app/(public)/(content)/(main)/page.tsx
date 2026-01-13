@@ -27,9 +27,8 @@ export default function Home() {
           <div className='px-0 sm:px-40'>
             <SearchBar />
           </div>
+          <ActivitySection />
         </Suspense>
-
-        <ActivitySection />
 
         <div />
       </div>

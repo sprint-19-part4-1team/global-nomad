@@ -24,7 +24,7 @@ type KakaoGeocoderStatus = 'OK' | 'ZERO_RESULT' | 'ERROR';
 
 /**
  * 체험 위치 정보 컴포넌트의 Props
- * @property {string} address - 표시할 주소
+ * @property address - 표시할 주소
  */
 interface ActivityLocationProps {
   address: string;
@@ -33,9 +33,9 @@ interface ActivityLocationProps {
 /**
  * 카카오맵 커스텀 마커의 HTML 컨텐츠를 생성합니다.
  *
- * @param {string} address - 마커에 표시할 주소
- * @param {string} iconHTML - 마커 아이콘의 HTML 문자열
- * @returns {string} 마커 HTML 컨텐츠
+ * @param address - 마커에 표시할 주소
+ * @param iconHTML - 마커 아이콘의 HTML 문자열
+ * @returns 마커 HTML 컨텐츠
  */
 const createMarkerContent = (address: string, iconHTML: string): string => {
   return `
@@ -59,8 +59,8 @@ const createMarkerContent = (address: string, iconHTML: string): string => {
  * 커스텀 마커로 위치를 표시합니다.
  *
  * @component
- * @param {ActivityLocationProps} props - 컴포넌트 props
- * @returns {JSX.Element} 위치 정보 섹션
+ * @param props - 컴포넌트 props
+ * @returns 위치 정보 섹션
  *
  * @example
  * ```tsx

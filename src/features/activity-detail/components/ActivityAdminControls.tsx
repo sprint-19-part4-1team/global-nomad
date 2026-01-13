@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import Icons from '@/assets/icons';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
+import { useDeleteActivity } from '@/features/activity-detail/mutations/useDeleteActivityMutation';
 import { useReservationStats } from '@/features/activity-detail/queries/useReservationStats';
 import Button from '@/shared/components/button/Button';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**
@@ -35,6 +38,7 @@ interface ActivityAdminControlsProps {
  */
 export default function ActivityAdminControls({ activityId, userId }: ActivityAdminControlsProps) {
   const loginUserId = useUserStore((s) => s.user?.id);
+  const deleteMutation = useDeleteActivity();
 
   // 60일 이내 예약 통계 조회
   const { confirmedCount, pendingCount, isPending } = useReservationStats({
@@ -45,6 +49,20 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
   if (userId !== loginUserId) {
     return null;
   }
+
+  const handleDeleteConfirm = (activityId: number) => {
+    overlayStore.push(
+      <Dialog
+        variant='confirm'
+        message='체험을 삭제하시겠습니까?'
+        cancelLabel='취소하기'
+        confirmLabel='삭제하기'
+        onCancel={() => overlayStore.pop()}
+        isConfirm={deleteMutation.isPending}
+        onConfirm={() => deleteMutation.mutate(activityId)}
+      />
+    );
+  };
 
   // 로딩 중이거나 예약이 있으면 삭제 비활성화
   const isDeleteDisabled = isPending || confirmedCount > 0 || pendingCount > 0;
@@ -69,10 +87,7 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
         <Button
           variant='negative'
           size='lg'
-          onClick={() => {
-            // TODO: API 연동 후 실제 체험 삭제 로직 구현
-            console.log('체험 삭제하기');
-          }}
+          onClick={() => handleDeleteConfirm(activityId)}
           disabled={isDeleteDisabled}
           className='flex-1'>
           체험 삭제하기

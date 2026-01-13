@@ -12,6 +12,7 @@ import {
   getSchedulesByDate,
 } from '@/features/activity-detail/utils/reservationDateUtils';
 import Button from '@/shared/components/button/Button';
+import Skeleton from '@/shared/components/skeleton/Skeleton';
 import Title from '@/shared/components/title/Title';
 import { CreateReservationBodyDto } from '@/shared/types/activities';
 import { formatDateToString } from '@/shared/utils/dateUtil';
@@ -99,7 +100,7 @@ export default function ActivityReservationContent({
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
 
   // 체험의 예약 가능일 조회
-  const { data: schedules } = useActivitySchedules(activityId, currentMonth);
+  const { data: schedules, isLoading, isError } = useActivitySchedules(activityId, currentMonth);
 
   // 커스텀 훅으로 모든 상태 관리 (currentMonth를 전달하여 월 변경 시 자동 초기화)
   const reservation = useReservationState(currentMonth);
@@ -204,16 +205,26 @@ export default function ActivityReservationContent({
 
         {/* 날짜 & 시간 선택 영역 */}
         {showDateTimeSection && (
-          <ActivityReservationDateTimeSection
-            selectedDate={reservation.selectedDate}
-            onDateSelect={reservation.handleDateSelect}
-            selectedScheduleId={reservation.selectedScheduleId}
-            onScheduleSelect={reservation.setSelectedScheduleId}
-            schedules={schedules || []}
-            currentMonth={currentMonth}
-            onMonthChange={setCurrentMonth}
-            isBottomSheet={isBottomSheet}
-          />
+          <>
+            {isLoading ? (
+              <Skeleton className='h-396 sm:h-300 lg:h-428' />
+            ) : isError ? (
+              <div className='mx-auto mb-10 body-16 font-medium tracking-[-0.4px] text-gray-400'>
+                예약 가능일을 불러오는 데 실패했습니다.
+              </div>
+            ) : (
+              <ActivityReservationDateTimeSection
+                selectedDate={reservation.selectedDate}
+                onDateSelect={reservation.handleDateSelect}
+                selectedScheduleId={reservation.selectedScheduleId}
+                onScheduleSelect={reservation.setSelectedScheduleId}
+                schedules={schedules || []}
+                currentMonth={currentMonth}
+                onMonthChange={setCurrentMonth}
+                isBottomSheet={isBottomSheet}
+              />
+            )}
+          </>
         )}
 
         {/* 인원 선택 영역 */}

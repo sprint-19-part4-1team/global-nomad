@@ -13,24 +13,29 @@ import { ScheduleResponseDto } from '@/shared/types/activities';
  *
  * @param activityId - 체험 ID
  * @param currentMonth - 조회할 월 (Date 객체)
- * @returns React Query의 쿼리 결과 객체
+ *
+ * @returns 스케줄 데이터 배열, 로딩 상태, 에러 상태를 포함한 객체
+ * @returns data - 예약 가능한 스케줄 배열 (ScheduleResponseDto[])
+ * @returns isLoading - 데이터 로딩 여부
+ * @returns isError - 에러 발생 여부
  *
  * @example
  * ```tsx
- * const { data: schedules, isLoading } = useActivitySchedules('123', new Date('2026-01-01'));
+ * const { data: schedules, isLoading, isError } = useActivitySchedules('123', new Date('2026-01-01'));
  * ```
  */
 export const useActivitySchedules = (activityId: string, currentMonth: Date) => {
   const year = String(getYear(currentMonth));
   const month = String(getMonth(currentMonth) + 1).padStart(2, '0');
 
-  const { data, refetch } = useQuery<ScheduleResponseDto[]>({
+  const { data, isLoading, isError } = useQuery<ScheduleResponseDto[]>({
     queryKey: QUERY_KEYS.ACTIVITY_AVAILABLE_SCHEDULE(Number(activityId), { year, month }),
     queryFn: () => getActivitySchedules(Number(activityId), { year, month }),
   });
 
   return {
     data,
-    refetch,
+    isLoading,
+    isError,
   };
 };

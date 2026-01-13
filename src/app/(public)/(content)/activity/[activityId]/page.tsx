@@ -57,7 +57,8 @@ export async function generateMetadata({ params }: ActivityDetailParams): Promis
 }
 
 export default async function ActivityDetail({ params }: ActivityDetailParams) {
-  const { activityId } = await params;
+  const { activityId: activityIdString } = await params;
+  const activityId = Number(activityIdString);
 
   let activity;
   try {

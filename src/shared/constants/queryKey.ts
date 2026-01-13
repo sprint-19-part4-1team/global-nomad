@@ -53,12 +53,16 @@ export const QUERY_KEYS = {
     params,
   ],
   /** 내 체험 리스트 조회 */
-  MY_ACTIVITIES: (
-    params?: {
-      size?: number;
-    },
-    userId?: number
-  ) => ['myActivities', { size: params?.size }, userId],
+  MY_ACTIVITIES: (params?: { size?: number }, userId?: number) => {
+    const key: unknown[] = ['myActivities'];
+    if (params) {
+      key.push({ size: params.size });
+    }
+    if (userId) {
+      key.push(userId);
+    }
+    return key;
+  },
   /** 내 체험 월별 예약 현황 조회 */
   MY_ACTIVITY_RESERVATION_DASHBOARD: (
     activityId: number,

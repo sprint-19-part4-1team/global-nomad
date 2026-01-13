@@ -3,13 +3,11 @@ import { useUploadImageMutation } from '@/features/activity-form/common/mutation
 import { UpdateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { updateMyActivity } from '@/shared/apis/feature/myActivities';
 import { QUERY_KEYS } from '@/shared/constants';
-import { useUserStore } from '@/shared/stores/userStore';
 import { UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export const useUpdateActivityMutation = (activityId: number) => {
   const queryClient = getQueryClient();
-  const userId = useUserStore((s) => s.user?.id);
   const { mutateAsync: uploadImage } = useUploadImageMutation();
 
   return useMutation({
@@ -30,9 +28,13 @@ export const useUpdateActivityMutation = (activityId: number) => {
 
       return updateMyActivity(activityId, updateData);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId) });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES({}, userId) });
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(data.id) });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.MY_ACTIVITIES(),
+        exact: false,
+      });
     },
   });
 };

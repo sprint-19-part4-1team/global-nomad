@@ -40,15 +40,19 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
   const [mounted, setMounted] = useState(false);
   const loginUserId = useUserStore((s) => s.user?.id);
 
-  // 60일 이내 예약 통계 조회
-  const { confirmedCount, pendingCount, isPending } = useReservationStats({
-    activityId,
-  });
-
   // 클라이언트에서 마운트된 후에만 렌더링되도록 보장
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // 조건 체크: 마운트되었고, 로그인했으며, 작성자와 동일한 경우
+  const isOwner = mounted && !!loginUserId && userId === loginUserId;
+
+  // 소유자일 때만 60일 이내 예약 통계 조회
+  const { confirmedCount, pendingCount, isPending } = useReservationStats({
+    activityId,
+    enabled: isOwner,
+  });
 
   // 마운트될 때까지 렌더링하지 않음
   if (!mounted) {
@@ -56,7 +60,7 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
   }
 
   // 체험 작성 유저와 로그인한 유저가 다를 경우 렌더링하지 않음
-  if (userId !== loginUserId) {
+  if (!isOwner) {
     return null;
   }
 

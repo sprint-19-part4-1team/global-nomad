@@ -24,6 +24,9 @@ interface ActivityAdminControlsProps {
  * - 체험 예약 현황 확인 링크와 체험 수정/삭제 버튼을 제공합니다.
  * - 체험 승인/대기 상태에서의 제한 사항 안내 문구를 함께 표시합니다.
  *
+ * @param {ActivityAdminControlsProps} props - 컴포넌트 props
+ * @returns {JSX.Element} 렌더링된 체험 작성자 전용 영역
+ *
  * @example
  * ```tsx
  * <ActivityAdminControls userId={activity.userId} />
@@ -64,13 +67,6 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
           className='flex-1'>
           체험 삭제하기
         </Button>
-      </div>
-
-      <div className='flex flex-col gap-4 rounded-7 bg-gray-25 p-12 sm:p-16'>
-        <span className='body-13 font-bold text-gray-700 sm:body-14'>확인해주세요!</span>
-        <span className='body-12 font-medium text-gray-500 sm:body-14'>
-          ・체험 승인/대기 중일 때는 체험을 수정 및 삭제할 수 없습니다.
-        </span>
       </div>
     </div>
   );

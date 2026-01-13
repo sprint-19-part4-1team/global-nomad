@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import Icons from '@/assets/icons';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
 import ActivityReviewItem from '@/features/activity-detail/components/review/ActivityReviewItem';
+import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { formatSatisfaction } from '@/features/activity-detail/utils/formatSatisfaction';
 import Pagination from '@/shared/components/pagination/Pagination';
 import Title from '@/shared/components/title/Title';
@@ -70,7 +71,8 @@ const ITEMS_PER_PAGE = 3;
  * ```
  */
 export default function ActivityReviewList({ reviewData, className }: ActivityReviewListProps) {
-  const { averageRating, totalCount, reviews } = reviewData;
+  const { totalCount, reviews } = reviewData;
+  const averageRating = formatRating(reviewData.averageRating);
   const count = formatValue(totalCount);
 
   // 페이지 상태를 최상위에서 관리 (Lifting State Up)

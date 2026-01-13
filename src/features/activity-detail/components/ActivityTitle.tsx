@@ -13,16 +13,16 @@ import Title from '@/shared/components/title/Title';
  * 체험 타이틀 컴포넌트의 Props
  * @property {string} category - 체험 카테고리
  * @property {string} title - 체험 제목
+ * @property {string} address - 체험 장소 주소
  * @property {number} rating - 평점 (별점)
  * @property {number} reviewCount - 리뷰 개수
- * @property {string} address - 체험 장소 주소
  */
 interface ActivityTitleProps {
   category: string;
   title: string;
+  address: string;
   rating: number;
   reviewCount: number;
-  address: string;
 }
 
 /**
@@ -47,18 +47,18 @@ interface ActivityTitleProps {
  * <ActivityTitle
  *   category="문화 · 예술"
  *   title="한강 서울 야경 투어"
+ *   address="서울시 용산구 이촌동"
  *   rating={4.5}
  *   reviewCount={128}
- *   address="서울시 용산구 이촌동"
  * />
  * ```
  */
 export default function ActivityTitle({
   category,
   title,
+  address,
   rating,
   reviewCount,
-  address,
 }: ActivityTitleProps) {
   return (
     <div className='flex flex-col gap-8'>

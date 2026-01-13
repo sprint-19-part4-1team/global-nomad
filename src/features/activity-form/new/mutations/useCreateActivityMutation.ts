@@ -1,10 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
+import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
+import { CreateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { createActivity } from '@/shared/apis/feature/activities';
-import { QUERY_KEYS, type ActivityCategory } from '@/shared/constants';
-
-type ActivityRequestData = ReturnType<ReturnType<typeof useActivityForm>['getActivityRequest']>;
+import { QUERY_KEYS } from '@/shared/constants';
+import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 /**
  * ## useCreateActivityMutation
@@ -20,11 +19,11 @@ type ActivityRequestData = ReturnType<ReturnType<typeof useActivityForm>['getAct
  * - 성공 시 생성된 체험(Activity) 데이터 반환
  */
 export const useCreateActivityMutation = () => {
-  const queryClient = useQueryClient();
+  const queryClient = getQueryClient();
   const { mutateAsync: uploadImage } = useUploadImageMutation();
 
   return useMutation({
-    mutationFn: async (reqbody: ActivityRequestData) => {
+    mutationFn: async (reqbody: CreateActivityFormPayload) => {
       const { bannerImageUrl: bannerFile, subImageUrls: subImageFiles } = reqbody;
 
       if (!(bannerFile instanceof File)) {
@@ -46,7 +45,6 @@ export const useCreateActivityMutation = () => {
 
       const finalData = {
         ...reqbody,
-        category: reqbody.category as ActivityCategory,
         bannerImageUrl,
         subImageUrls,
       };

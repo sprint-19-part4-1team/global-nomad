@@ -39,6 +39,8 @@ export interface CreateScheduleBodyDto {
   startTime: string;
   endTime: string;
 }
+
+/** 내 체험 수정 리퀘스트 body */
 export interface UpdateMyActivityBodyDto {
   title?: string;
   category?: ActivityCategory;

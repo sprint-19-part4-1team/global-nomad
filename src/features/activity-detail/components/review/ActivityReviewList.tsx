@@ -66,7 +66,7 @@ export default function ActivityReviewList({ activityId, className }: ActivityRe
 
   // 로딩 상태
   if (isPending) {
-    return <ActivityReviewEmpty state='loading' className={className} />;
+    return <ActivityReviewEmpty state='pending' className={className} />;
   }
 
   // 에러 상태

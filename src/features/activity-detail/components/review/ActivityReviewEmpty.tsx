@@ -6,11 +6,11 @@ import { cn } from '@/shared/utils/cn';
 /**
  * 리뷰 상태 컴포넌트의 Props
  *
- * @property {ReviewStateType} [state='empty'] - 표시할 상태 ('empty' | 'loading' | 'error')
+ * @property {ReviewStateType} [state='empty'] - 표시할 상태 ('empty' | 'pending' | 'error')
  * @property {string} [className] - 추가 CSS 클래스명
  */
 interface ActivityReviewEmptyProps {
-  state?: 'empty' | 'loading' | 'error';
+  state?: 'empty' | 'pending' | 'error';
   className?: string;
 }
 
@@ -46,7 +46,7 @@ export default function ActivityReviewEmpty({
           )}
         </div>
         {state === 'empty' && <EmptyState mainText='아직 등록된 후기가 없어요' type='review' />}
-        {state === 'loading' && <Skeleton className='h-222 w-327 rounded-24 sm:w-694 lg:w-670' />}
+        {state === 'pending' && <Skeleton className='h-222 w-327 rounded-24 sm:w-694 lg:w-670' />}
         {state === 'error' && (
           <div className='flex w-full justify-center py-20 body-16 font-medium tracking-[-0.4px] text-gray-400'>
             후기를 불러오는 데 실패했어요

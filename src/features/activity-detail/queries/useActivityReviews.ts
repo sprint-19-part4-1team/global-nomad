@@ -22,25 +22,26 @@ type useActivityReviewsProps = {
  * 페이지가 변경될 때마다 해당 페이지의 리뷰 데이터를 자동으로 조회합니다.
  * React Query를 통해 데이터 캐싱 및 상태 관리가 자동으로 처리됩니다.
  *
- * @param activityId - 체험 ID
- * @param params - 페이지네이션 파라미터 (page, size)
+ * @param params - 훅 파라미터 객체
+ * @param params.activityId - 체험 ID
+ * @param params.params - 페이지네이션 파라미터 (page, size)
  *
- * @returns 리뷰 데이터를 포함한 객체
- * @returns data - 리뷰 응답 데이터 (GetActivityReviewsResponse)
- * @returns isPending - 데이터 로딩 여부
- * @returns isError - 에러 발생 여부
+ * @returns 리뷰 쿼리 결과 객체
+ * @returns returns.data - 리뷰 응답 데이터 (GetActivityReviewsResponse | undefined)
+ * @returns returns.isPending - 데이터 로딩 여부
+ * @returns returns.isError - 에러 발생 여부
  *
  * @example
  * ```tsx
- * const { data: reviewData } = useActivityReviews({
+ * const { data, isPending, isError } = useActivityReviews({
  *   activityId: 123,
  *   params: { page: 1, size: 3 }
  * });
  *
- * if (reviewData) {
- *   console.log(reviewData.totalCount); // 전체 리뷰 개수
- *   console.log(reviewData.reviews); // 현재 페이지의 리뷰 목록
- *   console.log(reviewData.averageRating); // 평균 평점
+ * if (data) {
+ *   console.log(data.totalCount); // 전체 리뷰 개수
+ *   console.log(data.reviews); // 현재 페이지의 리뷰 목록
+ *   console.log(data.averageRating); // 평균 평점
  * }
  * ```
  */

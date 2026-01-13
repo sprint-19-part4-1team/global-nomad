@@ -67,9 +67,9 @@ export const getActivityDetail = cache(
 export const getActivitySchedules = (
   activityId: number,
   params: GetActivitySchedulesParams
-): Promise<ScheduleResponseDto> => {
+): Promise<ScheduleResponseDto[]> => {
   const queryString = createQueryString(params);
-  return publicFetch<ScheduleResponseDto>(
+  return publicFetch<ScheduleResponseDto[]>(
     `/activities/${activityId}/available-schedule${queryString}`,
     {
       method: 'GET',

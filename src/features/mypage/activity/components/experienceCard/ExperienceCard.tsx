@@ -15,22 +15,26 @@ export type ActivitySummaryDto = Pick<
 >;
 
 /**
- * 활동 요약 정보를 카드 형태로 표시하기 위한 타입 및 컴포넌트
+ * ## ExperienceCard
  *
  * @description
- * - 마이페이지 / 활동 관리 목록에서 사용되는 카드 UI
- * - `ActivityBasicDto` 중 카드 렌더링에 필요한 필드만 선별하여 사용
- * - 좌측에는 제목, 평점, 가격, 액션 버튼을 배치
- * - 우측에는 활동을 대표하는 배너 이미지를 표시
- * - 제목은 한 줄 말줄임 처리
- * - 수정/삭제와 같은 액션 처리를 위해 활동의 고유 id를 포함
+ * - 마이페이지 / 활동 관리 목록에서 사용되는 활동 요약 카드 컴포넌트입니다.
+ * - 활동의 핵심 정보(제목, 평점, 가격)를 카드 형태로 요약하여 표시합니다.
+ * - 카드 전체를 클릭하거나 Enter / Space 키를 통해
+ *   활동 상세 페이지로 이동할 수 있습니다.
  *
- * @property id - 활동을 식별하기 위한 고유 ID (수정 페이지 이동 등 액션에 사용)
- * @property title - 활동 제목
- * @property price - 1인 기준 가격
- * @property rating - 평균 평점
- * @property reviewCount - 리뷰 개수
- * @property bannerImageUrl - 카드 우측에 노출되는 배너 이미지 URL
+ * @remarks
+ * - 수정 / 삭제 버튼은 카드 내부 액션으로 제공되며,
+ *   삭제 시에는 확인 다이얼로그(`ActivityDeleteDialog`)를 오버레이로 표시합니다.
+ * - 카드 우측에는 활동을 대표하는 배너 이미지를 표시합니다.
+ * - 접근성을 위해 `role="button"`과 키보드 이벤트를 처리합니다.
+ *
+ * @params id - 활동을 식별하기 위한 고유 ID (상세/수정/삭제 액션에 사용)
+ * @params title - 활동 제목 (한 줄 말줄임 처리)
+ * @params price - 1인 기준 가격
+ * @params rating - 평균 평점
+ * @params reviewCount - 리뷰 개수
+ * @params bannerImageUrl - 카드 우측에 노출되는 배너 이미지 URL
  *
  * @example
  * ```tsx
@@ -41,7 +45,6 @@ export type ActivitySummaryDto = Pick<
  *   rating={4.8}
  *   reviewCount={128}
  *   bannerImageUrl="/images/surfing.jpg"
- *   onDelete={onDelete}
  * />
  * ```
  */

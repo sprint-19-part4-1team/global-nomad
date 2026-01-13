@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**
@@ -33,11 +34,17 @@ const MESSAGE = {
  * ```
  */
 export default function ActivityNotice({ userId }: ActivityNoticeProps) {
+  const [mounted, setMounted] = useState(false);
   const loginUserId = useUserStore((s) => s.user?.id);
   const hasHydrated = useUserStore((s) => s.hasHydrated);
 
-  // hydration이 완료될 때까지 렌더링하지 않음
-  if (!hasHydrated) {
+  // 클라이언트에서 마운트된 후에만 렌더링되도록 보장
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 마운트되고 hydration이 완료될 때까지 렌더링하지 않음
+  if (!mounted || !hasHydrated) {
     return null;
   }
 

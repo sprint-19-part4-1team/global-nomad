@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
-
-const ERROR_FAVICON_PATH = '/favicons/error.ico';
+import { ERROR_FAVICON_PATH } from '@/shared/constants';
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found',

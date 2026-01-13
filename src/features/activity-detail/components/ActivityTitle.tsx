@@ -1,8 +1,8 @@
 'use client';
 
-import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import { useKakaoShare } from '@/features/activity-detail/hooks/useKakaoShare';
+import { copyToClipboard } from '@/features/activity-detail/utils/copyToClipboard';
 import {
   ActionDropdown,
   ActionDropdownContent,
@@ -81,13 +81,7 @@ export default function ActivityTitle({
 
   /** URL 복사 핸들러 */
   const handleUrlCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      toast.success('URL이 복사되었습니다');
-    } catch (error) {
-      console.error('URL 복사 실패:', error);
-      toast.error('URL 복사에 실패했습니다');
-    }
+    await copyToClipboard(window.location.href, 'URL이 복사되었습니다');
   };
 
   return (

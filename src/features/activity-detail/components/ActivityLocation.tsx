@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
+import { copyToClipboard } from '@/features/activity-detail/utils/copyToClipboard';
 
 /**
  * 카카오맵 Geocoder 검색 결과 타입
@@ -161,13 +162,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
 
   /** 주소 복사 핸들러 */
   const handleCopyAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(address);
-      toast.success('주소가 복사되었습니다');
-    } catch (error) {
-      console.error('주소 복사 실패:', error);
-      toast.error('주소 복사에 실패했습니다');
-    }
+    await copyToClipboard(address, '주소가 복사되었습니다');
   };
 
   return (

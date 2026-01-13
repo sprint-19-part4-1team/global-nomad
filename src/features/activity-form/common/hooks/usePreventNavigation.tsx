@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 
@@ -23,6 +23,7 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  */
 export const usePreventNavigation = (isDirty: boolean) => {
   const router = useRouter();
+  const pushCount = useRef(0);
 
   useEffect(() => {
     if (!isDirty) {
@@ -66,6 +67,7 @@ export const usePreventNavigation = (isDirty: boolean) => {
     /** 브라우저 뒤로가기 방지 */
     const handlePopState = () => {
       history.pushState(null, '', location.href);
+      pushCount.current += 1;
 
       overlayStore.push(
         <Dialog
@@ -79,10 +81,9 @@ export const usePreventNavigation = (isDirty: boolean) => {
           onConfirm={() => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
             window.removeEventListener('popstate', handlePopState);
-
             overlayStore.pop();
-            // 가짜 스택을 건너뛰고 이전 페이지로 이동
-            history.go(-2);
+            const targetIndex = -(pushCount.current + 1);
+            history.go(targetIndex);
           }}
           onCancel={() => {
             overlayStore.pop();
@@ -93,6 +94,7 @@ export const usePreventNavigation = (isDirty: boolean) => {
 
     // 초기 방어용 스택 쌓기
     history.pushState(null, '', location.href);
+    pushCount.current = 1;
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('click', handleAnchorClick, true);
@@ -103,5 +105,5 @@ export const usePreventNavigation = (isDirty: boolean) => {
       window.removeEventListener('click', handleAnchorClick, true);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [isDirty]);
+  }, [isDirty, router]);
 };

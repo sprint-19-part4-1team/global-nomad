@@ -99,7 +99,6 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
         <div className='mt-20 mb-24 sm:mt-24 sm:mb-40 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:my-0'>
           <ActivityTitle
             title={title}
-            description={description}
             category={category}
             address={address}
             bannerImageUrl={bannerImageUrl}

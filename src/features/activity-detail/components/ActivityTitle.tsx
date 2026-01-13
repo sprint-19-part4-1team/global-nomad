@@ -3,6 +3,7 @@
 import Icons from '@/assets/icons';
 import { useKakaoShare } from '@/features/activity-detail/hooks/useKakaoShare';
 import { copyToClipboard } from '@/features/activity-detail/utils/copyToClipboard';
+import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import {
   ActionDropdown,
   ActionDropdownContent,
@@ -14,7 +15,6 @@ import Title from '@/shared/components/title/Title';
 /**
  * 체험 타이틀 컴포넌트의 Props
  * @property title - 체험 제목
- * @property description - 체험 설명
  * @property category - 체험 카테고리
  * @property address - 체험 장소 주소
  * @property bannerImageUrl - 체험 배너 이미지
@@ -23,7 +23,6 @@ import Title from '@/shared/components/title/Title';
  */
 interface ActivityTitleProps {
   title: string;
-  description: string;
   category: string;
   address: string;
   bannerImageUrl: string;
@@ -61,7 +60,6 @@ interface ActivityTitleProps {
  */
 export default function ActivityTitle({
   title,
-  description,
   category,
   address,
   bannerImageUrl,
@@ -74,8 +72,9 @@ export default function ActivityTitle({
   const handleShareKakao = () => {
     shareKakao({
       title,
-      description,
       imageUrl: bannerImageUrl,
+      reviewCount,
+      rating: formatRating(rating),
     });
   };
 

@@ -22,6 +22,14 @@ interface KakaoSharePayload {
 }
 
 /**
+ * 카카오 공유하기 API의 `sendCustom` 메소드에 전달되는 인자 타입
+ */
+interface KakaoShareCustomPayload {
+  templateId: number;
+  templateArgs: Record<string, any>;
+}
+
+/**
  * 카카오 공유 SDK에서 사용하는 API의 타입 정의
  */
 interface KakaoAPI {
@@ -29,6 +37,7 @@ interface KakaoAPI {
   isInitialized: () => boolean;
   Share: {
     sendDefault: (payload: KakaoSharePayload) => void;
+    sendCustom: (payload: KakaoShareCustomPayload) => void;
   };
 }
 

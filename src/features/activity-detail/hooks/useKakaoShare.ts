@@ -4,14 +4,16 @@ import { toast } from 'react-toastify';
 /**
  * 카카오톡 공유에 필요한 파라미터
  * @property title - 공유할 콘텐츠의 제목
- * @property description - 공유할 콘텐츠의 설명
  * @property imageUrl - 공유할 콘텐츠의 대표 이미지 URL
+ * @property reviewCount - 공유할 콘텐츠의 리뷰 개수
+ * @property rating - 공유할 콘텐츠의 평점 (별점)
  * @property url - 공유할 페이지 URL (선택적, 기본값: 현재 페이지 URL)
  */
 interface ShareKakaoParams {
   title: string;
-  description: string;
   imageUrl: string;
+  reviewCount: number;
+  rating: number;
   url?: string;
 }
 
@@ -21,6 +23,9 @@ const KAKAO_SHARE_SDK_URL = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.mi
 /** 카카오 공유 SDK 무결성 해시값 */
 const KAKAO_SHARE_SDK_INTEGRITY =
   'sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4';
+
+/** 카카오톡 공유용 커스텀 템플릿 ID */
+const KAKAO_TEMPLATE_ID = 127930;
 
 /**
  * 카카오 공유 SDK를 초기화하고 공유 기능을 제공하는 커스텀 훅
@@ -95,11 +100,12 @@ export function useKakaoShare() {
    *
    * @param params - 공유할 콘텐츠 정보
    * @param params.title - 공유할 제목
-   * @param params.description - 공유할 설명
    * @param params.imageUrl - 공유할 이미지 URL
+   * @param params.reviewCount - 공유할 리뷰 개수
+   * @param params.rating - 공유할 평점 (별점)
    * @param params.url - 공유할 페이지 URL (기본값: 현재 페이지)
    */
-  const shareKakao = ({ title, description, imageUrl, url }: ShareKakaoParams) => {
+  const shareKakao = ({ title, imageUrl, reviewCount, rating, url }: ShareKakaoParams) => {
     // SDK 로드 여부 확인
     if (!isReady || !window.Kakao) {
       toast.error('공유 기능을 준비 중입니다. 잠시 후 다시 시도해주세요.');
@@ -109,26 +115,15 @@ export function useKakaoShare() {
     const shareUrl = url || window.location.href;
 
     try {
-      window.Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title,
-          description,
-          imageUrl,
-          link: {
-            mobileWebUrl: shareUrl,
-            webUrl: shareUrl,
-          },
+      window.Kakao.Share.sendCustom({
+        templateId: KAKAO_TEMPLATE_ID,
+        templateArgs: {
+          TITLE: title,
+          BANNER_IMAGE: imageUrl,
+          REVIEW_COUNT: reviewCount,
+          RATING: rating,
+          url: shareUrl,
         },
-        buttons: [
-          {
-            title: '보러 가기',
-            link: {
-              mobileWebUrl: shareUrl,
-              webUrl: shareUrl,
-            },
-          },
-        ],
       });
     } catch (error) {
       console.error('카카오톡 공유 실패:', error);

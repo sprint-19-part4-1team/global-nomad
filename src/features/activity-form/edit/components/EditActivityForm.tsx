@@ -4,24 +4,34 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
+import { usePreventNavigation } from '@/features/activity-form/common/hooks/usePreventNavigation';
 import { useUpdateActivityMutation } from '@/features/activity-form/edit/mutations/useUpdateActivityMutation';
 import { useActivityDetailQuery } from '@/features/activity-form/edit/queries/useActivityDetailQuery';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 
 interface EditActivityFormProps {
+  /** 수정할 체험(Activity)의 ID */
   activityId: number;
 }
 
-// TODO: 구현 완료 후 tsDoc 추가 예정
+/**
+ * ## EditActivityForm
+ *
+ * @description
+ * - 체험(Activity) 수정 페이지에서 사용하는 폼 컨테이너 컴포넌트입니다.
+ * - 체험 상세 데이터를 조회하여 `useActivityForm`의 초기값으로 전달하고,
+ *   수정된 항목만 추출하여 수정 API를 호출합니다.
+ */
 export default function EditActivityForm({ activityId }: EditActivityFormProps) {
-  // TODO: 체험 수정 폼에 기존과 다른 변경사항이 있다면 이탈 안내 모달 보여주기
   const router = useRouter();
 
   const { data: activity } = useActivityDetailQuery(activityId);
 
   const formState = useActivityForm(activity);
-  const { changedValues, isEditDirty, isAllValid } = formState;
+  const { changedValues, isDirty, isAllValid } = formState;
+
+  usePreventNavigation(isDirty);
 
   const { mutate, isPending } = useUpdateActivityMutation(activityId);
 
@@ -55,7 +65,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
       submitButtonText='체험 수정하기'
       onSubmit={handleSubmit}
       isSubmitting={isPending}
-      isDisabled={!isEditDirty || !isAllValid}
+      isDisabled={!isDirty || !isAllValid}
     />
   );
 }

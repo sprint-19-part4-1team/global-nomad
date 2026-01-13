@@ -69,7 +69,7 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
   }
 
   const { userId, category, title, description, price, bannerImageUrl, subImages, reviewCount } =
-    activity!;
+    activity;
   const address = parseAddress(activity.address);
   const rating = formatRating(activity.rating);
 

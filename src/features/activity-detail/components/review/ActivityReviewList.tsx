@@ -1,15 +1,16 @@
 'use client';
 
-import { useMemo } from 'react';
 import Icons from '@/assets/icons';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
+import ActivityReviewEmpty from '@/features/activity-detail/components/review/ActivityReviewEmpty';
 import ActivityReviewItem from '@/features/activity-detail/components/review/ActivityReviewItem';
+import { ITEMS_PER_PAGE } from '@/features/activity-detail/constants/pagination';
+import { useActivityReviews } from '@/features/activity-detail/queries/useActivityReviews';
 import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { formatSatisfaction } from '@/features/activity-detail/utils/formatSatisfaction';
 import Pagination from '@/shared/components/pagination/Pagination';
 import Title from '@/shared/components/title/Title';
 import useQueryParamState from '@/shared/hooks/useQueryParamState';
-import { GetActivityReviewsResponse } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
 import { formatValue } from '@/shared/utils/formatValue';
 import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
@@ -17,64 +18,30 @@ import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 /**
  * 체험 리뷰 목록 컴포넌트의 Props
  *
- * @property {GetActivityReviewsResponse} reviewData - 리뷰 데이터 (평균 평점, 총 개수, 리뷰 목록)
+ * @property {number} activityId - 체험 ID
  * @property {string} [className] - 추가 CSS 클래스명
  */
 interface ActivityReviewListProps {
-  reviewData: GetActivityReviewsResponse;
+  activityId: number;
   className?: string;
 }
 
 /**
- * 페이지당 표시할 리뷰 아이템 개수
- */
-const ITEMS_PER_PAGE = 3;
-
-/**
- * 체험 리뷰 목록 표시 컴포넌트
+ * 체험 리뷰 목록을 페이지네이션과 함께 표시하는 컴포넌트
  *
- * 체험에 대한 전체 리뷰 목록을 페이지네이션과 함께 표시하며,
- * 평균 평점, 총 리뷰 개수, 만족도 평가를 포함합니다.
+ * 평균 평점, 만족도, 리뷰 목록을 표시하며,
+ * URL 쿼리 파라미터를 통해 페이지 상태를 관리합니다.
  *
- * @description
- * **주요 기능**
- * - 평균 평점: 숫자와 만족도 텍스트(예: "매우 만족")로 표시
- * - 총 리뷰 개수: 포맷팅된 숫자로 표시
- * - 리뷰 목록: 페이지당 3개씩 표시
- * - 페이지네이션: URL 쿼리 파라미터 `page`를 통한 페이지 관리
- *
- * **상태 관리 패턴**
- * - 페이지 상태를 이 컴포넌트에서 관리하고 `Pagination` 컴포넌트에 props로 전달
- * - 단일 진실 공급원(Single Source of Truth): URL 상태를 한 곳에서만 읽고 관리
- * - 1페이지일 경우 URL에 쿼리 파라미터를 표시하지 않음 (`/activity/123` 형태)
- * - 2페이지 이상일 경우에만 표시 (`/activity/123?page=2` 형태)
- *
- * **클라이언트 측 페이지네이션**
- * - 모든 리뷰 데이터를 한 번에 받아와 클라이언트에서 페이지네이션 처리
- * - `useMemo`를 사용하여 현재 페이지에 해당하는 리뷰만 필터링
- *
+ * @component
  * @param {ActivityReviewListProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 체험 리뷰 목록 섹션
+ * @returns {JSX.Element} 리뷰 목록 섹션
  *
  * @example
  * ```tsx
- * <ActivityReviewList
- *   reviewData={{
- *     averageRating: 4.5,
- *     totalCount: 128,
- *     reviews: [
- *       { id: 1, rating: 5, content: '정말 좋았어요!', ... },
- *       // ...
- *     ]
- *   }}
- * />
+ * <ActivityReviewList activityId={123} />
  * ```
  */
-export default function ActivityReviewList({ reviewData, className }: ActivityReviewListProps) {
-  const { totalCount, reviews } = reviewData;
-  const averageRating = formatRating(reviewData.averageRating);
-  const count = formatValue(totalCount);
-
+export default function ActivityReviewList({ activityId, className }: ActivityReviewListProps) {
   // 페이지 상태를 최상위에서 관리 (Lifting State Up)
   const [currentPage, setCurrentPage] = useQueryParamState<number>('reviewPage', {
     defaultValue: 1,
@@ -84,12 +51,37 @@ export default function ActivityReviewList({ reviewData, className }: ActivityRe
     scroll: false,
   });
 
-  // 현재 페이지에 표시할 리뷰 계산
-  const paginatedReviews = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return reviews.slice(startIndex, endIndex);
-  }, [reviews, currentPage]);
+  // API를 통해 리뷰 데이터 조회
+  const {
+    data: reviewData,
+    isPending,
+    isError,
+  } = useActivityReviews({
+    activityId,
+    params: {
+      page: currentPage,
+      size: ITEMS_PER_PAGE,
+    },
+  });
+
+  // 로딩 상태
+  if (isPending) {
+    return <ActivityReviewEmpty state='pending' className={className} />;
+  }
+
+  // 에러 상태
+  if (isError) {
+    return <ActivityReviewEmpty state='error' className={className} />;
+  }
+
+  // 빈 상태
+  if (!reviewData || reviewData.totalCount === 0) {
+    return <ActivityReviewEmpty className={className} />;
+  }
+
+  const { totalCount, reviews, averageRating: rawAverageRating } = reviewData;
+  const averageRating = formatRating(rawAverageRating);
+  const count = formatValue(totalCount);
 
   return (
     <section
@@ -118,7 +110,7 @@ export default function ActivityReviewList({ reviewData, className }: ActivityRe
             </div>
           </div>
           <div className='flex flex-col gap-20'>
-            {paginatedReviews.map((review) => (
+            {reviews.map((review) => (
               <ActivityReviewItem key={review.id} review={review} />
             ))}
           </div>

@@ -21,7 +21,7 @@ import { formatValue } from '@/shared/utils/formatValue';
 /**
  * 체험 예약 콘텐츠 컴포넌트의 Props
  *
- * @property {string} activityId - 체험 ID
+ * @property {number} activityId - 체험 ID
  * @property {number} price - 1인당 체험 가격
  * @property {() => void} [onClose] - 바텀시트 닫기 핸들러 (바텀시트 모드에서만 사용)
  * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} [onConfirm] - 바텀시트 확인 핸들러 (바텀시트 모드에서만 사용)
@@ -29,7 +29,7 @@ import { formatValue } from '@/shared/utils/formatValue';
  * @property {boolean} [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
  */
 interface ActivityReservationContentProps {
-  activityId: string;
+  activityId: number;
   price: number;
   onClose?: () => void;
   onConfirm?: (info: CreateReservationBodyDto & { dateTime: string }) => void;
@@ -67,7 +67,7 @@ interface ActivityReservationContentProps {
  * ```tsx
  * // 데스크톱 모드
  * <ActivityReservationContent
- *   activityId="123"
+ *   activityId={123}
  *   price={50000}
  *   onReservation={async (info) => {
  *     await createReservation(info);
@@ -100,7 +100,11 @@ export default function ActivityReservationContent({
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
 
   // 체험의 예약 가능일 조회
-  const { data: schedules, isPending, isError } = useActivitySchedules(activityId, currentMonth);
+  const {
+    data: schedules,
+    isPending,
+    isError,
+  } = useActivitySchedules({ activityId, currentMonth });
 
   // 커스텀 훅으로 모든 상태 관리 (currentMonth를 전달하여 월 변경 시 자동 초기화)
   const reservation = useReservationState(currentMonth);

@@ -1,7 +1,8 @@
-export function pickRandom<T>(items: readonly T[], count: number): T[] {
+export const pickRandom = <T>(items: readonly T[], count: number): T[] => {
   if (count <= 0) {
     return [];
   }
+
   if (items.length <= count) {
     return [...items];
   }
@@ -19,4 +20,4 @@ export function pickRandom<T>(items: readonly T[], count: number): T[] {
   }
 
   return result;
-}
+};

@@ -35,7 +35,7 @@ export default function PopularSlide() {
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [prevDisabled, setPrevDisabled] = useState(true);
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
     usePopularActivities();
 
   // 모든 페이지의 activities를 하나의 배열로 합치기
@@ -94,63 +94,59 @@ export default function PopularSlide() {
     }, 50);
   };
 
-  // if (isLoading) {
-  //   return <div>인기체험 로딩중...</div>;
-  // }
+  if (isPending) {
+    return <div>인기체험 로딩중...</div>;
+  }
 
   return (
     <>
-      {isLoading ? (
-        <div>인기체험 로딩중...</div>
-      ) : (
-        <div className='relative mx-auto w-full'>
-          <div ref={emblaRef} className='overflow-hidden'>
-            {/* mr-24 */}
-            <div className='-mr-12 flex sm:-mr-20 md:-mr-24'>
-              {visibleActivities.map((activity) => (
-                //  basis-1/4 pr-24
-                <div
-                  key={activity.id}
-                  className='box-border min-w-0 flex-none basis-1/3 pr-12 sm:basis-1/2 sm:pr-20 md:basis-1/4 md:pr-24'>
-                  <Card
-                    id={activity.id}
-                    bannerImageUrl={activity.bannerImageUrl}
-                    title={activity.title}
-                    rating={activity.rating}
-                    reviewCount={activity.reviewCount}
-                    price={activity.price}
-                  />
-                </div>
-              ))}
-              {isFetchingNextPage && (
-                <div className='box-border flex min-w-0 flex-none basis-1/4 items-center justify-center pr-24'>
-                  인기체험 로딩중...
-                </div>
-              )}
-            </div>
+      <div className='relative mx-auto w-full'>
+        <div ref={emblaRef} className='overflow-hidden'>
+          {/* mr-24 */}
+          <div className='-mr-12 flex sm:-mr-20 md:-mr-24'>
+            {visibleActivities.map((activity) => (
+              //  basis-1/4 pr-24
+              <div
+                key={activity.id}
+                className='box-border min-w-0 flex-none basis-1/3 pr-12 sm:basis-1/2 sm:pr-20 md:basis-1/4 md:pr-24'>
+                <Card
+                  id={activity.id}
+                  bannerImageUrl={activity.bannerImageUrl}
+                  title={activity.title}
+                  rating={activity.rating}
+                  reviewCount={activity.reviewCount}
+                  price={activity.price}
+                />
+              </div>
+            ))}
+            {isFetchingNextPage && (
+              <div className='box-border flex min-w-0 flex-none basis-1/4 items-center justify-center pr-24'>
+                인기체험 로딩중...
+              </div>
+            )}
           </div>
-
-          <button
-            onClick={() => emblaApi?.scrollPrev()}
-            disabled={prevDisabled}
-            className={carouselButtonVariants({
-              direction: 'prev',
-              disabled: prevDisabled,
-            })}>
-            <Icons.ArrowLeft className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
-          </button>
-
-          <button
-            onClick={handleNext}
-            disabled={!hasMoreToShow}
-            className={carouselButtonVariants({
-              direction: 'next',
-              disabled: !hasMoreToShow,
-            })}>
-            <Icons.ArrowRight className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
-          </button>
         </div>
-      )}
+
+        <button
+          onClick={() => emblaApi?.scrollPrev()}
+          disabled={prevDisabled}
+          className={carouselButtonVariants({
+            direction: 'prev',
+            disabled: prevDisabled,
+          })}>
+          <Icons.ArrowLeft className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
+        </button>
+
+        <button
+          onClick={handleNext}
+          disabled={!hasMoreToShow}
+          className={carouselButtonVariants({
+            direction: 'next',
+            disabled: !hasMoreToShow,
+          })}>
+          <Icons.ArrowRight className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
+        </button>
+      </div>
     </>
   );
 }

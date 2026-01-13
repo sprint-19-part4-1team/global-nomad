@@ -4,7 +4,7 @@ import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { GetActivitiesParams } from '@/shared/types/activities';
 import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
-export function useActivityFilters() {
+export const useActivityFilters = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useQueryParamState('keyword', {
     defaultValue: undefined as string | undefined,
@@ -28,10 +28,9 @@ export function useActivityFilters() {
   const [size, setSize] = useQueryParamState<GetActivitiesParams['size']>('size', {
     defaultValue: 8,
     parse: (v) => Number(v),
-    serialize: (v) => String(v),
   });
 
-  const { data: activities, isLoading } = useActivities({
+  const { data: activities, isPending } = useActivities({
     method: 'offset',
     page: currentPage,
     size: size,
@@ -99,7 +98,7 @@ export function useActivityFilters() {
     size,
     setSize,
     activities,
-    isLoading,
+    isPending,
     updateFilters,
   };
-}
+};

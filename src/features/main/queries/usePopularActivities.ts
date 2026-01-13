@@ -8,17 +8,19 @@ type GetActivitiesParamsWithCursor = {
 };
 
 const getActivitiesWithCursor = (params: GetActivitiesParamsWithCursor) => {
-  return getActivities(params as any);
+  return getActivities(params);
 };
 
 export const usePopularActivities = () => {
   return useInfiniteQuery({
     queryKey: ['activities', 'popular'],
     queryFn: async ({ pageParam }) => {
+      const isFirstPage = pageParam === undefined;
+
       return await getActivitiesWithCursor({
         method: 'cursor',
         cursorId: pageParam,
-        size: 9999,
+        size: isFirstPage ? 4 : 1, // ⭐ 핵심
       });
     },
     initialPageParam: undefined as number | undefined,

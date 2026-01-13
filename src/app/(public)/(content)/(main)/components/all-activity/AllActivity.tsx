@@ -13,7 +13,7 @@ import {
 } from '@/shared/components/dropdown/select';
 import Pagination from '@/shared/components/pagination/Pagination';
 import Title from '@/shared/components/title/Title';
-import { ACTIVITY_CATEGORIES } from '@/shared/constants';
+import { ACTIVITY_CATEGORIES, SORT_LABELS } from '@/shared/constants';
 import { GetActivitiesParams } from '@/shared/types/activities';
 
 export default function AllActivity({
@@ -31,23 +31,15 @@ export default function AllActivity({
     size,
     setSize,
     activities,
-    isLoading,
+    isPending,
   } = useActivityFilters();
 
   // 상위로 activities 갯수 보내기
   useEffect(() => {
-    if (!isLoading) {
+    if (!isPending) {
       onEmptyChange?.(activities?.length === 0);
     }
-  }, [activities, isLoading, onEmptyChange]);
-
-  // 정렬
-  const SORT_LABEL: Record<string, string> = {
-    latest: '최신순',
-    most_reviewed: '리뷰 많은순',
-    price_asc: '가격 높은순',
-    price_desc: '가격 낮은순',
-  };
+  }, [activities, isPending, onEmptyChange]);
 
   // 화면 크기에 따라 size 자동 변경
   useEffect(() => {
@@ -82,7 +74,7 @@ export default function AllActivity({
 
   return (
     <>
-      {isLoading ? (
+      {isPending ? (
         <div>모든 체험 로딩중...</div>
       ) : activities && activities.length > 0 ? (
         <>
@@ -148,7 +140,7 @@ export default function AllActivity({
                   <SelectDropdownValue
                     placeholder={sort}
                     placeholderClassName='text-gray-950'
-                    render={(value) => SORT_LABEL[value] ?? '정렬'}
+                    render={(value) => SORT_LABELS[value] ?? '정렬'}
                     valueClassName='text-gray-950'
                   />
                 </SelectDropdownTrigger>
@@ -163,7 +155,7 @@ export default function AllActivity({
           </div>
 
           <div className='-mr-12 flex flex-wrap'>
-            {activities.slice(0, 8).map((activity) => (
+            {activities.map((activity) => (
               <div key={activity.id} className='mt-30 basis-1/4 pr-12'>
                 <Card
                   id={activity.id}

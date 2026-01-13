@@ -20,7 +20,7 @@ export const usePopularActivities = () => {
       return await getActivitiesWithCursor({
         method: 'cursor',
         cursorId: pageParam,
-        size: isFirstPage ? 4 : 1, // ⭐ 핵심
+        size: isFirstPage ? 4 : 1,
       });
     },
     initialPageParam: undefined as number | undefined,

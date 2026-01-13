@@ -31,6 +31,7 @@ export default function AllActivity({
     size,
     setSize,
     activities,
+    totalCount,
     isPending,
   } = useActivityFilters();
 
@@ -56,21 +57,13 @@ export default function AllActivity({
     updateSize(); // 초기 값 설정
     mediaQuery.addEventListener('change', updateSize);
     return () => mediaQuery.removeEventListener('change', updateSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
-
-  // 페이지 네이션
-  const activitiesList = activities ?? [];
-
-  const pageSize = size ?? 8;
-  const isLastPage = activitiesList.length < pageSize;
-
-  const totalCount = isLastPage
-    ? (currentPage - 1) * pageSize + activitiesList.length
-    : (currentPage + 1) * pageSize;
 
   return (
     <>
@@ -78,8 +71,8 @@ export default function AllActivity({
         <div>모든 체험 로딩중...</div>
       ) : activities && activities.length > 0 ? (
         <>
-          <div className='relative mt-33 sm:mt-80'>
-            <div className='mb-15 sm:mb-15 md:mb-20'>
+          <div className='relative mt-33 mb-15 sm:mt-80 sm:mb-15 md:mb-20'>
+            <div>
               <Title responsive='lg' className='hidden sm:block'>
                 🛼 모든 체험
               </Title>
@@ -154,9 +147,11 @@ export default function AllActivity({
             </div>
           </div>
 
-          <div className='-mr-12 flex flex-wrap'>
+          <div className='mr-0 flex flex-wrap sm:-mr-20 md:-mr-24'>
             {activities.map((activity) => (
-              <div key={activity.id} className='mt-30 basis-1/4 pr-12'>
+              <div
+                key={activity.id}
+                className='mt-24 basis-1/1 pr-0 sm:basis-1/2 sm:pr-20 md:mt-10 md:basis-1/4 md:pr-24'>
                 <Card
                   id={activity.id}
                   bannerImageUrl={activity.bannerImageUrl}
@@ -171,8 +166,8 @@ export default function AllActivity({
 
           <div className='mt-24 flex justify-center sm:mt-30'>
             <Pagination
-              totalCount={totalCount}
-              itemsPerPage={pageSize}
+              totalCount={totalCount ?? 0}
+              itemsPerPage={size ?? 8}
               currentPage={currentPage}
               onPageChange={setCurrentPage}
             />

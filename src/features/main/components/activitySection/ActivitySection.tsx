@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-import AllActivity from '@/app/(public)/(content)/(main)/components/all-activity/AllActivity';
+import AllActivity from '@/features/main/components/all-activity/AllActivity';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
 import PopularSlide from '@/shared/components/slide/PopularSlide';

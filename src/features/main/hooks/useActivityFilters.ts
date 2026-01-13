@@ -30,7 +30,7 @@ export const useActivityFilters = () => {
     parse: (v) => Number(v),
   });
 
-  const { data: activities, isPending } = useActivities({
+  const { data, isPending } = useActivities({
     method: 'offset',
     page: currentPage,
     size: size,
@@ -38,6 +38,9 @@ export const useActivityFilters = () => {
     keyword: keyword,
     sort: sort,
   });
+
+  const activities = data?.activities;
+  const totalCount = data?.totalCount;
 
   const updateFilters = (updates: {
     category?: GetActivitiesParams['category'] | undefined;
@@ -98,6 +101,7 @@ export const useActivityFilters = () => {
     size,
     setSize,
     activities,
+    totalCount,
     isPending,
     updateFilters,
   };

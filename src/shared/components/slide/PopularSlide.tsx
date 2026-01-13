@@ -3,9 +3,9 @@
 import { cva } from 'class-variance-authority';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
-import Icons from '@/assets/icons';
 import Card from '@/features/main/components/card/Card';
 import { usePopularActivities } from '@/features/main/queries/usePopularActivities';
+import CarouselButton from '@/shared/components/slide/CarouselButton';
 
 const INITIAL_COUNT = 4;
 
@@ -127,25 +127,13 @@ export default function PopularSlide() {
           </div>
         </div>
 
-        <button
+        <CarouselButton
+          direction='prev'
           onClick={() => emblaApi?.scrollPrev()}
           disabled={prevDisabled}
-          className={carouselButtonVariants({
-            direction: 'prev',
-            disabled: prevDisabled,
-          })}>
-          <Icons.ArrowLeft className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
-        </button>
+        />
 
-        <button
-          onClick={handleNext}
-          disabled={!hasMoreToShow}
-          className={carouselButtonVariants({
-            direction: 'next',
-            disabled: !hasMoreToShow,
-          })}>
-          <Icons.ArrowRight className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600' />
-        </button>
+        <CarouselButton direction='next' onClick={handleNext} disabled={!hasMoreToShow} />
       </div>
     </>
   );

@@ -100,7 +100,7 @@ export default function ActivityReservationContent({
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
 
   // 체험의 예약 가능일 조회
-  const { data: schedules, isLoading, isError } = useActivitySchedules(activityId, currentMonth);
+  const { data: schedules, isPending, isError } = useActivitySchedules(activityId, currentMonth);
 
   // 커스텀 훅으로 모든 상태 관리 (currentMonth를 전달하여 월 변경 시 자동 초기화)
   const reservation = useReservationState(currentMonth);
@@ -202,7 +202,7 @@ export default function ActivityReservationContent({
         {/* 날짜 & 시간 선택 영역 */}
         {showDateTimeSection && (
           <>
-            {isLoading ? (
+            {isPending ? (
               <Skeleton className='h-396 sm:h-300 lg:h-428' />
             ) : isError ? (
               <div className='mx-auto mb-10 body-16 font-medium tracking-[-0.4px] text-gray-400'>

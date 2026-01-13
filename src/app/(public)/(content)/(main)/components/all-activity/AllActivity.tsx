@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import Card from '@/features/main/components/card/Card';
 import FilterButton from '@/features/main/components/filter-button/FilterButton';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
-// import { useActivities } from '@/features/main/queries/useActivities';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -15,11 +14,13 @@ import {
 import Pagination from '@/shared/components/pagination/Pagination';
 import Title from '@/shared/components/title/Title';
 import { ACTIVITY_CATEGORIES } from '@/shared/constants';
-// import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { GetActivitiesParams } from '@/shared/types/activities';
-// import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
-export default function AllActivity() {
+export default function AllActivity({
+  onEmptyChange,
+}: {
+  onEmptyChange?: (isEmpty: boolean) => void;
+}) {
   const {
     currentPage,
     setCurrentPage,
@@ -32,6 +33,13 @@ export default function AllActivity() {
     activities,
     isLoading,
   } = useActivityFilters();
+
+  // 상위로 activities 갯수 보내기
+  useEffect(() => {
+    if (!isLoading) {
+      onEmptyChange?.(activities?.length === 0);
+    }
+  }, [activities, isLoading, onEmptyChange]);
 
   // 정렬
   const SORT_LABEL: Record<string, string> = {
@@ -74,82 +82,88 @@ export default function AllActivity() {
 
   return (
     <>
-      <div className='relative mt-33 sm:mt-80'>
-        <div className='mb-15 sm:mb-15 md:mb-20'>
-          <Title responsive='lg' className='hidden sm:block'>
-            🛼 모든 체험
-          </Title>
-          <div className='block sm:hidden'>
-            <SelectDropdown
-              onChangeValue={(value) =>
-                setCategory(value as NonNullable<GetActivitiesParams['category']>)
-              }
-              triggerId='category-filter'
-              value={category as string}
-              variants='shadow'>
-              <SelectDropdownTrigger>
-                <SelectDropdownValue
-                  placeholder='🛼 모든 체험'
-                  placeholderClassName='heading-18 font-bold text-gray-950'
-                  render={(value) => ACTIVITY_CATEGORIES.find((opt) => opt.value === value)?.label}
-                  valueClassName='heading-18 font-bold text-gray-950'
-                />
-              </SelectDropdownTrigger>
-              <SelectDropdownContent>
-                {ACTIVITY_CATEGORIES.map((category) => (
-                  <SelectDropdownItem key={category.value} value={category.value}>
-                    {category.label}
-                  </SelectDropdownItem>
-                ))}
-              </SelectDropdownContent>
-            </SelectDropdown>
-          </div>
-        </div>
-
-        <div className='mt-15 hidden gap-10 sm:mt-30 sm:flex md:gap-13 lg:gap-20'>
-          {ACTIVITY_CATEGORIES.map((item) => {
-            const isActive = category === item.value;
-
-            return (
-              <FilterButton
-                key={item.value}
-                isActive={isActive}
-                onClick={() => setCategory(isActive ? undefined : item.value)}>
-                <span>{item.label}</span>
-              </FilterButton>
-            );
-          })}
-        </div>
-
-        <div className='absolute top-0 right-0 md:top-auto md:bottom-10'>
-          <SelectDropdown
-            onChangeValue={(value) => setSort(value as NonNullable<GetActivitiesParams['sort']>)}
-            triggerId='sort-filter'
-            value={sort as string}
-            variants='shadow'>
-            <SelectDropdownTrigger>
-              <SelectDropdownValue
-                placeholder={sort}
-                placeholderClassName='text-gray-950'
-                render={(value) => SORT_LABEL[value] ?? '정렬'}
-                valueClassName='text-gray-950'
-              />
-            </SelectDropdownTrigger>
-            <SelectDropdownContent className='right-0 left-auto'>
-              <SelectDropdownItem value='latest'>최신순</SelectDropdownItem>
-              <SelectDropdownItem value='most_reviewed'>리뷰 많은순</SelectDropdownItem>
-              <SelectDropdownItem value='price_asc'>가격 높은순</SelectDropdownItem>
-              <SelectDropdownItem value='price_desc'>가격 낮은순</SelectDropdownItem>
-            </SelectDropdownContent>
-          </SelectDropdown>
-        </div>
-      </div>
       {isLoading ? (
         <div>모든 체험 로딩중...</div>
-      ) : (
+      ) : activities && activities.length > 0 ? (
         <>
+          <div className='relative mt-33 sm:mt-80'>
+            <div className='mb-15 sm:mb-15 md:mb-20'>
+              <Title responsive='lg' className='hidden sm:block'>
+                🛼 모든 체험
+              </Title>
+
+              <div className='block sm:hidden'>
+                <SelectDropdown
+                  onChangeValue={(value) =>
+                    setCategory(value as NonNullable<GetActivitiesParams['category']>)
+                  }
+                  triggerId='category-filter'
+                  value={category as string}
+                  variants='shadow'>
+                  <SelectDropdownTrigger>
+                    <SelectDropdownValue
+                      placeholder='🛼 모든 체험'
+                      placeholderClassName='heading-18 font-bold text-gray-950'
+                      render={(value) =>
+                        ACTIVITY_CATEGORIES.find((opt) => opt.value === value)?.label
+                      }
+                      valueClassName='heading-18 font-bold text-gray-950'
+                    />
+                  </SelectDropdownTrigger>
+                  <SelectDropdownContent>
+                    {ACTIVITY_CATEGORIES.map((category) => (
+                      <SelectDropdownItem key={category.value} value={category.value}>
+                        {category.label}
+                      </SelectDropdownItem>
+                    ))}
+                  </SelectDropdownContent>
+                </SelectDropdown>
+              </div>
+            </div>
+
+            <div className='mt-15 hidden gap-10 sm:mt-30 sm:flex md:gap-13 lg:gap-20'>
+              {ACTIVITY_CATEGORIES.map((item) => {
+                const isActive = category === item.value;
+
+                return (
+                  <FilterButton
+                    key={item.value}
+                    isActive={isActive}
+                    onClick={() => setCategory(isActive ? undefined : item.value)}>
+                    <span>{item.label}</span>
+                  </FilterButton>
+                );
+              })}
+            </div>
+
+            <div className='absolute top-0 right-0 md:top-auto md:bottom-10'>
+              <SelectDropdown
+                onChangeValue={(value) =>
+                  setSort(value as NonNullable<GetActivitiesParams['sort']>)
+                }
+                triggerId='sort-filter'
+                value={sort as string}
+                variants='shadow'>
+                <SelectDropdownTrigger>
+                  <SelectDropdownValue
+                    placeholder={sort}
+                    placeholderClassName='text-gray-950'
+                    render={(value) => SORT_LABEL[value] ?? '정렬'}
+                    valueClassName='text-gray-950'
+                  />
+                </SelectDropdownTrigger>
+                <SelectDropdownContent className='right-0 left-auto'>
+                  <SelectDropdownItem value='latest'>최신순</SelectDropdownItem>
+                  <SelectDropdownItem value='most_reviewed'>리뷰 많은순</SelectDropdownItem>
+                  <SelectDropdownItem value='price_asc'>가격 높은순</SelectDropdownItem>
+                  <SelectDropdownItem value='price_desc'>가격 낮은순</SelectDropdownItem>
+                </SelectDropdownContent>
+              </SelectDropdown>
+            </div>
+          </div>
+
           <div className='-mr-12 flex flex-wrap'>
-            {activities?.slice(0, 8).map((activity) => (
+            {activities.slice(0, 8).map((activity) => (
               <div key={activity.id} className='mt-30 basis-1/4 pr-12'>
                 <Card
                   id={activity.id}
@@ -172,7 +186,7 @@ export default function AllActivity() {
             />
           </div>
         </>
-      )}
+      ) : null}
     </>
   );
 }

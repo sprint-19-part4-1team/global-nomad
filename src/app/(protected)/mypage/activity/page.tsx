@@ -8,7 +8,7 @@ import Button from '@/shared/components/button/Button';
 
 export default function MypageActivity() {
   const PAGE_SIZE = 5;
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useMyActivitiesInfiniteQuery(PAGE_SIZE);
 
   const observerRef = useInfiniteScroll({
@@ -31,7 +31,6 @@ export default function MypageActivity() {
           isLoading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
           observerRef={observerRef}
-          onDelete={refetch}
         />
       </div>
 

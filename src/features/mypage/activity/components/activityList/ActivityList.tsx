@@ -1,4 +1,5 @@
 import { InfiniteData } from '@tanstack/react-query';
+import { RefObject } from 'react';
 import ExperienceCard from '@/features/mypage/activity/components/experienceCard/ExperienceCard';
 import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
@@ -13,8 +14,7 @@ type ActivityListProps = {
   data?: InfiniteData<ActivitiesPage>;
   isLoading: boolean;
   isFetchingNextPage: boolean;
-  observerRef: React.RefObject<HTMLDivElement | null>;
-  onDelete: () => void;
+  observerRef: RefObject<HTMLDivElement | null>;
 };
 
 export default function ActivityList({
@@ -22,7 +22,6 @@ export default function ActivityList({
   isLoading,
   isFetchingNextPage,
   observerRef,
-  onDelete,
 }: ActivityListProps) {
   const isEmpty = !data?.pages[0]?.activities.length;
 
@@ -40,7 +39,7 @@ export default function ActivityList({
         {data.pages.map((page) =>
           page.activities.map((activity: ActivityBasicDto) => (
             <li key={activity.id} className='mt-20 sm:mt-24'>
-              <ExperienceCard {...activity} onDelete={onDelete} />
+              <ExperienceCard {...activity} />
             </li>
           ))
         )}

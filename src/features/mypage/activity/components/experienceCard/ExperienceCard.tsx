@@ -2,9 +2,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { KeyboardEvent, MouseEvent } from 'react';
 import Icons from '@/assets/icons';
-import { useActivityDelete } from '@/features/mypage/activity/hooks/useActivityDelete';
 import Button from '@/shared/components/button/Button';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import ActivityDeleteDialog from '@/shared/components/overlay/dialog/variants/ActivityDeleteDialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ActivityBasicDto } from '@/shared/types/activities';
@@ -53,22 +52,11 @@ export default function ExperienceCard({
   rating,
   reviewCount,
   bannerImageUrl,
-  onDelete,
-}: ActivitySummaryDto & { onDelete: () => void }) {
+}: ActivitySummaryDto) {
   const router = useRouter();
-  const { showDeleteConfirm } = useActivityDelete(onDelete);
 
   const handleClickDelete = (id: number) => {
-    showDeleteConfirm(id, (onConfirm) => (
-      <Dialog
-        message='체험을 삭제하시겠습니까?'
-        cancelLabel='취소하기'
-        confirmLabel='삭제하기'
-        variant='confirm'
-        onCancel={overlayStore.pop}
-        onConfirm={onConfirm}
-      />
-    ));
+    overlayStore.push(<ActivityDeleteDialog activityId={id} />);
   };
 
   const handleButtonClick = (e: MouseEvent, action: () => void) => {

@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { KeyboardEvent, MouseEvent } from 'react';
 import Icons from '@/assets/icons';
 import { useActivityDelete } from '@/features/mypage/activity/hooks/useActivityDelete';
 import Button from '@/shared/components/button/Button';
@@ -53,6 +55,7 @@ export default function ExperienceCard({
   bannerImageUrl,
   onDelete,
 }: ActivitySummaryDto & { onDelete: () => void }) {
+  const router = useRouter();
   const { showDeleteConfirm } = useActivityDelete(onDelete);
 
   const handleClickDelete = (id: number) => {
@@ -68,8 +71,34 @@ export default function ExperienceCard({
     ));
   };
 
+  const handleButtonClick = (e: MouseEvent, action: () => void) => {
+    e.stopPropagation();
+    action();
+  };
+
+  const handleCardClick = () => {
+    router.push(`/activity/${id}`);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.currentTarget !== e.target) {
+      return;
+    }
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCardClick();
+    }
+  };
+
   return (
-    <RoundBox className='flex w-full justify-between gap-24 bg-white px-16 py-24 shadow-card sm:px-20 sm:py-28 md:px-24 md:py-32'>
+    <RoundBox
+      role='button'
+      tabIndex={0}
+      aria-label={`${title} 상세 페이지로 이동`}
+      onKeyDown={handleKeyDown}
+      className='flex w-full cursor-pointer justify-between gap-24 bg-white px-16 py-24 shadow-card sm:px-20 sm:py-28 md:px-24 md:py-32'
+      onClick={handleCardClick}>
       <div className='min-w-0 flex-1'>
         <strong className='block truncate body-14 text-gray-950 sm:body-16 md:body-18'>
           {title}
@@ -90,10 +119,16 @@ export default function ExperienceCard({
           / 인
         </div>
         <div className='mt-12 flex gap-8 sm:mt-16 md:mt-20'>
-          <Button size='sm' href={`/activity/${id}/edit`} variant='secondary'>
+          <Button
+            size='sm'
+            variant='secondary'
+            onClick={(e) => handleButtonClick(e, () => router.push(`/activity/${id}/edit`))}>
             수정하기
           </Button>
-          <Button size='sm' variant='negative' onClick={() => handleClickDelete(id)}>
+          <Button
+            size='sm'
+            variant='negative'
+            onClick={(e) => handleButtonClick(e, () => handleClickDelete(id))}>
             삭제하기
           </Button>
         </div>

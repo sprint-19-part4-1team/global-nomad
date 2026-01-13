@@ -43,8 +43,17 @@ const meta: Meta<typeof ExperienceCard> = {
     bannerImageUrl: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f',
   },
   parameters: {
-    layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+    },
   },
+  decorators: [
+    (Story) => (
+      <div className='w-680'>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;

@@ -18,9 +18,11 @@ type ReservationStats = {
 /**
  * useReservationStats 훅의 매개변수 타입
  * @property {number} activityId - 조회할 체험의 ID
+ * @property {boolean} enabled - 쿼리 활성화 여부 (기본값: true)
  */
 type UseReservationStatsParams = {
   activityId: number;
+  enabled?: boolean;
 };
 
 /**
@@ -31,19 +33,22 @@ type UseReservationStatsParams = {
  * - confirmed와 pending 예약 수를 집계
  * - useQueries를 사용하여 여러 월의 데이터를 병렬로 효율적으로 조회
  * - 60일 기간이 걸치는 월의 개수를 자동으로 계산하여 최소한의 API 호출만 수행
+ * - enabled 옵션을 통해 조건부로 쿼리를 실행할 수 있음
  *
  * @param params - 조회 파라미터
  * @param params.activityId - 체험 ID
+ * @param params.enabled - 쿼리 활성화 여부 (기본값: true)
  * @returns 예약 통계 및 로딩 상태
  *
  * @example
  * ```tsx
  * const { confirmedCount, pendingCount, isPending } = useReservationStats({
- *   activityId: 123
+ *   activityId: 123,
+ *   enabled: isOwner
  * });
  * ```
  */
-export const useReservationStats = ({ activityId }: UseReservationStatsParams) => {
+export const useReservationStats = ({ activityId, enabled = true }: UseReservationStatsParams) => {
   const userId = useUserStore((s) => s.user?.id);
 
   const todayString = new Date().toDateString();
@@ -88,7 +93,7 @@ export const useReservationStats = ({ activityId }: UseReservationStatsParams) =
           year: params.year,
           month: params.month.padStart(2, '0'),
         }),
-      enabled: !!activityId && !!userId,
+      enabled: !!activityId && !!userId && enabled,
     })),
   });
 

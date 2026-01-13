@@ -4,17 +4,7 @@ import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
-
-/**
- * 카카오맵 API를 위한 전역 Window 인터페이스 확장
- * @global
- */
-declare global {
-  interface Window {
-    /** 카카오맵 JavaScript API 객체 */
-    kakao: any;
-  }
-}
+import { copyToClipboard } from '@/features/activity-detail/utils/copyToClipboard';
 
 /**
  * 카카오맵 Geocoder 검색 결과 타입
@@ -35,7 +25,7 @@ type KakaoGeocoderStatus = 'OK' | 'ZERO_RESULT' | 'ERROR';
 
 /**
  * 체험 위치 정보 컴포넌트의 Props
- * @property {string} address - 표시할 주소
+ * @property address - 표시할 주소
  */
 interface ActivityLocationProps {
   address: string;
@@ -44,9 +34,9 @@ interface ActivityLocationProps {
 /**
  * 카카오맵 커스텀 마커의 HTML 컨텐츠를 생성합니다.
  *
- * @param {string} address - 마커에 표시할 주소
- * @param {string} iconHTML - 마커 아이콘의 HTML 문자열
- * @returns {string} 마커 HTML 컨텐츠
+ * @param address - 마커에 표시할 주소
+ * @param iconHTML - 마커 아이콘의 HTML 문자열
+ * @returns 마커 HTML 컨텐츠
  */
 const createMarkerContent = (address: string, iconHTML: string): string => {
   return `
@@ -70,8 +60,8 @@ const createMarkerContent = (address: string, iconHTML: string): string => {
  * 커스텀 마커로 위치를 표시합니다.
  *
  * @component
- * @param {ActivityLocationProps} props - 컴포넌트 props
- * @returns {JSX.Element} 위치 정보 섹션
+ * @param props - 컴포넌트 props
+ * @returns 위치 정보 섹션
  *
  * @example
  * ```tsx
@@ -170,15 +160,17 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
     };
   }, [address]);
 
+  /** 주소 복사 핸들러 */
+  const handleCopyAddress = async () => {
+    await copyToClipboard(address, '주소가 복사되었습니다');
+  };
+
   return (
     <section className='flex flex-col gap-8 border-t border-gray-100 py-20 sm:py-40'>
       <ActivityContentTitle>오시는 길</ActivityContentTitle>
       <button
         aria-label='주소 복사'
-        onClick={() => {
-          // TODO: 실제 주소 복사 기능 연결 후 삭제
-          console.log('주소 복사');
-        }}
+        onClick={handleCopyAddress}
         className='flex w-fit cursor-pointer items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
         <span>{address}</span>
         <Icons.Copy aria-hidden='true' className='h-24 w-24' />

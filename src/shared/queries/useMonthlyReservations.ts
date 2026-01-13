@@ -16,7 +16,7 @@ type UseMonthlyReservationsParams = {
 };
 
 /**
- * 달력에 표시할 월별 예약 현황 조회 훅
+ * 월별 예약 현황 조회 훅
  *
  * @description
  * - 특정 체험의 특정 월(year-month) 예약 현황을 조회

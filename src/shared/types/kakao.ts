@@ -5,7 +5,8 @@
 declare global {
   interface Window {
     /** 카카오 JavaScript API 객체 */
-    kakao: any;
+    kakao: any; // 지도용
+    Kakao: any; // 공유 SDK용
   }
 }
 

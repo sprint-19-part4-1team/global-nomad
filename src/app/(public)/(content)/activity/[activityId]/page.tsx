@@ -68,7 +68,8 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
     notFound();
   }
 
-  const { userId, category, title, description, price, subImages, reviewCount } = activity!;
+  const { userId, category, title, description, price, bannerImageUrl, subImages, reviewCount } =
+    activity!;
   const address = parseAddress(activity.address);
   const rating = formatRating(activity.rating);
 
@@ -97,11 +98,13 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
         {/* 제목 */}
         <div className='mt-20 mb-24 sm:mt-24 sm:mb-40 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:my-0'>
           <ActivityTitle
-            category={category}
             title={title}
+            description={description}
+            category={category}
             address={address}
-            rating={rating}
+            bannerImageUrl={bannerImageUrl}
             reviewCount={reviewCount}
+            rating={rating}
           />
           <ActivityAdminControls activityId={activityId} userId={userId} />
           <ActivityNotice userId={userId} />

@@ -46,12 +46,15 @@ type UseReservationStatsParams = {
 export const useReservationStats = ({ activityId }: UseReservationStatsParams) => {
   const userId = useUserStore((s) => s.user?.id);
 
-  // 오늘 날짜와 60일 후 날짜 계산 (useMemo로 메모이제이션)
+  const todayString = new Date().toDateString();
+
+  // 오늘 날짜와 60일 후 날짜 계산
   const { today, endDate } = useMemo(() => {
     const today = new Date();
     const endDate = addDays(today, 60);
     return { today, endDate };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todayString]);
 
   // 조회해야 할 년-월 목록 생성 (실제 필요한 월만 계산)
   const monthsToQuery = useMemo(() => {

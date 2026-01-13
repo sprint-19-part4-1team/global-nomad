@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Icons from '@/assets/icons';
 import Button from '@/shared/components/button/Button';
+import { ERROR_FAVICON_PATH } from '@/shared/constants';
 
 /**
  * @description
@@ -25,7 +26,7 @@ export default function Error({ reset }: { reset: () => void }) {
     const originalHref = link?.href;
 
     if (link) {
-      link.href = '/favicons/error.svg';
+      link.href = ERROR_FAVICON_PATH;
     }
 
     return () => {

@@ -51,9 +51,15 @@ export const useCreateActivityMutation = () => {
 
       return createActivity(finalData);
     },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(data.id) });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }) });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }),
+        exact: false,
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.MY_ACTIVITIES(),
+        exact: false,
+      });
     },
   });
 };

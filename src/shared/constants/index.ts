@@ -1,4 +1,5 @@
 export * from './activities';
+export * from './favicon';
 export * from './layout';
 export * from './messages';
 export * from './authCookies';

@@ -67,7 +67,11 @@ interface ActivityReservationContentProps {
  * ```tsx
  * // 데스크톱 모드
  * <ActivityReservationContent
+<<<<<<< HEAD
  *   activityId={123}
+=======
+ *   activityId="123"
+>>>>>>> dev
  *   price={50000}
  *   onReservation={async (info) => {
  *     await createReservation(info);
@@ -77,7 +81,11 @@ interface ActivityReservationContentProps {
  *
  * // 바텀시트 모드
  * <ActivityReservationContent
+<<<<<<< HEAD
  *   activityId={123}
+=======
+ *   activityId="123"
+>>>>>>> dev
  *   price={50000}
  *   onClose={() => overlayStore.pop()}
  *   onConfirm={(info) => {

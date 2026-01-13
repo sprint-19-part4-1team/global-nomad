@@ -33,14 +33,13 @@ const MESSAGE = {
  * ```
  */
 export default function ActivityNotice({ userId }: ActivityNoticeProps) {
-  const user = useUserStore((s) => s.user);
+  const loginUserId = useUserStore((s) => s.user?.id);
+  const hasHydrated = useUserStore((s) => s.hasHydrated);
 
-  // 유저 정보를 불러오는 중일 때는 아무것도 렌더링하지 않음
-  if (user === undefined) {
+  // hydration이 완료될 때까지 렌더링하지 않음
+  if (!hasHydrated) {
     return null;
   }
-
-  const loginUserId = user.id;
 
   // 로그인한 유저가 체험 작성 유저가 아닌 경우 렌더링하지 않음
   if (loginUserId !== undefined && loginUserId !== userId) {

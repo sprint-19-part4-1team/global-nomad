@@ -84,8 +84,9 @@ export default function ActivityReservation({
 
         // 예약 성공 시 상태 초기화
         setReservationInfo(null);
-      } catch {
+      } catch (error) {
         toast.error('예약에 실패했습니다.');
+        console.error('예약 실패: ', error);
       }
     },
     [activityId]

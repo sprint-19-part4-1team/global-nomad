@@ -52,7 +52,11 @@ export default function ActivityReviewList({ activityId, className }: ActivityRe
   });
 
   // API를 통해 리뷰 데이터 조회
-  const { data: reviewData } = useActivityReviews({
+  const {
+    data: reviewData,
+    isPending,
+    isError,
+  } = useActivityReviews({
     activityId,
     params: {
       page: currentPage,
@@ -60,7 +64,17 @@ export default function ActivityReviewList({ activityId, className }: ActivityRe
     },
   });
 
-  // 데이터가 없거나 리뷰가 0개일 경우 빈 상태 표시
+  // 로딩 상태
+  if (isPending) {
+    return <ActivityReviewEmpty state='loading' className={className} />;
+  }
+
+  // 에러 상태
+  if (isError) {
+    return <ActivityReviewEmpty state='error' className={className} />;
+  }
+
+  // 빈 상태
   if (!reviewData || reviewData.totalCount === 0) {
     return <ActivityReviewEmpty className={className} />;
   }

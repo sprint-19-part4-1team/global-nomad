@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getActivityReviews } from '@/shared/apis/feature/activities';
 import { QUERY_KEYS } from '@/shared/constants';
-import { GetActivityReviewsParams } from '@/shared/types/activities';
+import { GetActivityReviewsParams, GetActivityReviewsResponse } from '@/shared/types/activities';
 
 /**
  * 체험 리뷰 목록 조회 훅의 Props
@@ -26,7 +26,9 @@ type useActivityReviewsProps = {
  * @param params - 페이지네이션 파라미터 (page, size)
  *
  * @returns 리뷰 데이터를 포함한 객체
- * @returns data - 리뷰 응답 데이터 (totalCount, reviews, averageRating 포함)
+ * @returns data - 리뷰 응답 데이터 (GetActivityReviewsResponse)
+ * @returns isPending - 데이터 로딩 여부
+ * @returns isError - 에러 발생 여부
  *
  * @example
  * ```tsx
@@ -43,7 +45,7 @@ type useActivityReviewsProps = {
  * ```
  */
 export const useActivityReviews = ({ activityId, params }: useActivityReviewsProps) => {
-  const { data } = useQuery({
+  const { data, isPending, isError } = useQuery<GetActivityReviewsResponse>({
     queryKey: QUERY_KEYS.ACTIVITY_REVIEWS(activityId, params),
     queryFn: () => getActivityReviews(activityId, params),
     enabled: !!activityId,
@@ -51,5 +53,7 @@ export const useActivityReviews = ({ activityId, params }: useActivityReviewsPro
 
   return {
     data,
+    isPending,
+    isError,
   };
 };

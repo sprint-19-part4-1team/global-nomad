@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Icons from '@/assets/icons';
-import ActivityDeleteDialog from '@/features/activity-detail/components/admin-controls/ActivityDeleteDialog';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import { useReservationStats } from '@/features/activity-detail/queries/useReservationStats';
 import Button from '@/shared/components/button/Button';
+import ActivityDeleteDialog from '@/shared/components/overlay/dialog/variants/ActivityDeleteDialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 

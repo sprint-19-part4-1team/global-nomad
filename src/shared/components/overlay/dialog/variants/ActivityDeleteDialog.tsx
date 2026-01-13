@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
@@ -26,12 +26,18 @@ interface ActivityDeleteDialogProps {
  */
 export default function ActivityDeleteDialog({ activityId }: ActivityDeleteDialogProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const deleteMutation = useDeleteActivity();
 
   const handleConfirm = () => {
     deleteMutation.mutate(activityId, {
       onSuccess: () => {
-        router.push(ROUTE_PATHS.MAIN);
+        const isDetailPage = pathname.startsWith('/activity/');
+
+        if (isDetailPage) {
+          router.push(ROUTE_PATHS.MAIN);
+        }
+
         toast.info('체험이 성공적으로 삭제되었습니다.');
       },
       onError: (error) => {

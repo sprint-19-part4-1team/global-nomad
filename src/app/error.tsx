@@ -25,7 +25,7 @@ export default function Error({ reset }: { reset: () => void }) {
     const originalHref = link?.href;
 
     if (link) {
-      link.href = '/favicons/500_error.svg';
+      link.href = '/favicons/error.svg';
     }
 
     return () => {

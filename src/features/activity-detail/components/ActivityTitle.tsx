@@ -1,5 +1,6 @@
 'use client';
 
+import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import {
   ActionDropdown,
@@ -60,6 +61,17 @@ export default function ActivityTitle({
   rating,
   reviewCount,
 }: ActivityTitleProps) {
+  /** URL 복사 핸들러 */
+  const handleUrlCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success('URL이 복사되었습니다');
+    } catch (error) {
+      console.error('URL 복사 실패:', error);
+      toast.error('URL 복사에 실패했습니다');
+    }
+  };
+
   return (
     <div className='flex flex-col gap-8'>
       <div className='flex items-center justify-between'>
@@ -74,10 +86,7 @@ export default function ActivityTitle({
             <ActionDropdownItem onClick={() => console.log('카카오톡 공유')}>
               카카오톡 공유
             </ActionDropdownItem>
-            {/** TODO: 실제 기능과 연결하기 */}
-            <ActionDropdownItem onClick={() => console.log('URL 복사')}>
-              URL 복사
-            </ActionDropdownItem>
+            <ActionDropdownItem onClick={handleUrlCopy}>URL 복사</ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>
       </div>

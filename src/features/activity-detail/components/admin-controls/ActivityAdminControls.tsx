@@ -2,11 +2,10 @@
 
 import Link from 'next/link';
 import Icons from '@/assets/icons';
+import ActivityDeleteDialog from '@/features/activity-detail/components/admin-controls/ActivityDeleteDialog';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
-import { useDeleteActivity } from '@/features/activity-detail/mutations/useDeleteActivityMutation';
 import { useReservationStats } from '@/features/activity-detail/queries/useReservationStats';
 import Button from '@/shared/components/button/Button';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 
@@ -38,7 +37,6 @@ interface ActivityAdminControlsProps {
  */
 export default function ActivityAdminControls({ activityId, userId }: ActivityAdminControlsProps) {
   const loginUserId = useUserStore((s) => s.user?.id);
-  const deleteMutation = useDeleteActivity();
 
   // 60일 이내 예약 통계 조회
   const { confirmedCount, pendingCount, isPending } = useReservationStats({
@@ -50,18 +48,9 @@ export default function ActivityAdminControls({ activityId, userId }: ActivityAd
     return null;
   }
 
+  /** 체험 삭제 확인 다이얼로그 표시 핸들러 */
   const handleDeleteConfirm = (activityId: number) => {
-    overlayStore.push(
-      <Dialog
-        variant='confirm'
-        message='체험을 삭제하시겠습니까?'
-        cancelLabel='취소하기'
-        confirmLabel='삭제하기'
-        onCancel={() => overlayStore.pop()}
-        isConfirm={deleteMutation.isPending}
-        onConfirm={() => deleteMutation.mutate(activityId)}
-      />
-    );
+    overlayStore.push(<ActivityDeleteDialog activityId={activityId} />);
   };
 
   // 로딩 중이거나 예약이 있으면 삭제 비활성화

@@ -58,17 +58,18 @@ export default function ExperienceCard({
 }: ActivitySummaryDto) {
   const router = useRouter();
 
-  const handleClickDelete = (id: number) => {
+  const handleCardClick = () => {
+    router.push(`/activity/${id}`);
+  };
+
+  const handleDeleteClick = (e: MouseEvent) => {
+    e.stopPropagation();
     overlayStore.push(<ActivityDeleteDialog activityId={id} />);
   };
 
-  const handleButtonClick = (e: MouseEvent, action: () => void) => {
+  const handleEditClick = (e: MouseEvent) => {
     e.stopPropagation();
-    action();
-  };
-
-  const handleCardClick = () => {
-    router.push(`/activity/${id}`);
+    router.push(`/activity/${id}/edit`);
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -110,16 +111,10 @@ export default function ExperienceCard({
           / 인
         </div>
         <div className='mt-12 flex gap-8 sm:mt-16 md:mt-20'>
-          <Button
-            size='sm'
-            variant='secondary'
-            onClick={(e) => handleButtonClick(e, () => router.push(`/activity/${id}/edit`))}>
+          <Button size='sm' variant='secondary' onClick={handleEditClick}>
             수정하기
           </Button>
-          <Button
-            size='sm'
-            variant='negative'
-            onClick={(e) => handleButtonClick(e, () => handleClickDelete(id))}>
+          <Button size='sm' variant='negative' onClick={handleDeleteClick}>
             삭제하기
           </Button>
         </div>

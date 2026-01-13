@@ -1,10 +1,10 @@
-// ActivityReviewList.tsx
 'use client';
 
 import Icons from '@/assets/icons';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
 import ActivityReviewEmpty from '@/features/activity-detail/components/review/ActivityReviewEmpty';
 import ActivityReviewItem from '@/features/activity-detail/components/review/ActivityReviewItem';
+import { ITEMS_PER_PAGE } from '@/features/activity-detail/constants/pagination';
 import { useActivityReviews } from '@/features/activity-detail/queries/useActivityReviews';
 import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { formatSatisfaction } from '@/features/activity-detail/utils/formatSatisfaction';
@@ -25,11 +25,6 @@ interface ActivityReviewListProps {
   activityId: number;
   className?: string;
 }
-
-/**
- * 페이지당 표시할 리뷰 아이템 개수
- */
-const ITEMS_PER_PAGE = 3;
 
 /**
  * 체험 리뷰 목록을 페이지네이션과 함께 표시하는 컴포넌트

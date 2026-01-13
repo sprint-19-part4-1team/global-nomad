@@ -13,12 +13,12 @@ export default function CreateActivityForm() {
   // TODO: 체험 등록 폼에 내용이 있다면 이탈 안내 모달 보여주기
   const router = useRouter();
   const formState = useActivityForm();
-  const { getActivityRequest } = formState;
+  const { currentFormData, isAllValid } = formState;
 
   const { mutate, isPending } = useCreateActivityMutation();
 
   const handleSubmit = () => {
-    const reqbody = getActivityRequest();
+    const reqbody = currentFormData;
 
     mutate(reqbody, {
       onSuccess: (data) => {
@@ -35,7 +35,8 @@ export default function CreateActivityForm() {
       },
       onError: (error) => {
         console.error('체험 등록 실패:', error);
-        toast.error('등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        const serverErrorMessage = error.message;
+        toast.error(serverErrorMessage ?? '등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       },
     });
   };
@@ -46,6 +47,7 @@ export default function CreateActivityForm() {
       submitButtonText='체험 등록하기'
       onSubmit={handleSubmit}
       isSubmitting={isPending}
+      isDisabled={!isAllValid}
     />
   );
 }

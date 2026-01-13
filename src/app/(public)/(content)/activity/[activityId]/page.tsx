@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import Icons from '@/assets/icons';
 import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
@@ -165,11 +166,19 @@ export default async function ActivityDetail({
 }) {
   const { activityId } = await params;
 
-  // 체험 상세 조회
-  const activity = await getActivityDetail(Number(activityId));
+  let activity;
+  try {
+    // 체험 상세 조회
+    activity = await getActivityDetail(Number(activityId));
+  } catch {
+    notFound();
+  }
+
+  if (!activity) {
+    notFound();
+  }
 
   const { userId, category, title, description, price, subImages, reviewCount } = activity;
-
   const address = parseAddress(activity.address);
   const rating = formatRating(activity.rating);
 

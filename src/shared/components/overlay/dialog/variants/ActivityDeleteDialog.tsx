@@ -41,7 +41,7 @@ export default function ActivityDeleteDialog({ activityId }: ActivityDeleteDialo
         toast.info('체험이 성공적으로 삭제되었습니다.');
       },
       onError: (error) => {
-        toast.error('체험을 삭제하는 데 실패했습니다.');
+        toast.error(error.message ?? '체험을 삭제하는 데 실패했습니다.');
         console.error('체험 삭제 실패:', error);
       },
       onSettled: () => {

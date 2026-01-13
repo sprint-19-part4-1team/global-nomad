@@ -156,10 +156,6 @@ export default function ActivityReservationContent({
 
       // 예약 성공 시 모든 상태 초기화
       setCurrentMonth(startOfMonth(new Date()));
-      reservation.setSelectedDate(undefined);
-      reservation.setSelectedScheduleId(null);
-      reservation.setParticipantCount(1);
-      reservation.setShowParticipantSection(false);
     }
   };
 

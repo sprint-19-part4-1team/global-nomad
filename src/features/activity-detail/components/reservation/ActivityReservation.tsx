@@ -1,106 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { toast } from 'react-toastify';
 import ActivityReservationBottomSheet from '@/features/activity-detail/components/reservation/ActivityReservationBottomSheet';
 import ActivityReservationContent from '@/features/activity-detail/components/reservation/content/ActivityReservationContent';
+import { createActivityReservation } from '@/shared/apis/feature/activities';
 import Button from '@/shared/components/button/Button';
+import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
+import { CreateReservationBodyDto } from '@/shared/types/activities';
 import { formatValue } from '@/shared/utils/formatValue';
-
-// TODO: API 연동 후 삭제
-const DUMMY_AVAILABLE = [
-  {
-    date: '2026-01-05',
-    times: [
-      {
-        id: 45116,
-        startTime: '12:00',
-        endTime: '13:00',
-      },
-      {
-        id: 45117,
-        startTime: '13:00',
-        endTime: '14:00',
-      },
-      {
-        id: 45118,
-        startTime: '14:00',
-        endTime: '15:00',
-      },
-    ],
-  },
-  {
-    date: '2026-01-12',
-    times: [
-      {
-        id: 45119,
-        startTime: '12:00',
-        endTime: '13:00',
-      },
-      {
-        id: 45120,
-        startTime: '13:00',
-        endTime: '14:00',
-      },
-      {
-        id: 45121,
-        startTime: '14:00',
-        endTime: '15:00',
-      },
-    ],
-  },
-  {
-    date: '2026-01-13',
-    times: [
-      {
-        id: 45122,
-        startTime: '12:00',
-        endTime: '13:00',
-      },
-      {
-        id: 45123,
-        startTime: '13:00',
-        endTime: '14:00',
-      },
-      {
-        id: 45124,
-        startTime: '14:00',
-        endTime: '15:00',
-      },
-    ],
-  },
-  {
-    date: '2026-01-14',
-    times: [
-      {
-        id: 45127,
-        startTime: '14:00',
-        endTime: '15:00',
-      },
-    ],
-  },
-  {
-    date: '2026-01-15',
-    times: [
-      {
-        id: 45132,
-        startTime: '13:00',
-        endTime: '14:00',
-      },
-      {
-        id: 45133,
-        startTime: '14:00',
-        endTime: '15:00',
-      },
-    ],
-  },
-];
 
 /**
  * 체험 예약 컴포넌트의 Props
+ *
  * @property {string} activityId - 체험 ID
- * @property {number} userId - 체험을 작성한 유저ID
+ * @property {number} userId - 체험을 작성한 유저 ID
  * @property {number} price - 1인당 체험 가격
  */
 interface ActivityReservationProps {
@@ -124,18 +40,24 @@ interface ActivityReservationProps {
  * - 총 금액 계산: 인원 수에 따른 총 가격 자동 계산 및 표시
  * - 바텀시트 제어: overlayStore를 통한 바텀시트 열기/닫기
  * - 선택 상태 표시: 날짜 선택 전/후에 따라 다른 텍스트 표시
- * - 예약 실행: 선택된 정보로 예약 처리 (현재 콘솔 로그, API 연동 예정)
+ * - 예약 실행: 선택된 정보로 예약 처리 및 성공 시 상태 초기화
+ * - 데이터 조회 최적화: 각 컴포넌트가 자체적으로 데이터 조회하여 즉시 반영
  *
  * 모바일/태블릿에서는 하단 바에 총 금액과 인원 수를 표시하며,
  * "날짜 선택하기" 또는 선택된 날짜/시간을 표시합니다.
  *
+ * 접근 제어
+ * - 로그인하지 않은 사용자: 예약 UI 미표시
+ * - 체험 작성자 본인: 예약 UI 미표시 (자신의 체험은 예약 불가)
+ *
  * @param {ActivityReservationProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 체험 예약 UI
+ * @returns {JSX.Element | null} 렌더링된 체험 예약 UI 또는 null
  *
  * @example
  * ```tsx
  * <ActivityReservation
  *   activityId="123"
+ *   userId={456}
  *   price={50000}
  * />
  * ```
@@ -147,49 +69,79 @@ export default function ActivityReservation({
 }: ActivityReservationProps) {
   const loginUserId = useUserStore((s) => s.user?.id);
 
+  // 모바일 하단 바에 표시할 예약 정보 (바텀시트에서 확인 시 저장)
   const [reservationInfo, setReservationInfo] = useState<{
     scheduleId: number;
     headCount: number;
     dateTime: string;
   } | null>(null);
 
-  // 로그인하지 않았거나 체험 작성 유저와 로그인한 유저가 같은 경우 렌더링하지 않음
-  if (loginUserId === undefined || userId === loginUserId) {
-    return null;
-  }
+  /** 예약 처리 핸들러 */
+  const handleReservation = useCallback(
+    async (data: CreateReservationBodyDto) => {
+      try {
+        await createActivityReservation(Number(activityId), data);
+        overlayStore.push(
+          <Dialog
+            message={
+              <div className='flex flex-col items-center gap-6'>
+                <span>체험 신청이 완료되었습니다.</span>
+                <span className='body-13 font-normal text-gray-500 sm:body-14'>
+                  (승인 후 예약 확정 됩니다)
+                </span>
+              </div>
+            }
+            onClose={() => overlayStore.pop()}
+          />
+        );
 
-  const schedules = DUMMY_AVAILABLE;
-  const personNumber = reservationInfo?.headCount ?? 1;
-  const totalPrice = price * personNumber;
+        // 예약 성공 시 상태 초기화
+        setReservationInfo(null);
+      } catch (error) {
+        toast.error('예약에 실패했습니다.');
+        console.error('예약 실패: ', error);
+      }
+    },
+    [activityId]
+  );
 
-  const handleOpenBottomSheet = () => {
+  /** 바텀 시트 열기 핸들러 */
+  const handleOpenBottomSheet = useCallback(() => {
     overlayStore.push(
       <ActivityReservationBottomSheet
+        activityId={activityId}
         price={price}
-        schedules={schedules}
         onConfirm={(info) => {
           setReservationInfo(info);
           overlayStore.pop();
         }}
       />
     );
-  };
+  }, [activityId, price]);
 
-  const handleReservation = () => {
-    if (!reservationInfo) {
-      return;
+  /** 모바일 예약 버튼 클릭 핸들러 */
+  const handleMobileReservation = useCallback(() => {
+    if (reservationInfo) {
+      handleReservation({
+        scheduleId: reservationInfo.scheduleId,
+        headCount: reservationInfo.headCount,
+      });
+    } else {
+      handleOpenBottomSheet();
     }
-    // TODO: API 연동시 코드 삭제
-    console.log(activityId);
-    console.log({
-      scheduleId: reservationInfo.scheduleId,
-      headCount: reservationInfo.headCount,
-    });
-  };
+  }, [reservationInfo, handleReservation, handleOpenBottomSheet]);
+
+  // 로그인하지 않았거나 체험 작성 유저와 로그인한 유저가 같은 경우
+  if (loginUserId === undefined || userId === loginUserId) {
+    return null;
+  }
+
+  const personNumber = reservationInfo?.headCount ?? 1;
+  const totalPrice = price * personNumber;
 
   return (
     <>
-      {/* 모바일/태블릿: 하단 고정 바 + 바텀시트 */}
+      {/* 모바일/태블릿: 하단 고정 바 */}
       <div className='fixed right-0 bottom-0 left-0 z-10 flex flex-col gap-12 border-t border-gray-100 bg-white px-24 py-18 lg:hidden'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-6'>
@@ -199,13 +151,10 @@ export default function ActivityReservation({
           <button
             onClick={handleOpenBottomSheet}
             className='body-14 font-medium text-primary-500 underline'>
-            {reservationInfo ? reservationInfo.dateTime : <>날짜 선택하기</>}
+            {reservationInfo ? reservationInfo.dateTime : '날짜 선택하기'}
           </button>
         </div>
-        <Button
-          full
-          onClick={reservationInfo ? handleReservation : handleOpenBottomSheet}
-          disabled={!reservationInfo}>
+        <Button full onClick={handleMobileReservation} disabled={!reservationInfo}>
           예약하기
         </Button>
       </div>
@@ -213,8 +162,8 @@ export default function ActivityReservation({
       {/* 데스크톱: 오른쪽 고정 영역 */}
       <div className='mt-48 hidden lg:block'>
         <ActivityReservationContent
+          activityId={activityId}
           price={price}
-          schedules={schedules}
           onReservation={handleReservation}
         />
       </div>

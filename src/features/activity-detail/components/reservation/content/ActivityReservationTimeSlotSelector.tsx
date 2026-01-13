@@ -67,7 +67,7 @@ export default function ActivityReservationTimeSlotSelector({
   }
 
   return (
-    <div className='flex flex-col gap-12'>
+    <div className='flex flex-col gap-12 sm:scrollbar-hidden sm:max-h-262 sm:overflow-y-auto lg:max-h-210'>
       {availableTimes.map((time) => (
         <Button
           key={time.id}

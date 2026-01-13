@@ -1,4 +1,6 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import Icons from '@/assets/icons';
 import ActivityAdminControls from '@/features/activity-detail/components/ActivityAdminControls';
 import ActivityContentTitle from '@/features/activity-detail/components/ActivityContentTitle';
@@ -11,46 +13,48 @@ import ActivityReviewList from '@/features/activity-detail/components/review/Act
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
 import { formatRating } from '@/features/activity-detail/utils/formatRating';
 import { parseAddress } from '@/features/activity-detail/utils/parseAddress';
+import { getActivityDetail } from '@/shared/apis/feature/activities';
 import { layoutContainer } from '@/shared/constants/';
 import { cn } from '@/shared/utils/cn';
 
-// TODO: API 연동 후 삭제
-const DUMMY_ACTIVITY = {
-  id: 7,
-  userId: 2895,
-  title: '함께 배우면 즐거운 스트릿댄스',
-  description: '둠칫 둠칫 두둠칫',
-  category: '투어',
-  price: 10000,
-  address: '[06236] 서울 강남구 테헤란로26길 14 | 역삼동, 위워크빌딩',
-  bannerImageUrl:
-    'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/globalnomad/activity_registration_image/a.png',
-  subImages: [
-    {
-      id: 1,
-      imageUrl:
-        'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/globalnomad/activity_registration_image/b.png',
-    },
-  ],
-  schedules: [
-    {
-      id: 1,
-      date: '2023-12-01',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-    {
-      id: 2,
-      date: '2023-12-05',
-      startTime: '12:00',
-      endTime: '13:00',
-    },
-  ],
-  reviewCount: 5,
-  rating: 4.74,
-  createdAt: '2023-12-31T21:28:50.589Z',
-  updatedAt: '2023-12-31T21:28:50.589Z',
+/**
+ * 체험 상세 페이지 params 타입
+ *
+ * @property params.activityId - 체험 ID
+ */
+type ActivityDetailParams = {
+  params: Promise<{ activityId: string }>;
 };
+
+/**
+ * 체험 상세 페이지의 메타데이터를 생성
+ *
+ * SEO 최적화 및 소셜 미디어 공유를 위해 체험 정보를 기반으로 동적 메타데이터를 설정합니다.
+ *
+ * @param params.activityId - 조회할 체험 ID
+ * @returns 페이지 메타데이터 (title, description, openGraph)
+ */
+export async function generateMetadata({ params }: ActivityDetailParams): Promise<Metadata> {
+  const { activityId } = await params;
+  try {
+    const activity = await getActivityDetail(Number(activityId));
+
+    return {
+      title: activity.title,
+      description: activity.description,
+      openGraph: {
+        title: activity.title,
+        description: activity.description,
+        images: activity.bannerImageUrl,
+      },
+    };
+  } catch {
+    return {
+      title: '페이지를 찾을 수 없습니다',
+      description: '요청하신 체험을 찾을 수 없습니다.',
+    };
+  }
+}
 
 // TODO: API 연동 후 삭제
 const DUMMY_REVIEW = {
@@ -167,17 +171,20 @@ const DUMMY_REVIEW = {
   ],
 };
 
-export default async function ActivityDetail({
-  params,
-}: {
-  params: Promise<{ activityId: string }>;
-}) {
+export default async function ActivityDetail({ params }: ActivityDetailParams) {
   const { activityId } = await params;
 
-  const { userId, category, title, description, price, subImages, reviewCount } = DUMMY_ACTIVITY;
+  let activity;
+  try {
+    // 체험 상세 조회
+    activity = await getActivityDetail(Number(activityId));
+  } catch {
+    notFound();
+  }
 
-  const address = parseAddress(DUMMY_ACTIVITY.address);
-  const rating = formatRating(DUMMY_ACTIVITY.rating);
+  const { userId, category, title, description, price, subImages, reviewCount } = activity!;
+  const address = parseAddress(activity.address);
+  const rating = formatRating(activity.rating);
 
   return (
     <main
@@ -189,12 +196,14 @@ export default async function ActivityDetail({
         }),
         'flex flex-col gap-16 sm:gap-24 lg:gap-26'
       )}>
-      <Link
-        href={ROUTE_PATHS.MAIN}
-        className='flex gap-4 body-14 font-semibold text-gray-950 sm:gap-8 sm:body-16'>
-        <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
-        <span>메인으로</span>
-      </Link>
+      <div className='w-fit'>
+        <Link
+          href={ROUTE_PATHS.MAIN}
+          className='flex gap-4 body-14 font-semibold text-gray-950 hover:text-primary-600 sm:gap-8 sm:body-16'>
+          <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
+          <span>메인으로</span>
+        </Link>
+      </div>
       <div className='gap-x-40 lg:grid lg:grid-cols-[1fr_410px]'>
         {/* 이미지 */}
         <ActivityImageGrid subImages={subImages} />
@@ -218,7 +227,7 @@ export default async function ActivityDetail({
         {/* 설명 */}
         <div className='flex flex-col gap-8 border-t border-gray-100 py-20 sm:pt-44 sm:pb-40 lg:border-t-0 lg:py-40'>
           <ActivityContentTitle>체험 설명</ActivityContentTitle>
-          <div className='mb-20 sm:mb-0'>{description}</div>
+          <div className='mb-20 whitespace-pre-wrap sm:mb-0'>{description}</div>
         </div>
 
         {/* 지도 */}

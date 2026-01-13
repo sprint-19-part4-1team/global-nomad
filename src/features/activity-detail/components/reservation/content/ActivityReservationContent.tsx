@@ -1,34 +1,39 @@
 'use client';
 
+import { startOfMonth } from 'date-fns';
+import { useState } from 'react';
 import Icons from '@/assets/icons';
 import ActivityReservationDateTimeSection from '@/features/activity-detail/components/reservation/content/ActivityReservationDateTimeSection';
 import ActivityReservationHeadCounter from '@/features/activity-detail/components/reservation/content/ActivityReservationHeadCounter';
 import useReservationState from '@/features/activity-detail/hooks/useReservationState';
+import { useActivitySchedules } from '@/features/activity-detail/queries/useActivitySchedules';
 import {
   formatDateTimeForDisplay,
   getSchedulesByDate,
 } from '@/features/activity-detail/utils/reservationDateUtils';
 import Button from '@/shared/components/button/Button';
+import Skeleton from '@/shared/components/skeleton/Skeleton';
 import Title from '@/shared/components/title/Title';
-import { CreateReservationBodyDto, ScheduleResponseDto } from '@/shared/types/activities';
+import { CreateReservationBodyDto } from '@/shared/types/activities';
 import { formatDateToString } from '@/shared/utils/dateUtil';
 import { formatValue } from '@/shared/utils/formatValue';
 
 /**
  * 체험 예약 콘텐츠 컴포넌트의 Props
+ *
+ * @property {string} activityId - 체험 ID
  * @property {number} price - 1인당 체험 가격
- * @property {ScheduleResponseDto[]} schedules - 예약 가능한 스케줄 목록
- * @property {() => void} [onClose] - 바텀시트 닫기 핸들러
- * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} [onConfirm] - 바텀시트 확인 핸들러
- * @property {() => void} [onReservation] - 데스크톱 예약 버튼 핸들러
+ * @property {() => void} [onClose] - 바텀시트 닫기 핸들러 (바텀시트 모드에서만 사용)
+ * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} [onConfirm] - 바텀시트 확인 핸들러 (바텀시트 모드에서만 사용)
+ * @property {(info: CreateReservationBodyDto) => void | Promise<void>} [onReservation] - 데스크톱 예약 버튼 핸들러 (데스크톱 모드에서만 사용)
  * @property {boolean} [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
  */
 interface ActivityReservationContentProps {
+  activityId: string;
   price: number;
-  schedules: ScheduleResponseDto[];
   onClose?: () => void;
   onConfirm?: (info: CreateReservationBodyDto & { dateTime: string }) => void;
-  onReservation?: () => void;
+  onReservation?: (info: CreateReservationBodyDto) => void | Promise<void>;
   isBottomSheet?: boolean;
 }
 
@@ -37,6 +42,7 @@ interface ActivityReservationContentProps {
  *
  * 체험 예약을 위한 날짜, 시간, 인원 선택 UI를 제공하며,
  * 데스크톱과 모바일(바텀시트) 환경에서 다른 레이아웃으로 동작합니다.
+ * 각 컴포넌트가 자체적으로 스케줄 데이터를 조회하여 월 변경 시 즉시 반영됩니다.
  *
  * @description
  * 컴포넌트는 다음과 같은 기능을 제공합니다.
@@ -47,6 +53,9 @@ interface ActivityReservationContentProps {
  * - 바텀시트 2단계 플로우: 날짜/시간 선택 → 인원 선택
  * - 유효성 검증: 필수 정보가 모두 선택되어야 예약 가능
  * - 뒤로가기 기능: 바텀시트에서 인원 선택 단계에서 날짜/시간 선택으로 복귀
+ * - 자체 데이터 조회: 내부에서 스케줄 데이터를 조회하여 월 변경 시 즉시 새 데이터 반영
+ * - 월 변경 시 자동 초기화: 달력 월이 변경되면 선택 상태 자동 초기화
+ * - 예약 성공 시 초기화: 데스크톱 모드에서 예약 성공 시 모든 상태를 초기값으로 리셋
  *
  * 데스크톱 모드에서는 모든 옵션이 한 화면에 표시되며,
  * 바텀시트 모드에서는 날짜/시간 선택과 인원 선택이 단계별로 표시됩니다.
@@ -58,37 +67,48 @@ interface ActivityReservationContentProps {
  * ```tsx
  * // 데스크톱 모드
  * <ActivityReservationContent
+ *   activityId="123"
  *   price={50000}
- *   schedules={schedules}
- *   onReservation={() => handleReservation()}
+ *   onReservation={async (info) => {
+ *     await createReservation(info);
+ *   }}
  *   isBottomSheet={false}
  * />
  *
  * // 바텀시트 모드
  * <ActivityReservationContent
+ *   activityId="123"
  *   price={50000}
- *   schedules={schedules}
- *   onClose={() => setIsOpen(false)}
- *   onConfirm={(info) => handleConfirm(info)}
+ *   onClose={() => overlayStore.pop()}
+ *   onConfirm={(info) => {
+ *     setReservationInfo(info);
+ *     overlayStore.pop();
+ *   }}
  *   isBottomSheet={true}
  * />
  * ```
  */
 export default function ActivityReservationContent({
+  activityId,
   price,
-  schedules,
   onClose,
   onConfirm,
   onReservation,
   isBottomSheet = false,
 }: ActivityReservationContentProps) {
-  // 커스텀 훅으로 모든 상태 관리
-  const reservation = useReservationState();
+  // 현재 달력에 표시 중인 월
+  const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
+
+  // 체험의 예약 가능일 조회
+  const { data: schedules, isPending, isError } = useActivitySchedules(activityId, currentMonth);
+
+  // 커스텀 훅으로 모든 상태 관리 (currentMonth를 전달하여 월 변경 시 자동 초기화)
+  const reservation = useReservationState(currentMonth);
 
   const totalPrice = price * reservation.participantCount;
 
-  // 선택된 시간 정보 찾기 (유틸 함수 활용)
-  const schedulesByDate = getSchedulesByDate(schedules);
+  // 선택된 시간 정보 찾기
+  const schedulesByDate = getSchedulesByDate(schedules || []);
   const availableTimes = reservation.selectedDate
     ? schedulesByDate[formatDateToString(reservation.selectedDate)] || []
     : [];
@@ -99,7 +119,7 @@ export default function ActivityReservationContent({
   // 바텀시트에서 날짜/시간 선택이 완료되면 해당 영역 숨김
   const showDateTimeSection = isBottomSheet ? !reservation.showParticipantSection : true;
 
-  // 확인 버튼 핸들러 (바텀시트 - 날짜/시간 선택 단계)
+  /** 확인 버튼 핸들러 (바텀시트 - 날짜/시간 선택 단계) */
   const handleDateTimeConfirm = () => {
     if (!reservation.isDateTimeValid) {
       return;
@@ -107,7 +127,7 @@ export default function ActivityReservationContent({
     reservation.setShowParticipantSection(true);
   };
 
-  // 확인 버튼 핸들러 (바텀시트 - 인원 선택 단계)
+  /** 확인 버튼 핸들러 (바텀시트 - 인원 선택 단계) */
   const handleFinalConfirm = () => {
     if (!reservation.isValid || !reservation.selectedScheduleId) {
       return;
@@ -122,19 +142,20 @@ export default function ActivityReservationContent({
     }
   };
 
-  // 예약하기 버튼 핸들러 (데스크톱)
-  const handleReservation = () => {
+  /** 예약하기 버튼 핸들러 (데스크톱) */
+  const handleReservation = async () => {
     if (!reservation.isValid || !reservation.selectedScheduleId) {
       return;
     }
 
-    console.log({
-      scheduleId: reservation.selectedScheduleId,
-      headCount: reservation.participantCount,
-    });
-
     if (onReservation) {
-      onReservation();
+      await onReservation({
+        scheduleId: reservation.selectedScheduleId,
+        headCount: reservation.participantCount,
+      });
+
+      // 예약 성공 시 모든 상태 초기화
+      setCurrentMonth(startOfMonth(new Date()));
     }
   };
 
@@ -180,16 +201,26 @@ export default function ActivityReservationContent({
 
         {/* 날짜 & 시간 선택 영역 */}
         {showDateTimeSection && (
-          <ActivityReservationDateTimeSection
-            selectedDate={reservation.selectedDate}
-            onDateSelect={reservation.handleDateSelect}
-            selectedScheduleId={reservation.selectedScheduleId}
-            onScheduleSelect={reservation.setSelectedScheduleId}
-            schedules={schedules}
-            currentMonth={reservation.currentMonth}
-            onMonthChange={reservation.handleMonthChange}
-            isBottomSheet={isBottomSheet}
-          />
+          <>
+            {isPending ? (
+              <Skeleton className='h-396 sm:h-300 lg:h-428' />
+            ) : isError ? (
+              <div className='mx-auto mb-10 body-16 font-medium tracking-[-0.4px] text-gray-400'>
+                예약 가능일을 불러오는 데 실패했습니다.
+              </div>
+            ) : (
+              <ActivityReservationDateTimeSection
+                selectedDate={reservation.selectedDate}
+                onDateSelect={reservation.handleDateSelect}
+                selectedScheduleId={reservation.selectedScheduleId}
+                onScheduleSelect={reservation.setSelectedScheduleId}
+                schedules={schedules || []}
+                currentMonth={currentMonth}
+                onMonthChange={setCurrentMonth}
+                isBottomSheet={isBottomSheet}
+              />
+            )}
+          </>
         )}
 
         {/* 인원 선택 영역 */}

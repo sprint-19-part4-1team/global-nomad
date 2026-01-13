@@ -159,15 +159,23 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
     };
   }, [address]);
 
+  /** 주소 복사 핸들러 */
+  const handleCopyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      toast.success('주소가 복사되었습니다');
+    } catch (error) {
+      console.error('주소 복사 실패:', error);
+      toast.error('주소 복사에 실패했습니다');
+    }
+  };
+
   return (
     <section className='flex flex-col gap-8 border-t border-gray-100 py-20 sm:py-40'>
       <ActivityContentTitle>오시는 길</ActivityContentTitle>
       <button
         aria-label='주소 복사'
-        onClick={() => {
-          // TODO: 실제 주소 복사 기능 연결 후 삭제
-          console.log('주소 복사');
-        }}
+        onClick={handleCopyAddress}
         className='flex w-fit cursor-pointer items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
         <span>{address}</span>
         <Icons.Copy aria-hidden='true' className='h-24 w-24' />

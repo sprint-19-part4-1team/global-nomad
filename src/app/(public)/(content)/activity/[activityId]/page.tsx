@@ -18,6 +18,15 @@ import { layoutContainer } from '@/shared/constants/';
 import { cn } from '@/shared/utils/cn';
 
 /**
+ * 체험 상세 페이지 params 타입
+ *
+ * @property params.activityId - 체험 ID
+ */
+type ActivityDetailParams = {
+  params: Promise<{ activityId: string }>;
+};
+
+/**
  * 체험 상세 페이지의 메타데이터를 생성
  *
  * SEO 최적화 및 소셜 미디어 공유를 위해 체험 정보를 기반으로 동적 메타데이터를 설정합니다.
@@ -25,23 +34,26 @@ import { cn } from '@/shared/utils/cn';
  * @param params.activityId - 조회할 체험 ID
  * @returns 페이지 메타데이터 (title, description, openGraph)
  */
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ activityId: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: ActivityDetailParams): Promise<Metadata> {
   const { activityId } = await params;
-  const activity = await getActivityDetail(Number(activityId));
+  try {
+    const activity = await getActivityDetail(Number(activityId));
 
-  return {
-    title: activity.title,
-    description: activity.description,
-    openGraph: {
+    return {
       title: activity.title,
       description: activity.description,
-      images: activity.bannerImageUrl,
-    },
-  };
+      openGraph: {
+        title: activity.title,
+        description: activity.description,
+        images: activity.bannerImageUrl,
+      },
+    };
+  } catch {
+    return {
+      title: '페이지를 찾을 수 없습니다',
+      description: '요청하신 체험을 찾을 수 없습니다.',
+    };
+  }
 }
 
 // TODO: API 연동 후 삭제
@@ -159,11 +171,7 @@ const DUMMY_REVIEW = {
   ],
 };
 
-export default async function ActivityDetail({
-  params,
-}: {
-  params: Promise<{ activityId: string }>;
-}) {
+export default async function ActivityDetail({ params }: ActivityDetailParams) {
   const { activityId } = await params;
 
   let activity;
@@ -174,11 +182,7 @@ export default async function ActivityDetail({
     notFound();
   }
 
-  if (!activity) {
-    notFound();
-  }
-
-  const { userId, category, title, description, price, subImages, reviewCount } = activity;
+  const { userId, category, title, description, price, subImages, reviewCount } = activity!;
   const address = parseAddress(activity.address);
   const rating = formatRating(activity.rating);
 

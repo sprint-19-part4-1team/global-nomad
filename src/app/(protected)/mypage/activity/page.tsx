@@ -1,19 +1,21 @@
 'use client';
 
 import ActivityList from '@/features/mypage/activity/components/activityList/ActivityList';
-import { useInfiniteScroll } from '@/features/mypage/activity/hooks/useInfiniteScroll';
 import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll';
+
+const PAGE_SIZE = 5;
 
 export default function MypageActivity() {
-  const PAGE_SIZE = 5;
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch, isPending, isError } =
     useMyActivitiesInfiniteQuery(PAGE_SIZE);
 
   const observerRef = useInfiniteScroll({
-    enabled: hasNextPage && !isFetchingNextPage,
-    onIntersect: fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
   });
 
   return (
@@ -28,7 +30,9 @@ export default function MypageActivity() {
       <div className='mt-24 sm:mt-32'>
         <ActivityList
           data={data}
-          isLoading={isLoading}
+          isError={isError}
+          isPending={isPending}
+          refetch={refetch}
           isFetchingNextPage={isFetchingNextPage}
           observerRef={observerRef}
         />

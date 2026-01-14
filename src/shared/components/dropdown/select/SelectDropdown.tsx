@@ -1,10 +1,7 @@
 'use client';
 
 import { useId } from 'react';
-import {
-  SelectContext,
-  SelectContextType,
-} from '@/shared/components/dropdown/context/selectContext';
+import { SelectContext } from '@/shared/components/dropdown/context/selectContext';
 import DropdownBaseProvider from '@/shared/components/dropdown/root/DropdownBaseProvider';
 import DropdownBaseRoot from '@/shared/components/dropdown/root/DropdownBaseRoot';
 import { WithChildren } from '@/shared/types/common';
@@ -66,16 +63,8 @@ export default function SelectDropdown<T = string>({
   const autoId = useId();
   const triggerId = triggerIdProp ?? `select-trigger-${autoId}`;
 
-  const contextValue = {
-    value,
-    setValue: onChangeValue,
-    triggerId,
-    variants,
-    onBlur,
-  } as SelectContextType<unknown>;
-
   return (
-    <SelectContext value={contextValue}>
+    <SelectContext value={{ value, setValue: onChangeValue, triggerId, variants, onBlur }}>
       <DropdownBaseProvider>
         <DropdownBaseRoot className='w-full'>{children}</DropdownBaseRoot>
       </DropdownBaseProvider>

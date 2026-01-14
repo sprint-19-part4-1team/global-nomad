@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export interface SelectContextType<T = unknown> {
+export interface SelectContextType<T> {
   /** 현재 선택된 값 (제네릭 T 타입을 따름) */
   value: T;
   /** 선택한 값으로 변경하는 함수 */
@@ -23,4 +23,4 @@ export interface SelectContextType<T = unknown> {
  * - Dropdown의 open/close 상태는 관리하지 않습니다.
  * - ActionDropdown에서는 절대 사용하지 마세요!
  */
-export const SelectContext = createContext<SelectContextType<unknown> | undefined>(undefined);
+export const SelectContext = createContext<SelectContextType<any> | undefined>(undefined);

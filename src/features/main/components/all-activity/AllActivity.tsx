@@ -125,8 +125,8 @@ export default function AllActivity({
             <SelectDropdownContent className='right-0 left-auto'>
               <SelectDropdownItem value='latest'>최신순</SelectDropdownItem>
               <SelectDropdownItem value='most_reviewed'>리뷰 많은순</SelectDropdownItem>
-              <SelectDropdownItem value='price_asc'>가격 높은순</SelectDropdownItem>
-              <SelectDropdownItem value='price_desc'>가격 낮은순</SelectDropdownItem>
+              <SelectDropdownItem value='price_desc'>가격 높은순</SelectDropdownItem>
+              <SelectDropdownItem value='price_asc'>가격 낮은순</SelectDropdownItem>
             </SelectDropdownContent>
           </SelectDropdown>
         </div>

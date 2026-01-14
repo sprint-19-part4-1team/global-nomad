@@ -107,7 +107,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
               e.stopPropagation();
               overlayStore.pop();
             }}
-            className='absolute top-0 left-0 z-1 h-full w-full'
+            className='absolute top-0 left-0 z-1 h-full w-full cursor-pointer'
           />
           <Image
             src={imageUrl}

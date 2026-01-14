@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
 import BaseLayout from '@/shared/layout/BaseLayout';
+import { WithChildren } from '@/shared/types/common';
 
-interface ProtectedLayoutProps {
-  children: ReactNode;
-}
-
-export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
+export default function ProtectedLayout({ children }: WithChildren) {
   return <BaseLayout>{children}</BaseLayout>;
 }

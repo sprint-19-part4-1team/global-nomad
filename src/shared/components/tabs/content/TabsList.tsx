@@ -1,9 +1,5 @@
-import { ReactNode } from 'react';
 import { tabListBase } from '@/shared/components/tabs/styles/tabListBase';
-
-interface TabsListProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * ## TabsList
@@ -24,7 +20,7 @@ interface TabsListProps {
  *  </TabsList>
  * ```
  */
-export default function TabsList({ children }: TabsListProps) {
+export default function TabsList({ children }: WithChildren) {
   return (
     <div role='tablist' aria-orientation='horizontal' className={tabListBase}>
       {children}

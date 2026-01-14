@@ -1,8 +1,4 @@
-import { ReactNode } from 'react';
-
-interface ScheduleTimeFieldSetProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * ## ScheduleTimeFieldSet
@@ -35,7 +31,7 @@ interface ScheduleTimeFieldSetProps {
  * </ScheduleTimeFieldSet>
  * ```
  */
-export default function ScheduleTimeFieldSet({ children }: ScheduleTimeFieldSetProps) {
+export default function ScheduleTimeFieldSet({ children }: WithChildren) {
   return (
     <fieldset className='mt-20 sm:mt-24'>
       <legend className='form-title'>등록된 시간대</legend>

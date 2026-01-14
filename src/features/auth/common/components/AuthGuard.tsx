@@ -1,18 +1,15 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
+import { WithChildren } from '@/shared/types/common';
 
 const OVERLAY_ID = 'auth-guard-already-logged-in';
 const AUTH_GUARD_REDIRECT_DELAY_MS = 1500;
-
-interface AuthGuardProps {
-  children: ReactNode;
-}
 
 /**
  * ## AuthGuard
@@ -42,7 +39,7 @@ interface AuthGuardProps {
  * }
  * ```
  */
-export default function AuthGuard({ children }: AuthGuardProps) {
+export default function AuthGuard({ children }: WithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const isMainPage = pathname === '/';

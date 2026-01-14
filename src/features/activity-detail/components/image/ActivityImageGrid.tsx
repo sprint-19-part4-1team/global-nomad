@@ -115,7 +115,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
                 alt={`체험 상세 이미지 ${index}`}
                 fill
                 sizes={config.sizes}
-                className='object-cover'
+                className='cursor-pointer object-cover'
                 priority={index === 0 && (count === 1 || count === 3)}
               />
             </button>

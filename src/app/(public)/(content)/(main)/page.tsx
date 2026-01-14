@@ -4,7 +4,7 @@ import ActivitySection from '@/features/main/components/activity-section/Activit
 import SearchBar from '@/features/main/components/search-bar/SearchBar';
 import { pickRandom } from '@/features/main/utils/pickRandom';
 import { getActivities } from '@/shared/apis/feature/activities';
-import BannerSlide from '@/shared/components/slide/BannerSlide';
+import BannerSlide2 from '@/shared/components/slide/BannerSlide2';
 import Title from '@/shared/components/title/Title';
 import { layoutContainer } from '@/shared/constants/';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
@@ -78,7 +78,7 @@ export default async function Home() {
             paddingX: 'wide',
             paddingTop: 'md',
           })}>
-          <BannerSlide />
+          <BannerSlide2 />
           <Title responsive='lg' className='mt-30 mb-12 text-center sm:mt-62 sm:mb-36 md:mt-82'>
             무엇을 체험하고 싶으신가요?
           </Title>

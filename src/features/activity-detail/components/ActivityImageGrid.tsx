@@ -1,4 +1,12 @@
+'use client';
+
 import Image from 'next/image';
+import { useRef } from 'react';
+import { LAYER } from '@/shared/components/overlay/constants/layer';
+import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
+import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { SubImagesType } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
 
@@ -39,19 +47,23 @@ const layoutConfig = {
 /**
  * 체험 상세 이미지를 그리드 레이아웃으로 표시하는 컴포넌트
  *
- * Next.js Image 컴포넌트를 사용하여 반응형 이미지 최적화를 제공하며,
+ * 이미지 클릭 시 오버레이 모달로 확대 이미지를 표시하며,
+ * Next.js Image 컴포넌트를 사용하여 반응형 이미지 최적화를 제공합니다.
  * 1개 또는 3개 이미지 레이아웃의 경우 LCP(Largest Contentful Paint) 최적화를 위해
  * 첫 번째 이미지에 priority 속성을 적용합니다.
  *
  * @description
- * 이미지 개수에 따라 자동으로 최적의 그리드 레이아웃을 적용합니다.
+ * 이미지 개수에 따라 자동으로 최적의 그리드 레이아웃을 적용합니다:
  * - 1개: 전체 너비 단일 이미지
  * - 2개: 2열 나란히 배치
- * - 3개: 왼쪽 큰 이미지 + 오른쪽 2개 작은 이미지
+ * - 3개: 왼쪽 큰 이미지(2행 span) + 오른쪽 2개 작은 이미지
  * - 4개: 2x2 그리드
  *
- * @param {ActivityImageGridProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 체험 상세 이미지 그리드
+ * 확대 모달은 외부 클릭 시 자동으로 닫히며,
+ * overlayStore를 통해 오버레이 상태를 관리합니다.
+ *
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 체험 상세 이미지 그리드 또는 null (지원하지 않는 이미지 개수인 경우)
  *
  * @example
  * ```tsx
@@ -59,6 +71,13 @@ const layoutConfig = {
  * ```
  */
 export default function ActivityImageGrid({ subImages }: ActivityImageGridProps) {
+  const surfaceRef = useRef<HTMLDivElement>(null);
+
+  // 확대 모달 외부 클릭 시 모달 닫기
+  useOutsideClick(surfaceRef, () => {
+    overlayStore.pop();
+  });
+
   const count = subImages.length;
   const config = layoutConfig[count as keyof typeof layoutConfig];
 
@@ -67,14 +86,57 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
     return null;
   }
 
+  /**
+   * 이미지 클릭 시 확대 모달을 오버레이로 표시
+   * @param imageUrl - 확대할 이미지 URL
+   * @param index - 이미지 인덱스 (접근성을 위한 라벨링에 사용)
+   */
+  const handleImageClick = (imageUrl: string, index: number) => {
+    overlayStore.push(
+      <OverlayPortal>
+        <Backdrop />
+        <div
+          ref={surfaceRef}
+          className={cn(
+            'fixed top-1/2 left-1/2 h-fit w-340 -translate-x-1/2 -translate-y-1/2 shadow-card sm:w-700',
+            LAYER.OVERLAY_SURFACE
+          )}>
+          <button
+            aria-label={`체험 상세 이미지 ${index} 확대 닫기`}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              overlayStore.pop();
+            }}
+            className='absolute top-0 left-0 z-1 h-full w-full'
+          />
+          <Image
+            src={imageUrl}
+            alt={`체험 상세 이미지 ${index} 확대 보기`}
+            width={0}
+            height={0}
+            className='h-auto max-h-[70vh] w-full object-contain'
+            sizes='(max-width: 640px) 340px, 700px'
+          />
+        </div>
+      </OverlayPortal>
+    );
+  };
+
   return (
     <div className='h-245 w-full overflow-hidden rounded-24 sm:h-400'>
       <div className={cn('grid h-full gap-6 sm:gap-12', config.grid)}>
         {subImages.map((image, index) => {
+          // 3개 레이아웃에서 첫 번째 이미지는 2행을 차지
           const isFirstInThreeLayout = count === 3 && index === 0;
 
           return (
-            <div key={image.id} className={cn('relative', isFirstInThreeLayout && 'row-span-2')}>
+            <button
+              key={image.id}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                handleImageClick(image.imageUrl, index);
+              }}
+              className={cn('relative', isFirstInThreeLayout && 'row-span-2')}>
               <Image
                 src={image.imageUrl}
                 alt={`체험 상세 이미지 ${index}`}
@@ -83,7 +145,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
                 className='object-cover'
                 priority={index === 0 && (count === 1 || count === 3)}
               />
-            </div>
+            </button>
           );
         })}
       </div>

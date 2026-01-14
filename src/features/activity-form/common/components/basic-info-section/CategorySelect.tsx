@@ -8,11 +8,13 @@ import {
 import Label from '@/shared/components/label/Label';
 import { ACTIVITY_CATEGORIES, ActivityCategory } from '@/shared/constants';
 
+type CategoryValue = ActivityCategory | '';
+
 interface CategorySelectProps {
   /** 선택된 카테고리 값 */
-  value: ActivityCategory | '';
+  value: CategoryValue;
   /** 카테고리 변경 시 호출되는 콜백 함수 */
-  onChange: (value: ActivityCategory) => void;
+  onChange: (value: CategoryValue) => void;
   /** 포커스를 잃을 때 호출되는 콜백 */
   onBlur: () => void;
   /** 에러 메세지 */
@@ -38,7 +40,7 @@ export default function CategorySelect({
       <SelectDropdown
         triggerId='category-filter'
         value={value}
-        onChangeValue={(value) => onChange(value as ActivityCategory)}
+        onChangeValue={(value) => onChange(value)}
         onBlur={onBlur}>
         <SelectDropdownTrigger isError={!!errorMessage}>
           <SelectDropdownValue

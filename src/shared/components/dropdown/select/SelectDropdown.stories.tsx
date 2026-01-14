@@ -107,6 +107,8 @@ const CATEGORY_OPTIONS = [
   { value: '웰빙', label: '🌿 웰빙', disabled: false },
 ] as const;
 
+type CategoryValue = (typeof CATEGORY_OPTIONS)[number]['value'];
+
 export const Default: Story = {
   args: {
     value: '',
@@ -120,12 +122,13 @@ export const Default: Story = {
     },
   },
   render: (args) => {
-    const [, updateArgs] = useArgs<{ value: string }>();
+    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
 
     return (
       <div className='flex h-320 w-360 flex-col gap-8'>
-        <SelectDropdown
+        <SelectDropdown<CategoryValue | ''>
           {...args}
+          value={value}
           onChangeValue={(nextValue) => {
             updateArgs({ value: nextValue });
           }}>
@@ -176,15 +179,16 @@ Label과 함께 사용하는 SelectDropdown 예시입니다.
     },
   },
   render: (args) => {
-    const [, updateArgs] = useArgs<{ value: string }>();
+    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
     const triggerRef = useRef<HTMLButtonElement>(null);
 
     return (
       <div className='flex h-360 w-360 flex-col gap-8'>
         <Label onClick={() => triggerRef.current?.focus()}>카테고리</Label>
 
-        <SelectDropdown
+        <SelectDropdown<CategoryValue | ''>
           {...args}
+          value={value}
           onChangeValue={(nextValue) => {
             updateArgs({ value: nextValue });
           }}>
@@ -230,11 +234,14 @@ export const WithScroll: Story = {
     },
   },
   render: (args) => {
-    const [, updateArgs] = useArgs<{ value: string }>();
+    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
 
     return (
       <div className='flex h-360 w-360 flex-col gap-8'>
-        <SelectDropdown {...args} onChangeValue={(nextValue) => updateArgs({ value: nextValue })}>
+        <SelectDropdown
+          {...args}
+          value={value}
+          onChangeValue={(nextValue) => updateArgs({ value: nextValue })}>
           <SelectDropdownTrigger>
             <SelectDropdownValue
               placeholder='옵션 선택'

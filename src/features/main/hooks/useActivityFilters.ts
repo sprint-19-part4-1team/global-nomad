@@ -4,8 +4,31 @@ import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { GetActivitiesParams } from '@/shared/types/activities';
 import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 
+type FilterKey = 'category' | 'sort' | 'keyword' | 'page';
+
+const FILTER_CONFIG: Record<
+  FilterKey,
+  {
+    shouldRemove: (value: any) => boolean;
+  }
+> = {
+  category: {
+    shouldRemove: (value) => value === undefined,
+  },
+  sort: {
+    shouldRemove: (value) => value === 'latest' || !value,
+  },
+  keyword: {
+    shouldRemove: (value) => !value || value.trim() === '',
+  },
+  page: {
+    shouldRemove: (value) => value === 1 || !value,
+  },
+};
+
 export const useActivityFilters = () => {
   const router = useRouter();
+
   const [keyword, setKeyword] = useQueryParamState('keyword', {
     defaultValue: undefined as string | undefined,
   });
@@ -33,58 +56,34 @@ export const useActivityFilters = () => {
   const { data, isPending } = useActivities({
     method: 'offset',
     page: currentPage,
-    size: size,
-    category: category,
-    keyword: keyword,
-    sort: sort,
+    size,
+    category,
+    keyword,
+    sort,
   });
 
   const activities = data?.activities;
   const totalCount = data?.totalCount;
 
-  const updateFilters = (updates: {
-    category?: GetActivitiesParams['category'] | undefined;
-    sort?: GetActivitiesParams['sort'];
-    keyword?: string;
-    page?: number;
-  }) => {
+  const updateFilters = (
+    updates: Partial<{
+      category: GetActivitiesParams['category'];
+      sort: GetActivitiesParams['sort'];
+      keyword: string;
+      page: number;
+    }>
+  ) => {
     const params = new URLSearchParams(window.location.search);
 
-    // category 처리
-    if ('category' in updates) {
-      if (updates.category === undefined) {
-        params.delete('category');
-      } else {
-        params.set('category', updates.category);
-      }
-    }
+    (Object.entries(updates) as [FilterKey, any][]).forEach(([key, value]) => {
+      const { shouldRemove } = FILTER_CONFIG[key];
 
-    // sort 처리
-    if ('sort' in updates) {
-      if (updates.sort === 'latest' || !updates.sort) {
-        params.delete('sort');
+      if (shouldRemove(value)) {
+        params.delete(key);
       } else {
-        params.set('sort', updates.sort);
+        params.set(key, String(value));
       }
-    }
-
-    // keyword 처리
-    if ('keyword' in updates) {
-      if (updates.keyword) {
-        params.set('keyword', updates.keyword);
-      } else {
-        params.delete('keyword');
-      }
-    }
-
-    // page 처리
-    if ('page' in updates) {
-      if (updates.page === 1) {
-        params.delete('page');
-      } else {
-        params.set('page', String(updates.page));
-      }
-    }
+    });
 
     router.push(`?${params.toString()}`);
   };

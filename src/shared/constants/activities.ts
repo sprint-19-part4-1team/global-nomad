@@ -27,6 +27,6 @@ export type ActivitySortOption = (typeof ACTIVITY_SORT_OPTIONS)[number];
 export const SORT_LABELS: Record<string, string> = {
   latest: '최신순',
   most_reviewed: '리뷰 많은순',
-  price_asc: '가격 높은순',
-  price_desc: '가격 낮은순',
+  price_desc: '가격 높은순',
+  price_asc: '가격 낮은순',
 } as const;

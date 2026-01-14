@@ -6,13 +6,16 @@ import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
 import Button from '@/shared/components/button/Button';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 
 export default function SearchBar() {
   const { keyword, updateFilters } = useActivityFilters();
 
   const [value, setValue] = useState('');
 
+  const overlays = useOverlayState();
   const EMPTY_SEARCH_DIALOG_ID = 'empty-search-dialog';
+  const isSearchDialogOpen = overlays.some((o) => o.id === EMPTY_SEARCH_DIALOG_ID);
 
   useEffect(() => {
     setValue(keyword ?? '');
@@ -20,7 +23,7 @@ export default function SearchBar() {
 
   // esc 키 눌렀을 때 dialog 닫기 (이외의 키는 차단)
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!overlayStore.has(EMPTY_SEARCH_DIALOG_ID)) {
+    if (!isSearchDialogOpen) {
       return;
     }
 
@@ -37,7 +40,7 @@ export default function SearchBar() {
     const trimmedValue = value.trim();
 
     if (!trimmedValue) {
-      if (overlayStore.has(EMPTY_SEARCH_DIALOG_ID)) {
+      if (isSearchDialogOpen) {
         return;
       }
 
@@ -83,7 +86,7 @@ export default function SearchBar() {
           placeholder='내가 원하는 체험은'
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          readOnly={overlayStore.has(EMPTY_SEARCH_DIALOG_ID)}
+          readOnly={isSearchDialogOpen}
           className='w-full body-14 font-medium outline-0 sm:body-18'
         />
       </div>

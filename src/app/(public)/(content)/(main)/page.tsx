@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import ActivitySection from '@/features/main/components/activitySection/ActivitySection';
+import ActivitySection from '@/features/main/components/activity-section/ActivitySection';
 import SearchBar from '@/features/main/components/search-bar/SearchBar';
 import { pickRandom } from '@/features/main/utils/pickRandom';
 import { getActivities } from '@/shared/apis/feature/activities';

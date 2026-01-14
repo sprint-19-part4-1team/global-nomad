@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Card from '@/features/main/components/card/Card';
 import FilterButton from '@/features/main/components/filter-button/FilterButton';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
+import { useMediaQuery } from '@/features/main/hooks/useMediaQuery';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -43,22 +44,12 @@ export default function AllActivity({
   }, [activities, isPending, onEmptyChange]);
 
   // 화면 크기에 따라 size 자동 변경
+  const isMdOrLarger = useMediaQuery('(min-width: 768px)');
+
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
-
-    const updateSize = () => {
-      if (mediaQuery.matches) {
-        setSize(8);
-      } else {
-        setSize(4);
-      }
-    };
-
-    updateSize(); // 초기 값 설정
-    mediaQuery.addEventListener('change', updateSize);
-    return () => mediaQuery.removeEventListener('change', updateSize);
+    setSize(isMdOrLarger ? 8 : 4);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isMdOrLarger]);
 
   useEffect(() => {
     setCurrentPage(1);

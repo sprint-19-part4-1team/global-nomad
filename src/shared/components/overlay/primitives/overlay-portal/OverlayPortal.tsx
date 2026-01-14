@@ -1,7 +1,8 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { WithChildren } from '@/shared/types/common';
 
 const OVERLAY_ROOT_ID = 'overlay-root';
 
@@ -14,9 +15,6 @@ const OVERLAY_ROOT_ID = 'overlay-root';
  *   z-index, overflow, stacking-context 문제를 방지합니다.
  * - 기본적으로 `#overlay-root` DOM 노드에 렌더링됩니다.
  *
- * @param {ReactNode} children
- * Portal을 통해 `overlay-root`에 렌더링될 Overlay 콘텐츠입니다.
- *
  * @example
  * ```tsx
  * <OverlayPortal>
@@ -27,7 +25,7 @@ const OVERLAY_ROOT_ID = 'overlay-root';
  * </OverlayPortal>
  * ```
  */
-export default function OverlayPortal({ children }: { children: ReactNode }) {
+export default function OverlayPortal({ children }: WithChildren) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {

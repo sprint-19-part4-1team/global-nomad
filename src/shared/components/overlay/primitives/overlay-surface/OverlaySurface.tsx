@@ -1,6 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { ReactNode } from 'react';
+import { Ref } from 'react';
 import { LAYER } from '@/shared/components/overlay/constants/layer';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -75,13 +76,11 @@ const overlaySurfaceVariants = cva(`fixed bg-white shadow-card ${LAYER.OVERLAY_S
 
 type OverlaySurfaceVariantProps = VariantProps<typeof overlaySurfaceVariants>;
 
-interface SurfaceProps extends OverlaySurfaceVariantProps {
-  /** Surface 내부에 렌더링될 콘텐츠 */
-  children: ReactNode;
+interface SurfaceProps extends OverlaySurfaceVariantProps, WithChildren {
   /** 추가 스타일 대응 */
   className?: string;
   /** React Ref (useOutsideClick 훅 적용 시 필요) */
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: Ref<HTMLDivElement>;
 }
 
 /**

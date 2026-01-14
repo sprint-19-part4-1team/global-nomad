@@ -1,16 +1,24 @@
 'use client';
 
-import { ReactNode, useId } from 'react';
-import { SelectContext } from '@/shared/components/dropdown/context/selectContext';
+import { useId } from 'react';
+import {
+  SelectContext,
+  SelectContextType,
+} from '@/shared/components/dropdown/context/selectContext';
 import DropdownBaseProvider from '@/shared/components/dropdown/root/DropdownBaseProvider';
 import DropdownBaseRoot from '@/shared/components/dropdown/root/DropdownBaseRoot';
+import { WithChildren } from '@/shared/types/common';
 
-interface SelectDropdownProps {
-  children: ReactNode;
-  value: string;
-  onChangeValue: (value: string) => void;
+interface SelectDropdownProps<T = string> extends WithChildren {
+  /** 현재 선택된 값 (제네릭 T 타입을 따름) */
+  value: T;
+  /** 선택 값 변경 핸들러 */
+  onChangeValue: (value: T) => void;
+  /** 트리거 버튼에 사용할 id (미지정 시 자동 생성) */
   triggerId?: string;
+  /** SelectDropdown 스타일 변형 (기본값: basic) */
   variants?: 'basic' | 'shadow';
+  /** 드롭다운이 포커스를 잃을 때 호출되는 콜백 */
   onBlur?: () => void;
 }
 
@@ -24,13 +32,6 @@ interface SelectDropdownProps {
  * - SelectContext를 통해 value / triggerId / variants를 하위 컴포넌트에 제공합니다.
  * - DropdownBaseProvider를 통해 드롭다운의 open 상태를 관리합니다.
  * - 내부적으로 DropdownBaseRoot를 사용하여 외부 클릭 시 드롭다운을 닫습니다.
- *
- * @param children - SelectDropdownTrigger, SelectDropdownContent 등의 조합 컴포넌트
- * @param value - 현재 선택된 값
- * @param onChangeValue - 선택 값 변경 핸들러
- * @param triggerId - 트리거 버튼에 사용할 id (미지정 시 자동 생성)
- * @param variants - SelectDropdown 스타일 변형 (기본값: basic)
- * @param onBlur - 드롭다운이 포커스를 잃을 때 호출되는 콜백
  *
  * @example
  * ```tsx
@@ -54,19 +55,27 @@ interface SelectDropdownProps {
  *   </SelectDropdown>
  * ```
  */
-export default function SelectDropdown({
+export default function SelectDropdown<T = string>({
   children,
   value,
   onChangeValue,
   triggerId: triggerIdProp,
   variants = 'basic',
   onBlur,
-}: SelectDropdownProps) {
+}: SelectDropdownProps<T>) {
   const autoId = useId();
   const triggerId = triggerIdProp ?? `select-trigger-${autoId}`;
 
+  const contextValue = {
+    value,
+    setValue: onChangeValue,
+    triggerId,
+    variants,
+    onBlur,
+  } as SelectContextType<unknown>;
+
   return (
-    <SelectContext value={{ value, setValue: onChangeValue, triggerId, variants, onBlur }}>
+    <SelectContext value={contextValue}>
       <DropdownBaseProvider>
         <DropdownBaseRoot className='w-full'>{children}</DropdownBaseRoot>
       </DropdownBaseProvider>

@@ -41,9 +41,9 @@ export const dropdownItemVariants = cva(dropdownItemBase, {
   },
 });
 
-interface SelectDropdownItemProps extends WithChildren {
+interface SelectDropdownItemProps<T = string> extends WithChildren {
   /** 옵션의 실제 선택 값 */
-  value: string;
+  value: T;
   /** 옵션 비활성화 여부 */
   disabled?: boolean;
 }
@@ -64,13 +64,13 @@ interface SelectDropdownItemProps extends WithChildren {
  * <SelectDropdownItem value={문화 · 예술}>🎨 문화 · 예술</SelectDropdownItem>
  * ```
  */
-export default function SelectDropdownItem({
+export default function SelectDropdownItem<T = string>({
   children,
   value,
   disabled = false,
-}: SelectDropdownItemProps) {
+}: SelectDropdownItemProps<T>) {
   const { setIsOpen } = useDropdownBaseContext();
-  const { value: selectedValue, setValue, variants } = useSelectContext();
+  const { value: selectedValue, setValue, variants } = useSelectContext<T>();
 
   const isSelected = selectedValue === value;
 

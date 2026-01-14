@@ -65,7 +65,7 @@ export default function ActivityImageModal({ imageUrl, index, onClose }: Activit
             e.stopPropagation();
             onClose();
           }}
-          className='absolute inset-0 h-full w-full cursor-pointer'
+          className='absolute inset-0 cursor-pointer'
         />
       </div>
     </OverlayPortal>

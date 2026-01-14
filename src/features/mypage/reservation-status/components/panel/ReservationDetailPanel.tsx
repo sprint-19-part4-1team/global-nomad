@@ -1,7 +1,7 @@
 'use client';
 
 import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icons from '@/assets/icons';
 import { useDailyReservations } from '@/features/mypage/reservation-status/queries/useDailyReservations';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
@@ -9,6 +9,7 @@ import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { Tabs, TabsContent } from '@/shared/components/tabs';
 import Title from '@/shared/components/title/Title';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { ActivityReservationStatus } from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 import ReservationTabButtons from './ReservationTabButtons';
@@ -57,6 +58,8 @@ export default function ReservationDetailPanel({
   date,
   onClose,
 }: ReservationDetailPanelProps) {
+  const surfaceRef = useRef<HTMLDivElement>(null);
+
   const [selectedScheduleId, setSelectedScheduleId] = useState<string>('');
   const [tabValue, setTabValue] = useState<ActivityReservationStatus>(ReservationStatus.Pending);
 
@@ -94,6 +97,8 @@ export default function ReservationDetailPanel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedules]);
 
+  useOutsideClick(surfaceRef, onClose);
+
   // 화면에 표시할 날짜 포맷 (예: 24년 01월 15일)
   const displayDate = format(date, 'yy년 MM월 dd일');
 
@@ -106,7 +111,7 @@ export default function ReservationDetailPanel({
     <OverlayPortal>
       <div role='dialog'>
         <Backdrop />
-        <OverlaySurface position='right' variant='panel'>
+        <OverlaySurface ref={surfaceRef} position='right' variant='panel'>
           <div className='flex h-full w-full flex-col gap-12 px-24 py-30 sm:gap-16 sm:p-32 sm:pb-48'>
             {/* 헤더: 날짜 표시 및 닫기 버튼 */}
             <div className='flex w-full items-center justify-between'>

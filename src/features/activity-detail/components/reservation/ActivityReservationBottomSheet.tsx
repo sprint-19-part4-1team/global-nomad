@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import ActivityReservationContent from '@/features/activity-detail/components/reservation/content/ActivityReservationContent';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 import OverlaySurface from '@/shared/components/overlay/primitives/overlay-surface/OverlaySurface';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { CreateReservationBodyDto } from '@/shared/types/activities';
 
 /**
@@ -55,6 +56,8 @@ export default function ActivityReservationBottomSheet({
   price,
   onConfirm,
 }: ActivityReservationBottomSheetProps) {
+  const surfaceRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     /** 화면 크기 변경 감지 핸들러 */
     const handleResize = () => {
@@ -67,10 +70,16 @@ export default function ActivityReservationBottomSheet({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useOutsideClick(surfaceRef, () => overlayStore.pop());
+
   return (
     <OverlayPortal>
       <Backdrop />
-      <OverlaySurface position='bottom' variant='sheet' className='z-10 h-auto max-h-700'>
+      <OverlaySurface
+        ref={surfaceRef}
+        position='bottom'
+        variant='sheet'
+        className='z-10 h-auto max-h-700'>
         <ActivityReservationContent
           activityId={activityId}
           price={price}

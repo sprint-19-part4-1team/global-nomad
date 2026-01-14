@@ -1,6 +1,6 @@
 'use client';
 
-import ActivityList from '@/features/mypage/activity/components/activityList/ActivityList';
+import ActivityList from '@/features/mypage/activity/components/activity-list/ActivityList';
 import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';

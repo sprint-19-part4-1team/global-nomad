@@ -1,6 +1,6 @@
 import type { InfiniteData, QueryObserverResult } from '@tanstack/react-query';
 import type { RefObject } from 'react';
-import ExperienceCard from '@/features/mypage/activity/components/experienceCard/ExperienceCard';
+import ExperienceCard from '@/features/mypage/activity/components/experience-card/ExperienceCard';
 import MypageListSkeleton from '@/features/mypage/common/components/skeleton/MypageListSkeleton';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
 import type { ActivityBasicDto } from '@/shared/types/activities';

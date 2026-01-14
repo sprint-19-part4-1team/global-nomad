@@ -1,9 +1,9 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ROUTE_PATHS } from '@/features/activity-detail/constants/routePaths';
-import { useDeleteActivity } from '@/features/activity-detail/mutations/useDeleteActivityMutation';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { useDeleteActivity } from '@/shared/mutations/useDeleteActivityMutation';
 
 /**
  * 체험 삭제 확인 다이얼로그 컴포넌트의 Props
@@ -26,16 +26,22 @@ interface ActivityDeleteDialogProps {
  */
 export default function ActivityDeleteDialog({ activityId }: ActivityDeleteDialogProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const deleteMutation = useDeleteActivity();
 
   const handleConfirm = () => {
     deleteMutation.mutate(activityId, {
       onSuccess: () => {
-        router.push(ROUTE_PATHS.MAIN);
+        const isDetailPage = pathname.startsWith('/activity/');
+
+        if (isDetailPage) {
+          router.push(ROUTE_PATHS.MAIN);
+        }
+
         toast.info('체험이 성공적으로 삭제되었습니다.');
       },
       onError: (error) => {
-        toast.error('체험을 삭제하는 데 실패했습니다.');
+        toast.error(error.message ?? '체험을 삭제하는 데 실패했습니다.');
         console.error('체험 삭제 실패:', error);
       },
       onSettled: () => {

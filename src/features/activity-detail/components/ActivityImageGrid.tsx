@@ -101,14 +101,6 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
             'fixed top-1/2 left-1/2 h-fit w-340 -translate-x-1/2 -translate-y-1/2 shadow-card sm:w-700',
             LAYER.OVERLAY_SURFACE
           )}>
-          <button
-            aria-label={`체험 상세 이미지 ${index} 확대 닫기`}
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              overlayStore.pop();
-            }}
-            className='absolute top-0 left-0 z-1 h-full w-full cursor-pointer'
-          />
           <Image
             src={imageUrl}
             alt={`체험 상세 이미지 ${index} 확대 보기`}
@@ -116,6 +108,14 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
             height={0}
             className='h-auto max-h-[70vh] w-full object-contain'
             sizes='(max-width: 640px) 340px, 700px'
+          />
+          <button
+            aria-label={`체험 상세 이미지 ${index} 확대 닫기`}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              overlayStore.pop();
+            }}
+            className='absolute top-0 left-0 h-full w-full cursor-pointer'
           />
         </div>
       </OverlayPortal>

@@ -1,14 +1,10 @@
 import { Metadata } from 'next';
-import { ReactNode } from 'react';
-
-interface LoginLayoutProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 export const metadata: Metadata = {
   title: '로그인',
 };
 
-export default function LoginLayout({ children }: LoginLayoutProps) {
+export default function LoginLayout({ children }: WithChildren) {
   return <>{children}</>;
 }

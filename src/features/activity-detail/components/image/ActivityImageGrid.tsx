@@ -2,9 +2,7 @@
 
 import Image from 'next/image';
 import { useRef } from 'react';
-import { LAYER } from '@/shared/components/overlay/constants/layer';
-import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
-import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
+import ActivityImageModal from '@/features/activity-detail/components/image/ActivityImageModal';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { SubImagesType } from '@/shared/types/activities';
@@ -12,7 +10,7 @@ import { cn } from '@/shared/utils/cn';
 
 /**
  * 체험 상세 이미지 그리드 컴포넌트의 Props
- * @property {SubImagesType[]} subImages - 표시할 이미지 배열 (1~4개)
+ * @property subImages - 표시할 이미지 배열 (1~4개)
  */
 interface ActivityImageGridProps {
   subImages: SubImagesType[];
@@ -93,32 +91,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
    */
   const handleImageClick = (imageUrl: string, index: number) => {
     overlayStore.push(
-      <OverlayPortal>
-        <Backdrop />
-        <div
-          ref={surfaceRef}
-          className={cn(
-            'fixed top-1/2 left-1/2 h-fit w-340 -translate-x-1/2 -translate-y-1/2 shadow-card sm:w-700',
-            LAYER.OVERLAY_SURFACE
-          )}>
-          <Image
-            src={imageUrl}
-            alt={`체험 상세 이미지 ${index} 확대 보기`}
-            width={0}
-            height={0}
-            className='h-auto max-h-[70vh] w-full object-contain'
-            sizes='(max-width: 640px) 340px, 700px'
-          />
-          <button
-            aria-label={`체험 상세 이미지 ${index} 확대 닫기`}
-            onPointerDown={(e) => {
-              e.stopPropagation();
-              overlayStore.pop();
-            }}
-            className='absolute top-0 left-0 h-full w-full cursor-pointer'
-          />
-        </div>
-      </OverlayPortal>
+      <ActivityImageModal imageUrl={imageUrl} index={index} onClose={() => overlayStore.pop()} />
     );
   };
 

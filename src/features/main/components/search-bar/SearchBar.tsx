@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import Icons from '@/assets/icons';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
@@ -9,7 +10,8 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 
 export default function SearchBar() {
-  const { keyword, updateFilters } = useActivityFilters();
+  const { keyword } = useActivityFilters();
+  const router = useRouter();
 
   const [value, setValue] = useState('');
 
@@ -56,12 +58,7 @@ export default function SearchBar() {
       return;
     }
 
-    updateFilters({
-      category: undefined,
-      sort: 'latest',
-      keyword: trimmedValue,
-      page: 1,
-    });
+    router.push(`/search?keyword=${encodeURIComponent(trimmedValue)}&sort=latest&page=1`);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

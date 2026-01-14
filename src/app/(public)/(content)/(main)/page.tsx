@@ -5,6 +5,7 @@ import SearchBar from '@/features/main/components/search-bar/SearchBar';
 import { pickRandom } from '@/features/main/utils/pickRandom';
 import { getActivities } from '@/shared/apis/feature/activities';
 import BannerSlide from '@/shared/components/slide/BannerSlide';
+import PopularSlide from '@/shared/components/slide/PopularSlide';
 import Title from '@/shared/components/title/Title';
 import { layoutContainer } from '@/shared/constants/';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
@@ -86,9 +87,12 @@ export default async function Home() {
             <div className='px-0 sm:px-40'>
               <SearchBar />
             </div>
+            <Title responsive='lg' className='mt-55 mb-14 sm:mt-92 sm:mb-16 md:mb-20'>
+              🔥 인기 체험
+            </Title>
+            <PopularSlide />
             <ActivitySection />
           </Suspense>
-
           <div />
         </div>
       </main>

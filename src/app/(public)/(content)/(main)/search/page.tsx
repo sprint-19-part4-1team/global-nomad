@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import ActivitySection from '@/features/main/components/activity-section/ActivitySection';
 import SearchBar from '@/features/main/components/search-bar/SearchBar';
+import Button from '@/shared/components/button/Button';
 import Title from '@/shared/components/title/Title';
 import { layoutContainer } from '@/shared/constants';
 
@@ -27,6 +28,10 @@ export default function SearchPage() {
           </div>
           <ActivitySection />
         </Suspense>
+
+        <Button href='/' variant='secondary' className='mx-auto mt-48'>
+          전체목록으로
+        </Button>
       </div>
     </main>
   );

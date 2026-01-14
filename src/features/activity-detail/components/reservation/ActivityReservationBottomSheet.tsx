@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import ActivityReservationContent from '@/features/activity-detail/components/reservation/content/ActivityReservationContent';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
@@ -70,7 +70,10 @@ export default function ActivityReservationBottomSheet({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useOutsideClick(surfaceRef, () => overlayStore.pop());
+  /** 바텀 시트 닫기 핸들러 */
+  const handleClose = useCallback(() => overlayStore.pop(), []);
+
+  useOutsideClick(surfaceRef, handleClose);
 
   return (
     <OverlayPortal>

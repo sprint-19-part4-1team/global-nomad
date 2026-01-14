@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { KeyboardEvent, ReactNode } from 'react';
+import { KeyboardEvent } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContext';
 import {
@@ -10,6 +10,7 @@ import {
   dropdownItemShadowStyle,
 } from '@/shared/components/dropdown/styles/dropdownItem';
 import { moveFocus, moveToEdge } from '@/shared/components/dropdown/utils/focusNavigation';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
 export const dropdownItemVariants = cva(dropdownItemBase, {
@@ -40,9 +41,10 @@ export const dropdownItemVariants = cva(dropdownItemBase, {
   },
 });
 
-interface SelectDropdownItemProps {
-  children: ReactNode;
+interface SelectDropdownItemProps extends WithChildren {
+  /** 옵션의 실제 선택 값 */
   value: string;
+  /** 옵션 비활성화 여부 */
   disabled?: boolean;
 }
 
@@ -56,10 +58,6 @@ interface SelectDropdownItemProps {
  * - 클릭 또는 키보드(Enter / Space)로 선택할 수 있습니다.
  * - 선택 시 값을 변경하고 드롭다운을 닫습니다.
  * - `disabled` 상태인 경우 선택 및 포커스를 차단합니다.
- *
- * @param children - 옵션에 표시될 콘텐츠 (텍스트, 아이콘 등)
- * @param value - 옵션의 실제 선택 값
- * @param disabled - 옵션 비활성화 여부
  *
  * @example
  * ```tsx

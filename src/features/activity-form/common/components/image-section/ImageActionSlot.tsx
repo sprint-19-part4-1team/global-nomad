@@ -1,13 +1,12 @@
 'use client';
 
-import { KeyboardEvent, ReactNode } from 'react';
+import { KeyboardEvent } from 'react';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
-interface ImageActionSlotProps {
+interface ImageActionSlotProps extends WithChildren {
   /** 스크린리더를 위한 버튼 접근성 라벨 */
   ariaLabel: string;
-  /** 슬롯 내부에 렌더링될 콘텐츠 */
-  children: ReactNode;
   /** 추가로 적용할 클래스 이름 */
   className?: string;
   /** 슬롯 클릭 시 실행될 핸들러 */

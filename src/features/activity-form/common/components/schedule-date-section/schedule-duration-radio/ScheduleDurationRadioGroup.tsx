@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
+import { WithChildren } from '@/shared/types/common';
 
-interface ScheduleDurationRadioGroupProps {
+interface ScheduleDurationRadioGroupProps extends WithChildren {
   /** 라디오 그룹 제목 */
   legend: string;
-  /** 라디오 옵션 컴포넌트들 */
-  children: ReactNode;
   /** fieldset에 적용할 스타일 */
   className?: string;
 }

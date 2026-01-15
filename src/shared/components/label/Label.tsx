@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { ReactNode } from 'react';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
 const labelVariants = cva('w-fit', {
@@ -17,11 +17,14 @@ const labelVariants = cva('w-fit', {
 
 type LabelVariantsProps = VariantProps<typeof labelVariants>;
 
-interface LabelProps extends LabelVariantsProps {
+interface LabelProps extends LabelVariantsProps, WithChildren {
+  /** 다른 컴포넌트에서 라벨을 참조하기 위한 식별자 */
   id?: string;
+  /** 연결될 form control의 `id` 값 */
   htmlFor?: string;
-  children: ReactNode;
+  /** 추가적인 스타일 확장을 위한 클래스 */
   className?: string;
+  /** selectDropdown 포커스 트리거를 위한 onClick 함수 */
   onClick?: () => void;
 }
 
@@ -44,13 +47,6 @@ interface LabelProps extends LabelVariantsProps {
  * - `review`
  *   - 리뷰 폼에서 사용되는 라벨
  *   - `lg` 사이즈, 중앙 정렬, bold weight
- *
- * @param id - 다른 컴포넌트에서 라벨을 참조하기 위한 식별자
- * @param htmlFor - 연결될 form control의 `id` 값
- * @param children - 라벨에 표시될 텍스트
- * @param variant - 라벨의 스타일 `'authForm' | 'form' | 'review'`
- * @param className - 추가적인 스타일 확장을 위한 클래스
- * @param onClick - selectDropdown 포커스 트리거를 위한 onClick 함수
  *
  * @example
  * ```tsx

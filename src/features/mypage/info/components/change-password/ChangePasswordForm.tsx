@@ -22,7 +22,7 @@ interface ChangePasswordFormProps {
  * @description
  * - 마이페이지 내 정보 수정에서 사용하는 비밀번호 변경 폼입니다.
  *
- * @param {string} userEmail - 로그인한 유저 이메일
+ * @param userEmail - 로그인한 유저 이메일
  */
 export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProps) {
   const { values, errors, isValid, handleChange, handleBlur } = useChangePasswordForm();
@@ -37,7 +37,6 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
       clearSession('user');
       router.replace('/login');
     } catch (error) {
-      // TODO: 프로덕션 배포 시 console.error 삭제
       console.error('로그아웃 실패: ', error);
       toast.error('로그아웃에 실패했습니다.');
     }
@@ -61,7 +60,6 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
         />
       );
     } catch (error) {
-      // TODO: 프로덕션 배포 시 console.error 삭제
       console.error('비밀번호 변경 실패: ', error);
       toast.error('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
     } finally {

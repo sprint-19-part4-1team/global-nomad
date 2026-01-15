@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { fn } from 'storybook/test';
 import Avatar from '@/shared/components/avatar/Avatar';
 import AvatarFallback from '@/shared/components/avatar/AvatarFallback';
 import AvatarImage from '@/shared/components/avatar/AvatarImage';
@@ -95,12 +96,8 @@ export const Default: Story = {
           </ActionDropdownTrigger>
 
           <ActionDropdownContent className='-left-20'>
-            <ActionDropdownItem onClick={() => console.log('로그아웃')}>
-              로그아웃
-            </ActionDropdownItem>
-            <ActionDropdownItem onClick={() => console.log('마이페이지')}>
-              마이페이지
-            </ActionDropdownItem>
+            <ActionDropdownItem onClick={fn()}>로그아웃</ActionDropdownItem>
+            <ActionDropdownItem onClick={fn()}>마이페이지</ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>
       </div>
@@ -135,12 +132,8 @@ export const IconOnlyTrigger: Story = {
           </ActionDropdownTrigger>
 
           <ActionDropdownContent className='-left-40'>
-            <ActionDropdownItem onClick={() => console.log('로그아웃')}>
-              로그아웃
-            </ActionDropdownItem>
-            <ActionDropdownItem onClick={() => console.log('마이페이지')}>
-              마이페이지
-            </ActionDropdownItem>
+            <ActionDropdownItem onClick={fn()}>로그아웃</ActionDropdownItem>
+            <ActionDropdownItem onClick={fn()}>마이페이지</ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>
       </div>

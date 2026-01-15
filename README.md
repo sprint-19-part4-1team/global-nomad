@@ -133,9 +133,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>
@@ -148,9 +148,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>
@@ -163,9 +163,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>
@@ -178,9 +178,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>
@@ -193,9 +193,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>
@@ -208,9 +208,9 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></a></td>
-    <td align="center"><b>Tablet</b></a></td>
-    <td align="center"><b>Mobile</b></a></td>
+    <td align="center"><b>PC</b></td>
+    <td align="center"><b>Tablet</b></td>
+    <td align="center"><b>Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src=""></td>

@@ -123,10 +123,11 @@ export default function ActivityReservationContent({
   // 바텀시트에서 날짜/시간 선택이 완료되면 해당 영역 숨김
   const showDateTimeSection = isBottomSheet ? !reservation.showParticipantSection : true;
 
-  // 바텀시트 초기화, 확인 버튼 비활성화 여부
-  const isBottomSheetButtonDisabled = reservation.showParticipantSection
-    ? !reservation.isValid
-    : !reservation.isDateTimeValid;
+  // 바텀시트 확인 버튼 비활성화 여부
+  const isBottomSheetButtonDisabled = !reservation.isDateTimeValid;
+
+  // 초기화 버튼 비활성화 여부
+  const isResetDisabled = !reservation.selectedDate;
 
   /** 확인 버튼 핸들러 (바텀시트 - 날짜/시간 선택 단계) */
   const handleDateTimeConfirm = () => {
@@ -170,11 +171,6 @@ export default function ActivityReservationContent({
 
   /** 초기화 버튼 핸들러 */
   const handleReset = () => {
-    // 바텀시트이고 인원수 표시 중이라면 날짜 표시로 이동
-    if (isBottomSheet && reservation.showParticipantSection) {
-      reservation.handleBack();
-    }
-
     setCurrentMonth(startOfMonth(new Date()));
   };
 
@@ -270,7 +266,7 @@ export default function ActivityReservationContent({
                     variant='negative'
                     size='lg'
                     onClick={handleReset}
-                    disabled={!reservation.isValid}
+                    disabled={isResetDisabled}
                     className='py-14'>
                     <span className='flex w-full items-center justify-center gap-12'>
                       초기화
@@ -294,11 +290,7 @@ export default function ActivityReservationContent({
       {/* 버튼 - 바텀시트에서는 항상 표시 */}
       {isBottomSheet && (
         <div className='flex gap-24'>
-          <Button
-            variant='negative'
-            full
-            onClick={handleReset}
-            disabled={isBottomSheetButtonDisabled}>
+          <Button variant='negative' full onClick={handleReset} disabled={isResetDisabled}>
             <span className='flex w-full items-center justify-center gap-12'>
               초기화
               <Icons.Reset className='h-20 w-20' />

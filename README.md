@@ -57,7 +57,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 #### 라이브러리
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) <img src="https://img.shields.io/badge/TANSTACK QUERY-black?style=for-the-badge&logo=TANSTACK QUERY&logoColor=white"> <img src="https://img.shields.io/badge/ZUSTAND-black?style=for-the-badge&logo=ZUSTAND&logoColor=white"> <img src="https://img.shields.io/badge/EMBLA CAROUSEL-black?style=for-the-badge&logo=EMBLA CAROUSEL&logoColor=white"> <img src="https://img.shields.io/badge/REACT TOASTIFY-black?style=for-the-badge&logo=REACT TOASTIFY&logoColor=white">
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) <img src="https://img.shields.io/badge/TANSTACK-black?style=for-the-badge&logo=TANSTACK&logoColor=white"> <img src="https://img.shields.io/badge/Zustand-black?style=for-the-badge&logo=Zustand&logoColor=white"> <img src="https://img.shields.io/badge/REACT_SLICK-black?style=for-the-badge&logo=REACT_SLICK&logoColor=white"> <img src="https://img.shields.io/badge/REACT_TOASTIFY-black?style=for-the-badge&logo=REACT_TOASTIFY&logoColor=white"> <img src="https://img.shields.io/badge/REACT_Day_Picker-black?style=for-the-badge&logo=REACT_Day_Picker&logoColor=white">
 
 - 프레임워크 : `Next.js 15.5.9 (App Router)`
 - 라이브러리 : `React`
@@ -66,7 +66,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 - 상태 관리
   - 서버 : `TanStack Query`
   - 클라이언트 : `Zustand`
-- UI 컴포넌트 : `Embla Carousel`, `React Toastify`, `React Day Picker`
+- UI 컴포넌트 : `React-Slick`, `React-Toastify`, `React-Day-Picker`
 
 #### 빌드 & 개발 도구
 
@@ -89,8 +89,8 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
 - 프로덕션 배포 : `Vercel`
-- CI 워크플로우 : `GitHub Actions` (TypeScript 자동 검사, Chromatic 배포)
-- UI 테스트 배포 : `Chromatic` (시각적 회귀 테스트 및 스토리북 배포)
+- CI 워크플로우 : `GitHub Actions` (TypeScript 자동 검사 및 스토리북 빌드 자동화)
+- UI 테스트 : `Chromatic` (스토리북 배포)
 
 #### 협업 도구
 

@@ -79,7 +79,7 @@ export default function ActivityReservationDatePicker({
 
   return (
     <DayPicker
-      className='custom-day-picker reservation-day-picker h-300'
+      className='custom-day-picker reservation-day-picker flex h-300 justify-center'
       mode='single'
       locale={ko}
       selected={selectedDate}

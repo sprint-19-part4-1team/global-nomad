@@ -59,7 +59,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) <img src="https://img.shields.io/badge/TANSTACK QUERY-black?style=for-the-badge&logo=TANSTACK QUERY&logoColor=white"> <img src="https://img.shields.io/badge/ZUSTAND-black?style=for-the-badge&logo=ZUSTAND&logoColor=white"> <img src="https://img.shields.io/badge/EMBLA CAROUSEL-black?style=for-the-badge&logo=EMBLA CAROUSEL&logoColor=white"> <img src="https://img.shields.io/badge/REACT TOASTIFY-black?style=for-the-badge&logo=REACT TOASTIFY&logoColor=white">
 
-- 프레임워크 : `Next.js 15.5.9 (App Rotuer)`
+- 프레임워크 : `Next.js 15.5.9 (App Router)`
 - 라이브러리 : `React`
 - 개발 언어 : `TypeScript`
 - 스타일링 : `Tailwind CSS v4`

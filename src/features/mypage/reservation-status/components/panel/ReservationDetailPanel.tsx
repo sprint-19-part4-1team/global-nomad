@@ -115,13 +115,13 @@ export default function ReservationDetailPanel({
           <div className='flex h-full w-full flex-col gap-12 px-24 py-30 sm:gap-16 sm:p-32 sm:pb-48'>
             {/* 헤더: 날짜 표시 및 닫기 버튼 */}
             <div className='flex w-full items-center justify-between'>
-              <Title as='h3' size='18' className='text-gray-950 sm:heading-20'>
+              <Title as='h3' size='18' className='sm:heading-20'>
                 {displayDate}
               </Title>
               <button
                 onClick={onClose}
                 aria-label={`${displayDate} 예약 상세 패널 닫기`}
-                className='h-24 w-24 cursor-pointer sm:h-40 sm:w-40'>
+                className='h-24 w-24 sm:h-40 sm:w-40'>
                 <Icons.Close aria-hidden='true' />
               </button>
             </div>
@@ -143,7 +143,7 @@ export default function ReservationDetailPanel({
 
                 {/* 예약 내역 섹션 */}
                 <div className='flex flex-col gap-12'>
-                  <Title as='h4' responsive='sm' className='text-gray-950'>
+                  <Title as='h4' responsive='sm'>
                     예약 내역
                   </Title>
 

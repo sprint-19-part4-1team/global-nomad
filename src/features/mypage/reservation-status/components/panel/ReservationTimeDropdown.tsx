@@ -55,7 +55,7 @@ export default function ReservationTimeDropdown({
 }: ReservationTimeDropdownProps) {
   return (
     <div className='flex flex-col gap-12'>
-      <Title as='h4' responsive='sm' className='text-gray-950'>
+      <Title as='h4' responsive='sm'>
         예약 시간
       </Title>
       {isPending ? (

@@ -8,7 +8,6 @@ interface LogoProps {
 
 const desktopLogoBaseClass = cn(
   'hidden sm:block',
-  'text-gray-950',
   'transition transition-color duration-500',
   'hover:text-primary-600'
 );

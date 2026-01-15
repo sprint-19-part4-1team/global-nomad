@@ -33,7 +33,7 @@ export default function ScheduleTimeChip({ startTime, endTime, onRemove }: Sched
         type='button'
         aria-label={`예약 시간 ${startTime}부터 ${endTime}까지 삭제`}
         onClick={onRemove}
-        className='ml-10 h-24 w-24 cursor-pointer text-gray-400'>
+        className='ml-10 h-24 w-24 text-gray-400'>
         <Icons.Close aria-hidden='true' />
       </button>
     </li>

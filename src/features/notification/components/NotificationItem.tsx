@@ -51,7 +51,7 @@ export default function NotificationItem({
           <time dateTime={updatedAt} className='body-12 font-medium text-gray-400'>
             {getTimeAgo(updatedAt)}
           </time>
-          <button type='button' className='cursor-pointer' onClick={() => void onDelete(id)}>
+          <button type='button' onClick={() => void onDelete(id)}>
             <Icons.Trash className='h-24 w-24 text-gray-300 hover:text-gray-700' />
           </button>
         </div>

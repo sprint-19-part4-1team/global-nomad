@@ -133,8 +133,6 @@ export default function AllActivity({
 
       {isPending && <AllActivitiesSkeleton />}
 
-      {/* <AllActivitiesSkeleton /> */}
-
       {!isPending && activities && activities.length > 0 && (
         <>
           <div className='mr-0 flex flex-wrap sm:-mr-20 md:-mr-24'>

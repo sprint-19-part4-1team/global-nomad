@@ -57,7 +57,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 #### 라이브러리
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) <img src="https://img.shields.io/badge/TANSTACK-black?style=for-the-badge&logo=TANSTACK&logoColor=white"> <img src="https://img.shields.io/badge/Zustand-black?style=for-the-badge&logo=Zustand&logoColor=white"> <img src="https://img.shields.io/badge/REACT_SLICK-black?style=for-the-badge&logo=REACT_SLICK&logoColor=white"> <img src="https://img.shields.io/badge/REACT_TOASTIFY-black?style=for-the-badge&logo=REACT_TOASTIFY&logoColor=white"> <img src="https://img.shields.io/badge/REACT_Day_Picker-black?style=for-the-badge&logo=REACT_Day_Picker&logoColor=white">
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![Tanstack](https://img.shields.io/badge/Tanstack-black?style=for-the-badge&logo=Tanstack&logoColor=white) ![Reack-Slick](https://img.shields.io/badge/React_Slick-black?style=for-the-badge&logo=React_Slick&logoColor=white) ![React-Toastify](https://img.shields.io/badge/React_Toastify-black?style=for-the-badge&logo=React_Toastify&logoColor=white) ![React-Day-Picker](https://img.shields.io/badge/REACT_Day_Picker-black?style=for-the-badge&logo=REACT_Day_Picker&logoColor=white)
 
 - 프레임워크 : `Next.js 15.5.9 (App Router)`
 - 라이브러리 : `React`
@@ -78,7 +78,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 #### 코드 품질 & 포맷팅
 
-![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) ![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black) <img src="https://img.shields.io/badge/HUSKY-black?style=for-the-badge&logo=HUSKY&logoColor=white">
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) ![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black) ![Husky](https://img.shields.io/badge/Husky-black?style=for-the-badge&logo=Husky&logoColor=white)
 
 - 린트 : `ESLint`
 - 포맷팅 : `Prettier`

@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { pickRandom } from '@/features/main/utils/pickRandom';
 import { getActivities } from '@/shared/apis/feature/activities';
+import { QUERY_KEYS } from '@/shared/constants';
 
 export const useRandomActivities = () => {
   return useQuery({
-    queryKey: ['activities', 'random', 5],
+    queryKey: QUERY_KEYS.RANDOM_ACTIVITIES(5),
     queryFn: async () => {
       const data = await getActivities({
         method: 'offset',

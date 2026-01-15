@@ -72,7 +72,7 @@ export default function AllActivity({
                 setCategory(value as NonNullable<GetActivitiesParams['category']>)
               }
               triggerId='category-filter'
-              value={category as string}
+              value={category}
               variants='shadow'>
               <SelectDropdownTrigger>
                 <SelectDropdownValue

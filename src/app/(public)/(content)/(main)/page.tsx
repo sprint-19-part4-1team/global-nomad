@@ -7,7 +7,7 @@ import { getActivities } from '@/shared/apis/feature/activities';
 import BannerSlide from '@/shared/components/slide/BannerSlide';
 import PopularSlide from '@/shared/components/slide/PopularSlide';
 import Title from '@/shared/components/title/Title';
-import { layoutContainer } from '@/shared/constants/';
+import { layoutContainer, QUERY_KEYS } from '@/shared/constants/';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export default async function Home() {
@@ -15,7 +15,7 @@ export default async function Home() {
 
   // 배너
   await queryClient.prefetchQuery({
-    queryKey: ['activities', 'random', 5],
+    queryKey: QUERY_KEYS.RANDOM_ACTIVITIES(5),
     queryFn: async () => {
       const data = await getActivities({
         method: 'offset',

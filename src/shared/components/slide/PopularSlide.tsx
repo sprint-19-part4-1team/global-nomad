@@ -92,10 +92,12 @@ export default function PopularSlide() {
   };
 
   return (
-    <div className='relative'>
-      <Slider ref={sliderRef} {...settings} className='-mr-12m:-mr-20 md:-mr-24'>
+    <div className='popular relative'>
+      <Slider ref={sliderRef} {...settings} className='-mr-24 sm:-mr-20 md:-mr-24'>
         {allActivities.map((activity, index) => (
-          <div key={`${activity.id}-${index}`} className='box-border min-w-156 flex-none pr-12'>
+          <div
+            key={`${activity.id}-${index}`}
+            className='box-border min-w-156 flex-none pr-12 sm:pr-20 md:pr-24'>
             <Card
               id={activity.id}
               bannerImageUrl={activity.bannerImageUrl}

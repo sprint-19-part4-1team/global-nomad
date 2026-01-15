@@ -18,7 +18,8 @@ export default function ActivitySection() {
             <strong>{keyword}</strong> 으로 검색한 결과입니다.
           </div>
           <div className='mt-10 body-16 font-medium text-gray-700'>
-            총 {activities?.length}개의 결과가 있습니다.
+            총 <span className='font-bold text-primary-500'>{activities?.length}</span>개의 결과가
+            있습니다.
           </div>
         </div>
       )}

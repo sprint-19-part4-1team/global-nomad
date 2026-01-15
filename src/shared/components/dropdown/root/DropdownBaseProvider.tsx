@@ -1,11 +1,8 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { DropdownBaseContext } from '@/shared/components/dropdown/context/dropdownBaseContext';
-
-interface DropdownBaseProviderProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * ## DropdownBaseProvider
@@ -19,7 +16,7 @@ interface DropdownBaseProviderProps {
  *
  * @param children - ActionDropdown 또는 SelectDropdown 루트 컴포넌트
  */
-export default function DropdownBaseProvider({ children }: DropdownBaseProviderProps) {
+export default function DropdownBaseProvider({ children }: WithChildren) {
   const [isOpen, setIsOpen] = useState(false);
 
   return <DropdownBaseContext value={{ isOpen, setIsOpen }}>{children}</DropdownBaseContext>;

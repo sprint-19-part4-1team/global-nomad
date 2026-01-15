@@ -1,11 +1,10 @@
 'use client';
 
-import { ReactNode, useId, useState } from 'react';
+import { useId, useState } from 'react';
 import { ScheduleDateAccordionContext } from '@/features/activity-form/common/components/schedule-date-section/schedule-date-accordion/context/ScheduleDateAccordion';
+import { WithChildren } from '@/shared/types/common';
 
-interface ScheduleDateAccordionProps {
-  /** 아코디언을 구성하는 하위 컴포넌트들 (Header, Panel) */
-  children: ReactNode;
+interface ScheduleDateAccordionProps extends WithChildren {
   /** 아코디언의 초기 열림 상태 */
   defaultOpen?: boolean;
 }

@@ -24,25 +24,25 @@ type LogoutReason = 'user' | 'expired';
  * - 로그인, `/users/me` 조회, 프로필 수정 등 **서버에서 최신 사용자 정보를 받은 시점에만** `setUser` 또는 `setSession`를 호출해야 합니다.
  * - 로그아웃 또는 세션 만료 시 `clearSession`를 호출하여 인증 상태를 초기화합니다.
  * - 이 store는 `zustand/persist`를 사용하여 새로고침 후에도 사용자 정보를 복원합니다.
- *
- * @property {UserServiceResponseDto | undefined} user - 로그인한 사용자 정보 (비로그인 시 undefined)
- * @property {number | undefined} accessTokenExpiresAt - accessToken 만료 시각 (ms timestamp)
- * @property {LogoutReason | undefined} logoutReason - 세션 종료 원인 수동 로그아웃(`user`) 또는 자동 로그아웃(`expired`)
- * @property {boolean} hasHydrated - persist hydration 완료 여부 (SSR → CSR 깜빡임 방지용)
- * @property {boolean} isAuthInProgress - 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환이 진행 중인지 여부
- * @function setUser - 사용자 정보 설정
- * @function setSession - 사용자 정보와 accessToken 만료 시각을 함께 설정 (로그인, 토큰 만료)
- * @function clearSession - 인증 세션을 종료하고 사용자 정보를 초기화
  */
 type UserStore = {
+  /** 로그인한 사용자 정보 (비로그인 시 undefined) */
   user: UserServiceResponseDto | undefined;
+  /** accessToken 만료 시각 (ms timestamp) */
   accessTokenExpiresAt: number | undefined;
+  /** 세션 종료 원인 수동 로그아웃(`user`) 또는 자동 로그아웃(`expired`) */
   logoutReason: LogoutReason | undefined;
+  /** persist hydration 완료 여부 (SSR → CSR 깜빡임 방지용) */
   hasHydrated: boolean;
+  /** 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환이 진행 중인지 여부 */
   isAuthInProgress: boolean;
+  /** 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환 설정 */
   setIsAuthInProgress: (isAuthTransitioning: boolean) => void;
+  /** 사용자 정보 설정 */
   setUser: (user: UserServiceResponseDto) => void;
+  /** 사용자 정보와 accessToken 만료 시각을 함께 설정 (로그인, 토큰 만료) */
   setSession: (params: { user: UserServiceResponseDto; accessTokenExpiresAt: number }) => void;
+  /** 인증 세션을 종료하고 사용자 정보를 초기화 */
   clearSession: (reason: LogoutReason) => void;
 };
 

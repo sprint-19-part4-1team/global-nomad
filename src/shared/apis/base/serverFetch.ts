@@ -8,17 +8,15 @@ import { coreFetch } from '@/shared/apis/base/coreFetch';
  * - Next.js API Route(BFF) 내부에서 백엔드 API를 호출하기 위한 함수입니다.
  * - 실제 요청 실행 및 에러 처리는 coreFetch에 위임합니다.
  *
- * @param {string} endpoint - 호출할 백엔드 API의 엔드포인트
- * @param {RequestInit} options - fetch에 전달할 RequestInit 옵션
- * @param {number} [timeoutMs] - 요청 제한 시간(ms), 미지정 시 coreFetch의 기본 timeout 사용 (10초)
- * @returns {Promise<T>} - 백엔드 API 응답 JSON 데이터
- *
  * @throws
  * `{ status: number; message: string }` 형태의 에러 객체
  */
 export const serverFetch = async <T>(
+  /** 호출할 백엔드 API의 엔드포인트 */
   endpoint: string,
+  /** fetch에 전달할 RequestInit 옵션 */
   options: RequestInit,
+  /** 요청 제한 시간(ms), 미지정 시 coreFetch의 기본 timeout 사용 (10초) */
   timeoutMs?: number
 ): Promise<T> => {
   const BASE_URL = process.env.API_URL;

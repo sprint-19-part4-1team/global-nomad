@@ -20,7 +20,7 @@ export const MYPAGE_TABS = [
     label: '예약 현황',
     href: '/mypage/reservation-status',
   },
-] as const;
+];
 
 /**
  * ### MypageTabs

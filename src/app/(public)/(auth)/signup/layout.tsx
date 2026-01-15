@@ -1,14 +1,10 @@
 import { Metadata } from 'next';
-import { ReactNode } from 'react';
-
-interface SignupLayoutProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 export const metadata: Metadata = {
   title: '회원가입',
 };
 
-export default function SignupLayout({ children }: SignupLayoutProps) {
+export default function SignupLayout({ children }: WithChildren) {
   return <>{children}</>;
 }

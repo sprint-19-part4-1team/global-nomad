@@ -1,9 +1,10 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { LinkProps } from 'next/link';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import ButtonBase from '@/shared/components/button/ButtonBase';
 import LinkBase from '@/shared/components/button/LinkBase';
 import Spinner from '@/shared/components/spinner/Spinner';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
 /** 공통 스타일 */
@@ -60,10 +61,10 @@ const buttonVariants = cva(
 );
 
 /** 공통(스타일 + children/className) */
-type ButtonCommonProps = VariantProps<typeof buttonVariants> & {
-  children: ReactNode;
-  className?: string;
-};
+type ButtonCommonProps = WithChildren
+  & VariantProps<typeof buttonVariants> & {
+    className?: string;
+  };
 
 /** button(action) 타입 */
 type ButtonAsButton = ButtonCommonProps

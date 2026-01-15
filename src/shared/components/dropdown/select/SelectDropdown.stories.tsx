@@ -9,6 +9,7 @@ import {
   SelectDropdownItem,
 } from '@/shared/components/dropdown/select';
 import Label from '@/shared/components/label/Label';
+import { ActivityCategory } from '@/shared/constants';
 
 /**
  * SelectDropdown 컴포넌트 스토리 가이드
@@ -105,9 +106,7 @@ const CATEGORY_OPTIONS = [
   { value: '투어', label: '🏙️ 투어', disabled: false },
   { value: '관광', label: '🚍 관광', disabled: false },
   { value: '웰빙', label: '🌿 웰빙', disabled: false },
-] as const;
-
-type CategoryValue = (typeof CATEGORY_OPTIONS)[number]['value'];
+];
 
 export const Default: Story = {
   args: {
@@ -122,11 +121,11 @@ export const Default: Story = {
     },
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
+    const [{ value }, updateArgs] = useArgs<{ value: ActivityCategory | '' }>();
 
     return (
       <div className='flex h-320 w-360 flex-col gap-8'>
-        <SelectDropdown<CategoryValue | ''>
+        <SelectDropdown<ActivityCategory | ''>
           {...args}
           value={value}
           onChangeValue={(nextValue) => {
@@ -179,14 +178,14 @@ Label과 함께 사용하는 SelectDropdown 예시입니다.
     },
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
+    const [{ value }, updateArgs] = useArgs<{ value: ActivityCategory | '' }>();
     const triggerRef = useRef<HTMLButtonElement>(null);
 
     return (
       <div className='flex h-360 w-360 flex-col gap-8'>
         <Label onClick={() => triggerRef.current?.focus()}>카테고리</Label>
 
-        <SelectDropdown<CategoryValue | ''>
+        <SelectDropdown<ActivityCategory | ''>
           {...args}
           value={value}
           onChangeValue={(nextValue) => {
@@ -234,7 +233,7 @@ export const WithScroll: Story = {
     },
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs<{ value: CategoryValue | '' }>();
+    const [{ value }, updateArgs] = useArgs<{ value: ActivityCategory | '' }>();
 
     return (
       <div className='flex h-360 w-360 flex-col gap-8'>

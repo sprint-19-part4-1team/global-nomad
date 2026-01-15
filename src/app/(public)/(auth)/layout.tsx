@@ -1,12 +1,8 @@
-import { ReactNode } from 'react';
 import Logo from '@/shared/components/logo/Logo';
 import { layoutContainer } from '@/shared/constants/';
+import { WithChildren } from '@/shared/types/common';
 
-interface AuthLayoutProps {
-  children: ReactNode;
-}
-
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default function AuthLayout({ children }: WithChildren) {
   return (
     <main
       className={layoutContainer({

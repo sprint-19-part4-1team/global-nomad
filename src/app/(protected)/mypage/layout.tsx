@@ -1,13 +1,9 @@
-import { ReactNode } from 'react';
 import MypageTabs from '@/features/mypage/common/components/mypage-tabs/MypageTabs';
 import Sidemenu from '@/features/mypage/common/components/side-menu/Sidemenu';
 import { layoutContainer } from '@/shared/constants/';
+import { WithChildren } from '@/shared/types/common';
 
-interface MypageLayoutProps {
-  children: ReactNode;
-}
-
-export default function MypageLayout({ children }: MypageLayoutProps) {
+export default function MypageLayout({ children }: WithChildren) {
   return (
     <main
       className={layoutContainer({

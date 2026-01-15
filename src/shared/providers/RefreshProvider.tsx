@@ -1,11 +1,7 @@
 'use client';
 
-import { ReactNode } from 'react';
 import useTokenRefresh from '@/shared/hooks/useTokenRefresh';
-
-interface RefreshProviderProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * ## RefreshProvider
@@ -15,7 +11,7 @@ interface RefreshProviderProps {
  * - 내부에서 `useTokenRefresh` 훅을 실행하여,
  *   로그인 상태인 사용자의 accessToken을 만료 5분 전에 자동으로 갱신합니다.
  */
-export default function RefreshProvider({ children }: RefreshProviderProps) {
+export default function RefreshProvider({ children }: WithChildren) {
   useTokenRefresh();
 
   return <>{children}</>;

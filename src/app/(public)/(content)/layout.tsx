@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
 import BaseLayout from '@/shared/layout/BaseLayout';
+import { WithChildren } from '@/shared/types/common';
 
-interface ContentLayoutProps {
-  children: ReactNode;
-}
-
-export default function ContentLayout({ children }: ContentLayoutProps) {
+export default function ContentLayout({ children }: WithChildren) {
   return <BaseLayout>{children}</BaseLayout>;
 }

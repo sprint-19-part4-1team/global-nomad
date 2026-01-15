@@ -37,5 +37,5 @@ interface SkeletonProps {
  * ```
  */
 export default function Skeleton({ className }: SkeletonProps) {
-  return <div className={cn('animate-pulse bg-gray-200', className)} />;
+  return <div className={cn('animate-pulse bg-gray-100 opacity-70', className)} />;
 }

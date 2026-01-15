@@ -20,15 +20,17 @@ export default function OverlayRoot() {
   const overlays = useOverlayState();
   const pathname = usePathname();
   const isMounted = useRef(false);
+  const prevPathname = useRef(pathname);
 
   useEffect(() => {
-    if (isMounted.current) {
-      // 실제로 경로가 변경될 때마다 모든 오버레이 닫기
+    if (isMounted.current && prevPathname.current !== pathname) {
+      // 경로가 실제로 변경되었을 때만 오버레이 닫기
       overlayStore.clear();
     } else {
-      // 첫 마운트 시에는 실행하지 않음
       isMounted.current = true;
     }
+
+    prevPathname.current = pathname;
   }, [pathname]);
 
   const isOpenOverlay = overlays.length > 0;

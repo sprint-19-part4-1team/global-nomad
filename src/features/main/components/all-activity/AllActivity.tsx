@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Card from '@/features/main/components/card/Card';
 import FilterButton from '@/features/main/components/filter-button/FilterButton';
+import AllActivitiesSkeleton from '@/features/main/components/skeleton/AllActivitiesSkeleton';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
 import { useMediaQuery } from '@/features/main/hooks/useMediaQuery';
 import {
@@ -58,8 +59,6 @@ export default function AllActivity({
 
   return (
     <>
-      {isPending && <div>모든 체험 로딩중...</div>}
-
       <div className='relative mt-33 mb-15 sm:mt-80 sm:mb-15 md:mb-20'>
         <div>
           <Title responsive='lg' className='hidden sm:block'>
@@ -131,6 +130,10 @@ export default function AllActivity({
           </SelectDropdown>
         </div>
       </div>
+
+      {isPending && <AllActivitiesSkeleton />}
+
+      {/* <AllActivitiesSkeleton /> */}
 
       {!isPending && activities && activities.length > 0 && (
         <>

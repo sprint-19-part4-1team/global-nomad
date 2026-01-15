@@ -29,7 +29,9 @@ export default function ActivitySection() {
       </Suspense>
 
       {/* 검색결과 없을 때 */}
-      {isEmptyResult && <EmptyState mainText='아직 등록된 체험이 없어요.' type='experience' />}
+      {isEmptyResult === true && (
+        <EmptyState mainText='아직 등록된 체험이 없어요.' type='experience' />
+      )}
     </>
   );
 }

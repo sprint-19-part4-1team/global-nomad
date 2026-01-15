@@ -1,7 +1,10 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLock';
 import useOverlayEscape from '@/shared/components/overlay/hooks/useOverlayEscape';
+import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 
 /**
@@ -14,6 +17,13 @@ import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
  */
 export default function OverlayRoot() {
   const overlays = useOverlayState();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // 경로가 변경될 때마다 모든 오버레이 닫기
+    overlayStore.clear();
+  }, [pathname]);
+
   const isOpenOverlay = overlays.length > 0;
 
   useBodyScrollLock(isOpenOverlay);

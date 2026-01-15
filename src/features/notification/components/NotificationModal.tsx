@@ -46,7 +46,7 @@ export default function NotificationModal({
         {notifications.length > 0 && (
           <button
             type='button'
-            className='cursor-pointer body-13 font-semibold text-red-500'
+            className='body-13 font-semibold text-red-500'
             onClick={onDeleteAll}>
             전체삭제
           </button>

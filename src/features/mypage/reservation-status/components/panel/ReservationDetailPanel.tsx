@@ -121,7 +121,7 @@ export default function ReservationDetailPanel({
               <button
                 onClick={onClose}
                 aria-label={`${displayDate} 예약 상세 패널 닫기`}
-                className='h-24 w-24 cursor-pointer sm:h-40 sm:w-40'>
+                className='h-24 w-24 sm:h-40 sm:w-40'>
                 <Icons.Close aria-hidden='true' />
               </button>
             </div>

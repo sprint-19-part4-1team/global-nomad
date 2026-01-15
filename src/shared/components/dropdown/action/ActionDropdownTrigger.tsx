@@ -2,7 +2,6 @@
 
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
 import { WithChildren } from '@/shared/types/common';
-import { cn } from '@/shared/utils/cn';
 
 interface ActionDropdownTriggerProps extends WithChildren {
   /** 트리거 버튼에 추가로 적용할 스타일 */
@@ -42,7 +41,7 @@ export default function ActionDropdownTrigger({
       aria-haspopup='menu'
       aria-label={ariaLabel}
       aria-expanded={isOpen}
-      className={cn('cursor-pointer', className)}
+      className={className}
       onClick={() => setIsOpen((prev) => !prev)}>
       {children}
     </button>

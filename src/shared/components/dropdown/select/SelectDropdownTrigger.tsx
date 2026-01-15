@@ -8,7 +8,7 @@ import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContex
 import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
-const selectDropdownTriggerVariants = cva('cursor-pointer flex', {
+const selectDropdownTriggerVariants = cva('flex', {
   variants: {
     variants: {
       basic:

@@ -102,7 +102,6 @@ export default function Pagination({
       <button
         aria-label='이전 페이지'
         className={cn(arrowBtnBase, canGoPrev ? hoverableBtn : disabledArrowBtn)}
-        data-disabled={!canGoPrev}
         disabled={!canGoPrev}
         onClick={handlePrev}>
         <Icons.ChevronLeft aria-hidden='true' focusable='false' className='h-24 w-24' />
@@ -127,7 +126,6 @@ export default function Pagination({
         aria-label='다음 페이지'
         className={cn(arrowBtnBase, canGoNext ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoNext}
-        data-disabled={!canGoNext}
         onClick={handleNext}>
         <Icons.ChevronRight aria-hidden='true' focusable='false' className='h-24 w-24' />
       </button>

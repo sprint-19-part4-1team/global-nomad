@@ -14,3 +14,15 @@
 /* Scrollbar */
 @import './base/customScrollbar.css';
 @import './base/hiddenScrollbar.css';
+
+/* 폰트 기본 스타일 */
+body {
+  font-size: var(--body-size-16);
+  line-height: var(--leading-body-16);
+  color: var(--color-gray-950);
+}
+
+/* 버튼 커서 공통 스타일 */
+button {
+  cursor: pointer;
+}

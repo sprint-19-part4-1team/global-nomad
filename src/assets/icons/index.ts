@@ -28,6 +28,7 @@ import Notion from './icon_notion.svg';
 import Plus from './icon_plus.svg';
 import ReservationList from './icon_reservation_list.svg';
 import ReservationStatus from './icon_reservation_status.svg';
+import Reset from './icon_reset.svg';
 import SadEarth from './icon_sad_earth.svg';
 import Search from './icon_search.svg';
 import Setting from './icon_setting.svg';
@@ -71,6 +72,7 @@ export default {
   Plus,
   ReservationList,
   ReservationStatus,
+  Reset,
   SadEarth,
   Search,
   Setting,

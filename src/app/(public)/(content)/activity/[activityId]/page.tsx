@@ -86,7 +86,7 @@ export default async function ActivityDetail({ params }: ActivityDetailParams) {
       <div className='w-fit'>
         <Link
           href={ROUTE_PATHS.MAIN}
-          className='flex gap-4 body-14 font-semibold text-gray-950 hover:text-primary-600 sm:gap-8 sm:body-16'>
+          className='flex gap-4 body-14 font-semibold hover:text-primary-600 sm:gap-8 sm:body-16'>
           <Icons.ArrowLeft aria-hidden='true' className='h-24 w-24' />
           <span>메인으로</span>
         </Link>

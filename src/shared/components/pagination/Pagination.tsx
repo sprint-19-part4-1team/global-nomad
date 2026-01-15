@@ -25,11 +25,11 @@ interface PaginationProps {
 // - disabledArrowBtn : 비활성 화살표
 // - selectedStyle : 선택된 페이지
 const PAGINATION_STYLES = {
-  arrowBtnBase: 'flex items-center justify-center h-40 w-40 text-gray-950 rounded-4',
+  arrowBtnBase: 'flex items-center justify-center h-40 w-40 rounded-4',
   pageBtnBase:
     'flex items-center justify-center h-40 w-40 body-14 font-medium select-none text-gray-300 rounded-4',
-  hoverableBtn: 'cursor-pointer hover:bg-gray-25',
-  disabledArrowBtn: 'cursor-default text-gray-300',
+  hoverableBtn: 'hover:bg-gray-25',
+  disabledArrowBtn: 'text-gray-300',
   selectedStyle: 'border-b-2 border-primary-500 text-gray-950 rounded-none',
 } as const;
 
@@ -102,6 +102,7 @@ export default function Pagination({
       <button
         aria-label='이전 페이지'
         className={cn(arrowBtnBase, canGoPrev ? hoverableBtn : disabledArrowBtn)}
+        data-disabled={!canGoPrev}
         disabled={!canGoPrev}
         onClick={handlePrev}>
         <Icons.ChevronLeft aria-hidden='true' focusable='false' className='h-24 w-24' />
@@ -115,6 +116,7 @@ export default function Pagination({
             aria-label={`${page} 페이지`}
             key={page}
             className={cn(pageBtnBase, isSelected ? selectedStyle : hoverableBtn)}
+            data-disabled={isSelected}
             disabled={isSelected}
             onClick={() => handleSelectPage(page)}>
             {page}
@@ -125,6 +127,7 @@ export default function Pagination({
         aria-label='다음 페이지'
         className={cn(arrowBtnBase, canGoNext ? hoverableBtn : disabledArrowBtn)}
         disabled={!canGoNext}
+        data-disabled={!canGoNext}
         onClick={handleNext}>
         <Icons.ChevronRight aria-hidden='true' focusable='false' className='h-24 w-24' />
       </button>

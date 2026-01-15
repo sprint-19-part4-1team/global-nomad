@@ -49,7 +49,7 @@ export default function ScheduleDateAccordionHeader({
         id={triggerId}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className='flex items-center gap-8 text-gray-950'
+        className='flex items-center gap-8'
         onClick={() => setIsOpen((prev) => !prev)}>
         <Icons.CaretRight
           aria-hidden='true'

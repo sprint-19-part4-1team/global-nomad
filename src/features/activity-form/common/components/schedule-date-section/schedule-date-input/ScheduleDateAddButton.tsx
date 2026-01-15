@@ -18,7 +18,7 @@ export default function ScheduleDateAddButton({ disabled, onAdd }: ScheduleDateA
     <button
       type='button'
       disabled={disabled}
-      className='flex h-42 min-w-42 cursor-pointer items-center justify-center rounded-full bg-primary-500 text-white disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-25'
+      className='flex h-42 min-w-42 items-center justify-center rounded-full bg-primary-500 text-white disabled:bg-gray-100 disabled:text-gray-25'
       onClick={onAdd}>
       <Icons.Plus aria-hidden='true' className='h-24 w-24' />
     </button>

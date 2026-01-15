@@ -45,7 +45,7 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
               <AvatarImage />
               <AvatarFallback />
             </Avatar>
-            <span className='ml-10 body-14 font-medium text-gray-950'>{user.nickname}</span>
+            <span className='ml-10 body-14 font-medium'>{user.nickname}</span>
           </ActionDropdownTrigger>
           <ActionDropdownContent className='right-0 left-auto w-full min-w-96'>
             <ActionDropdownItem onClick={handleLogout} className='min-w-full'>

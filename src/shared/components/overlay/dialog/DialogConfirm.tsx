@@ -38,7 +38,7 @@ export default function DialogConfirm({
     <>
       <div className='flex flex-col items-center gap-2'>
         <Icons.SurprisedEarth className='w-49 sm:w-88' />
-        <span className='text-center body-16 font-bold text-gray-950 sm:body-18'>{message}</span>
+        <span className='text-center body-16 font-bold sm:body-18'>{message}</span>
       </div>
       <div className='flex w-full gap-12 sm:px-24'>
         <Button variant='secondary' full onClick={onCancel}>

@@ -50,7 +50,7 @@ export default function ActivityReviewItem({ review }: ActivityReviewItemProps) 
   const date = format(new Date(createdAt), 'yyyy.MM.dd');
 
   return (
-    <article className='flex w-full flex-col gap-12 rounded-24 p-20 body-14 text-gray-950 shadow-card sm:body-16'>
+    <article className='flex w-full flex-col gap-12 rounded-24 p-20 body-14 shadow-card sm:body-16'>
       <div className='flex flex-col gap-4'>
         <div className='flex items-center gap-8'>
           <span className='font-bold'>{nickname}</span>

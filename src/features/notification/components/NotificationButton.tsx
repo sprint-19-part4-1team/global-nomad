@@ -40,13 +40,11 @@ export default function NotificationButton() {
         type='button'
         aria-label='알림'
         disabled={!hasNotifications}
+        data-disabled={!hasNotifications}
         onClick={() => setIsModalOpen((prev) => !prev)}>
         {hasNotifications ? (
           <Icons.Alert
-            className={cn(
-              'h-24 w-24 cursor-pointer text-gray-600',
-              isModalOpen ? 'text-primary-500' : ''
-            )}
+            className={cn('h-24 w-24 text-gray-600', isModalOpen ? 'text-primary-500' : '')}
           />
         ) : (
           <Icons.AlertOff className='h-24 w-24 text-gray-600' />

@@ -78,10 +78,7 @@ export default function SelectDropdownTrigger({
       {children}
       <Icons.CaretBottom
         aria-hidden
-        className={cn(
-          'h-24 w-24 text-gray-950 transition-transform duration-200',
-          isOpen && 'rotate-180'
-        )}
+        className={cn('h-24 w-24 transition-transform duration-200', isOpen && 'rotate-180')}
       />
     </button>
   );

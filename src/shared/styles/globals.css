@@ -26,3 +26,15 @@ body {
 button {
   cursor: pointer;
 }
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button[data-disabled='true'] {
+  cursor: default;
+}
+
+button[data-loading='true'] {
+  cursor: wait;
+}

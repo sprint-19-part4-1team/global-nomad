@@ -59,7 +59,9 @@ export default function ScheduleDateField({ date, setDate, onAddDate }: Schedule
       </div>
       <div className='relative' ref={containerRef}>
         <div className='flex items-center gap-16'>
-          <div className='input-box cursor-pointer border-field-default' onClick={handleToggle}>
+          <div
+            className='input-box max-w-[calc(100%-42px)] cursor-pointer border-field-default'
+            onClick={handleToggle}>
             <input
               id='date'
               readOnly

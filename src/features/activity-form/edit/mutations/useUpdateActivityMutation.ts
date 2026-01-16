@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
 import { UpdateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { updateMyActivity } from '@/shared/apis/feature/myActivities';
-import { QUERY_KEYS } from '@/shared/constants';
+import { ACTIVITIES_KEY, QUERY_KEYS } from '@/shared/constants';
 import { UpdateMyActivityBodyDto } from '@/shared/types/myActivities';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
@@ -30,8 +30,8 @@ export const useUpdateActivityMutation = (activityId: number) => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ['activities'],
-        refetchType: 'all',
+        queryKey: [ACTIVITIES_KEY],
+        exact: false,
       });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.ACTIVITY_DETAIL(data.id),

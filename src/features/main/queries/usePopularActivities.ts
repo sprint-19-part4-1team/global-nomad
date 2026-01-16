@@ -16,7 +16,7 @@ const getActivitiesWithCursor = (params: GetActivitiesParamsWithCursor) => {
 export const usePopularActivities = () => {
   return useInfiniteQuery({
     queryKey: QUERY_KEYS.ACTIVITIES({
-      method: 'offset',
+      method: 'cursor',
     }),
     queryFn: async ({ pageParam }) => {
       const isFirstPage = pageParam === undefined;

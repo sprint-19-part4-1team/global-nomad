@@ -52,8 +52,7 @@ export default function PopularSlide() {
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
       if (sliderRef.current) {
-        sliderRef.current.slickGoTo(currentSlide); // 첫 슬라이드로 이동
-        setCurrentSlide(currentSlide); // 상태도 초기화
+        sliderRef.current.slickGoTo(currentSlide);
       }
     };
     window.addEventListener('resize', handleResize);
@@ -79,13 +78,13 @@ export default function PopularSlide() {
       {
         breakpoint: 768,
         settings: {
-          // slidesToShow: 2,
+          slidesToShow: 2,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          // slidesToShow: 2.5,
+          slidesToShow: 2.5,
           swipe: true,
           swipeToSlide: true,
           touchThreshold: 10,

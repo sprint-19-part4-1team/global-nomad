@@ -14,7 +14,7 @@ import { getQueryClient } from '@/shared/utils/getQueryClient';
 export default async function Home() {
   const queryClient = getQueryClient();
 
-  // prefetch 로직들...
+  // prefetch 로직
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEYS.RANDOM_ACTIVITIES(5),
     queryFn: async () => {
@@ -30,7 +30,7 @@ export default async function Home() {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: QUERY_KEYS.ACTIVITIES({
-      method: 'offset',
+      method: 'cursor',
     }),
     queryFn: async ({ pageParam }) => {
       const isFirstPage = pageParam === undefined;

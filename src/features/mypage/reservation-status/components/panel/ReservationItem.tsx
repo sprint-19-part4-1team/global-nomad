@@ -89,7 +89,8 @@ export default function ReservationItem({
   onApprovingChange,
 }: ReservationItemProps) {
   const [isDeclining, setIsDeclining] = useState(false);
-  const { mutate: updateStatus } = useUpdateReservationStatusMutation();
+  const { mutate: updateStatus, mutateAsync: updateStatusAsync } =
+    useUpdateReservationStatusMutation();
 
   /**
    * 예약 승인 처리 함수
@@ -120,58 +121,36 @@ export default function ReservationItem({
 
     try {
       // 1단계: 현재 예약을 승인 상태로 변경
-      await new Promise<void>((resolve, reject) => {
-        updateStatus(
-          {
-            activityId,
-            reservationId,
-            status: ReservationStatus.Confirmed,
-            scheduleId,
-            date,
-            year,
-            month,
-          },
-          {
-            onSuccess: () => resolve(),
-            onError: (error) => reject(error),
-          }
-        );
+      await updateStatusAsync({
+        activityId,
+        reservationId,
+        status: ReservationStatus.Confirmed,
+        scheduleId,
+        date,
+        year,
+        month,
       });
 
       // 2단계: 동일 스케줄의 다른 신청 상태 예약 필터링
-      // 현재 예약(방금 승인한 예약)과 이미 처리된 예약은 제외
       const otherPendingReservations = allReservationsInSchedule.filter(
         (r) => r.id !== reservationId && r.status === ReservationStatus.Pending
       );
 
       // 3단계: 다른 대기 중인 예약들이 있는 경우, 모두 거절 처리
       if (otherPendingReservations.length > 0) {
-        // Promise.allSettled를 사용하여 모든 거절 요청을 병렬로 처리(일부 요청이 실패해도 다른 요청은 계속 진행)
+        // Promise.allSettled를 사용하여 모든 거절 요청을 병렬로 처리
         // 이미 처리된 예약(pending 아님)에 대한 400 에러는 정상적인 상황
         await Promise.allSettled(
-          otherPendingReservations.map(
-            (reservation) =>
-              new Promise<void>((resolve, reject) => {
-                updateStatus(
-                  {
-                    activityId,
-                    reservationId: reservation.id,
-                    status: ReservationStatus.Declined,
-                    scheduleId,
-                    date,
-                    year,
-                    month,
-                  },
-                  {
-                    onSuccess: () => resolve(),
-                    onError: (error) => {
-                      // 이미 처리된 예약(pending 아님) 에러는 무시
-                      // React Query의 빠른 캐시 무효화로 인한 정상적인 Race Condition
-                      reject(error);
-                    },
-                  }
-                );
-              })
+          otherPendingReservations.map((reservation) =>
+            updateStatusAsync({
+              activityId,
+              reservationId: reservation.id,
+              status: ReservationStatus.Declined,
+              scheduleId,
+              date,
+              year,
+              month,
+            })
           )
         );
       }
@@ -181,7 +160,6 @@ export default function ReservationItem({
       console.error('예약 승인 처리 중 오류 발생:', error);
     } finally {
       // 성공/실패 여부와 관계없이 항상 처리 상태 해제
-      // finally 블록은 try/catch 이후 반드시 실행됨
       onApprovingChange?.(null);
     }
   };

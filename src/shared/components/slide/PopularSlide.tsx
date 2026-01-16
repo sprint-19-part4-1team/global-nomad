@@ -1,109 +1,122 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import useEmblaCarousel from 'embla-carousel-react';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
-import Icons from '@/assets/icons';
+import { useEffect, useRef, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Card from '@/features/main/components/card/Card';
+import { usePopularActivities } from '@/features/main/queries/usePopularActivities';
+import CarouselButton from '@/shared/components/slide/CarouselButton';
 
-type PopularSlideProps = {
-  // slides: number[] | Element[];
-  slides: ReactNode[];
-};
-
-export const carouselButtonVariants = cva(
-  'hidden sm:flex group absolute top-1/2 -mt-27 flex h-54 w-54 items-center justify-center rounded-full border bg-white duration-300',
-  {
-    variants: {
-      direction: {
-        next: '-right-27',
-        prev: '-left-27',
-      },
-      disabled: {
-        true: 'pointer-events-none opacity-0',
-        false: 'border-[#b3b3b3] hover:border-gray-400 hover:shadow-sm',
-      },
-    },
-    defaultVariants: {
-      disabled: false,
-    },
-  }
-);
-
-export default function PopularSlide({ slides }: PopularSlideProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    slidesToScroll: 1,
-    loop: false,
-  });
-
-  const [prevDisabled, setPrevDisabled] = useState(true);
-  const [nextDisabled, setNextDisabled] = useState(true);
-
-  const updateButtons = useCallback(() => {
-    if (!emblaApi) {
-      return;
+export default function PopularSlide() {
+  const getSlidesToShow = () => {
+    if (typeof window === 'undefined') {
+      return 4;
     }
-    setPrevDisabled(!emblaApi.canScrollPrev());
-    setNextDisabled(!emblaApi.canScrollNext());
-  }, [emblaApi]);
+
+    const width = window.innerWidth;
+    if (width < 640) {
+      return 2.5;
+    } // 모바일
+    if (width < 768) {
+      return 2;
+    } // 태블릿
+    return 4; // PC
+  };
+
+  const sliderRef = useRef<Slider>(null);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePopularActivities();
+  const [currentSlide, setCurrentSlide] = useState(getSlidesToShow);
+
+  const allActivities = data?.pages.flatMap((page) => page.activities) ?? [];
+
+  // next 버튼 클릭(swipe)시
+  const checkAndFetchNextPage = async (slideIndex: number) => {
+    const isNearEnd = slideIndex >= allActivities.length - 5;
+
+    if (isNearEnd && hasNextPage && !isFetchingNextPage) {
+      await fetchNextPage();
+    }
+  };
+
+  const handleNextClick = async () => {
+    await checkAndFetchNextPage(currentSlide + 1);
+    sliderRef.current?.slickNext();
+  };
+
+  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
 
   useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
+    setSlidesToShow(getSlidesToShow());
 
-    updateButtons();
-    emblaApi.on('select', updateButtons);
-    emblaApi.on('reInit', updateButtons);
-  }, [emblaApi, updateButtons]);
+    const handleResize = () => {
+      setSlidesToShow(getSlidesToShow());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 버튼 상태 관리
+  const isPrevDisabled = currentSlide === 0;
+  const isNextDisabled = !hasNextPage && currentSlide >= allActivities.length - slidesToShow;
+
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow,
+    slidesToScroll: 1,
+    arrows: false,
+    afterChange: async (index: number) => {
+      setCurrentSlide(index);
+      await checkAndFetchNextPage(index);
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2.5,
+          swipe: true,
+          swipeToSlide: true,
+          touchThreshold: 10,
+        },
+      },
+    ],
+  };
 
   return (
-    <div className='relative mx-auto w-full'>
-      <div className='overflow-hidden' ref={emblaRef}>
-        <div className='popular flex'>
-          {slides.map((slide, i) => (
-            <div
-              className='box-border min-w-0 flex-none basis-1/3 sm:basis-1/2 md:basis-1/4'
-              key={i}>
-              <div>{slide}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className='popular relative'>
+      <Slider ref={sliderRef} {...settings} className='-mr-24 sm:-mr-20 md:-mr-24'>
+        {allActivities.map((activity, index) => (
+          <div
+            key={`${activity.id}-${index}`}
+            className='box-border min-w-156 flex-none pr-12 sm:pr-20 md:pr-24'>
+            <Card
+              id={activity.id}
+              bannerImageUrl={activity.bannerImageUrl}
+              title={activity.title}
+              rating={activity.rating}
+              reviewCount={activity.reviewCount}
+              price={activity.price}
+            />
+          </div>
+        ))}
+      </Slider>
 
-      <button
-        aria-label='이전 슬라이드로 이동'
-        onClick={() => emblaApi?.scrollPrev()}
-        disabled={prevDisabled}
-        aria-hidden={prevDisabled}
-        className={carouselButtonVariants({
-          direction: 'prev',
-          disabled: prevDisabled,
-        })}>
-        <Icons.ArrowLeft
-          className='w-24 transition-colors duration-300 group-hover:text-primary-600'
-          aria-hidden
-        />
-      </button>
+      <CarouselButton
+        direction='prev'
+        onClick={() => sliderRef.current?.slickPrev()}
+        disabled={isPrevDisabled}
+      />
 
-      <button
-        aria-label='다음 슬라이드로 이동'
-        onClick={() => emblaApi?.scrollNext()}
-        disabled={nextDisabled}
-        aria-hidden={nextDisabled}
-        className={carouselButtonVariants({
-          direction: 'next',
-          disabled: nextDisabled,
-        })}>
-        <Icons.ArrowRight
-          className='w-24 transition-colors duration-300 group-hover:text-primary-600'
-          aria-hidden
-        />
-      </button>
-
-      {/* <div className='absolute top-0 hidden h-full w-full items-center justify-between sm:flex'>
-        
-      </div> */}
+      <CarouselButton direction='next' onClick={handleNextClick} disabled={isNextDisabled} />
     </div>
   );
 }

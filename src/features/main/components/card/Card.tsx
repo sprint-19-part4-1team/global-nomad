@@ -52,18 +52,18 @@ export default function Card({
     <Link
       href={`/activity/${id}`}
       title={title}
-      className='relative block overflow-hidden rounded-18 shadow-card sm:rounded-32'>
-      <div className='relative min-h-366 rounded-18 sm:rounded-32'>
+      className='group relative block overflow-hidden rounded-18 shadow-card sm:rounded-32'>
+      <div className='relative min-h-242 rounded-18 sm:min-h-423 sm:rounded-32 md:min-h-366'>
         <Image
           src={bannerImageUrl}
           fill
           alt={title}
-          className='object-cover'
-          sizes='(min-width: 1024px) 262px, (min-width: 768px) 331px, 328px'
+          className='h-3/4! object-cover transition-transform duration-300 group-hover:scale-150'
+          sizes='(min-width: 1024px) 262px, (min-width: 768px) 331px, 328px '
         />
       </div>
       <div className='absolute bottom-0 w-full rounded-18 bg-white px-17 py-16 sm:rounded-32 sm:px-30 sm:py-20'>
-        <strong className='block truncate body-14 font-semibold text-gray-950 sm:body-18'>
+        <strong className='transition-color block truncate body-14 font-semibold text-gray-950 duration-300 group-hover:text-primary-600 sm:body-18'>
           {title}
         </strong>
         <div className='mt-2 flex items-center body-13 text-gray-500 sm:body-14'>

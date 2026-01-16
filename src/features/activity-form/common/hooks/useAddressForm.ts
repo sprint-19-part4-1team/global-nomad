@@ -75,7 +75,7 @@ export const useAddressForm = (initialData?: AddressInitialData) => {
   const validateAddress = (passedAddress?: string) => {
     const targetAddress = typeof passedAddress === 'string' ? passedAddress : address;
 
-    const error = isRequired(targetAddress, VALIDATION_MESSAGES.ADDRESS_REQUIRED);
+    const error = isRequired(targetAddress, VALIDATION_MESSAGES.ADDRESS.REQUIRED);
 
     setAddressError(error);
     return !error;

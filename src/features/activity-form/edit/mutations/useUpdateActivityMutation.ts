@@ -28,16 +28,20 @@ export const useUpdateActivityMutation = (activityId: number) => {
 
       return updateMyActivity(activityId, updateData);
     },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }),
-        refetchType: 'all',
-      });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(data.id) });
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.MY_ACTIVITIES(),
-        exact: false,
-      });
+    onSuccess: async (data) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }),
+          refetchType: 'all',
+        }),
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.ACTIVITY_DETAIL(data.id),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.MY_ACTIVITIES(),
+          exact: false,
+        }),
+      ]);
     },
   });
 };

@@ -31,7 +31,7 @@ export const useUpdateActivityMutation = (activityId: number) => {
     onSuccess: async (data) => {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }),
+          queryKey: ['activities'],
           refetchType: 'all',
         }),
         queryClient.invalidateQueries({

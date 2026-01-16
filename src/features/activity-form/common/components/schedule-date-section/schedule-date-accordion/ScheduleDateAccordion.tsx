@@ -35,7 +35,7 @@ export default function ScheduleDateAccordion({
   return (
     <ScheduleDateAccordionContext
       value={{ isOpen, setIsOpen, triggerId: `${baseId}-trigger`, panelId: `${baseId}-panel` }}>
-      <fieldset>{children}</fieldset>
+      <div>{children}</div>
     </ScheduleDateAccordionContext>
   );
 }

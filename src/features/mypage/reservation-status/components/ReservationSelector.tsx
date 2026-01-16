@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ReservationCalendar from '@/features/mypage/reservation-status/components/ReservationCalendar';
 import ReservationCalendarSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationCalendarSkeleton';
 import ReservationSkeleton from '@/features/mypage/reservation-status/components/skeleton/ReservationSkeleton';
+import { useMonthlyReservations } from '@/features/mypage/reservation-status/queries/useMonthlyReservations';
 import { useMyActivities } from '@/features/mypage/reservation-status/queries/useMyActivities';
 import {
   SelectDropdown,
@@ -13,7 +14,6 @@ import {
   SelectDropdownValue,
 } from '@/shared/components/dropdown/select';
 import EmptyState from '@/shared/components/empty-state/EmptyState';
-import { useMonthlyReservations } from '@/shared/queries/useMonthlyReservations';
 
 /**
  * 체험 선택 및 예약 현황 조회 컴포넌트

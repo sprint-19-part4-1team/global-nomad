@@ -1,7 +1,9 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { format, addMonths, subMonths, isSameMonth, isSameDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
 import ReservationDetailPanel from '@/features/mypage/reservation-status/components/panel/ReservationDetailPanel';
 import ReservationBadge from '@/features/mypage/reservation-status/components/ReservationBadge';
@@ -10,10 +12,14 @@ import {
   WEEK_DAYS,
 } from '@/features/mypage/reservation-status/constants/calendarConfig';
 import { useReservationCalendar } from '@/features/mypage/reservation-status/hooks/useReservationCalendar';
+import { getMyActivityReservedSchedules } from '@/shared/apis/feature/myActivities';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import Title from '@/shared/components/title/Title';
+import { QUERY_KEYS } from '@/shared/constants';
+import { useUserStore } from '@/shared/stores/userStore';
 import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities';
 import { cn } from '@/shared/utils/cn';
+import { formatDateToString } from '@/shared/utils/dateUtil';
 
 /**
  * ReservationCalendar 컴포넌트의 Props
@@ -70,6 +76,8 @@ export default function ReservationCalendar({
   currentMonth,
   onMonthChange,
 }: ReservationCalendarProps) {
+  const queryClient = useQueryClient();
+
   const { today, canGoPrevMonth, canGoNextMonth, calendarDays, getReservationForDateMemo } =
     useReservationCalendar({
       reservations,
@@ -83,14 +91,62 @@ export default function ReservationCalendar({
    *
    * @param {Date} date - 클릭된 날짜
    */
-  const handleDateClick = (date: Date) => {
-    overlayStore.push(
-      <ReservationDetailPanel
-        activityId={selectedActivityId}
-        date={date}
-        onClose={() => overlayStore.pop()}
-      />
-    );
+  const handleDateClick = async (date: Date) => {
+    const reservation = getReservationForDateMemo(date);
+
+    if (!reservation) {
+      toast.info('해당 날짜에 예약 내역이 없습니다.');
+      return;
+    }
+
+    // 예약 현황에 대기 또는 승인이 있는지 확인
+    const hasActiveReservations =
+      reservation.reservations.pending > 0 || reservation.reservations.confirmed > 0;
+
+    // 예약 상세 패널 표시 여부
+    let shouldOpenPanel = hasActiveReservations;
+
+    // 예약 현황에 대기 또는 승인이 없다면 일별 스케줄 조회를 하여 거절이 있는지 확인
+    if (!hasActiveReservations) {
+      try {
+        const formattedDate = formatDateToString(date);
+        const userId = useUserStore.getState().user?.id;
+
+        // React Query 캐시 활용하여 일별 스케줄 조회
+        const schedules = await queryClient.fetchQuery({
+          queryKey: QUERY_KEYS.MY_ACTIVITY_RESERVED_SCHEDULE(
+            Number(selectedActivityId),
+            { date: formattedDate },
+            userId
+          ),
+          queryFn: () =>
+            getMyActivityReservedSchedules(Number(selectedActivityId), { date: formattedDate }),
+        });
+
+        // 예약 현황에 거절이 있는지 확인
+        const hasDeclined = schedules.some((schedule) => (schedule.count.declined ?? 0) > 0);
+
+        if (hasDeclined) {
+          shouldOpenPanel = true;
+        } else {
+          // 완료만 있는 경우 토스트 표시
+          toast.info('완료된 예약만 있습니다.');
+        }
+      } catch (error) {
+        console.error('예약 정보를 불러오는 중 오류 발생:', error);
+        toast.error('예약 정보를 불러오는 중 오류가 발생했습니다.');
+      }
+    }
+
+    if (shouldOpenPanel) {
+      overlayStore.push(
+        <ReservationDetailPanel
+          activityId={selectedActivityId}
+          date={date}
+          onClose={() => overlayStore.pop()}
+        />
+      );
+    }
   };
 
   return (

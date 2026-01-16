@@ -12,6 +12,7 @@ import Title from '@/shared/components/title/Title';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { ActivityReservationStatus } from '@/shared/types/myActivities';
 import { ReservationStatus } from '@/shared/types/myReservations';
+import { formatDateToString } from '@/shared/utils/dateUtil';
 import ReservationTabButtons from './ReservationTabButtons';
 import ReservationTabContent from './ReservationTabContent';
 import ReservationTimeDropdown from './ReservationTimeDropdown';
@@ -63,7 +64,7 @@ export default function ReservationDetailPanel({
   const [selectedScheduleId, setSelectedScheduleId] = useState<string>('');
   const [tabValue, setTabValue] = useState<ActivityReservationStatus>(ReservationStatus.Pending);
 
-  const formattedDate = format(date, 'yyyy-MM-dd');
+  const formattedDate = formatDateToString(date);
 
   // 선택된 날짜의 스케줄 목록 조회
   const { schedules, isPending: isSchedulesPending } = useDailyReservations({

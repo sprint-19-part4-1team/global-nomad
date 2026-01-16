@@ -84,12 +84,13 @@ export const useBasicInfoForm = (initialData?: BasicInfoDataServer) => {
     return !error;
   };
 
-  const isValid = Object.values(formData).every((value) => value.trim() !== '');
+  const isBasicFormValid =
+    Object.values(formData).every((v) => v.trim() !== '') && Object.values(errors).every((e) => !e);
 
   return {
     formData,
     updateFormData,
-    isBasicFormValid: isValid,
+    isBasicFormValid,
     validateBasicFormField: validateField,
     basicFormErrors: errors,
   };

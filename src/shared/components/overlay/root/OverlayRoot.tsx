@@ -21,23 +21,18 @@ export default function OverlayRoot() {
   const pathname = usePathname();
   const params = useParams();
   const isMounted = useRef(false);
-  const prevPathname = useRef(pathname);
-  const prevParams = useRef(params);
 
   useEffect(() => {
-    // 전체 경로를 문자열로 만들어 비교
-    const currentFullPath = `${pathname}${JSON.stringify(params)}`;
-    const prevFullPath = `${prevPathname.current}${JSON.stringify(prevParams.current)}`;
-
-    if (isMounted.current && currentFullPath !== prevFullPath) {
-      // 경로나 파라미터가 실제로 변경되었을 때만 오버레이 닫기
+    if (isMounted.current) {
+      // 경로나 파라미터가 변경될 때마다 무조건 모든 overlay 초기화
       overlayStore.clear();
-    } else {
-      isMounted.current = true;
     }
+    isMounted.current = true;
 
-    prevPathname.current = pathname;
-    prevParams.current = params;
+    // 컴포넌트 언마운트 시에도 정리
+    return () => {
+      overlayStore.clear();
+    };
   }, [pathname, params]);
 
   const isOpenOverlay = overlays.length > 0;

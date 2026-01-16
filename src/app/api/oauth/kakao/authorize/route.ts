@@ -51,6 +51,10 @@ export function GET(request: Request) {
   authorizeUrl.searchParams.set('client_id', clientId);
   authorizeUrl.searchParams.set('redirect_uri', redirectUri);
   authorizeUrl.searchParams.set('state', oauthMode);
+  // 로그인 플로우일 때 동의 화면 생략
+  if (oauthMode === 'signin') {
+    authorizeUrl.searchParams.set('prompt', 'login');
+  }
 
   return NextResponse.redirect(authorizeUrl.toString());
 }

@@ -1,4 +1,5 @@
 import {
+  ACTIVITY_FORM,
   NICKNAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   VALIDATION_MESSAGES,
@@ -61,23 +62,23 @@ const validateNicknameFormat = (value: string): string => {
  * - 20자 초과일 경우 에러메세지 표시
  */
 export const validateMaxTitle = (value: string) => {
-  return value.length > 20 ? VALIDATION_MESSAGES.TITLE.MAX : '';
+  return value.length > ACTIVITY_FORM.TITLE_MAX_LENGTH ? VALIDATION_MESSAGES.TITLE.MAX : '';
 };
 
 /**
  * 체험 가격 최소 금액 검증
  * - 1000원 미만일 경우 에러 메세지 표시
  */
-export const validateMinPrice = (value: number | string, min = 1000) => {
-  return Number(value) < min ? VALIDATION_MESSAGES.PRICE.MIN_AMOUNT : '';
+export const validateMinPrice = (value: number | string) => {
+  return Number(value) < ACTIVITY_FORM.PRICE_MIN_AMOUNT ? VALIDATION_MESSAGES.PRICE.MIN_AMOUNT : '';
 };
 
 /**
  * 체험 가격 최대 금액 검증
  * - 999,999원 초과일 경우 에러메세지 표시
  */
-export const validateMaxPrice = (value: number | string, max = 999_999) => {
-  return Number(value) > max ? VALIDATION_MESSAGES.PRICE.MAX_AMOUNT : '';
+export const validateMaxPrice = (value: number | string) => {
+  return Number(value) > ACTIVITY_FORM.PRICE_MAX_AMOUNT ? VALIDATION_MESSAGES.PRICE.MAX_AMOUNT : '';
 };
 
 /**

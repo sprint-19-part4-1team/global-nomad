@@ -24,19 +24,19 @@ export default function SearchBar() {
   }, [keyword]);
 
   // esc 키 눌렀을 때 dialog 닫기 (이외의 키는 차단)
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isSearchDialogOpen) {
-      return;
-    }
+  // const handleKeyDown = (e: React.KeyboardEvent) => {
+  //   if (!isSearchDialogOpen) {
+  //     return;
+  //   }
 
-    if (e.key === 'Escape') {
-      overlayStore.pop();
-      return;
-    }
+  //   if (e.key === 'Escape') {
+  //     overlayStore.pop();
+  //     return;
+  //   }
 
-    e.preventDefault();
-    e.stopPropagation();
-  };
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  // };
 
   const onSubmit = () => {
     const trimmedValue = value.trim();
@@ -69,7 +69,7 @@ export default function SearchBar() {
   return (
     <form
       onSubmit={handleSubmit}
-      onKeyDown={handleKeyDown}
+      // onKeyDown={handleKeyDown}
       className='flex items-center justify-between rounded-16 bg-white py-6 pr-8 pl-20 shadow-card sm:rounded-24 sm:py-10 sm:pr-12 sm:pl-32'>
       <div className='flex min-w-0 flex-1 items-center'>
         <Icons.Search aria-hidden className='mr-4 h-24 w-24 sm:mr-10' />

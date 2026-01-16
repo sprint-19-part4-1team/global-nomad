@@ -4,7 +4,7 @@ import { useEffect } from 'react';
  * ## useBodyScrollLock
  *
  * @description
- * - body 스크롤을 잠그기 위한 훅입니다.
+ * - body 스크롤을 잠금 및 외부 요소 포커스/상호작용 차단을 관리합니다.
  * - `lock` 값이 `true`일 때 `document.body`의 `overflow`를 `hidden`으로 설정하여
  *   배경 스크롤을 비활성화합니다.
  * - 스크롤바 제거로 인한 레이아웃 흔들림을 방지하기 위해
@@ -27,6 +27,7 @@ const useBodyScrollLock = (lock: boolean) => {
     }
 
     const body = document.body;
+    const mainContent = document.querySelector('#main');
 
     const originalOverflow = body.style.overflow;
     const originalPaddingRight = body.style.paddingRight;
@@ -39,9 +40,12 @@ const useBodyScrollLock = (lock: boolean) => {
       body.style.paddingRight = `${scrollbarWidth}px`;
     }
 
+    mainContent?.setAttribute('inert', '');
+
     return () => {
       body.style.overflow = originalOverflow;
       body.style.paddingRight = originalPaddingRight;
+      mainContent?.removeAttribute('inert');
     };
   }, [lock]);
 };

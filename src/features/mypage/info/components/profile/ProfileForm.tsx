@@ -43,9 +43,10 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
     resetForm,
   } = useProfileForm(user);
 
-  const createProfileImageUrlMutation = useCreateProfileImageUrlMutation();
-  const updateMyInfoMutation = useUpdateMyInfoMutation();
-  const isLoading = createProfileImageUrlMutation.isPending || updateMyInfoMutation.isPending;
+  const { mutateAsync: createProfileImageUrl, isPending: isCreatingProfileImage } =
+    useCreateProfileImageUrlMutation();
+  const { mutateAsync: updateMyInfo, isPending: isUpdatingMyInfo } = useUpdateMyInfoMutation();
+  const isLoading = isCreatingProfileImage || isUpdatingMyInfo;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,7 +55,7 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
       let profileImageUrl: string | null | undefined;
 
       if (imageState.type === 'upload') {
-        const res = await createProfileImageUrlMutation.mutateAsync(imageState.file);
+        const res = await createProfileImageUrl(imageState.file);
         profileImageUrl = res.profileImageUrl;
       }
 
@@ -62,7 +63,7 @@ function ProfileFormInner({ user }: ProfileFormInnerProps) {
         profileImageUrl = null;
       }
 
-      await updateMyInfoMutation.mutateAsync({
+      await updateMyInfo({
         nickname,
         profileImageUrl,
       });

@@ -59,7 +59,8 @@ export const useProfileForm = (user: UserServiceResponseDto) => {
   };
 
   const isNicknameDirty = nickname !== user.nickname;
-  const isImageDirty = imageState.type !== 'keep';
+  const isImageDirty =
+    imageState.type === 'upload' || (imageState.type === 'remove' && user.profileImageUrl !== null);
   const canSubmit = isNicknameValid && (isNicknameDirty || isImageDirty);
 
   /**

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ReservationWithUserResponseDto } from '@/shared/types/myActivities';
 import ReservationItem from './ReservationItem';
 
@@ -20,6 +21,7 @@ interface ReservationListProps {
  * 예약 내역 리스트 컴포넌트
  *
  * 예약 목록을 순회하며 각 예약을 ReservationItem 컴포넌트로 렌더링합니다.
+ * 승인 처리 중에는 모든 예약의 버튼을 비활성화하여 동시 승인을 방지합니다.
  *
  * @param {ReservationListProps} props - 컴포넌트 Props
  * @returns 예약 내역 리스트 컴포넌트
@@ -43,6 +45,13 @@ export default function ReservationList({
   date,
   reservations,
 }: ReservationListProps) {
+  // 승인 처리 중인지 여부를 추적
+  const [isApproving, setIsApproving] = useState(false);
+
+  const handleApprovingChange = (id: number | null) => {
+    setIsApproving(id !== null);
+  };
+
   return (
     <div className='scrollbar-hidden flex w-full flex-col gap-14'>
       {reservations.map((reservation) => (
@@ -56,6 +65,8 @@ export default function ReservationList({
           headCount={reservation.headCount}
           status={reservation.status}
           allReservationsInSchedule={reservations}
+          isAnyApproving={isApproving}
+          onApprovingChange={handleApprovingChange}
         />
       ))}
     </div>

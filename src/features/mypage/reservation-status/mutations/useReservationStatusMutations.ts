@@ -87,7 +87,14 @@ export const useUpdateReservationStatusMutation = () => {
       });
     },
     onError: (error) => {
-      // 에러 로깅
+      // "pending이 아닙니다" 에러는 정상적인 Race Condition이므로 무시
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      if (errorMessage.includes('pending이 아닙니다')) {
+        return;
+      }
+
+      // 실제 에러만 로깅 및 토스트 표시
       console.error('예약 상태 업데이트 실패:', error);
       toast.error('예약 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },

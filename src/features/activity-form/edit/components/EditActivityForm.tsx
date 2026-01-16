@@ -47,6 +47,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
             onClose={() => {
               overlayStore.pop();
               router.push(`/activity/${activityId}`);
+              router.refresh();
             }}
           />
         );

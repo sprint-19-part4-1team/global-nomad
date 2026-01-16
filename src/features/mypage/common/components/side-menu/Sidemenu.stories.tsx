@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Sidemenu from '@/features/mypage/common/components/side-menu/Sidemenu';
+import { useUserStore } from '@/shared/stores/userStore';
 
 /**
  * 마이페이지 사이드 메뉴 컴포넌트
@@ -41,6 +42,17 @@ type Story = StoryObj<typeof Sidemenu>;
 export const Default: Story = {
   decorators: [
     (Story) => {
+      useUserStore.setState({
+        user: {
+          id: 1,
+          email: 'test@example.com',
+          nickname: '테스트',
+          profileImageUrl: null,
+          createdAt: '2025-12-24T08:50:57.848Z',
+          updatedAt: '2025-12-24T08:50:57.848Z',
+        },
+        hasHydrated: true,
+      });
       return <Story />;
     },
   ],

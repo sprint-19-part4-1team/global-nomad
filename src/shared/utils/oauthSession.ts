@@ -31,3 +31,11 @@ export const getRequiredKakaoRedirectUri = (): string => {
   }
   return redirectUri;
 };
+
+export const getRequiredKakaoRestApiKey = (): string => {
+  const clientId = process.env.KAKAO_REST_API_KEY;
+  if (!clientId) {
+    throw new Error('KAKAO_REST_API_KEY_NOT_SET');
+  }
+  return clientId;
+};

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { createReview } from '@/shared/apis/feature/myReservations';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { CreateReviewBodyDto, ReservationStatus } from '@/shared/types/myReservations';
-import { isApiError } from '@/shared/utils/errorGuards';
+// import { isApiError } from '@/shared/utils/errorGuards';
 
 interface UseCreateReviewMutationParams {
   status?: ReservationStatus;
@@ -41,10 +41,7 @@ export const useCreateReviewMutation = ({
     },
 
     onError: (error) => {
-      const message = isApiError(error)
-        ? error.message
-        : '리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요.';
-      toast.error(message);
+      toast.error(error.message || '리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
     },
   });
 };

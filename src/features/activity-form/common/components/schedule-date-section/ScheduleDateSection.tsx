@@ -79,10 +79,10 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
   };
 
   return (
-    <fieldset>
-      <legend className='mb-16 form-title'>예약 가능 시간대</legend>
+    <fieldset className='flex flex-col gap-16'>
+      <legend className='form-title'>예약 가능 시간대</legend>
       <ScheduleDateField date={selectedDate} setDate={setSelectedDate} onAddDate={handleAddDate} />
-      <div className='mt-16 flex flex-col gap-16'>
+      <div className='flex flex-col gap-16'>
         {accordionDates.map((date) => (
           <div
             key={date}

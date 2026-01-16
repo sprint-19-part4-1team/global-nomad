@@ -79,8 +79,13 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
   };
 
   return (
-    <div className='flex w-full flex-col gap-16'>
-      <span className='form-title'>예약 가능 시간대</span>
+    <div
+      role='group'
+      aria-labelledby='schedule-group-title'
+      className='flex w-full flex-col gap-16'>
+      <span id='schedule-group-title' className='form-title'>
+        예약 가능 시간대
+      </span>
       <ScheduleDateField date={selectedDate} setDate={setSelectedDate} onAddDate={handleAddDate} />
       <div className='flex flex-col gap-16'>
         {accordionDates.map((date) => (

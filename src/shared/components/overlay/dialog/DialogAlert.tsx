@@ -22,7 +22,7 @@ export interface DialogAlertProps {
 export default function DialogAlert({ message, closeLabel = '확인', onClose }: DialogAlertProps) {
   return (
     <>
-      <span className='body-16 font-bold text-gray-950 sm:body-18'>{message}</span>
+      <div className='body-16 font-bold sm:body-18'>{message}</div>
       <Button className='w-180 sm:w-200' onClick={onClose}>
         {closeLabel}
       </Button>

@@ -16,5 +16,5 @@ import { PropsWithChildren } from 'react';
  * ```
  */
 export default function ActivityContentTitle({ children }: PropsWithChildren) {
-  return <h3 className='body-16 font-bold text-gray-950 sm:heading-18'>{children}</h3>;
+  return <h3 className='body-16 font-bold sm:heading-18'>{children}</h3>;
 }

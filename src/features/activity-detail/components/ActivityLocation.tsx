@@ -171,7 +171,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       <button
         aria-label='주소 복사'
         onClick={handleCopyAddress}
-        className='flex w-fit cursor-pointer items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
+        className='flex w-fit items-center gap-4 body-14 font-semibold text-gray-600 transition-colors hover:text-gray-900'>
         <span>{address}</span>
         <Icons.Copy aria-hidden='true' className='h-24 w-24' />
       </button>

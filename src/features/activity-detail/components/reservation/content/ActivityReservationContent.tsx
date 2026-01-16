@@ -123,6 +123,14 @@ export default function ActivityReservationContent({
   // 바텀시트에서 날짜/시간 선택이 완료되면 해당 영역 숨김
   const showDateTimeSection = isBottomSheet ? !reservation.showParticipantSection : true;
 
+  // 바텀시트 확인 버튼 비활성화 여부
+  const isBottomSheetButtonDisabled = !reservation.isDateTimeValid;
+
+  // 초기화 버튼 비활성화 여부
+  const isResetDisabled = isBottomSheet
+    ? !reservation.selectedDate
+    : !reservation.selectedDate && reservation.participantCount === 1;
+
   /** 확인 버튼 핸들러 (바텀시트 - 날짜/시간 선택 단계) */
   const handleDateTimeConfirm = () => {
     if (!reservation.isDateTimeValid) {
@@ -163,6 +171,11 @@ export default function ActivityReservationContent({
     }
   };
 
+  /** 초기화 버튼 핸들러 */
+  const handleReset = () => {
+    setCurrentMonth(startOfMonth(new Date()));
+  };
+
   return (
     <div className='flex flex-col gap-30 rounded-t-24 bg-white p-24 pb-18 shadow-card lg:rounded-b-24 lg:border lg:border-gray-100 lg:p-30 lg:pb-30'>
       <div className='flex flex-col gap-8 lg:gap-24'>
@@ -194,7 +207,7 @@ export default function ActivityReservationContent({
         {/* 헤더 - 데스크톱에서만 표시 */}
         {!isBottomSheet && (
           <div className='flex items-center gap-5'>
-            <Title as='h4' size='24' className='tracking-[-0.6px] text-gray-950'>
+            <Title as='h4' size='24' className='tracking-[-0.6px]'>
               ₩ {formatValue(price)}
             </Title>
             <Title as='h4' size='20' className='tracking-[-0.5px] text-gray-600'>
@@ -229,7 +242,7 @@ export default function ActivityReservationContent({
 
         {/* 인원 선택 영역 */}
         {(reservation.showParticipantSection || !isBottomSheet) && (
-          <div className='flex flex-col gap-20'>
+          <div className='flex flex-col gap-24'>
             {isBottomSheet && (
               <div className='body-16 font-medium text-gray-700'>예약할 인원을 선택해주세요.</div>
             )}
@@ -241,23 +254,36 @@ export default function ActivityReservationContent({
 
             {/* 버튼 - 데스크톱에서만 표시 */}
             {!isBottomSheet && (
-              <div className='flex items-center justify-between border-t border-gray-100 py-10 pt-20'>
-                <div className='flex gap-6'>
-                  <Title as='h5' size='20' className='tracking-[-0.5px] text-gray-600'>
-                    총 합계
-                  </Title>
-                  <Title as='h5' size='20' className='tracking-[-0.5px] text-gray-950'>
-                    ₩ {totalPrice.toLocaleString()}
-                  </Title>
+              <>
+                <div className='flex items-center justify-between border-t border-gray-100 pt-20'>
+                  <div className='flex gap-6'>
+                    <Title as='h5' size='20' className='tracking-[-0.5px] text-gray-600'>
+                      총 합계
+                    </Title>
+                    <Title as='h5' size='20' className='tracking-[-0.5px] text-gray-950'>
+                      ₩ {formatValue(totalPrice)}
+                    </Title>
+                  </div>
+                  <Button
+                    variant='negative'
+                    size='lg'
+                    onClick={handleReset}
+                    disabled={isResetDisabled}
+                    className='py-14'>
+                    <span className='flex w-full items-center justify-center gap-12'>
+                      초기화
+                      <Icons.Reset className='h-20 w-20' />
+                    </span>
+                  </Button>
                 </div>
                 <Button
-                  size='lg'
+                  full
                   onClick={handleReservation}
                   disabled={!reservation.isValid}
                   className='py-14'>
                   예약하기
                 </Button>
-              </div>
+              </>
             )}
           </div>
         )}
@@ -265,14 +291,22 @@ export default function ActivityReservationContent({
 
       {/* 버튼 - 바텀시트에서는 항상 표시 */}
       {isBottomSheet && (
-        <Button
-          full
-          onClick={reservation.showParticipantSection ? handleFinalConfirm : handleDateTimeConfirm}
-          disabled={
-            reservation.showParticipantSection ? !reservation.isValid : !reservation.isDateTimeValid
-          }>
-          확인
-        </Button>
+        <div className='flex gap-24'>
+          <Button variant='negative' full onClick={handleReset} disabled={isResetDisabled}>
+            <span className='flex w-full items-center justify-center gap-12'>
+              초기화
+              <Icons.Reset className='h-20 w-20' />
+            </span>
+          </Button>
+          <Button
+            full
+            onClick={
+              reservation.showParticipantSection ? handleFinalConfirm : handleDateTimeConfirm
+            }
+            disabled={isBottomSheetButtonDisabled}>
+            확인
+          </Button>
+        </div>
       )}
     </div>
   );

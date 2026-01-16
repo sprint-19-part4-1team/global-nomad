@@ -86,7 +86,7 @@ export default function ReviewModal({
             <button
               type='button'
               onClick={handleClose}
-              className='ml-auto flex cursor-pointer justify-end'
+              className='ml-auto flex justify-end'
               aria-label='모달 닫기'>
               <Icons.Close className='h-24 w-24 text-gray-900' />
             </button>
@@ -103,7 +103,6 @@ export default function ReviewModal({
                 key={star}
                 type='button'
                 onClick={() => handleStarClick(star)}
-                className='cursor-pointer'
                 aria-label={`${star}점`}>
                 <Icons.Star
                   className={cn('h-42 w-42', star <= rating ? 'text-yellow-500' : 'text-gray-100')}

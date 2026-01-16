@@ -38,6 +38,8 @@ export const QUERY_KEYS = {
       size: params?.size,
     },
   ],
+  /** 체험 리스트 랜덤 조회 */
+  RANDOM_ACTIVITIES: (count: number) => ['activities', 'random', count],
   /** 체험 상세 조회 */
   ACTIVITY_DETAIL: (activityId: number) => ['activityDetail', activityId],
   /** 체험 예약 가능일 조회 */

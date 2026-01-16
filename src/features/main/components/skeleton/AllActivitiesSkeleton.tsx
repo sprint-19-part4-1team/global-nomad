@@ -32,19 +32,20 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
 export default function AllActivitiesSkeleton() {
   return (
     // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
-    <section
-      className='scrollbar-hidden overflow-x-auto'
-      aria-busy='true'
-      aria-label='모든 체험 로딩 중'>
+    <section aria-busy='true' aria-label='모든 체험 로딩 중'>
       <div className='flex flex-col lg:gap-30' aria-hidden='true'>
-        <div className='flex flex-col gap-24 sm:grid sm:grid-cols-2 sm:gap-x-20 sm:gap-y-24 lg:flex lg:flex-row lg:gap-24'>
+        <div className='flex flex-col gap-24 sm:grid sm:grid-cols-2 sm:gap-x-20 sm:gap-y-24 md:grid-cols-4 lg:flex lg:flex-row lg:gap-24'>
           {Array.from({ length: 4 }).map((_, i) => (
-            <ActivityCardSkeleton key={i} variant='default' className='shrink-0' />
+            <ActivityCardSkeleton key={i} variant='default' className='shrink-0 shadow-card' />
           ))}
         </div>
         <div className='hidden gap-24 lg:flex'>
           {Array.from({ length: 4 }).map((_, i) => (
-            <ActivityCardSkeleton key={`desktop-${i}`} variant='default' className='shrink-0' />
+            <ActivityCardSkeleton
+              key={`desktop-${i}`}
+              variant='default'
+              className='shrink-0 shadow-card'
+            />
           ))}
         </div>
       </div>

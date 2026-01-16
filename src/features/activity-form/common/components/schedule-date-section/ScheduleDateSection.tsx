@@ -79,7 +79,7 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
   };
 
   return (
-    <fieldset className='flex flex-col gap-16 overflow-hidden'>
+    <fieldset className='flex w-full flex-col gap-16 overflow-hidden'>
       <legend className='form-title'>예약 가능 시간대</legend>
       <ScheduleDateField date={selectedDate} setDate={setSelectedDate} onAddDate={handleAddDate} />
       <div className='flex flex-col gap-16'>

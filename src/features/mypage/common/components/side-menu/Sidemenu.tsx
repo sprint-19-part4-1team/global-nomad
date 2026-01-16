@@ -83,7 +83,11 @@ const activeLinkClass = 'bg-primary-100 text-primary-500';
  * ```
  */
 
-export default function Sidemenu({ className }: { className: String }) {
+type SidemenuProps = {
+  className?: string;
+};
+
+export default function Sidemenu({ className }: SidemenuProps) {
   const pathname = usePathname();
   const user = useUserStore((state) => state.user);
 

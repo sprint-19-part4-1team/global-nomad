@@ -83,13 +83,13 @@ const activeLinkClass = 'bg-primary-100 text-primary-500';
  * ```
  */
 
-export default function Sidemenu() {
+export default function Sidemenu({ className }: { className: String }) {
   const pathname = usePathname();
   const user = useUserStore((state) => state.user);
 
   return (
     <aside
-      className='hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290'
+      className={`hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290 ${className}`}
       aria-label='마이페이지 사이드 메뉴'>
       <Avatar user={user} size='md' className='mx-auto'>
         <AvatarImage />

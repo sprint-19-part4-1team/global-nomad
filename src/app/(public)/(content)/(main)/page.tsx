@@ -29,12 +29,14 @@ export default async function Home() {
   });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['activities', 'popular'],
+    queryKey: QUERY_KEYS.ACTIVITIES({
+      method: 'offset',
+    }),
     queryFn: async ({ pageParam }) => {
       const isFirstPage = pageParam === undefined;
       return await getActivities({
         method: 'cursor',
-        cursorId: pageParam as number | undefined,
+        cursorId: pageParam,
         sort: 'most_reviewed',
         size: isFirstPage ? 4 : 1,
       });

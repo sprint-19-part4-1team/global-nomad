@@ -29,4 +29,4 @@ export const SORT_LABELS: Record<string, string> = {
   most_reviewed: '리뷰 많은순',
   price_desc: '가격 높은순',
   price_asc: '가격 낮은순',
-} as const;
+};

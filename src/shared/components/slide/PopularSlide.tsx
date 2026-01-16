@@ -26,7 +26,7 @@ export default function PopularSlide() {
 
   const sliderRef = useRef<Slider>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePopularActivities();
-  const [currentSlide, setCurrentSlide] = useState(getSlidesToShow);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const allActivities = data?.pages.flatMap((page) => page.activities) ?? [];
 
@@ -50,12 +50,18 @@ export default function PopularSlide() {
     setSlidesToShow(getSlidesToShow());
 
     const handleResize = () => {
+      // console.log(currentSlide);
       setSlidesToShow(getSlidesToShow());
+      if (sliderRef.current) {
+        sliderRef.current.slickGoTo(currentSlide); // 첫 슬라이드로 이동
+        setCurrentSlide(currentSlide); // 상태도 초기화
+      }
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // console.log('밖', currentSlide);
 
   // 버튼 상태 관리
   const isPrevDisabled = currentSlide === 0;
@@ -76,13 +82,13 @@ export default function PopularSlide() {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          // slidesToShow: 2,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 2.5,
+          // slidesToShow: 2.5,
           swipe: true,
           swipeToSlide: true,
           touchThreshold: 10,

@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLock';
 import useOverlayEscape from '@/shared/components/overlay/hooks/useOverlayEscape';
@@ -19,19 +19,26 @@ import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 export default function OverlayRoot() {
   const overlays = useOverlayState();
   const pathname = usePathname();
+  const params = useParams();
   const isMounted = useRef(false);
   const prevPathname = useRef(pathname);
+  const prevParams = useRef(params);
 
   useEffect(() => {
-    if (isMounted.current && prevPathname.current !== pathname) {
-      // 경로가 실제로 변경되었을 때만 오버레이 닫기
+    // 전체 경로를 문자열로 만들어 비교
+    const currentFullPath = `${pathname}${JSON.stringify(params)}`;
+    const prevFullPath = `${prevPathname.current}${JSON.stringify(prevParams.current)}`;
+
+    if (isMounted.current && currentFullPath !== prevFullPath) {
+      // 경로나 파라미터가 실제로 변경되었을 때만 오버레이 닫기
       overlayStore.clear();
     } else {
       isMounted.current = true;
     }
 
     prevPathname.current = pathname;
-  }, [pathname]);
+    prevParams.current = params;
+  }, [pathname, params]);
 
   const isOpenOverlay = overlays.length > 0;
 

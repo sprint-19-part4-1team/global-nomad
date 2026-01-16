@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { createReview } from '@/shared/apis/feature/myReservations';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { CreateReviewBodyDto, ReservationStatus } from '@/shared/types/myReservations';
-// import { isApiError } from '@/shared/utils/errorGuards';
 
 interface UseCreateReviewMutationParams {
   status?: ReservationStatus;

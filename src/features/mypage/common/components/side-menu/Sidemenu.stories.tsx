@@ -9,25 +9,28 @@ import { useUserStore } from '@/shared/stores/userStore';
  *
  * ### 주요 기능
  * - 사용자 프로필 아바타 렌더링
- * - 마이페이지 관련 고정 메뉴 목록 표시
- * - 현재 URL 경로 기준 활성 메뉴 스타일 적용
+ * - 마이페이지 관련 메뉴 목록 표시
+ * - 현재 URL 경로 기준 활성 메뉴 하이라이트
+ *
+ * ### Props
+ * - `className` (optional): 추가 스타일링을 위한 커스텀 클래스명
  *
  * ### 사용 위치
  * - 마이페이지 공통 레이아웃의 좌측 영역
- * - 내 정보 / 예약 내역 / 체험 관리 / 예약 현황 페이지 이동
+ * - 내 정보, 예약 내역, 체험 관리, 예약 현황 페이지 네비게이션
  *
  * ### 반응형 동작
- * - 모바일 화면에서는 숨김 처리
- * - 태블릿(sm) 이상 해상도에서만 노출
+ * - 모바일(sm 미만): 숨김 처리
+ * - 태블릿 이상(sm~): 표시
  */
 
 const meta: Meta<typeof Sidemenu> = {
   title: 'Features/Mypage/Common/Sidemenu',
   component: Sidemenu,
   argTypes: {
-    user: {
-      control: false,
-      description: '로그인한 사용자 정보',
+    className: {
+      control: 'text',
+      description: 'class를 추가로 사용하고 싶을때 사용',
     },
   },
 };

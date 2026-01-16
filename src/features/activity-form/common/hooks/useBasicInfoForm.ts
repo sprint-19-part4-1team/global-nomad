@@ -4,7 +4,12 @@ import { useState } from 'react';
 import type { BasicInfo } from '@/features/activity-form/common/types/activityFormType';
 import { VALIDATION_MESSAGES } from '@/shared/constants';
 import type { BasicInfoDataServer } from '@/shared/types/activities';
-import { isRequired, priceMinAmount } from '@/shared/utils/validators';
+import {
+  isRequired,
+  validateMaxPrice,
+  validateMaxTitle,
+  validateMinPrice,
+} from '@/shared/utils/validators';
 
 type FormErrors = Partial<Record<keyof BasicInfo, string>>;
 
@@ -50,21 +55,24 @@ export const useBasicInfoForm = (initialData?: BasicInfoDataServer) => {
 
     switch (field) {
       case 'title':
-        error = isRequired(formData.title, VALIDATION_MESSAGES.TITLE_REQUIRED);
+        error =
+          isRequired(formData.title, VALIDATION_MESSAGES.TITLE.REQUIRED)
+          || validateMaxTitle(formData.title);
         break;
 
       case 'category':
-        error = isRequired(formData.category, VALIDATION_MESSAGES.CATEGORY_REQUIRED);
+        error = isRequired(formData.category, VALIDATION_MESSAGES.CATEGORY.REQUIRED);
         break;
 
       case 'price':
         error =
-          isRequired(formData.price, VALIDATION_MESSAGES.PRICE_REQUIRED)
-          || priceMinAmount(formData.price);
+          isRequired(formData.price, VALIDATION_MESSAGES.PRICE.REQUIRED)
+          || validateMinPrice(formData.price)
+          || validateMaxPrice(formData.price);
         break;
 
       case 'description':
-        error = isRequired(formData.description, VALIDATION_MESSAGES.DESCRIPTION_REQUIRED);
+        error = isRequired(formData.description, VALIDATION_MESSAGES.DESCRIPTION.REQUIRED);
         break;
     }
 
@@ -76,12 +84,13 @@ export const useBasicInfoForm = (initialData?: BasicInfoDataServer) => {
     return !error;
   };
 
-  const isValid = Object.values(formData).every((value) => value.trim() !== '');
+  const isBasicFormValid =
+    Object.values(formData).every((v) => v.trim() !== '') && Object.values(errors).every((e) => !e);
 
   return {
     formData,
     updateFormData,
-    isBasicFormValid: isValid,
+    isBasicFormValid,
     validateBasicFormField: validateField,
     basicFormErrors: errors,
   };

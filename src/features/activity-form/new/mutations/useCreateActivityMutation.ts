@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useUploadImageMutation } from '@/features/activity-form/common/mutations/useUploadImageMutation';
 import { CreateActivityFormPayload } from '@/features/activity-form/common/types/activityFormType';
 import { createActivity } from '@/shared/apis/feature/activities';
-import { QUERY_KEYS } from '@/shared/constants';
+import { ACTIVITIES_KEY, QUERY_KEYS } from '@/shared/constants';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 /**
@@ -53,7 +53,7 @@ export const useCreateActivityMutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ACTIVITIES({ method: 'offset' }),
+        queryKey: [ACTIVITIES_KEY],
         exact: false,
       });
       queryClient.invalidateQueries({

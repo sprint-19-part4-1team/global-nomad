@@ -39,8 +39,8 @@ export const useCreateReviewMutation = ({
       });
     },
 
-    onError: () => {
-      toast.error('리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    onError: (error) => {
+      toast.error(error.message || '리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
     },
   });
 };

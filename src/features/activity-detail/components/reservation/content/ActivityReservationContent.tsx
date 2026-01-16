@@ -127,7 +127,9 @@ export default function ActivityReservationContent({
   const isBottomSheetButtonDisabled = !reservation.isDateTimeValid;
 
   // 초기화 버튼 비활성화 여부
-  const isResetDisabled = !reservation.selectedDate;
+  const isResetDisabled = isBottomSheet
+    ? !reservation.selectedDate
+    : !reservation.selectedDate && reservation.participantCount === 1;
 
   /** 확인 버튼 핸들러 (바텀시트 - 날짜/시간 선택 단계) */
   const handleDateTimeConfirm = () => {

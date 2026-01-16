@@ -41,7 +41,7 @@ export default function ScheduleDatePicker({ value, onChange, isOpen }: Schedule
   return (
     <div className='absolute top-full left-0 z-3 mt-4'>
       <DayPicker
-        className='custom-day-picker min-h-348 w-fit max-w-312 rounded-16 bg-white p-16 font-sans shadow-card sm:p-24'
+        className='custom-day-picker activity-form-picker min-h-316 w-fit rounded-16 bg-white p-12 font-sans shadow-card sm:min-h-348 sm:p-24'
         mode='single'
         locale={ko}
         selected={value}

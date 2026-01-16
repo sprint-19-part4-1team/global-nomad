@@ -63,7 +63,7 @@ export default function ActivityReservationHeadCounter({
       <div className='flex h-48 w-144 items-center justify-between rounded-12 border border-gray-100 px-10 text-gray-700'>
         <button
           onClick={handleDecrement}
-          className='cursor-pointer p-10 disabled:cursor-not-allowed disabled:text-gray-100'
+          className='p-10 disabled:text-gray-100'
           disabled={count <= minCount}
           aria-label='인원 감소'>
           <Icons.Minus aria-hidden='true' className='h-20 w-20' />
@@ -71,7 +71,7 @@ export default function ActivityReservationHeadCounter({
         <span className='h-40 w-40 p-8 text-center body-16 font-bold'>{count}</span>
         <button
           onClick={handleIncrement}
-          className='cursor-pointer p-10 disabled:cursor-not-allowed disabled:text-gray-100'
+          className='p-10 disabled:text-gray-100'
           disabled={count >= maxCount}
           aria-label='인원 증가'>
           <Icons.Plus aria-hidden='true' className='h-20 w-20' />

@@ -17,7 +17,7 @@ export default function AuthBackButton() {
   return (
     <button
       title='약관 페이지 닫기'
-      className='flex w-fit cursor-pointer items-center gap-4 body-14 font-semibold text-gray-600 transition-colors duration-500 hover:text-gray-950'
+      className='flex w-fit items-center gap-4 body-14 font-semibold text-gray-600 transition-colors duration-500 hover:text-gray-950'
       onClick={handleBack}>
       <Icons.ArrowLeft width={20} height={20} />
       회원가입으로 돌아가기

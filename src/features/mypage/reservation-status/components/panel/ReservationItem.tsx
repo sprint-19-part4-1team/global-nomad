@@ -36,7 +36,7 @@ interface ReservationItemProps {
 const infoFieldStyles = {
   container: 'flex items-center body-14 sm:body-16',
   label: 'font-bold text-gray-500',
-  value: 'font-medium text-gray-950',
+  value: 'font-medium',
 };
 
 /**

@@ -11,7 +11,7 @@ type PopularSlideProps = {
 };
 
 export const carouselButtonVariants = cva(
-  'hidden sm:flex group absolute top-1/2 -mt-27 flex h-54 w-54 cursor-pointer items-center justify-center rounded-full border bg-white duration-300',
+  'hidden sm:flex group absolute top-1/2 -mt-27 flex h-54 w-54 items-center justify-center rounded-full border bg-white duration-300',
   {
     variants: {
       direction: {
@@ -81,7 +81,7 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
           disabled: prevDisabled,
         })}>
         <Icons.ArrowLeft
-          className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600'
+          className='w-24 transition-colors duration-300 group-hover:text-primary-600'
           aria-hidden
         />
       </button>
@@ -96,7 +96,7 @@ export default function PopularSlide({ slides }: PopularSlideProps) {
           disabled: nextDisabled,
         })}>
         <Icons.ArrowRight
-          className='w-24 text-gray-950 transition-colors duration-300 group-hover:text-primary-600'
+          className='w-24 transition-colors duration-300 group-hover:text-primary-600'
           aria-hidden
         />
       </button>

@@ -8,7 +8,7 @@ import useSelectContext from '@/shared/components/dropdown/hooks/useSelectContex
 import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
-const selectDropdownTriggerVariants = cva('cursor-pointer flex', {
+const selectDropdownTriggerVariants = cva('flex', {
   variants: {
     variants: {
       basic:
@@ -78,10 +78,7 @@ export default function SelectDropdownTrigger({
       {children}
       <Icons.CaretBottom
         aria-hidden
-        className={cn(
-          'h-24 w-24 text-gray-950 transition-transform duration-200',
-          isOpen && 'rotate-180'
-        )}
+        className={cn('h-24 w-24 transition-transform duration-200', isOpen && 'rotate-180')}
       />
     </button>
   );

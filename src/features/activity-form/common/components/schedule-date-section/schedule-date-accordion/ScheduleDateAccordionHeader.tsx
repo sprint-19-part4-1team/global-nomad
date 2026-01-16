@@ -49,7 +49,7 @@ export default function ScheduleDateAccordionHeader({
         id={triggerId}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className='flex cursor-pointer items-center gap-8 text-gray-950'
+        className='flex items-center gap-8'
         onClick={() => setIsOpen((prev) => !prev)}>
         <Icons.CaretRight
           aria-hidden='true'
@@ -59,7 +59,7 @@ export default function ScheduleDateAccordionHeader({
       </button>
       <button
         type='button'
-        className='cursor-pointer text-gray-300'
+        className='text-gray-300'
         aria-label={`${formatDate} 일정 삭제`}
         onClick={onDelete}>
         <Icons.Trash aria-hidden='true' className='h-24 w-24' />

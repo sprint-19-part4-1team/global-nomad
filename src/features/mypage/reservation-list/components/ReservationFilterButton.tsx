@@ -16,8 +16,8 @@ interface ReservationFilterButtonProps {
  * 버튼, 라벨 공통 스타일
  */
 const BUTTON_BASE =
-  'w-fit cursor-pointer rounded-full border border-gray-200 bg-white px-16 py-6 sm:py-8 whitespace-nowrap';
-const LABEL_BASE = 'body-14 font-semibold whitespace-nowrap text-gray-950 sm:body-16';
+  'w-fit rounded-full border border-gray-200 bg-white px-16 py-6 sm:py-8 whitespace-nowrap';
+const LABEL_BASE = 'body-14 font-semibold whitespace-nowrap sm:body-16';
 
 /**
  * @description

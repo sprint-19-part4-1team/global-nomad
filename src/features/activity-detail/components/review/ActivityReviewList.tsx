@@ -100,7 +100,7 @@ export default function ActivityReviewList({ activityId, className }: ActivityRe
               <Title as='h4' size='24' className='sm:heading-32'>
                 {averageRating}
               </Title>
-              <div className='body-14 font-bold text-gray-950 sm:body-16'>
+              <div className='body-14 font-bold sm:body-16'>
                 {formatSatisfaction(averageRating)}
               </div>
             </div>

@@ -50,7 +50,6 @@ export default function PopularSlide() {
     setSlidesToShow(getSlidesToShow());
 
     const handleResize = () => {
-      // console.log(currentSlide);
       setSlidesToShow(getSlidesToShow());
       if (sliderRef.current) {
         sliderRef.current.slickGoTo(currentSlide); // 첫 슬라이드로 이동
@@ -60,8 +59,6 @@ export default function PopularSlide() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // console.log('밖', currentSlide);
 
   // 버튼 상태 관리
   const isPrevDisabled = currentSlide === 0;

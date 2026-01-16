@@ -145,7 +145,7 @@ export default function ActivityReservation({
       <div className='fixed right-0 bottom-0 left-0 z-10 flex flex-col gap-12 border-t border-gray-100 bg-white px-24 py-18 lg:hidden'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-6'>
-            <span className='body-18 font-bold text-gray-950'>₩ {formatValue(totalPrice)}</span>
+            <span className='body-18 font-bold'>₩ {formatValue(totalPrice)}</span>
             <span className='body-16 font-medium text-gray-700'>/ {personNumber}명</span>
           </div>
           <button

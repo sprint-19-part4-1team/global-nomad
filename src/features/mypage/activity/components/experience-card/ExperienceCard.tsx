@@ -92,9 +92,7 @@ export default function ExperienceCard({
       className='flex w-full cursor-pointer justify-between gap-24 bg-white px-16 py-24 shadow-card sm:px-20 sm:py-28 md:px-24 md:py-32'
       onClick={handleCardClick}>
       <div className='min-w-0 flex-1'>
-        <strong className='block truncate body-14 text-gray-950 sm:body-16 md:body-18'>
-          {title}
-        </strong>
+        <strong className='block truncate body-14 sm:body-16 md:body-18'>{title}</strong>
         <div className='mt-4 flex body-13 text-gray-500 sm:mt-8 sm:body-14 md:body-16'>
           <Icons.Star className='w-16 text-yellow-500' />
           <span className='ml-4 inline-block font-medium' aria-label={`평점 ${rating}점`}>

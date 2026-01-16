@@ -15,5 +15,5 @@ import { PropsWithChildren } from 'react';
  * ```
  */
 export default function ActivityReservationContentTitle({ children }: PropsWithChildren) {
-  return <h5 className='body-16 font-bold text-gray-950'>{children}</h5>;
+  return <h5 className='body-16 font-bold'>{children}</h5>;
 }

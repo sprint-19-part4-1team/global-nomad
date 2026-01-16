@@ -326,7 +326,7 @@ export default function Input({
             type='button'
             aria-label={passwordLabelText}
             onClick={handlePasswordVisibility}
-            className='input-icon cursor-pointer'>
+            className='input-icon'>
             {isPasswordVisible ? (
               <Icons.Eye aria-hidden='true' />
             ) : (

@@ -68,7 +68,7 @@ export default function ProfileImageSection({
       <button
         type='button'
         aria-label='프로필 이미지 수정'
-        className='relative mx-6 my-8 h-120 w-120 cursor-pointer'
+        className='relative mx-6 my-8 h-120 w-120'
         onClick={open}>
         <ImagePreview
           className='rounded-full'

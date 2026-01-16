@@ -93,7 +93,7 @@ export default function ActivityTitle({
         <span className='body-13 text-gray-700 sm:body-14'>{category}</span>
         <ActionDropdown>
           <ActionDropdownTrigger aria-label='공유 메뉴 열기'>
-            <Icons.Share aria-hidden='true' className='h-24 w-24 text-gray-950' />
+            <Icons.Share aria-hidden='true' className='h-24 w-24' />
           </ActionDropdownTrigger>
 
           <ActionDropdownContent className='right-0 left-auto'>
@@ -103,7 +103,7 @@ export default function ActivityTitle({
         </ActionDropdown>
       </div>
       <div className='flex flex-col gap-8 sm:gap-17'>
-        <Title as='h2' responsive='md' className='text-gray-950'>
+        <Title as='h2' responsive='md'>
           {title}
         </Title>
         <div className='flex flex-col gap-10 body-14 text-gray-700'>

@@ -4,7 +4,6 @@ import { KeyboardEvent } from 'react';
 import useTabsContext from '@/shared/components/tabs/hooks/useTabsContext';
 import { tabItemVariants } from '@/shared/components/tabs/styles/tabItemVariants';
 import { WithChildren } from '@/shared/types/common';
-import { cn } from '@/shared/utils/cn';
 
 interface TabsTriggerProps extends WithChildren {
   /** 이 탭이 나타내는 값 */
@@ -80,10 +79,7 @@ export default function TabsTrigger({ value, children }: TabsTriggerProps) {
       tabIndex={isActive ? 0 : -1}
       onClick={() => setValue(value)}
       onKeyDown={handleKeyDown}
-      className={cn(
-        tabItemVariants({ state: isActive ? 'active' : 'inactive' }),
-        'cursor-pointer'
-      )}>
+      className={tabItemVariants({ state: isActive ? 'active' : 'inactive' })}>
       {children}
     </button>
   );

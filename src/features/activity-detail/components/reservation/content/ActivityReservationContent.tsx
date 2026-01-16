@@ -205,7 +205,7 @@ export default function ActivityReservationContent({
         {/* 헤더 - 데스크톱에서만 표시 */}
         {!isBottomSheet && (
           <div className='flex items-center gap-5'>
-            <Title as='h4' size='24' className='tracking-[-0.6px] text-gray-950'>
+            <Title as='h4' size='24' className='tracking-[-0.6px]'>
               ₩ {formatValue(price)}
             </Title>
             <Title as='h4' size='20' className='tracking-[-0.5px] text-gray-600'>
@@ -259,7 +259,7 @@ export default function ActivityReservationContent({
                       총 합계
                     </Title>
                     <Title as='h5' size='20' className='tracking-[-0.5px] text-gray-950'>
-                      ₩ {totalPrice.toLocaleString()}
+                      ₩ {formatValue(totalPrice)}
                     </Title>
                   </div>
                   <Button

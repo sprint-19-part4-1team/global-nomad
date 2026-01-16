@@ -70,6 +70,13 @@ export default function ReservationSelector() {
     }
   }, [activityOptions, selectedActivityId]);
 
+  /** 체험 변경 핸들러 */
+  const handleActivityChange = (value: string) => {
+    setSelectedActivityId(value);
+    // 체험 변경 시, 달력을 현재 월로 초기화
+    setCurrentMonth(new Date());
+  };
+
   // 초기 로딩 또는 refetch 중일 때 스켈레톤 표시
   if (isPending || isRefetching) {
     return <ReservationSkeleton />;
@@ -105,7 +112,7 @@ export default function ReservationSelector() {
     <div className='flex flex-col gap-28 sm:gap-24 lg:gap-32'>
       {/* 체험 목록 드롭다운 */}
       <SelectDropdown
-        onChangeValue={(value) => setSelectedActivityId(value)}
+        onChangeValue={handleActivityChange}
         triggerId='activity-select'
         value={selectedActivityId}>
         <SelectDropdownTrigger>

@@ -36,8 +36,8 @@ export default function CreateActivityForm() {
             variant='alert'
             message='체험 등록이 완료되었습니다.'
             onClose={() => {
-              overlayStore.pop();
               router.push(`/activity/${data.id}`);
+              overlayStore.pop();
             }}
           />
         );

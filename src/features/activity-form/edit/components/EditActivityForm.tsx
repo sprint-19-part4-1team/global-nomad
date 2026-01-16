@@ -45,8 +45,8 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
             variant='alert'
             message='체험 수정이 완료되었습니다.'
             onClose={() => {
-              overlayStore.pop();
               router.push(`/activity/${activityId}`);
+              overlayStore.pop();
             }}
           />
         );

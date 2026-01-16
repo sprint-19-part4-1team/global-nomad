@@ -57,11 +57,27 @@ const validateNicknameFormat = (value: string): string => {
 };
 
 /**
- * 체험 가격 최소 금액 검증 검사
- * - 1000원 이하일 경우 에러 메세지 표시
+ * 체험 제목 최대 길이 검증
+ * - 20자 초과일 경우 에러메세지 표시
  */
-export const priceMinAmount = (value: number | string, min = 1000) => {
-  return Number(value) < min ? VALIDATION_MESSAGES.PRICE_MIN_AMOUNT : '';
+export const validateMaxTitle = (value: string) => {
+  return value.length > 20 ? VALIDATION_MESSAGES.TITLE.MAX : '';
+};
+
+/**
+ * 체험 가격 최소 금액 검증
+ * - 1000원 미만일 경우 에러 메세지 표시
+ */
+export const validateMinPrice = (value: number | string, min = 1000) => {
+  return Number(value) < min ? VALIDATION_MESSAGES.PRICE.MIN_AMOUNT : '';
+};
+
+/**
+ * 체험 가격 최대 금액 검증
+ * - 999,999원 초과일 경우 에러메세지 표시
+ */
+export const validateMaxPrice = (value: number | string, max = 999_999) => {
+  return Number(value) > max ? VALIDATION_MESSAGES.PRICE.MAX_AMOUNT : '';
 };
 
 /**

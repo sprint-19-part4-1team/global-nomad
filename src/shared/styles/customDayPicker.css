@@ -37,16 +37,8 @@
   width: 100%;
 }
 
-.reservation-day-picker .rdp-months {
-  width: 100%;
-  max-width: 100%;
-}
-
-.reservation-day-picker .rdp-months .rdp-month {
-  width: 100%;
-  max-width: 100%;
-}
-
+.reservation-day-picker .rdp-months,
+.reservation-day-picker .rdp-months .rdp-month,
 .reservation-day-picker .rdp-months .rdp-month table {
   width: 100%;
   max-width: 100%;

@@ -77,6 +77,7 @@ export default function ReservationCalendar({
   onMonthChange,
 }: ReservationCalendarProps) {
   const queryClient = useQueryClient();
+  const userId = useUserStore((s) => s.user?.id);
 
   const { today, canGoPrevMonth, canGoNextMonth, calendarDays, getReservationForDateMemo } =
     useReservationCalendar({
@@ -110,7 +111,6 @@ export default function ReservationCalendar({
     if (!hasActiveReservations) {
       try {
         const formattedDate = formatDateToString(date);
-        const userId = useUserStore.getState().user?.id;
 
         // React Query 캐시 활용하여 일별 스케줄 조회
         const schedules = await queryClient.fetchQuery({

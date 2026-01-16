@@ -29,4 +29,14 @@ export const SORT_LABELS: Record<string, string> = {
   most_reviewed: '리뷰 많은순',
   price_desc: '가격 높은순',
   price_asc: '가격 낮은순',
+} as const;
+
+/** 체험 등록/수정 폼 검증 규칙 */
+export const ACTIVITY_FORM = {
+  /** 최대 타이틀 길이 */
+  TITLE_MAX_LENGTH: 20,
+  /** 최소 금액 */
+  PRICE_MIN_AMOUNT: 1000,
+  /** 최대 금액 */
+  PRICE_MAX_AMOUNT: 999_999,
 };

@@ -51,15 +51,15 @@ export default function ReviewModal({
   const [rating, setRating] = useState(0);
   const surfaceRef = useRef<HTMLDivElement>(null);
 
-  const { mutate, isPending } = useCreateReviewMutation({
-    status,
-    size,
-    onClose: () => handleClose,
-  });
-
   const handleClose = () => {
     overlayStore.pop();
   };
+
+  const { mutate, isPending } = useCreateReviewMutation({
+    status,
+    size,
+    onClose: handleClose,
+  });
 
   const handleSubmit = () => {
     if (!content.trim() || rating === 0 || isPending) {

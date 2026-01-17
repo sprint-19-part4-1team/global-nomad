@@ -2,10 +2,8 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
-import { getActivityDetail } from '@/shared/apis/feature/activities';
+import { useActivityExistenceCheck } from '@/features/mypage/reservation-list/hooks/useActivityExistenceCheck';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 interface ReservationCardImageProps {
@@ -34,30 +32,18 @@ export default function ReservationCardImage({
   reviewSubmitted,
 }: ReservationCardImageProps) {
   const router = useRouter();
-  const [isNavigating, setIsNavigating] = useState(false);
+  const { checkAndExecute, isLoading } = useActivityExistenceCheck(activityId);
   const isReviewCompleted = status === ReservationStatus.Completed && reviewSubmitted;
 
-  const handleClick = async () => {
-    if (isNavigating) {
-      return;
-    }
-
-    setIsNavigating(true);
-    try {
-      await getActivityDetail(activityId);
-      router.push(`/activity/${activityId}`);
-    } catch {
-      toast.error('존재하지 않는 체험입니다.');
-    } finally {
-      setIsNavigating(false);
-    }
+  const handleClick = () => {
+    checkAndExecute(() => router.push(`/activity/${activityId}`));
   };
 
   return (
     <button
       type='button'
       onClick={handleClick}
-      disabled={isNavigating}
+      disabled={isLoading}
       aria-label='체험 상세 페이지로 이동'
       className='absolute inset-y-0 right-0 w-[40%] cursor-pointer overflow-hidden bg-primary-200'>
       <div className='relative h-full w-full'>

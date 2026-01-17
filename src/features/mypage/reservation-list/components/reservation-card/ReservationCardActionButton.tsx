@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { getActivityDetail } from '@/shared/apis/feature/activities';
+import { useActivityExistenceCheck } from '@/features/mypage/reservation-list/hooks/useActivityExistenceCheck';
 import Button from '@/shared/components/button/Button';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
@@ -34,22 +32,10 @@ export default function ReservationCardActionButton({
   onCancel,
   onWriteReview,
 }: ReservationCardActionButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const { checkAndExecute, isLoading } = useActivityExistenceCheck(activityId);
 
-  const handleWriteReview = async () => {
-    if (isLoading) {
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      await getActivityDetail(activityId);
-      onWriteReview?.();
-    } catch {
-      toast.error('존재하지 않는 체험입니다.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handleWriteReview = () => {
+    checkAndExecute(() => onWriteReview?.());
   };
 
   if (status === ReservationStatus.Pending) {

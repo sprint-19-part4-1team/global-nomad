@@ -51,6 +51,7 @@ export default function ReservationCard({
         </div>
         <ReservationCardActionButton
           status={status}
+          activityId={activity.id}
           reviewSubmitted={reviewSubmitted}
           onCancel={onCancel}
           onWriteReview={onWriteReview}

@@ -10,6 +10,13 @@ const meta: Meta<typeof ReservationCard> = {
   component: ReservationCard,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: '/my/reservations',
+        push: () => {},
+      },
+    },
     docs: {
       description: {
         component: `
@@ -30,6 +37,22 @@ const meta: Meta<typeof ReservationCard> = {
       },
     },
   },
+  loaders: [
+    async () => {
+      const originalFetch = window.fetch;
+      window.fetch = async (input, init) => {
+        const url = typeof input === 'string' ? input : input.toString();
+        if (url.includes('/activities/')) {
+          return new Response(JSON.stringify({ id: 1, title: '함께 배우면 즐거운 스트릿 댄스' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+        return originalFetch(input, init);
+      };
+      return { originalFetch };
+    },
+  ],
   decorators: [
     (Story) => (
       <div className='w-642 max-w-[90vw]'>

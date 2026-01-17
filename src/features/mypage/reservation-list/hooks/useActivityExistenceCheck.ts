@@ -24,8 +24,10 @@ export function useActivityExistenceCheck(activityId: number) {
     try {
       await getActivityDetail(activityId);
       onSuccess();
-    } catch {
-      toast.error('존재하지 않는 체험입니다.');
+    } catch (error) {
+      if (error instanceof Error && 'status' in error && error.status === 404) {
+        toast.error('존재하지 않는 체험입니다.');
+      }
     } finally {
       setIsLoading(false);
     }

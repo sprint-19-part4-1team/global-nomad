@@ -49,7 +49,7 @@ export default function NotificationButton() {
     <div
       ref={notificationRef}
       className='relative box-content w-24 pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
-      <button type='button' aria-label='알림' className='cursor-pointer' onClick={handleClick}>
+      <button type='button' aria-label='알림' onClick={handleClick}>
         {hasNotifications ? (
           <Icons.Alert
             className={cn('h-24 w-24 text-gray-600', isModalOpen ? 'text-primary-500' : '')}

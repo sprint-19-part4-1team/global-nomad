@@ -32,6 +32,27 @@
   border: 0;
 }
 
+.activity-form-picker .rdp-caption_label {
+  /* 기본 스타일 (모바일) */
+  font-size: 16px;
+
+  @media (min-width: 640px) {
+    font-size: 18px;
+  }
+}
+
+.activity-form-picker .rdp-day_button,
+.activity-form-picker .rdp-day {
+  /* 기본 스타일 (모바일) */
+  width: 40px;
+  height: 40px;
+
+  @media (min-width: 640px) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 /* 체험 상세 페이지의 체험 예약 날짜 선택 */
 .reservation-day-picker {
   width: 100%;

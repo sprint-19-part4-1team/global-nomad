@@ -39,7 +39,7 @@ export default function ScheduleDateAccordionHeader({
   const formatDate = format(date, 'yyyy년 MM월 dd일 EEEE', { locale: ko });
 
   return (
-    <legend
+    <div
       className={cn(
         'flex w-full items-center justify-between border border-gray-100 bg-white p-16',
         isOpen ? 'rounded-t-16 border-b-0' : 'rounded-16'
@@ -64,6 +64,6 @@ export default function ScheduleDateAccordionHeader({
         onClick={onDelete}>
         <Icons.Trash aria-hidden='true' className='h-24 w-24' />
       </button>
-    </legend>
+    </div>
   );
 }

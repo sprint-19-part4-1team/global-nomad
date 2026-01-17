@@ -79,10 +79,15 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
   };
 
   return (
-    <fieldset>
-      <legend className='mb-16 form-title'>예약 가능 시간대</legend>
+    <div
+      role='group'
+      aria-labelledby='schedule-group-title'
+      className='flex w-full flex-col gap-16'>
+      <span id='schedule-group-title' className='form-title'>
+        예약 가능 시간대
+      </span>
       <ScheduleDateField date={selectedDate} setDate={setSelectedDate} onAddDate={handleAddDate} />
-      <div className='mt-16 flex flex-col gap-16'>
+      <div className='flex flex-col gap-16'>
         {accordionDates.map((date) => (
           <div
             key={date}
@@ -106,6 +111,6 @@ export default function ScheduleDateSection({ scheduleInfo }: ScheduleDateSectio
           </div>
         ))}
       </div>
-    </fieldset>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import ActivityReservationContentTitle from '@/features/activity-detail/componen
 import ActivityReservationDatePicker from '@/features/activity-detail/components/reservation/content/ActivityReservationDatePicker';
 import ActivityReservationTimeSlotSelector from '@/features/activity-detail/components/reservation/content/ActivityReservationTimeSlotSelector';
 import {
+  filterTimesByNow,
   getAvailableDates,
   getSchedulesByDate,
 } from '@/features/activity-detail/utils/reservationDateUtils';
@@ -84,7 +85,7 @@ export default function ActivityReservationDateTimeSection({
   const availableDates = getAvailableDates(schedules, today);
 
   // 선택된 날짜의 시간 목록
-  const availableTimes = selectedDate
+  const scheduleTimes = selectedDate
     ? getSchedulesByDate(schedules)[formatDateToString(selectedDate)] || []
     : [];
 
@@ -107,7 +108,7 @@ export default function ActivityReservationDateTimeSection({
         <ActivityReservationContentTitle>예약 가능한 시간</ActivityReservationContentTitle>
         <ActivityReservationTimeSlotSelector
           selectedDate={selectedDate}
-          availableTimes={availableTimes}
+          availableTimes={filterTimesByNow(scheduleTimes, selectedDate)}
           selectedScheduleId={selectedScheduleId}
           onSelectSchedule={onScheduleSelect}
         />

@@ -1,3 +1,4 @@
+import { startOfDay } from 'date-fns';
 import { ScheduleResponseDto } from '@/shared/types/activities';
 import { formatDateForDisplay } from '@/shared/utils/dateUtil';
 
@@ -8,23 +9,11 @@ import { formatDateForDisplay } from '@/shared/utils/dateUtil';
  * 사용자 친화적인 형식으로 조합합니다.
  * 날짜나 시간 정보가 없는 경우 빈 문자열을 반환합니다.
  *
- * @param {Date | undefined} date - 날짜 객체
- * @param {Object | undefined} timeInfo - 시간 정보 객체
- * @param {string} timeInfo.startTime - 시작 시간 (HH:MM 형식)
- * @param {string} timeInfo.endTime - 종료 시간 (HH:MM 형식)
- * @returns {string} 조합된 날짜/시간 문자열, 정보가 없으면 빈 문자열
- *
- * @example
- * ```typescript
- * formatDateTimeForDisplay(
- *   new Date('2026-01-15'),
- *   { startTime: '12:00', endTime: '13:00' }
- * )
- * // returns: '2026. 01. 15 12:00 - 13:00'
- *
- * formatDateTimeForDisplay(undefined, { startTime: '12:00', endTime: '13:00' })
- * // returns: ''
- * ```
+ * @param date - 날짜 객체
+ * @param timeInfo - 시간 정보 객체
+ * @param timeInfo.startTime - 시작 시간 (HH:MM 형식)
+ * @param timeInfo.endTime - 종료 시간 (HH:MM 형식)
+ * @returns 조합된 날짜/시간 문자열, 정보가 없으면 빈 문자열
  */
 export const formatDateTimeForDisplay = (
   date: Date | undefined,
@@ -43,30 +32,8 @@ export const formatDateTimeForDisplay = (
  * 특정 날짜의 예약 가능한 시간대를 빠르게 조회할 수 있도록 합니다.
  * reduce를 사용하여 O(n) 시간 복잡도로 변환합니다.
  *
- * @param {ScheduleResponseDto[]} schedules - 스케줄 배열
- * @returns {Record<string, Array<{id: number, startTime: string, endTime: string}>>}
- *          날짜 문자열을 키로 하는 시간대 배열 맵
- *
- * @example
- * ```typescript
- * const schedules = [
- *   {
- *     date: '2026-01-15',
- *     times: [
- *       { id: 1, startTime: '12:00', endTime: '13:00' },
- *       { id: 2, startTime: '14:00', endTime: '15:00' }
- *     ]
- *   }
- * ];
- *
- * getSchedulesByDate(schedules)
- * // returns: {
- * //   '2026-01-15': [
- * //     { id: 1, startTime: '12:00', endTime: '13:00' },
- * //     { id: 2, startTime: '14:00', endTime: '15:00' }
- * //   ]
- * // }
- * ```
+ * @param schedules - 스케줄 배열
+ * @returns 날짜 문자열을 키로 하는 시간대 배열 맵
  */
 export const getSchedulesByDate = (schedules: ScheduleResponseDto[]) => {
   return schedules.reduce(
@@ -79,28 +46,72 @@ export const getSchedulesByDate = (schedules: ScheduleResponseDto[]) => {
 };
 
 /**
+ * 현재 시간 이후의 시간대만 필터링합니다.
+ *
+ * 선택된 날짜가 오늘인 경우, 현재 시간 이후의 시간대만 반환합니다.
+ * 오늘이 아닌 경우에는 모든 시간대를 그대로 반환합니다.
+ *
+ * @param times - 시간대 배열
+ * @param selectedDate - 선택된 날짜
+ * @returns 필터링된 시간대 배열
+ */
+export const filterTimesByNow = (
+  times: Array<{ id: number; startTime: string; endTime: string }>,
+  selectedDate: Date | undefined
+): Array<{ id: number; startTime: string; endTime: string }> => {
+  if (!selectedDate) {
+    return times;
+  }
+
+  const now = new Date();
+  const today = startOfDay(now);
+  const selectedDay = startOfDay(selectedDate);
+
+  // 선택된 날짜가 오늘이 아니면 모든 시간대 반환
+  if (selectedDay.getTime() !== today.getTime()) {
+    return times;
+  }
+
+  // 오늘인 경우, 현재 시간 이후의 시간대만 필터링
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+  const currentTimeInMinutes = currentHour * 60 + currentMinute;
+
+  return times.filter((time) => {
+    const [startHour, startMinute] = time.startTime.split(':').map(Number);
+    const startTimeInMinutes = startHour * 60 + startMinute;
+
+    return startTimeInMinutes > currentTimeInMinutes;
+  });
+};
+
+/**
  * 오늘 이후의 예약 가능한 날짜 목록을 반환합니다.
  *
  * 전체 스케줄에서 기준 날짜(일반적으로 오늘) 이후의 날짜만 필터링하여
  * Date 객체 배열로 반환합니다. 이 배열은 달력 컴포넌트에서
  * 선택 가능한 날짜를 표시하는 데 사용됩니다.
  *
- * @param {ScheduleResponseDto[]} schedules - 스케줄 배열
- * @param {Date} today - 기준 날짜 (일반적으로 오늘 날짜)
- * @returns {Date[]} 예약 가능한 날짜 배열 (기준 날짜 포함, 이후 날짜만)
+ * 오늘 날짜의 경우, 현재 시간 이후의 예약 가능한 시간대가 있는 경우에만 포함됩니다.
  *
- * @example
- * ```typescript
- * const schedules = [
- *   { date: '2026-01-10', times: [...] },
- *   { date: '2026-01-15', times: [...] },
- *   { date: '2026-01-20', times: [...] }
- * ];
- *
- * getAvailableDates(schedules, new Date('2026-01-12'))
- * // returns: [Date('2026-01-15'), Date('2026-01-20')]
- * ```
+ * @param schedules - 스케줄 배열
+ * @param today - 기준 날짜 (일반적으로 오늘 날짜)
+ * @returns 예약 가능한 날짜 배열 (기준 날짜 포함, 이후 날짜만)
  */
 export const getAvailableDates = (schedules: ScheduleResponseDto[], today: Date): Date[] => {
-  return schedules.map((schedule) => new Date(schedule.date)).filter((date) => date >= today);
+  return schedules
+    .filter((schedule) => {
+      const scheduleDate = new Date(schedule.date);
+
+      // 과거 날짜는 제외
+      if (scheduleDate < today) {
+        return false;
+      }
+
+      // filterTimesByNow를 사용하여 현재 시간 이후 시간대 확인
+      const availableTimes = filterTimesByNow(schedule.times, scheduleDate);
+
+      return availableTimes.length > 0;
+    })
+    .map((schedule) => new Date(schedule.date));
 };

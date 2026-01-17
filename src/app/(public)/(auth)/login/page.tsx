@@ -2,15 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import AuthForm from '@/features/auth/components/AuthForm';
-import KakaoButton from '@/features/auth/components/KakaoButton';
+import AuthForm from '@/features/auth/common/components/AuthForm';
+import KakaoButton from '@/features/auth/common/components/KakaoButton';
+import useAuthForm from '@/features/auth/common/hooks/useAuthForm';
 import { login } from '@/shared/apis/feature/auth';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { COMMON_MESSAGE } from '@/shared/constants';
-import useAuthForm from '@/shared/hooks/useAuthForm';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isApiError } from '@/shared/utils/errorGuards';
 

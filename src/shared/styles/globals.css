@@ -1,10 +1,64 @@
 @import 'tailwindcss';
 
-@import './base/tokens.css';
+/* Color, Token, Typography */
 @import './base/colors.css';
+@import './base/tokens.css';
 @import './base/fontFace.css';
 @import './base/fontUtils.css';
-@import './base/hiddenScrollbar.css';
-@import './base/customScrollbar.css';
+
+/* Form Elements */
 @import './base/field.css';
+@import './base/formSection.css';
 @import './base/input.css';
+
+/* Scrollbar */
+@import './base/customScrollbar.css';
+@import './base/hiddenScrollbar.css';
+
+/* 폰트 기본 스타일, footer 하단 고정 */
+#main {
+  font-size: var(--body-size-16);
+  line-height: var(--leading-body-16);
+  color: var(--color-gray-950);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#main main {
+  flex: 1;
+}
+
+/* 버튼 커서 공통 스타일 */
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button[data-disabled='true'] {
+  cursor: default;
+}
+
+button[data-loading='true'] {
+  cursor: wait;
+}
+
+/* 메인 - 인기 체험 슬라이드 */
+@media screen and (max-width: 640px) {
+  .popular .slick-track {
+    display: flex !important;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .popular .slick-slide {
+    min-width: 156px !important;
+    flex-shrink: 0;
+  }
+
+  .popular .slick-slide > div {
+    width: 100%;
+  }
+}

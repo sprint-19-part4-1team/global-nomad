@@ -1,4 +1,16 @@
+import { Metadata } from 'next';
+import CreateActivityForm from '@/features/activity-form/new/components/CreateActivityForm';
+import Title from '@/shared/components/title/Title';
+
+export const metadata: Metadata = {
+  title: '내 체험 등록',
+};
+
 export default function ActivityNew() {
-  // TODO: 체험 등록 페이지 구현
-  return <div>체험 등록 페이지</div>;
+  return (
+    <>
+      <Title responsive='md'>내 체험 등록</Title>
+      <CreateActivityForm />
+    </>
+  );
 }

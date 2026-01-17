@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import NotificationButton from '@/features/notification/components/NotificationButton';
 import { logout } from '@/shared/apis/feature/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/avatar';
 import {
@@ -35,10 +36,7 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
 
   return (
     <div className='flex items-center'>
-      {/* // TODO: 알림 팝업 추가 */}
-      <div className='relative box-content w-24 pr-20 after:absolute after:top-1/2 after:right-0 after:block after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100'>
-        알림
-      </div>
+      <NotificationButton />
 
       <div className='ml-20'>
         <ActionDropdown>
@@ -47,12 +45,14 @@ export default function LoggedInActions({ user }: LoggedInActionsProps) {
               <AvatarImage />
               <AvatarFallback />
             </Avatar>
-            <span className='ml-10 body-14 font-medium text-gray-950'>{user.nickname}</span>
+            <span className='ml-10 body-14 font-medium'>{user.nickname}</span>
           </ActionDropdownTrigger>
-          <ActionDropdownContent>
-            <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
-            <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
+          <ActionDropdownContent className='right-0 left-auto w-full min-w-96'>
+            <ActionDropdownItem onClick={() => router.push('/mypage/info')} className='min-w-full'>
               마이페이지
+            </ActionDropdownItem>
+            <ActionDropdownItem onClick={handleLogout} className='min-w-full'>
+              로그아웃
             </ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>

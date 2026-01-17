@@ -1,11 +1,18 @@
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+import ChangePasswordSection from '@/features/mypage/info/components/change-password/ChangePasswordSection';
+import ProfileSection from '@/features/mypage/info/components/profile/ProfileSection';
 
-export default function MypageInfo() {
-  // TODO: 마이페이지 내 정보 수정 페이지 구현
+/**
+ * ## MypageInfo
+ *
+ * @description
+ * - 마이페이지의 내 정보 수정 화면을 구성하는 페이지 컴포넌트입니다.
+ * - 프로필 수정 섹션과 비밀번호 변경 섹션을 순서대로 렌더링합니다.
+ */
+export default async function MypageInfo() {
   return (
     <>
-      <MypageSectionHeader title='내 정보' description='닉네임과 비밀번호를 수정할 수 있습니다.' />
-      <div className='mt-24 sm:mt-32'>마이페이지 내 정보 수정 페이지</div>
+      <ProfileSection />
+      <ChangePasswordSection />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { ReactNode } from 'react';
 import Spinner from '@/shared/components/spinner/Spinner';
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * Spinner 컴포넌트 스토리 가이드
@@ -38,7 +38,7 @@ export default meta;
 type Story = StoryObj<typeof Spinner>;
 
 /** 스토리 렌더용 배경 */
-const SpinnerWrapper = ({ children }: { children: ReactNode }) => (
+const SpinnerWrapper = ({ children }: WithChildren) => (
   <div className='flex items-center gap-20 text-primary-500'>{children}</div>
 );
 

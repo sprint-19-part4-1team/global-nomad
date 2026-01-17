@@ -1,13 +1,13 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import { ReactNode } from 'react';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
-const labelVariants = cva('text-gray-950', {
+const labelVariants = cva('w-fit', {
   variants: {
     variant: {
-      authForm: 'body-14 sm:body-16 text-left font-medium',
-      form: 'body-14 sm:body-16 text-left font-bold',
-      review: 'body-16 sm:body-18 text-center font-bold',
+      authForm: 'font-medium body-14 sm:body-16',
+      form: 'form-title',
+      review: 'w-full text-center font-bold body-16 sm:body-18',
     },
   },
   defaultVariants: {
@@ -17,10 +17,14 @@ const labelVariants = cva('text-gray-950', {
 
 type LabelVariantsProps = VariantProps<typeof labelVariants>;
 
-interface LabelProps extends LabelVariantsProps {
+interface LabelProps extends LabelVariantsProps, WithChildren {
+  /** 다른 컴포넌트에서 라벨을 참조하기 위한 식별자 */
+  id?: string;
+  /** 연결될 form control의 `id` 값 */
   htmlFor?: string;
-  children: ReactNode;
+  /** 추가적인 스타일 확장을 위한 클래스 */
   className?: string;
+  /** selectDropdown 포커스 트리거를 위한 onClick 함수 */
   onClick?: () => void;
 }
 
@@ -44,11 +48,6 @@ interface LabelProps extends LabelVariantsProps {
  *   - 리뷰 폼에서 사용되는 라벨
  *   - `lg` 사이즈, 중앙 정렬, bold weight
  *
- * @param htmlFor - 연결될 form control의 `id` 값
- * @param variant - 라벨의 스타일 `'authForm' | 'form' | 'review'`
- * @param className - 추가적인 스타일 확장을 위한 클래스
- * @param onClick - selectDropdown 포커스 트리거를 위한 onClick 함수
- *
  * @example
  * ```tsx
  * <Label htmlFor="email" variant="authForm">이메일</Label>
@@ -62,9 +61,10 @@ interface LabelProps extends LabelVariantsProps {
  * </Label>
  * ```
  */
-export default function Label({ htmlFor, children, className, variant, onClick }: LabelProps) {
+export default function Label({ id, htmlFor, children, className, variant, onClick }: LabelProps) {
   return (
     <label
+      id={id}
       htmlFor={htmlFor}
       className={cn(labelVariants({ variant }), className)}
       onClick={onClick}>

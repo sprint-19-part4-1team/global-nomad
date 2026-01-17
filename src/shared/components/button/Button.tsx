@@ -1,14 +1,15 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { LinkProps } from 'next/link';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import ButtonBase from '@/shared/components/button/ButtonBase';
 import LinkBase from '@/shared/components/button/LinkBase';
 import Spinner from '@/shared/components/spinner/Spinner';
+import { WithChildren } from '@/shared/types/common';
 import { cn } from '@/shared/utils/cn';
 
 /** 공통 스타일 */
 const buttonVariants = cva(
-  'cursor-pointer w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25',
+  'block w-fit text-center font-semibold disabled:bg-gray-100 disabled:text-gray-25 disabled:border-none',
   {
     variants: {
       /**
@@ -60,10 +61,10 @@ const buttonVariants = cva(
 );
 
 /** 공통(스타일 + children/className) */
-type ButtonCommonProps = VariantProps<typeof buttonVariants> & {
-  children: ReactNode;
-  className?: string;
-};
+type ButtonCommonProps = WithChildren
+  & VariantProps<typeof buttonVariants> & {
+    className?: string;
+  };
 
 /** button(action) 타입 */
 type ButtonAsButton = ButtonCommonProps
@@ -138,14 +139,12 @@ export default function Button(props: ButtonProps) {
 
   const isDisabled = isLoading || disabled;
 
-  /** 버튼 커서 스타일 */
-  const cursorClass = isLoading ? 'cursor-wait' : disabled ? 'cursor-default' : '';
-
   return (
     <ButtonBase
-      className={cn(classes, cursorClass, isLoading && 'relative')}
+      className={cn(classes, isLoading && 'relative')}
       type={type}
       disabled={isDisabled}
+      data-loading={isLoading}
       aria-busy={isLoading || undefined}
       {...buttonProps}>
       <span className={cn(isLoading && 'invisible')}>{children}</span>

@@ -8,6 +8,7 @@ import { UserServiceResponseDto } from '@/shared/types/user';
  */
 interface AvatarContextType {
   user: UserServiceResponseDto;
+  size: 'sm' | 'md' | 'lg';
   imageError: boolean;
   setImageError: Dispatch<SetStateAction<boolean>>;
 }

@@ -7,7 +7,6 @@ type ParseOption<T> = T extends string ? { parse?: (v: string) => T } : { parse:
 
 type UseQueryParamStateOptions<T> = {
   defaultValue: T;
-  serialize?: (value: T) => string;
   replace?: boolean;
   scroll?: boolean;
   removeParam?: (value: T) => boolean;
@@ -25,7 +24,6 @@ type UseQueryParamStateOptions<T> = {
  *
  * @param key - 쿼리 키
  * @param parse - URL string을 원하는 타입의 상태값으로 변환하는 함수
- * @param serialize - 상태값 → URL string으로 변환하는 함수
  * @param replace - history 관리 방식 (true: replace, false: push)
  * @param scroll - 라우팅 시 스크롤 이동 여부 (기본값: false)
  * @param removeParam - 특정 조건일 때 쿼리 파라미터를 제거할 지 여부
@@ -44,7 +42,6 @@ const useQueryParamState = <T = string>(
   {
     defaultValue,
     parse = (v) => v as T,
-    serialize = String,
     replace = true,
     scroll = false,
     removeParam,
@@ -74,7 +71,7 @@ const useQueryParamState = <T = string>(
       if (removeParam?.(nextValue)) {
         params.delete(key);
       } else {
-        params.set(key, serialize(nextValue));
+        params.set(key, String(nextValue));
       }
 
       const query = params.toString();
@@ -86,7 +83,7 @@ const useQueryParamState = <T = string>(
         router.push(url, { scroll });
       }
     },
-    [key, pathname, replace, router, scroll, serialize, removeParam]
+    [key, pathname, replace, router, scroll, removeParam]
   );
 
   return [value, setValue];

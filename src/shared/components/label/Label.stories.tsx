@@ -27,6 +27,13 @@ const meta: Meta<typeof Label> = {
   title: 'Shared/Label',
   component: Label,
   argTypes: {
+    id: {
+      control: 'text',
+      description: '다른 컴포넌트에서 라벨을 참조하기 위한 식별자',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
     htmlFor: {
       control: 'text',
       description: '연결될 form control의 id 값',

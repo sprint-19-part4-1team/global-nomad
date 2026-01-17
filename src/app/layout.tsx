@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
-import AuthGuard from '@/features/auth/components/AuthGuard';
+import AuthGuard from '@/features/auth/common/components/AuthGuard';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import RefreshProvider from '@/shared/providers/RefreshProvider';
 import SessionWatcher from '@/shared/providers/SessionWatcher';
+import { WithChildren } from '@/shared/types/common';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -43,22 +44,20 @@ export const viewport = {
   interactiveWidget: 'resizes-visual',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<WithChildren>) {
   return (
     <html lang='ko'>
       <body>
         <QueryProvider>
           <RefreshProvider>
             <SessionWatcher />
-            <AuthGuard>{children}</AuthGuard>
+            <AuthGuard>
+              <div id='main'>{children}</div>
+            </AuthGuard>
           </RefreshProvider>
+          <OverlayRoot />
         </QueryProvider>
         <ToastProvider />
-        <OverlayRoot />
       </body>
     </html>
   );

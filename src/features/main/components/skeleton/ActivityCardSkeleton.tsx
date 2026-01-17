@@ -17,11 +17,11 @@ interface ActivityCardSkeletonProps {
 
 /** 체험 카드 스켈레톤의 스타일 변형을 관리하는 CVA 설정 */
 const activityCardVariants = cva(
-  'relative flex flex-col overflow-hidden rounded-18 bg-transparent sm:h-423 sm:w-332 sm:rounded-32 lg:h-366 lg:w-262',
+  'relative flex flex-col overflow-hidden rounded-18 bg-transparent sm:h-423 sm:basis-1/2 sm:rounded-32 lg:h-366 md:basis-[calc(25%-18px)]',
   {
     variants: {
       variant: {
-        default: 'h-243 w-328',
+        default: 'h-243 w-full',
         popular: 'h-243 w-131',
       },
     },

@@ -1,12 +1,12 @@
 'use client';
 
-import { ReactNode } from 'react';
 import useDropdownBaseContext from '@/shared/components/dropdown/hooks/useDropdownBaseContext';
-import { cn } from '@/shared/utils/cn';
+import { WithChildren } from '@/shared/types/common';
 
-interface ActionDropdownTriggerProps {
-  children: ReactNode;
+interface ActionDropdownTriggerProps extends WithChildren {
+  /** 트리거 버튼에 추가로 적용할 스타일 */
   className?: string;
+  /** 트리거 내부 콘텐츠가 아이콘일때 적용할 aria-label */
   ariaLabel?: string;
 }
 
@@ -20,10 +20,6 @@ interface ActionDropdownTriggerProps {
  * - `button` 요소를 사용하여 기본적인 키보드 접근성을 제공합니다.
  * - `aria-haspopup="menu"`와 `aria-expanded`를 통해
  *   스크린 리더에 메뉴 상태를 전달합니다.
- *
- * @param children - 트리거 내부에 표시될 콘텐츠
- * @param className - 트리거 버튼에 추가로 적용할 클래스 이름
- * @param ariaLabel - 트리거 내부 콘텐츠가 아이콘일때 적용할 aria-label
  *
  * @example
  * ```tsx
@@ -45,7 +41,7 @@ export default function ActionDropdownTrigger({
       aria-haspopup='menu'
       aria-label={ariaLabel}
       aria-expanded={isOpen}
-      className={cn('cursor-pointer', className)}
+      className={className}
       onClick={() => setIsOpen((prev) => !prev)}>
       {children}
     </button>

@@ -1,0 +1,50 @@
+import {
+  RESERVATION_STATUS_LABEL,
+  statusBackgroundVariants,
+  statusTextVariants,
+} from '@/features/mypage/common/constants/reservationStatus';
+import { ReservationStatus } from '@/shared/types/myReservations';
+import { cn } from '@/shared/utils/cn';
+
+interface ReservationFilterButtonProps {
+  status: ReservationStatus;
+  isActive: boolean;
+  onSelect: (status: ReservationStatus) => void;
+}
+
+/**
+ * 버튼, 라벨 공통 스타일
+ */
+const BUTTON_BASE =
+  'w-fit rounded-full border border-gray-200 bg-white px-16 py-6 sm:py-8 whitespace-nowrap';
+const LABEL_BASE = 'body-14 font-semibold whitespace-nowrap sm:body-16';
+
+/**
+ * @description
+ * 예약 상태를 선택하기 위한 필터 버튼 컴포넌트입니다.
+ * - 선택 여부(`isActive`)에 따라 스타일이 변경됩니다.
+ *
+ * @param status - 버튼이 나타내는 예약 상태 (`ReservationStatus` enum)
+ * @param isActive - 현재 선택된 상태인지 여부
+ * @param onSelect - 상태 선택 시 호출되는 콜백 (ReservationStatus 전달)
+ */
+export default function ReservationFilterButton({
+  status,
+  isActive,
+  onSelect,
+}: ReservationFilterButtonProps) {
+  const selectedButtonStyle = cn('border-transparent', statusBackgroundVariants[status]);
+  const selectedLabelStyle = statusTextVariants[status];
+
+  return (
+    <button
+      type='button'
+      aria-pressed={isActive}
+      onClick={() => onSelect(status)}
+      className={cn(BUTTON_BASE, isActive ? selectedButtonStyle : '')}>
+      <span className={cn(LABEL_BASE, isActive ? selectedLabelStyle : '')}>
+        {RESERVATION_STATUS_LABEL[status]}
+      </span>
+    </button>
+  );
+}

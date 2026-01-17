@@ -1,13 +1,22 @@
 'use client';
 
 import Icons from '@/assets/icons';
-import useQueryParamState from '@/shared/hooks/useQueryParamState';
 import { cn } from '@/shared/utils/cn';
 import { getPaginationRange } from '@/shared/utils/getPaginationRange';
 
+/**
+ * Pagination 컴포넌트의 Props
+ *
+ * @property {number} totalCount - 전체 아이템 개수
+ * @property {number} itemsPerPage - 한 페이지에 표시할 아이템 개수
+ * @property {number} currentPage - 현재 페이지 번호 (1부터 시작)
+ * @property {(page: number) => void} onPageChange - 페이지 변경 시 호출되는 콜백 함수
+ */
 interface PaginationProps {
   totalCount: number;
   itemsPerPage: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
 // 버튼 스타일 모음
@@ -16,39 +25,48 @@ interface PaginationProps {
 // - disabledArrowBtn : 비활성 화살표
 // - selectedStyle : 선택된 페이지
 const PAGINATION_STYLES = {
-  arrowBtnBase: 'flex items-center justify-center h-40 w-40 text-gray-950 rounded-4',
+  arrowBtnBase: 'flex items-center justify-center h-40 w-40 rounded-4',
   pageBtnBase:
     'flex items-center justify-center h-40 w-40 body-14 font-medium select-none text-gray-300 rounded-4',
-  hoverableBtn: 'cursor-pointer hover:bg-gray-25',
-  disabledArrowBtn: 'cursor-default text-gray-300',
+  hoverableBtn: 'hover:bg-gray-25',
+  disabledArrowBtn: 'text-gray-300',
   selectedStyle: 'border-b-2 border-primary-500 text-gray-950 rounded-none',
 } as const;
 
 /**
- * @description
- * - 현재 페이지는 URL 쿼리 파라미터 `page`를 기준으로 동작합니다.
- * - URL 상태 관리는 `useQueryParamState` 공통 훅에서 처리됩니다.
- * - 유효하지 않은 page 값은 1페이지로 보정되며, 1페이지는 URL에 남기지 않습니다.
- * - 실제 UI는 `getPaginationRange`에서 보정된 `checkedCurrentPage`를 기준으로 렌더링됩니다.
+ * 페이지네이션 컴포넌트 (Controlled Component)
  *
- * @param totalCount - 전체 아이템 개수
- * @param itemsPerPage - 한 페이지에 표시할 아이템 개수 ( ex) 메인 페이지 기준 8개(데스크탑), 4개(테블릿), 6개(모바일) )
+ * @description
+ * - 페이지 상태를 직접 관리하지 않고 부모 컴포넌트로부터 props로 받아 제어됩니다.
+ * - URL 쿼리 파라미터 관리는 부모 컴포넌트에서 담당합니다.
+ * - Controlled Component 패턴을 사용하여 재사용성과 유연성을 높였습니다.
+ * - 여러 페이지네이션이 필요한 경우 각각 다른 쿼리 키로 관리할 수 있습니다.
+ *
+ * @param {PaginationProps} props - 컴포넌트 props
+ * @returns {JSX.Element} 렌더링된 페이지네이션 UI
+ *
+ * @example
+ * ```tsx
+ * // 부모 컴포넌트에서 상태 관리
+ * const [currentPage, setCurrentPage] = useQueryParamState('page', {
+ *   defaultValue: 1,
+ *   parse: parsePageQueryParam,
+ * });
+ *
+ * <Pagination
+ *   totalCount={100}
+ *   itemsPerPage={10}
+ *   currentPage={currentPage}
+ *   onPageChange={setCurrentPage}
+ * />
+ * ```
  */
-export default function Pagination({ totalCount, itemsPerPage }: PaginationProps) {
-  const [currentPage, setCurrentPage] = useQueryParamState<number>('page', {
-    defaultValue: 1,
-    parse: (v) => {
-      const n = Number(v);
-      if (!Number.isFinite(n) || n <= 0) {
-        return 1;
-      }
-      return Math.floor(n);
-    },
-    removeParam: (v) => v === 1,
-    replace: false,
-    scroll: false,
-  });
-
+export default function Pagination({
+  totalCount,
+  itemsPerPage,
+  currentPage,
+  onPageChange,
+}: PaginationProps) {
   const totalPage = Math.max(1, Math.ceil(totalCount / itemsPerPage));
   const { checkedCurrentPage, visiblePages, canGoPrev, canGoNext } = getPaginationRange({
     currentPage,
@@ -59,19 +77,21 @@ export default function Pagination({ totalCount, itemsPerPage }: PaginationProps
     if (!canGoPrev) {
       return;
     }
-    setCurrentPage(checkedCurrentPage - 1);
+    onPageChange(checkedCurrentPage - 1);
   };
+
   const handleNext = () => {
     if (!canGoNext) {
       return;
     }
-    setCurrentPage(checkedCurrentPage + 1);
+    onPageChange(checkedCurrentPage + 1);
   };
+
   const handleSelectPage = (page: number) => {
     if (page === checkedCurrentPage) {
       return;
     }
-    setCurrentPage(page);
+    onPageChange(page);
   };
 
   const { arrowBtnBase, pageBtnBase, hoverableBtn, disabledArrowBtn, selectedStyle } =
@@ -95,6 +115,7 @@ export default function Pagination({ totalCount, itemsPerPage }: PaginationProps
             aria-label={`${page} 페이지`}
             key={page}
             className={cn(pageBtnBase, isSelected ? selectedStyle : hoverableBtn)}
+            data-disabled={isSelected}
             disabled={isSelected}
             onClick={() => handleSelectPage(page)}>
             {page}

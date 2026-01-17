@@ -1,0 +1,80 @@
+/* 일요일 */
+.custom-day-picker .rdp-weekday:first-child,
+.custom-day-picker .rdp-week .rdp-day:first-child .rdp-day_button {
+  color: var(--color-red-500);
+}
+
+/* 토요일 */
+.custom-day-picker .rdp-weekday:last-child,
+.custom-day-picker .rdp-week .rdp-day:last-child .rdp-day_button {
+  color: var(--color-primary-600);
+}
+
+/* 월 이동 버튼 */
+.custom-day-picker .rdp-nav .rdp-button_previous .rdp-chevron,
+.custom-day-picker .rdp-nav .rdp-button_next .rdp-chevron {
+  fill: var(--color-gray-700);
+}
+
+.custom-day-picker .rdp-button_next:disabled,
+.rdp-button_next[aria-disabled='true'],
+.rdp-button_previous:disabled,
+.rdp-button_previous[aria-disabled='true'] {
+  opacity: 0.3;
+}
+
+/* 선택된 값 */
+.custom-day-picker .rdp-week .rdp-day.rdp-selected .rdp-day_button {
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-primary-500);
+  color: var(--color-white);
+  border: 0;
+}
+
+.activity-form-picker .rdp-caption_label {
+  /* 기본 스타일 (모바일) */
+  font-size: 16px;
+
+  @media (min-width: 640px) {
+    font-size: 18px;
+  }
+}
+
+.activity-form-picker .rdp-day_button,
+.activity-form-picker .rdp-day {
+  /* 기본 스타일 (모바일) */
+  width: 40px;
+  height: 40px;
+
+  @media (min-width: 640px) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* 체험 상세 페이지의 체험 예약 날짜 선택 */
+.reservation-day-picker {
+  width: 100%;
+}
+
+.reservation-day-picker .rdp-months,
+.reservation-day-picker .rdp-months .rdp-month,
+.reservation-day-picker .rdp-months .rdp-month table {
+  width: 100%;
+  max-width: 100%;
+}
+
+.reservation-day-picker .rdp-week .rdp-day .rdp-day_button {
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-500);
+  border: 0;
+}
+
+/* 비활성화 */
+.custom-day-picker .rdp-week .rdp-day.rdp-disabled .rdp-day_button {
+  background-color: transparent;
+  color: var(--color-gray-500);
+}

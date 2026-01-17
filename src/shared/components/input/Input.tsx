@@ -6,6 +6,7 @@ import {
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
   MouseEventHandler,
+  ReactNode,
   useId,
 } from 'react';
 import Icons from '@/assets/icons';
@@ -24,7 +25,8 @@ import { formatValue } from '@/shared/utils/formatValue';
  *   - `authForm`: 로그인/회원가입 등 인증 관련 폼에서 사용
  *   - `form`: 체험 등록/수정 등 일반 폼에서 사용
  * @property {string} [divClassName] - Input 컨테이너 div에 적용될 추가 CSS 클래스
- * @property {string} label - Input 위에 표시될 label 텍스트
+ * @property {ReactNode} label - Input 위에 표시될 label 텍스트
+ * @property {string} [labelClassName] - label 요소에 적용될 추가 CSS 클래스
  * @property {string} [inputClassName] - Input 요소에 적용될 추가 CSS 클래스
  * @property {string} name - form 제출 시 사용될 Input의 name 속성
  *   - `address` 포함 시: 검색 아이콘이 자동으로 표시됨
@@ -59,7 +61,8 @@ interface InputProps extends Omit<
 > {
   variant: 'authForm' | 'form';
   divClassName?: string;
-  label: string;
+  label: ReactNode;
+  labelClassName?: string;
   inputClassName?: string;
   name: string;
   type: HTMLInputTypeAttribute;
@@ -193,6 +196,7 @@ export default function Input({
   variant,
   divClassName,
   label,
+  labelClassName,
   inputClassName,
   name,
   type,
@@ -289,7 +293,7 @@ export default function Input({
 
   return (
     <div className={cn('input-container', divClassName)}>
-      <Label htmlFor={inputId} variant={variant}>
+      <Label htmlFor={inputId} variant={variant} className={labelClassName}>
         {label}
       </Label>
 
@@ -322,7 +326,7 @@ export default function Input({
             type='button'
             aria-label={passwordLabelText}
             onClick={handlePasswordVisibility}
-            className='input-icon cursor-pointer'>
+            className='input-icon'>
             {isPasswordVisible ? (
               <Icons.Eye aria-hidden='true' />
             ) : (
@@ -332,8 +336,7 @@ export default function Input({
         )}
 
         {/* 주소 관련 input일 경우 검색 아이콘 렌더링 */}
-        {((type !== 'password' && name.includes('address'))
-          || autoComplete?.includes('address')) && (
+        {type !== 'password' && name === 'address' && (
           <Icons.Search aria-label='주소 검색 아이콘' className='input-icon' />
         )}
       </div>

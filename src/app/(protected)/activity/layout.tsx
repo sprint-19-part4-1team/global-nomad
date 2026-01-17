@@ -1,11 +1,7 @@
-import { ReactNode } from 'react';
 import { layoutContainer } from '@/shared/constants/';
+import { WithChildren } from '@/shared/types/common';
 
-interface ActivityLayoutProps {
-  children: ReactNode;
-}
-
-export default function ActivityLayout({ children }: ActivityLayoutProps) {
+export default function ActivityLayout({ children }: WithChildren) {
   return (
     <main
       className={layoutContainer({

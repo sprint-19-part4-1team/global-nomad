@@ -42,19 +42,16 @@ const refreshTokenInternal = async (): Promise<void> => {
  * - 토큰 갱신 실패 시 자동으로 로그아웃 처리합니다.
  * - auth 관련 API(/auth/*)는 토큰 갱신 로직을 타지 않습니다.
  *
- * @param {string} endpoint - 호출할 API Route의 엔드포인트 (예: `/auth/login`)
- * @param {RequestInit} options - fetch에 전달할 RequestInit 옵션
- * @param {number} [timeoutMs] - 요청 제한 시간(ms), 미지정 시 coreFetch의 기본 timeout 사용
- *
- * @returns {Promise<T>} API Route 응답 JSON 데이터
- *
  * @throws
  * - ApiError: HTTP 상태 코드가 2xx가 아닌 경우
  * - Error: 요청이 취소되거나(timeout / abort) 예기치 못한 오류가 발생한 경우
  */
 export const bffFetch = async <T>(
+  /** 호출할 API Route의 엔드포인트 (예: `/auth/login`) */
   endpoint: string,
+  /** fetch에 전달할 RequestInit 옵션 */
   options: RequestInit,
+  /** 요청 제한 시간(ms), 미지정 시 coreFetch의 기본 timeout 사용 */
   timeoutMs?: number
 ): Promise<T> => {
   const url = BASE_URL + endpoint;

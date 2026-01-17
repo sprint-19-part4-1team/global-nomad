@@ -1,0 +1,46 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { createReview } from '@/shared/apis/feature/myReservations';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { CreateReviewBodyDto, ReservationStatus } from '@/shared/types/myReservations';
+
+interface UseCreateReviewMutationParams {
+  status?: ReservationStatus;
+  size?: number;
+  onClose?: () => void;
+}
+
+interface CreateReviewVariables extends CreateReviewBodyDto {
+  reservationId: number;
+}
+
+export const useCreateReviewMutation = ({
+  status,
+  size = 4,
+  onClose,
+}: UseCreateReviewMutationParams) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ reservationId, rating, content }: CreateReviewVariables) => {
+      return createReview(reservationId, { rating, content });
+    },
+
+    onSuccess: (data) => {
+      toast.success('리뷰가 작성되었습니다.');
+      onClose?.();
+
+      if (!data.userId) {
+        return;
+      }
+
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.MY_RESERVATIONS(data.userId, { status, size }),
+      });
+    },
+
+    onError: (error) => {
+      toast.error(error.message || '리뷰 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    },
+  });
+};

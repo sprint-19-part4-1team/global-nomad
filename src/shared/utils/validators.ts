@@ -1,9 +1,10 @@
-import { VALIDATION_MESSAGES } from '@/shared/constants/validationMessages';
 import {
+  ACTIVITY_FORM,
   NICKNAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
+  VALIDATION_MESSAGES,
   VALIDATION_PATTERNS,
-} from '@/shared/constants/validationPatterns';
+} from '@/shared/constants';
 
 /**
  * 필수 입력 검사
@@ -57,12 +58,36 @@ const validateNicknameFormat = (value: string): string => {
 };
 
 /**
+ * 체험 제목 최대 길이 검증
+ * - 20자 초과일 경우 에러메세지 표시
+ */
+export const validateMaxTitle = (value: string) => {
+  return value.length > ACTIVITY_FORM.TITLE_MAX_LENGTH ? VALIDATION_MESSAGES.TITLE.MAX : '';
+};
+
+/**
+ * 체험 가격 최소 금액 검증
+ * - 1000원 미만일 경우 에러 메세지 표시
+ */
+export const validateMinPrice = (value: number | string) => {
+  return Number(value) < ACTIVITY_FORM.PRICE_MIN_AMOUNT ? VALIDATION_MESSAGES.PRICE.MIN_AMOUNT : '';
+};
+
+/**
+ * 체험 가격 최대 금액 검증
+ * - 999,999원 초과일 경우 에러메세지 표시
+ */
+export const validateMaxPrice = (value: number | string) => {
+  return Number(value) > ACTIVITY_FORM.PRICE_MAX_AMOUNT ? VALIDATION_MESSAGES.PRICE.MAX_AMOUNT : '';
+};
+
+/**
  * 유효성 검사 타입
  *
  * @property {'login'} login - 로그인 페이지용 검사 (필수 입력만 확인)
  * @property {'signup'} signup - 회원가입 페이지용 검사 (필수 입력 + 형식 검사)
  */
-type ValidationType = 'login' | 'signup';
+type ValidationType = 'login' | 'signup' | 'changePassword';
 
 /**
  * 유효성 검사 함수들
@@ -146,7 +171,11 @@ export const validators = {
    * validators.confirmPassword('Password123', { password: 'Password123' }) // ''
    * validators.confirmPassword('Different', { password: 'Password123' }) // '비밀번호와 동일하게 입력해 주세요.'
    */
-  confirmPassword: (value: string, values: { password: string }): string => {
+  confirmPassword: (type: ValidationType, value: string, values: { password: string }): string => {
+    if (type === 'changePassword') {
+      return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.NEW_MISMATCH;
+    }
+
     return value === values.password ? '' : VALIDATION_MESSAGES.PASSWORD.MISMATCH;
   },
 

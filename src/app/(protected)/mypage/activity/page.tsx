@@ -1,7 +1,26 @@
-import MypageSectionHeader from '@/features/mypage/components/mypage-section-header/MypageSectionHeader';
+'use client';
+
+import ActivityList from '@/features/mypage/activity/components/activity-list/ActivityList';
+import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries/useMyActivitiesInfiniteQuery';
+import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
+import Button from '@/shared/components/button/Button';
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll';
+import { useScrollToTopOnUnload } from '@/shared/hooks/useScrollToTopOnUnload';
+
+const PAGE_SIZE = 5;
 
 export default function MypageActivity() {
-  // TODO: 마이페이지 내 체험 관리 페이지 구현
+  useScrollToTopOnUnload();
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch, isPending, isError } =
+    useMyActivitiesInfiniteQuery(PAGE_SIZE);
+
+  const observerRef = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
+
   return (
     <>
       <MypageSectionHeader
@@ -10,9 +29,25 @@ export default function MypageActivity() {
 단, 체험 승인/대기 중일 때는 삭제를 할 수 없습니다.`}
         btn
       />
-      <div className='mt-24 sm:mt-32'>마이페이지 내 체험 관리 페이지 구현</div>
-      {/* TODO: float button 구현 */}
-      <div className='fixed bottom-16 z-2 block sm:hidden'>float button</div>
+
+      <div className='mt-24 sm:mt-32'>
+        <ActivityList
+          data={data}
+          isError={isError}
+          isPending={isPending}
+          refetch={refetch}
+          isFetchingNextPage={isFetchingNextPage}
+          observerRef={observerRef}
+        />
+      </div>
+
+      <Button
+        full
+        href='/activity/new'
+        size='lg'
+        className='fixed bottom-16 z-2 block w-full max-w-[calc(100%-48px)] sm:hidden'>
+        체험 등록하기
+      </Button>
     </>
   );
 }

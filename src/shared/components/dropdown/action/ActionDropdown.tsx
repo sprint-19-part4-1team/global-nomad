@@ -1,12 +1,8 @@
 'use client';
 
-import { ReactNode } from 'react';
 import DropdownBaseProvider from '@/shared/components/dropdown/root/DropdownBaseProvider';
 import DropdownBaseRoot from '@/shared/components/dropdown/root/DropdownBaseRoot';
-
-interface ActionDropdownProps {
-  children: ReactNode;
-}
+import { WithChildren } from '@/shared/types/common';
 
 /**
  * ## ActionDropdown
@@ -33,7 +29,7 @@ interface ActionDropdownProps {
  * </ActionDropdown>
  * ```
  */
-export default function ActionDropdown({ children }: ActionDropdownProps) {
+export default function ActionDropdown({ children }: WithChildren) {
   return (
     <DropdownBaseProvider>
       <DropdownBaseRoot>{children}</DropdownBaseRoot>

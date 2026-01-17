@@ -35,6 +35,7 @@ export default function AllActivity({
     activities,
     totalCount,
     isPending,
+    updateFilters,
   } = useActivityFilters();
 
   // 상위로 activities 갯수 보내기
@@ -101,8 +102,10 @@ export default function AllActivity({
                 key={item.value}
                 isActive={isActive}
                 onClick={() => {
-                  setCurrentPage(1);
-                  setCategory(isActive ? undefined : item.value);
+                  updateFilters({
+                    page: 1,
+                    category: isActive ? undefined : item.value,
+                  });
                 }}>
                 <span>{item.label}</span>
               </FilterButton>

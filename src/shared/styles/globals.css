@@ -16,7 +16,7 @@
 @import './base/hiddenScrollbar.css';
 
 /* 폰트 기본 스타일, footer 하단 고정 */
-body {
+#main {
   font-size: var(--body-size-16);
   line-height: var(--leading-body-16);
   color: var(--color-gray-950);
@@ -25,7 +25,7 @@ body {
   flex-direction: column;
 }
 
-main {
+#main main {
   flex: 1;
 }
 

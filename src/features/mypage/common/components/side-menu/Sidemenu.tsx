@@ -50,46 +50,52 @@ const activeLinkClass = 'bg-primary-100 text-primary-500';
 /**
  * ## 마이페이지 사이드 메뉴 컴포넌트
  *
- * 마이페이지 레이아웃의 좌측에 위치하는 사이드바로,
- * 사용자 아바타와 마이페이지 관련 주요 메뉴 링크를 세로 목록으로 렌더링합니다.
+ * 마이페이지 레이아웃 좌측에 고정되는 사이드바로,
+ * 사용자 프로필 아바타와 주요 메뉴 링크를 제공합니다.
  *
- * 현재 URL 경로(`usePathname`)를 기준으로
- * 활성화된 메뉴에 강조 스타일을 적용합니다.
+ * 현재 URL 경로를 기준으로 활성 메뉴를 하이라이트 처리합니다.
  *
  * ---
  *
- * ### 주요 역할
+ * ### 주요 기능
  * - 사용자 프로필 아바타 표시
- * - 마이페이지 내 고정 메뉴 목록 렌더링
- * - 현재 경로와 일치하는 메뉴 활성화 처리
+ * - 마이페이지 메뉴 목록 렌더링 (내 정보, 예약 내역, 체험 관리, 예약 현황)
+ * - 현재 경로 기반 활성 메뉴 강조
  *
- * ### UI / 노출 조건
- * - 모바일에서는 숨김 처리 (`sm` 이상에서만 노출)
- * - 카드 형태의 사이드바 UI
+ * ### Props
+ * - `className` (optional): 추가 스타일링을 위한 커스텀 클래스명
  *
- * ### 구현 포인트
- * - 메뉴 정의를 `MYPAGE_MENUS` 상수로 분리해 확장성과 가독성 확보
- * - `usePathname`를 활용한 현재 경로 기반 active 스타일 처리
- * - `cn` 유틸로 기본/활성 클래스 조건부 병합
- * - 아이콘 컴포넌트를 데이터로 관리해 map 렌더링 단순화
+ * ### 반응형 동작
+ * - 모바일(sm 미만): 숨김 처리
+ * - 태블릿 이상(sm~): 표시
  *
- * ### 상태 의존성
- * - `useUserStore`를 통해 사용자 정보 조회
- * - 사용자 정보는 아바타 컴포넌트에 전달
+ * ### 구현 특징
+ * - `MYPAGE_MENUS` 상수로 메뉴 정의를 분리하여 유지보수성 향상
+ * - `usePathname` 훅으로 현재 경로 감지 및 활성 상태 처리
+ * - `cn` 유틸리티로 조건부 클래스 병합
+ * - 아이콘을 데이터로 관리하여 선언적 렌더링
+ *
+ * ### 상태 관리
+ * - `useUserStore`를 통해 사용자 정보 조회 및 아바타 컴포넌트에 전달
  *
  * @example
  * ```tsx
  * <Sidemenu />
+ * <Sidemenu className="custom-style" />
  * ```
  */
 
-export default function Sidemenu() {
+type SidemenuProps = {
+  className?: string;
+};
+
+export default function Sidemenu({ className }: SidemenuProps) {
   const pathname = usePathname();
   const user = useUserStore((state) => state.user);
 
   return (
     <aside
-      className='hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290'
+      className={`hidden h-358 w-178 overflow-hidden rounded-12 px-14 py-24 shadow-card sm:block sm:py-16 md:h-450 md:w-290 ${className}`}
       aria-label='마이페이지 사이드 메뉴'>
       <Avatar user={user} size='md' className='mx-auto'>
         <AvatarImage />

@@ -1,10 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getActivities } from '@/shared/apis/feature/activities';
+import { ActivitySortOption, QUERY_KEYS } from '@/shared/constants';
 
 type GetActivitiesParamsWithCursor = {
   method: 'cursor';
   cursorId?: number;
   size: number;
+  sort: ActivitySortOption;
 };
 
 const getActivitiesWithCursor = (params: GetActivitiesParamsWithCursor) => {
@@ -13,12 +15,14 @@ const getActivitiesWithCursor = (params: GetActivitiesParamsWithCursor) => {
 
 export const usePopularActivities = () => {
   return useInfiniteQuery({
-    queryKey: ['activities', 'popular'],
+    queryKey: QUERY_KEYS.ACTIVITIES({
+      method: 'cursor',
+    }),
     queryFn: async ({ pageParam }) => {
       const isFirstPage = pageParam === undefined;
-
       return await getActivitiesWithCursor({
         method: 'cursor',
+        sort: 'most_reviewed',
         cursorId: pageParam,
         size: isFirstPage ? 4 : 1,
       });

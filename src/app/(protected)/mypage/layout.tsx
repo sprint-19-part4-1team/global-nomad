@@ -15,7 +15,7 @@ export default function MypageLayout({ children }: WithChildren) {
         <MypageTabs />
       </div>
       <div className='flex shrink-0 justify-between gap-0 pt-48 sm:gap-30 sm:pt-0 md:gap-48'>
-        <Sidemenu />
+        <Sidemenu className='sticky top-95' />
         <div className='min-w-0 flex-1'>{children}</div>
       </div>
     </main>

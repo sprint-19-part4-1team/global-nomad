@@ -14,7 +14,7 @@ import { getQueryClient } from '@/shared/utils/getQueryClient';
 export default async function Home() {
   const queryClient = getQueryClient();
 
-  // prefetch 로직들...
+  // prefetch 로직
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEYS.RANDOM_ACTIVITIES(5),
     queryFn: async () => {
@@ -29,12 +29,14 @@ export default async function Home() {
   });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['activities', 'popular'],
+    queryKey: QUERY_KEYS.ACTIVITIES({
+      method: 'cursor',
+    }),
     queryFn: async ({ pageParam }) => {
       const isFirstPage = pageParam === undefined;
       return await getActivities({
         method: 'cursor',
-        cursorId: pageParam as number | undefined,
+        cursorId: pageParam,
         sort: 'most_reviewed',
         size: isFirstPage ? 4 : 1,
       });

@@ -34,6 +34,7 @@ export default function NotificationButton() {
     await Promise.allSettled(
       notifications.map((notification) => deleteNotificationAsync(notification.id))
     );
+    toast.success('모든 알림을 성공적으로 삭제했습니다.');
   };
 
   const handleClick = () => {

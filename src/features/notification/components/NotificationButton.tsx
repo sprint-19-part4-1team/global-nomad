@@ -23,6 +23,9 @@ export default function NotificationButton() {
   const hasNotifications = notifications.length > 0;
 
   const handleDeleteOne = (id: number) => {
+    if (notifications.length === 1) {
+      setIsModalOpen(false);
+    }
     deleteNotification(id);
   };
 

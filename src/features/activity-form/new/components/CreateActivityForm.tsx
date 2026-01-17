@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
@@ -19,6 +20,7 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  */
 export default function CreateActivityForm() {
   const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const formState = useActivityForm();
   const { currentFormData, isAllValid, isDirty } = formState;
 
@@ -31,6 +33,7 @@ export default function CreateActivityForm() {
 
     mutate(reqbody, {
       onSuccess: (data) => {
+        setIsRedirecting(true);
         overlayStore.push(
           <Dialog
             variant='alert'
@@ -43,6 +46,7 @@ export default function CreateActivityForm() {
         );
       },
       onError: (error) => {
+        setIsRedirecting(false);
         console.error('체험 등록 실패:', error);
         const serverErrorMessage = error.message;
         toast.error(serverErrorMessage ?? '등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
@@ -55,7 +59,7 @@ export default function CreateActivityForm() {
       formState={formState}
       submitButtonText='체험 등록하기'
       onSubmit={handleSubmit}
-      isSubmitting={isPending}
+      isSubmitting={isPending || isRedirecting}
       isDisabled={!isAllValid}
     />
   );

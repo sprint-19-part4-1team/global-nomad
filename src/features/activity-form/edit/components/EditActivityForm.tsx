@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
@@ -25,6 +26,7 @@ interface EditActivityFormProps {
  */
 export default function EditActivityForm({ activityId }: EditActivityFormProps) {
   const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const { data: activity } = useActivityDetailQuery(activityId);
 
@@ -40,6 +42,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
 
     mutate(payload, {
       onSuccess: () => {
+        setIsRedirecting(true);
         overlayStore.push(
           <Dialog
             variant='alert'
@@ -52,6 +55,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
         );
       },
       onError: (error) => {
+        setIsRedirecting(false);
         console.error('체험 수정 실패:', error);
         const serverErrorMessage = error.message;
         toast.error(serverErrorMessage ?? '수정에 실패했습니다. 잠시 후 다시 시도해 주세요.');
@@ -64,7 +68,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
       formState={formState}
       submitButtonText='체험 수정하기'
       onSubmit={handleSubmit}
-      isSubmitting={isPending}
+      isSubmitting={isPending || isRedirecting}
       isDisabled={!isDirty || !isAllValid}
     />
   );

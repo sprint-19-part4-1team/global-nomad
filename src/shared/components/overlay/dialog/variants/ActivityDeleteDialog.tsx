@@ -35,7 +35,7 @@ export default function ActivityDeleteDialog({ activityId }: ActivityDeleteDialo
         const isDetailPage = pathname.startsWith('/activity/');
 
         if (isDetailPage) {
-          router.push(ROUTE_PATHS.MAIN);
+          router.replace(ROUTE_PATHS.MAIN);
         }
 
         toast.info('체험이 성공적으로 삭제되었습니다.');

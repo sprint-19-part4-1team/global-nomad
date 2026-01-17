@@ -53,6 +53,18 @@
   }
 }
 
+/* 체험 상세 페이지의 체험 예약 날짜 선택 */
+.reservation-day-picker {
+  width: 100%;
+}
+
+.reservation-day-picker .rdp-months,
+.reservation-day-picker .rdp-months .rdp-month,
+.reservation-day-picker .rdp-months .rdp-month table {
+  width: 100%;
+  max-width: 100%;
+}
+
 .reservation-day-picker .rdp-week .rdp-day .rdp-day_button {
   width: 44px;
   height: 44px;

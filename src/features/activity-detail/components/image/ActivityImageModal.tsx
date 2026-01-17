@@ -48,7 +48,7 @@ export default function ActivityImageModal({ imageUrl, index, onClose }: Activit
       <div
         ref={modalRef}
         className={cn(
-          'fixed top-1/2 left-1/2 h-fit w-340 -translate-x-1/2 -translate-y-1/2 shadow-card sm:w-700',
+          'fixed top-1/2 left-1/2 h-fit w-340 -translate-x-1/2 -translate-y-1/2 sm:w-700',
           LAYER.OVERLAY_SURFACE
         )}>
         <Image

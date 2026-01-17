@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMyActivity } from '@/shared/apis/feature/myActivities';
-import { QUERY_KEYS } from '@/shared/constants';
+import { ACTIVITIES_KEY, QUERY_KEYS } from '@/shared/constants';
 
 /**
  * 체험 삭제 mutation hook
@@ -39,8 +39,17 @@ export const useDeleteActivity = () => {
 
   return useMutation({
     mutationFn: (activityId: number) => deleteMyActivity(activityId),
-    onSuccess: () => {
-      // 내 체험 리스트 쿼리 무효화하여 삭제된 체험이 목록에서 즉시 제거되도록 처리
+    onSuccess: (_, activityId) => {
+      // 메인 페이지의 전체 체험 리스트 무효화 (모든 필터/정렬 조건)
+      queryClient.invalidateQueries({
+        queryKey: [ACTIVITIES_KEY],
+        exact: false,
+      });
+      // 삭제된 체험의 상세 정보 캐시 제거
+      queryClient.removeQueries({
+        queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId),
+      });
+      // 내 체험 리스트 쿼리 무효화
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.MY_ACTIVITIES(),
         exact: false,

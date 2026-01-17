@@ -1,8 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { ReservationStatusBadge } from '@/features/mypage/common/components/reservation-status-badge/ReservationStatusBadge';
 import ReservationCardActionButton from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardActionButton';
 import ReservationCardImage from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardImage';
+import { useActivityExistenceCheck } from '@/features/mypage/reservation-list/hooks/useActivityExistenceCheck';
 import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationWithActivityResponseDto } from '@/shared/types/myReservations';
@@ -29,12 +31,21 @@ export default function ReservationCard({
   onCancel,
   onWriteReview,
 }: ReservationCardProps) {
+  const router = useRouter();
   const { activity, status, date, startTime, endTime, totalPrice, headCount, reviewSubmitted } =
     reservation;
   const schedule = useFormattedSchedule(date, startTime, endTime);
+  const { navigateWithCheck } = useActivityExistenceCheck(activity.id);
+
+  const handleCardClick = () => {
+    navigateWithCheck(() => router.push(`/activity/${activity.id}`));
+  };
 
   return (
-    <RoundBox radius='24' className='relative min-h-154 shadow-card sm:rounded-32'>
+    <RoundBox
+      onClick={handleCardClick}
+      radius='24'
+      className='relative min-h-154 cursor-pointer shadow-card sm:rounded-32'>
       <RoundBox
         radius='24'
         className='relative z-5 flex w-[66%] flex-col gap-12 bg-white px-16 py-20 sm:rounded-32 md:px-24 md:py-28 lg:px-28 lg:py-32'>
@@ -58,7 +69,6 @@ export default function ReservationCard({
         />
       </RoundBox>
       <ReservationCardImage
-        activityId={activity.id}
         imageUrl={activity.bannerImageUrl}
         status={status}
         reviewSubmitted={reviewSubmitted}

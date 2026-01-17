@@ -32,15 +32,21 @@ export default function ReservationCardActionButton({
   onCancel,
   onWriteReview,
 }: ReservationCardActionButtonProps) {
-  const { checkAndExecute, isLoading } = useActivityExistenceCheck(activityId);
+  const { navigateWithCheck, isLoading } = useActivityExistenceCheck(activityId);
 
-  const handleWriteReview = () => {
-    checkAndExecute(() => onWriteReview?.());
+  const handleWriteReview = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigateWithCheck(() => onWriteReview?.());
+  };
+
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onCancel?.();
   };
 
   if (status === ReservationStatus.Pending) {
     return (
-      <Button size='sm' onClick={onCancel} variant='negative'>
+      <Button size='sm' onClick={handleCancel} variant='negative'>
         예약 취소
       </Button>
     );

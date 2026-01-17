@@ -15,7 +15,7 @@ import { getActivityDetail } from '@/shared/apis/feature/activities';
 export function useActivityExistenceCheck(activityId: number) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const checkAndExecute = async (onSuccess: () => void) => {
+  const navigateWithCheck = async (onSuccess: () => void) => {
     if (isLoading) {
       return;
     }
@@ -33,5 +33,5 @@ export function useActivityExistenceCheck(activityId: number) {
     }
   };
 
-  return { checkAndExecute, isLoading };
+  return { navigateWithCheck, isLoading };
 }

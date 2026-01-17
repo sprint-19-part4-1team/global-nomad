@@ -34,6 +34,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export const viewport = {

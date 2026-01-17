@@ -1,8 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Icons from '@/assets/icons';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 interface ReservationCardImageProps {
+  activityId: number;
   imageUrl: string;
   status: ReservationStatus;
   reviewSubmitted: boolean;
@@ -14,11 +16,13 @@ interface ReservationCardImageProps {
  * - 체험 완료 + 후기 작성 완료 상태일 경우,
  *   이미지 위에 어두운 오버레이와 완료 아이콘을 표시합니다.
  *
+ * @param activityId - 체험 ID (상세 페이지 링크에 사용)
  * @param imageUrl - 체험 썸네일 이미지 URL
  * @param status - 예약 상태
  * @param reviewSubmitted - 후기 작성 완료 여부
  */
 export default function ReservationCardImage({
+  activityId,
   imageUrl,
   status,
   reviewSubmitted,
@@ -26,7 +30,9 @@ export default function ReservationCardImage({
   const isReviewCompleted = status === ReservationStatus.Completed && reviewSubmitted;
 
   return (
-    <div className='absolute inset-y-0 right-0 w-[40%] overflow-hidden bg-primary-200'>
+    <Link
+      href={`/activity/${activityId}`}
+      className='absolute inset-y-0 right-0 w-[40%] overflow-hidden bg-primary-200'>
       <div className='relative h-full w-full'>
         <Image src={imageUrl} alt='썸네일 이미지' fill sizes='40vw' className='object-cover' />
 
@@ -39,6 +45,6 @@ export default function ReservationCardImage({
           </>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { ReservationStatus } from '@/shared/types/myReservations';
+import {
+  ReservationStatus,
+  ReservationWithActivityResponseDto,
+} from '@/shared/types/myReservations';
 import ReservationCard from './ReservationCard';
 
 const meta: Meta<typeof ReservationCard> = {
@@ -34,63 +37,69 @@ const meta: Meta<typeof ReservationCard> = {
       </div>
     ),
   ],
-  argTypes: {
-    date: {
-      control: { type: 'text' },
-      description: '예약 날짜 (YYYY-MM-DD)',
-    },
-    status: {
-      control: { type: 'select' },
-      options: [...Object.values(ReservationStatus)],
-      description: '예약 상태',
-    },
-  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ReservationCard>;
 
-const baseArgs = {
-  title: '함께 배우면 즐거운 스트릿 댄스',
+const baseReservation: ReservationWithActivityResponseDto = {
+  id: 1,
+  teamId: 'team-1',
+  userId: 1,
+  activity: {
+    id: 1,
+    title: '함께 배우면 즐거운 스트릿 댄스',
+    bannerImageUrl: '/og-default.png',
+  },
+  scheduleId: 1,
+  status: ReservationStatus.Pending,
+  reviewSubmitted: false,
+  totalPrice: 50000,
+  headCount: 2,
   date: '2026-01-07',
   startTime: '10:00',
   endTime: '12:00',
-  totalPrice: 50000,
-  headCount: 2,
-  imageUrl: '/og-default.png',
+  createdAt: '2026-01-01T00:00:00Z',
+  updatedAt: '2026-01-01T00:00:00Z',
 };
 
 export const Canceled: Story = {
   args: {
-    ...baseArgs,
-    status: ReservationStatus.Canceled,
-    reviewSubmitted: false,
+    reservation: {
+      ...baseReservation,
+      status: ReservationStatus.Canceled,
+    },
   },
 };
 
 export const Pending: Story = {
   args: {
-    ...baseArgs,
-    status: ReservationStatus.Pending,
-    reviewSubmitted: false,
+    reservation: {
+      ...baseReservation,
+      status: ReservationStatus.Pending,
+    },
     onCancel: () => {},
   },
 };
 
 export const CompletedNoReview: Story = {
   args: {
-    ...baseArgs,
-    status: ReservationStatus.Completed,
-    reviewSubmitted: false,
+    reservation: {
+      ...baseReservation,
+      status: ReservationStatus.Completed,
+      reviewSubmitted: false,
+    },
     onWriteReview: () => {},
   },
 };
 
 export const CompletedWithReview: Story = {
   args: {
-    ...baseArgs,
-    status: ReservationStatus.Completed,
-    reviewSubmitted: true,
+    reservation: {
+      ...baseReservation,
+      status: ReservationStatus.Completed,
+      reviewSubmitted: true,
+    },
   },
 };

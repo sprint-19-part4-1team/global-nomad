@@ -100,7 +100,10 @@ export default function AllActivity({
               <FilterButton
                 key={item.value}
                 isActive={isActive}
-                onClick={() => setCategory(isActive ? undefined : item.value)}>
+                onClick={() => {
+                  setCurrentPage(1);
+                  setCategory(isActive ? undefined : item.value);
+                }}>
                 <span>{item.label}</span>
               </FilterButton>
             );

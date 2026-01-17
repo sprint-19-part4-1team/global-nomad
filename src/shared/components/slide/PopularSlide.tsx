@@ -26,7 +26,7 @@ export default function PopularSlide() {
 
   const sliderRef = useRef<Slider>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePopularActivities();
-  const [currentSlide, setCurrentSlide] = useState(getSlidesToShow);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const allActivities = data?.pages.flatMap((page) => page.activities) ?? [];
 
@@ -51,8 +51,10 @@ export default function PopularSlide() {
 
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
+      if (sliderRef.current) {
+        sliderRef.current.slickGoTo(currentSlide);
+      }
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

@@ -70,6 +70,7 @@ export default function MypageReservationList() {
     overlayStore.push(
       <ReviewModal
         reservationId={reservation.id}
+        activityId={reservation.activity.id}
         status={selectedStatus ?? undefined}
         size={4}
         activityTitle={reservation.activity.title}

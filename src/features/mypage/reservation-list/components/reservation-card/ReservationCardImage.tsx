@@ -1,6 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import Icons from '@/assets/icons';
+import { getActivityDetail } from '@/shared/apis/feature/activities';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 interface ReservationCardImageProps {
@@ -15,6 +20,7 @@ interface ReservationCardImageProps {
  * - 예약 카드 우측에 노출되는 이미지 영역 컴포넌트입니다.
  * - 체험 완료 + 후기 작성 완료 상태일 경우,
  *   이미지 위에 어두운 오버레이와 완료 아이콘을 표시합니다.
+ * - 이미지 클릭 시 체험 존재 여부를 확인하고 상세 페이지로 이동합니다.
  *
  * @param activityId - 체험 ID (상세 페이지 링크에 사용)
  * @param imageUrl - 체험 썸네일 이미지 URL
@@ -27,12 +33,33 @@ export default function ReservationCardImage({
   status,
   reviewSubmitted,
 }: ReservationCardImageProps) {
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
   const isReviewCompleted = status === ReservationStatus.Completed && reviewSubmitted;
 
+  const handleClick = async () => {
+    if (isNavigating) {
+      return;
+    }
+
+    setIsNavigating(true);
+    try {
+      await getActivityDetail(activityId);
+      router.push(`/activity/${activityId}`);
+    } catch {
+      toast.error('존재하지 않는 체험입니다.');
+    } finally {
+      setIsNavigating(false);
+    }
+  };
+
   return (
-    <Link
-      href={`/activity/${activityId}`}
-      className='absolute inset-y-0 right-0 w-[40%] overflow-hidden bg-primary-200'>
+    <button
+      type='button'
+      onClick={handleClick}
+      disabled={isNavigating}
+      aria-label='체험 상세 페이지로 이동'
+      className='absolute inset-y-0 right-0 w-[40%] cursor-pointer overflow-hidden bg-primary-200'>
       <div className='relative h-full w-full'>
         <Image src={imageUrl} alt='썸네일 이미지' fill sizes='40vw' className='object-cover' />
 
@@ -45,6 +72,6 @@ export default function ReservationCardImage({
           </>
         )}
       </div>
-    </Link>
+    </button>
   );
 }

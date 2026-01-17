@@ -85,7 +85,7 @@ export const useActivityFilters = () => {
       }
     });
 
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return {

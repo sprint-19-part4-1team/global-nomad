@@ -87,20 +87,12 @@ export default function ReservationList({
 
       {!isPending && !isError && reservations.length > 0 && (
         <>
-          {reservations.map((r) => (
+          {reservations.map((reservation) => (
             <ReservationCard
-              key={r.id}
-              status={r.status}
-              title={r.activity.title}
-              date={r.date}
-              startTime={r.startTime}
-              endTime={r.endTime}
-              totalPrice={r.totalPrice}
-              headCount={r.headCount}
-              imageUrl={r.activity.bannerImageUrl}
-              reviewSubmitted={r.reviewSubmitted}
-              onCancel={() => setCancelTarget(r.id)}
-              onWriteReview={() => setReviewTarget(r)}
+              key={reservation.id}
+              reservation={reservation}
+              onCancel={() => setCancelTarget(reservation.id)}
+              onWriteReview={() => setReviewTarget(reservation)}
             />
           ))}
 

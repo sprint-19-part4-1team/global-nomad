@@ -53,17 +53,18 @@ export const getSchedulesByDate = (schedules: ScheduleResponseDto[]) => {
  *
  * @param times - 시간대 배열
  * @param selectedDate - 선택된 날짜
+ * @param now - 현재 시간 (상위 컴포넌트에서 전달)
  * @returns 필터링된 시간대 배열
  */
 export const filterTimesByNow = (
   times: Array<{ id: number; startTime: string; endTime: string }>,
-  selectedDate: Date | undefined
+  selectedDate: Date | undefined,
+  now: Date
 ): Array<{ id: number; startTime: string; endTime: string }> => {
   if (!selectedDate) {
     return times;
   }
 
-  const now = new Date();
   const today = startOfDay(now);
   const selectedDay = startOfDay(selectedDate);
 
@@ -96,9 +97,14 @@ export const filterTimesByNow = (
  *
  * @param schedules - 스케줄 배열
  * @param today - 기준 날짜 (일반적으로 오늘 날짜)
+ * @param now - 현재 시간 (상위 컴포넌트에서 전달)
  * @returns 예약 가능한 날짜 배열 (기준 날짜 포함, 이후 날짜만)
  */
-export const getAvailableDates = (schedules: ScheduleResponseDto[], today: Date): Date[] => {
+export const getAvailableDates = (
+  schedules: ScheduleResponseDto[],
+  today: Date,
+  now: Date
+): Date[] => {
   return schedules
     .filter((schedule) => {
       const scheduleDate = new Date(schedule.date);
@@ -109,7 +115,7 @@ export const getAvailableDates = (schedules: ScheduleResponseDto[], today: Date)
       }
 
       // filterTimesByNow를 사용하여 현재 시간 이후 시간대 확인
-      const availableTimes = filterTimesByNow(schedule.times, scheduleDate);
+      const availableTimes = filterTimesByNow(schedule.times, scheduleDate, now);
 
       return availableTimes.length > 0;
     })

@@ -47,7 +47,9 @@ export default function RootLayout({ children }: Readonly<WithChildren>) {
         <QueryProvider>
           <RefreshProvider>
             <SessionWatcher />
-            <AuthGuard>{children}</AuthGuard>
+            <AuthGuard>
+              <div id='main'>{children}</div>
+            </AuthGuard>
           </RefreshProvider>
           <OverlayRoot />
         </QueryProvider>

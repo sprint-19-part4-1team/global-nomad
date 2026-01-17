@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SearchBar from './SearchBar';
 
 /**
@@ -16,11 +17,34 @@ import SearchBar from './SearchBar';
  * ```
  */
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: Infinity,
+    },
+  },
+});
+
 const meta: Meta<typeof SearchBar> = {
   title: 'Features/Main/SearchBar',
   component: SearchBar,
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <Story />
+      </QueryClientProvider>
+    ),
+  ],
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: '/search',
+        query: {},
+      },
+    },
   },
   tags: ['autodocs'],
 };
@@ -30,3 +54,16 @@ export default meta;
 type Story = StoryObj<typeof SearchBar>;
 
 export const Default: Story = {};
+
+export const WithKeyword: Story = {
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: '/search',
+        query: {
+          keyword: '서핑',
+        },
+      },
+    },
+  },
+};

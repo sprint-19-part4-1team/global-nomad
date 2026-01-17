@@ -91,7 +91,7 @@ export default function ActivityReservationDateTimeSection({
   return (
     <div className='scrollbar-hidden flex max-h-530 flex-col gap-24 overflow-y-auto sm:max-h-none sm:flex-row sm:overflow-y-visible lg:flex-col'>
       {/* 날짜 선택 */}
-      <div className='mx-auto flex flex-col gap-8 sm:flex-1'>
+      <div className='flex flex-col gap-8 sm:flex-1'>
         {!isBottomSheet && <ActivityReservationContentTitle>날짜</ActivityReservationContentTitle>}
         <ActivityReservationDatePicker
           selectedDate={selectedDate}

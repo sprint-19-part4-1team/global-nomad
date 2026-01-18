@@ -24,7 +24,7 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 export const usePreventNavigation = (isDirty: boolean) => {
   const router = useRouter();
   const isDirtyRef = useRef(isDirty);
-  const wasReloadedRef = useRef(false);
+  const reloadCountRef = useRef(0);
 
   useEffect(() => {
     isDirtyRef.current = isDirty;
@@ -35,7 +35,14 @@ export const usePreventNavigation = (isDirty: boolean) => {
     const isReload = entry instanceof PerformanceNavigationTiming && entry.type === 'reload';
 
     if (isReload && location.hash === '#prevent') {
-      wasReloadedRef.current = true;
+      const prevCount = Number(sessionStorage.getItem('reloadCount') || 0);
+      const newCount = prevCount + 1;
+
+      sessionStorage.setItem('reloadCount', String(newCount));
+      reloadCountRef.current = newCount;
+    } else {
+      const storedCount = Number(sessionStorage.getItem('reloadCount') || 0);
+      reloadCountRef.current = storedCount;
     }
   }, []);
 
@@ -95,13 +102,14 @@ export const usePreventNavigation = (isDirty: boolean) => {
     /** 브라우저 뒤로가기 방지 */
     const handlePopState = () => {
       if (!isDirtyRef.current) {
-        if (wasReloadedRef.current) {
-          wasReloadedRef.current = false;
-          return history.back();
+        if (reloadCountRef.current > 0) {
+          const steps = -(reloadCountRef.current + 1);
+          reloadCountRef.current = 0;
+          sessionStorage.removeItem('reloadCount');
+          return history.go(steps);
         }
         return;
       }
-
       overlayStore.push(
         <Dialog
           variant='confirm'
@@ -114,14 +122,14 @@ export const usePreventNavigation = (isDirty: boolean) => {
           onConfirm={() => {
             isDirtyRef.current = false;
             overlayStore.pop();
-            if (wasReloadedRef.current) {
-              // reload 이후에는 히스토리 스택에 현재 페이지가 한 칸 더 쌓여
-              // back(-1)으로는 폼을 벗어나지 못하므로 -2로 이동
-              history.go(-2);
+            if (reloadCountRef.current > 0) {
+              // 새로고침 횟수만큼 + 1 (현재 #prevent 스택)
+              history.go(-(reloadCountRef.current + 1));
             } else {
               history.back();
             }
-            wasReloadedRef.current = false;
+            reloadCountRef.current = 0;
+            sessionStorage.removeItem('reloadCount');
           }}
           onCancel={() => {
             overlayStore.pop();

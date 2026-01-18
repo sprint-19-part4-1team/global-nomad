@@ -96,12 +96,11 @@ export const usePreventNavigation = (isDirty: boolean) => {
 
     /** 브라우저 뒤로가기 방지 */
     const handlePopState = () => {
-      if (!isDirtyRef.current && wasReloadedRef.current) {
-        wasReloadedRef.current = false;
-        return history.back();
-      }
-
       if (!isDirtyRef.current) {
+        if (wasReloadedRef.current) {
+          wasReloadedRef.current = false;
+          return history.back();
+        }
         return;
       }
 

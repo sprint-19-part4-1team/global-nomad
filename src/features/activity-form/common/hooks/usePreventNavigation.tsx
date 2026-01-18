@@ -31,10 +31,8 @@ export const usePreventNavigation = (isDirty: boolean) => {
   }, [isDirty]);
 
   useEffect(() => {
-    const navigationEntries = performance.getEntriesByType('navigation');
-    const isReload =
-      navigationEntries.length > 0
-      && (navigationEntries[0] as PerformanceNavigationTiming).type === 'reload';
+    const [entry] = performance.getEntriesByType('navigation');
+    const isReload = entry instanceof PerformanceNavigationTiming && entry.type === 'reload';
 
     if (isReload && location.hash === '#prevent') {
       wasReloadedRef.current = true;

@@ -44,7 +44,7 @@ export default function ActivityForm({
   isSubmitting,
   isDisabled,
 }: ActivityFormProps) {
-  const { basicInfo, addressInfo, scheduleInfo, imageInfo, isComposingRef } = formState;
+  const { basicInfo, addressInfo, scheduleInfo, imageInfo } = formState;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -59,9 +59,7 @@ export default function ActivityForm({
   return (
     <form
       className='mt-24 flex flex-col gap-24 sm:mt-32 sm:gap-28 md:gap-32'
-      onSubmit={handleSubmit}
-      onCompositionStart={() => (isComposingRef.current = true)}
-      onCompositionEnd={() => (isComposingRef.current = false)}>
+      onSubmit={handleSubmit}>
       <BasicInfoSection basicInfo={basicInfo} />
       <AddressSection addressInfo={addressInfo} />
       <ScheduleDateSection scheduleInfo={scheduleInfo} />

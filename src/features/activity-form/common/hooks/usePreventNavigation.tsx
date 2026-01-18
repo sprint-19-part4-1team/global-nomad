@@ -24,10 +24,22 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 export const usePreventNavigation = (isDirty: boolean) => {
   const router = useRouter();
   const isDirtyRef = useRef(isDirty);
+  const wasReloadedRef = useRef(false);
 
   useEffect(() => {
     isDirtyRef.current = isDirty;
   }, [isDirty]);
+
+  useEffect(() => {
+    const navigationEntries = performance.getEntriesByType('navigation');
+    const isReload =
+      navigationEntries.length > 0
+      && (navigationEntries[0] as PerformanceNavigationTiming).type === 'reload';
+
+    if (isReload && location.hash === '#prevent') {
+      wasReloadedRef.current = true;
+    }
+  }, []);
 
   useEffect(() => {
     if (isDirty) {
@@ -84,6 +96,11 @@ export const usePreventNavigation = (isDirty: boolean) => {
 
     /** 브라우저 뒤로가기 방지 */
     const handlePopState = () => {
+      if (!isDirtyRef.current && wasReloadedRef.current) {
+        wasReloadedRef.current = false;
+        return history.back();
+      }
+
       if (!isDirtyRef.current) {
         return;
       }
@@ -100,7 +117,12 @@ export const usePreventNavigation = (isDirty: boolean) => {
           onConfirm={() => {
             isDirtyRef.current = false;
             overlayStore.pop();
-            history.back();
+            if (wasReloadedRef.current) {
+              history.go(-2);
+            } else {
+              history.back();
+            }
+            wasReloadedRef.current = false;
           }}
           onCancel={() => {
             overlayStore.pop();

@@ -25,7 +25,7 @@ export const TEXT_LINKS = [
 
 export const ICON_LINKS = [
   {
-    href: 'https://www.youtube.com/',
+    href: 'https://www.youtube.com/watch?v=FvOUM6Ip5S0',
     title: '코드잇 FE19기 파트4 1팀 시연영상페이지로 이동',
     Icon: Icons.Youtube,
     hoverClass: 'hover:text-red-500',

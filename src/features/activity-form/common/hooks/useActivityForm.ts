@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useAddressForm } from '@/features/activity-form/common/hooks/useAddressForm';
 import { useBasicInfoForm } from '@/features/activity-form/common/hooks/useBasicInfoForm';
 import { useImageUploadForm } from '@/features/activity-form/common/hooks/useImageUploadForm';
@@ -29,6 +29,7 @@ const BASIC_FIELDS = ['title', 'category', 'description', 'price', 'address'] as
  * @param initialData - 수정 화면에서 사용될 초기 체험 데이터
  */
 export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesDto) => {
+  const isComposingRef = useRef(false);
   const basicInfo = useBasicInfoForm(initialData);
   const addressInfo = useAddressForm(initialData);
   const imageInfo = useImageUploadForm(initialData);
@@ -136,9 +137,10 @@ export const useActivityForm = (initialData?: ActivityWithSubImagesAndSchedulesD
   /** 수정 폼에 변경사항이 있는지 확인 */
   const isEditDirty = Object.keys(changedValues).length > 0;
 
-  const isDirty = initialData ? isEditDirty : isCreateDirty;
+  const isDirty = isComposingRef.current || (initialData ? isEditDirty : isCreateDirty);
 
   return {
+    isComposingRef,
     basicInfo,
     addressInfo,
     imageInfo,

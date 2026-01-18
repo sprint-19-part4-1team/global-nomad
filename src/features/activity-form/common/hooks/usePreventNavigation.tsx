@@ -23,20 +23,39 @@ import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
  */
 export const usePreventNavigation = (isDirty: boolean) => {
   const router = useRouter();
-  const pushCount = useRef(0);
+  const isDirtyRef = useRef(isDirty);
 
   useEffect(() => {
-    if (!isDirty) {
-      return;
-    }
+    isDirtyRef.current = isDirty;
+  }, [isDirty]);
 
-    /** 새로고침/창 닫기 방지  */
+  useEffect(() => {
+    if (isDirty) {
+      if (location.hash !== '#prevent') {
+        window.history.pushState(null, '', '#prevent');
+      }
+    } else {
+      if (location.hash === '#prevent') {
+        window.history.replaceState(null, '', location.pathname);
+      }
+    }
+  }, [isDirty]);
+
+  useEffect(() => {
+    /** 새로고침/창 닫기 방지 */
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isDirtyRef.current) {
+        return;
+      }
       e.preventDefault();
     };
 
     /** 내부 링크 클릭 방지 */
     const handleAnchorClick = (e: MouseEvent) => {
+      if (!isDirtyRef.current) {
+        return;
+      }
+
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
 
@@ -53,8 +72,7 @@ export const usePreventNavigation = (isDirty: boolean) => {
             }
             confirmLabel='이동하기'
             onConfirm={() => {
-              window.removeEventListener('beforeunload', handleBeforeUnload);
-              window.removeEventListener('popstate', handlePopState);
+              isDirtyRef.current = false;
               overlayStore.pop();
               router.push(anchor.href);
             }}
@@ -66,8 +84,9 @@ export const usePreventNavigation = (isDirty: boolean) => {
 
     /** 브라우저 뒤로가기 방지 */
     const handlePopState = () => {
-      history.pushState(null, '', location.href);
-      pushCount.current += 1;
+      if (!isDirtyRef.current) {
+        return;
+      }
 
       overlayStore.push(
         <Dialog
@@ -79,22 +98,17 @@ export const usePreventNavigation = (isDirty: boolean) => {
           }
           confirmLabel='뒤로가기'
           onConfirm={() => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-            window.removeEventListener('popstate', handlePopState);
+            isDirtyRef.current = false;
             overlayStore.pop();
-            const targetIndex = -(pushCount.current + 1);
-            history.go(targetIndex);
+            history.back();
           }}
           onCancel={() => {
             overlayStore.pop();
+            window.history.pushState(null, '', '#prevent');
           }}
         />
       );
     };
-
-    // 초기 방어용 스택 쌓기
-    history.pushState(null, '', location.href);
-    pushCount.current = 1;
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('click', handleAnchorClick, true);
@@ -105,5 +119,5 @@ export const usePreventNavigation = (isDirty: boolean) => {
       window.removeEventListener('click', handleAnchorClick, true);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [isDirty, router]);
+  }, [router]);
 };

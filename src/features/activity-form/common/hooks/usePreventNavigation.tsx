@@ -115,6 +115,8 @@ export const usePreventNavigation = (isDirty: boolean) => {
             isDirtyRef.current = false;
             overlayStore.pop();
             if (wasReloadedRef.current) {
+              // reload 이후에는 히스토리 스택에 현재 페이지가 한 칸 더 쌓여
+              // back(-1)으로는 폼을 벗어나지 못하므로 -2로 이동
               history.go(-2);
             } else {
               history.back();

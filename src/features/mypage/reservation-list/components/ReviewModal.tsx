@@ -14,6 +14,7 @@ import { cn } from '@/shared/utils/cn';
 
 interface ReviewModalProps {
   reservationId: number;
+  activityId: number;
   status?: ReservationStatus;
   size?: number;
   activityTitle: string;
@@ -39,6 +40,7 @@ interface ReviewModalProps {
  */
 export default function ReviewModal({
   reservationId,
+  activityId,
   status,
   size,
   activityTitle,
@@ -56,6 +58,7 @@ export default function ReviewModal({
   };
 
   const { mutate, isPending } = useCreateReviewMutation({
+    activityId,
     status,
     size,
     onClose: handleClose,

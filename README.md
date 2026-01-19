@@ -155,6 +155,7 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
  ┃ ┣ 📂hooks              # 범용 커스텀 훅
  ┃ ┣ 📂stores             # 전역 상태 관리 (Zustand)
  ┃ ┗ 📂types              # 전역 타입 정의
+ ┃ ┗ 📂styles             # Tailwind 테마, 공통 스타일
  ┣ 📂stories              # UI 컴포넌트 문서화 및 테스트 (Storybook)
  ┗ 📜middleware.ts        # 라우팅 가드 및 인증 처리
 ```

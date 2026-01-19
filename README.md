@@ -227,11 +227,11 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
   </tr>
   <tr>
     <td align="center" bgcolor="#f9f9f9"><b>내 체험 관리</b></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/edd569c0-d94b-4f06-8cc5-9f49d4d1f881" width='500px' />
+    <td align="center"><img src="https://github.com/user-attachments/assets/b20bf93a-3dea-4898-89eb-fbadde8388a9" width='500px' />
 </td>
     <td align="left">
-      - 등록한 체험 목록 확인<br>
-      - 체험 수정/삭제
+      - 체험 등록/수정/삭제<br>
+      - 등록한 체험 목록 확인
     </td>
   </tr>
   <tr>

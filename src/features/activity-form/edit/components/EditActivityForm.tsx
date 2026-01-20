@@ -57,8 +57,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
       onError: (error) => {
         setIsRedirecting(false);
         console.error('체험 수정 실패:', error);
-        const serverErrorMessage = error.message;
-        toast.error(serverErrorMessage ?? '수정에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        toast.error(error.message ?? '수정에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       },
     });
   };

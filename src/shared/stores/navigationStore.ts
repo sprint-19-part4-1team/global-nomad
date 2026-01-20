@@ -41,11 +41,7 @@ export const useNavigationStore = create<NavigationState>()(
             return state;
           }
 
-          const newHistory = [...state.urlHistory, url];
-
-          if (newHistory.length > 3) {
-            newHistory.shift();
-          }
+          const newHistory = [...state.urlHistory, url].slice(-3);
           return { urlHistory: newHistory };
         });
       },

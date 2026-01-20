@@ -18,15 +18,11 @@ import { useNavigationStore } from '@/shared/stores/navigationStore';
  */
 export default function NavigationTracker() {
   const pathname = usePathname();
-  const { urlHistory, pushUrl } = useNavigationStore();
+  const { pushUrl } = useNavigationStore();
 
   useEffect(() => {
-    const lastPath = urlHistory[urlHistory.length - 1];
-
-    if (lastPath !== pathname) {
-      pushUrl(pathname);
-    }
-  }, [pathname, pushUrl, urlHistory]);
+    pushUrl(pathname);
+  }, [pushUrl, pathname]);
 
   return null;
 }

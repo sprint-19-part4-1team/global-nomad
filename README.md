@@ -24,14 +24,14 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 ---
 
-### 💁 팀원 소개
+### 💁 팀원 및 R&R
 
 <table>
   <tr>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/117738875?v=4" width="150"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/42933755?v=4" width="150"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/56210432?v=4" width="150"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/56614719?v=4" width="150"></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/117738875?v=4" width="150" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/42933755?v=4" width="150" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/56210432?v=4" width="150" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/56614719?v=4" width="150" /></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/aahreum">이아름</a></td>
@@ -45,11 +45,36 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
     <td align="center">팀원 | <code>FE</code></td>
     <td align="center">팀원 | <code>FE</code></td>
   </tr>
+  <tr>
+    <td align="center" valign="top">
+      인프라·초기 세팅<br>
+      공통 컴포넌트<br>
+      회원가입·로그인 페이지<br>
+      체험 등록·수정 페이지<br>
+      마이페이지 - 내 정보 수정
+    </td>
+    <td align="center" valign="top">
+      Tailwind CSS 유틸리티 설정<br>
+      입력 계열 공통 컴포넌트<br>
+      회원가입·로그인 페이지 UI<br>
+      체험 상세 페이지<br>
+      마이페이지 - 예약 현황
+    </td>
+    <td align="center" valign="top">
+      디자인 핵심 공통 컴포넌트<br>
+      공통 레이아웃<br>
+      메인 페이지<br>
+      마이페이지 - 내 체험 관리
+    </td>
+    <td align="center" valign="top">
+      공통 API 로직<br>
+      공통 컴포넌트<br>
+      카카오 회원가입·로그인<br>
+      마이페이지 - 예약 내역<br>
+      알림, 리뷰 등록
+    </td>
+  </tr>
 </table>
-
----
-
-### 🙋 팀원별 역할
 
 ---
 
@@ -101,6 +126,15 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 - 문서화 : `Notion`
 - 프로젝트 디자인 도안 : `Figma`
 
+---
+
+### 🧭 디렉토리 구조 설계 원칙
+- 이 프로젝트는 기존의 역할 기반 폴더 구조에 기능 단위 개념을 도입한 feature 중심 구조를 사용합니다.
+  - 하나의 기능(도메인)은 `feature` 폴더로 묶고, 해당 기능에서만 사용하는 `components / hooks / context / utils / constants` 등은 feature 내부에서 함께 관리합니다.
+  - 이를 통해 기능 단위의 응집도를 높이고, 수정·확장 시 영향 범위를 명확하게 유지할 수 있도록 했습니다.
+- 완전한 FSD 구조를 따르기 보다는 FSD의 장점만 일부 선택적으로 적용했습니다.
+
+
 ### 📦 디렉토리 구조
 
 ```
@@ -121,101 +155,107 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
  ┃ ┣ 📂hooks              # 범용 커스텀 훅
  ┃ ┣ 📂stores             # 전역 상태 관리 (Zustand)
  ┃ ┗ 📂types              # 전역 타입 정의
+ ┃ ┗ 📂styles             # Tailwind 테마, 공통 스타일
  ┣ 📂stories              # UI 컴포넌트 문서화 및 테스트 (Storybook)
  ┗ 📜middleware.ts        # 라우팅 가드 및 인증 처리
 ```
 
 ---
 
-### ✨ 페이지 기능 소개
+### ✨ 주요 기능 소개
 
-##### 🖥️ 메인페이지
-
-<table>
-  <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-  </tr>
-</table>
-
-##### 🖥️ 검색 결과 페이지
+#### 🖥️ 메인 서비스
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>메인 페이지</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/bc49d06f-862f-452b-98e0-8d6593544094" width='500px' /></td>
+    <td align="left">
+      - 인기 체험 목록<br>
+      - 카테고리별 필터링<br>
+      - 키워드 검색
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-  </tr>
-</table>
-
-##### 🖥️ 마이페이지 - 내 정보
-
-<table>
-  <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>검색 결과 페이지</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/bb122116-4e59-4119-a1de-574f22c89e47" width='500px' /></td>
+    <td align="left">
+      - 검색 결과 목록<br>
+      - 카테고리 필터<br>
+      - 가격순/최신순 정렬
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-  </tr>
-</table>
-
-##### 🖥️ 마이페이지 - 내 예약 내역
-
-<table>
-  <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>체험 상세</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/967ae858-d088-4c9c-85dc-2c87d0f85db2" width='500px' /></td>
+    <td align="left">
+      - 체험 정보 및 위치 확인<br>
+      - 체험 가능 날짜/시간 선택<br>
+      - 예약 신청<br>
+      - 별점/후기 목록 표시
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
+    <td align="center" bgcolor="#f9f9f9"><b>알림</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/2b504757-ce0c-4dc8-9240-305141f24f44" width='150px' /></td>
+    <td align="left">
+      - 예약 승인/거절 알림<br>
+      - 실시간 알림 확인
+    </td>
   </tr>
-</table>
+  </table>
 
-##### 🖥️ 마이페이지 - 내 체험 관리
+#### 🖥️ 마이페이지
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>내 정보</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/1e94d5e3-105a-4f17-ab8c-1f416ec0f0a3" width='500px' /></td>
+    <td align="left">
+      - 프로필 이미지 변경<br>
+      - 닉네임/비밀번호 수정
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
+    <td align="center" bgcolor="#f9f9f9"><b>예약 내역</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/17e0a5af-b105-4ece-a41e-42eeb979039f" width='500px' /></td>
+    <td align="left">
+      - 예약 상태별 필터링<br>
+      - 예약 취소<br>
+      - 리뷰 작성
+    </td>
   </tr>
-</table>
+  <tr>
+    <td align="center" bgcolor="#f9f9f9"><b>내 체험 관리</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/b20bf93a-3dea-4898-89eb-fbadde8388a9" width='500px' />
+</td>
+    <td align="left">
+      - 체험 등록/수정/삭제<br>
+      - 등록한 체험 목록 확인
+    </td>
+  </tr>
+  <tr>
+    <td align="center" bgcolor="#f9f9f9"><b>예약 현황</b></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/c694cfcb-55b2-49b1-af32-638f7d96c240" width='500px' /></td>
+    <td align="left">
+      - 체험별/날짜별 예약 조회<br>
+      - 예약 승인/거절
+    </td>
+  </tr>
+  </table>
 
-##### 🖥️ 마이페이지 - 내 체험 예약 현황
+#### 🖥️ 반응형 ex) 마이 페이지
 
 <table>
   <tr>
-    <td align="center"><b>PC</b></td>
-    <td align="center"><b>Tablet</b></td>
-    <td align="center"><b>Mobile</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>PC</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>Tablet</b></td>
+    <td align="center" bgcolor="#f9f9f9"><b>Mobile</b></td>
   </tr>
   <tr>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
-    <td align="center"><img src=""></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/7e06008a-9416-481b-a45b-346cdc41164c" height='400px'></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/73380aec-992a-4711-a36e-6edb328be916" height='400px'></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/f8a0fefe-a4e7-49f6-88eb-c96be5043c95" height='400px'></td>
   </tr>
 </table>
 
@@ -223,6 +263,8 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 
 ### 🔗 링크
 
-[📜 Notion 문서](https://www.notion.so/ahahahahreum/2c35213dcd4c80a99a16de00a56a8b70?source=copy_link)
+[🚀 배포 URL](https://global-nomad-1team.vercel.app/) <br>
+[👀 발표 자료](https://github.com/user-attachments/files/24707076/19._1._._.pdf) <br>
+[🎥 시연 영상](https://youtu.be/FvOUM6Ip5S0) <br>
+[📜 Notion 문서](https://www.notion.so/ahahahahreum/2c35213dcd4c80a99a16de00a56a8b70?source=copy_link) <br>
 [🎨 Figma 디자인](https://www.figma.com/file/of9CO1pQN0XyB5Co2Tkm0E?node-id=29265-11572&p=f&m=dev&type=design)
-[🚀 배포 URL](https://global-nomad-1team.vercel.app/)

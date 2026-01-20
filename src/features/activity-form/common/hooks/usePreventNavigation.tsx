@@ -26,8 +26,14 @@ export const usePreventNavigation = (isDirty: boolean) => {
   isDirtyRef.current = isDirty;
 
   useEffect(() => {
-    history.pushState({ blocked: true }, '', location.href);
-  }, []);
+    if (!isDirty) {
+      return;
+    }
+
+    if (history.state.blocked !== 'true') {
+      history.pushState({ blocked: true }, '', location.href);
+    }
+  }, [isDirty]);
 
   useEffect(() => {
     /** 새로고침/창 닫기 방지 */
@@ -76,32 +82,35 @@ export const usePreventNavigation = (isDirty: boolean) => {
 
       /** 클린 상태면 즉시 이전 페이지로 이동 */
       if (!isDirtyRef.current) {
-        router.push(targetUrl);
+        setTimeout(() => {
+          router.push(targetUrl);
+        }, 0);
         return;
       }
 
-      overlayStore.push(
-        <Dialog
-          variant='confirm'
-          message={
-            <>
-              작성 중인 내용이 사라집니다. <br />
-              정말 뒤로 가시겠습니까?
-            </>
-          }
-          confirmLabel='뒤로가기'
-          onConfirm={() => {
-            isDirtyRef.current = false;
-            overlayStore.pop();
-
-            router.push(targetUrl);
-          }}
-          onCancel={() => {
-            overlayStore.pop();
-            history.pushState({ blocked: true }, '', location.href);
-          }}
-        />
-      );
+      setTimeout(() => {
+        overlayStore.push(
+          <Dialog
+            variant='confirm'
+            message={
+              <>
+                작성 중인 내용이 사라집니다. <br />
+                정말 뒤로 가시겠습니까?
+              </>
+            }
+            confirmLabel='뒤로가기'
+            onConfirm={() => {
+              isDirtyRef.current = false;
+              overlayStore.pop();
+              router.push(targetUrl);
+            }}
+            onCancel={() => {
+              overlayStore.pop();
+              history.pushState({ blocked: true }, '', location.href);
+            }}
+          />
+        );
+      }, 0);
     };
 
     addEventListener('beforeunload', handleBeforeUnload);

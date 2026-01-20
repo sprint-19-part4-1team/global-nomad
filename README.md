@@ -266,5 +266,4 @@ Global Nomad는 사용자와 호스트를 연결하여 다양한 액티비티를
 [🚀 배포 URL](https://global-nomad-1team.vercel.app/) <br>
 [👀 발표 자료](https://github.com/user-attachments/files/24707076/19._1._._.pdf) <br>
 [🎥 시연 영상](https://youtu.be/FvOUM6Ip5S0) <br>
-[📜 Notion 문서](https://www.notion.so/ahahahahreum/2c35213dcd4c80a99a16de00a56a8b70?source=copy_link) <br>
-[🎨 Figma 디자인](https://www.figma.com/file/of9CO1pQN0XyB5Co2Tkm0E?node-id=29265-11572&p=f&m=dev&type=design)
+[📜 Notion 문서](https://www.notion.so/ahahahahreum/2c35213dcd4c80a99a16de00a56a8b70?source=copy_link)

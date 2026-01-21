@@ -5,9 +5,9 @@ import { ReservationStatusBadge } from '@/features/mypage/common/components/rese
 import ReservationCardActionButton from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardActionButton';
 import ReservationCardImage from '@/features/mypage/reservation-list/components/reservation-card/ReservationCardImage';
 import { useActivityExistenceCheck } from '@/features/mypage/reservation-list/hooks/useActivityExistenceCheck';
-import { useFormattedSchedule } from '@/features/mypage/reservation-list/hooks/useFormattedSchedule';
 import RoundBox from '@/shared/components/round-box/RoundBox';
 import { ReservationWithActivityResponseDto } from '@/shared/types/myReservations';
+import { formatDateForDisplay } from '@/shared/utils/dateUtil';
 import { formatValue } from '@/shared/utils/formatValue';
 
 interface ReservationCardProps {
@@ -34,7 +34,7 @@ export default function ReservationCard({
   const router = useRouter();
   const { activity, status, date, startTime, endTime, totalPrice, headCount, reviewSubmitted } =
     reservation;
-  const schedule = useFormattedSchedule(date, startTime, endTime);
+  const schedule = `${formatDateForDisplay(new Date(date))} · ${startTime} ~ ${endTime}`;
   const { navigateWithCheck } = useActivityExistenceCheck(activity.id);
 
   const handleCardClick = () => {

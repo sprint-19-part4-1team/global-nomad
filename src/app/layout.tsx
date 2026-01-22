@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
 import AuthGuard from '@/features/auth/common/components/AuthGuard';
-import NavigationTracker from '@/shared/components/navigation/NavigationTracker';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
+import NavigationTracker from '@/shared/providers/NavigationTracker';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import RefreshProvider from '@/shared/providers/RefreshProvider';
 import SessionWatcher from '@/shared/providers/SessionWatcher';

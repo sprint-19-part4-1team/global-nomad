@@ -24,6 +24,8 @@ interface ReviewModalProps {
   headCount: number;
 }
 
+const REVIEW_MAX_LENGTH = 100;
+
 /**
  * @description
  * - 예약 완료된 체험에 대해 후기를 작성하는 모달 컴포넌트입니다.
@@ -121,13 +123,13 @@ export default function ReviewModal({
           placeholder='체험에서 느낀 경험을 자유롭게 남겨주세요.'
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          maxLength={100}
+          maxLength={REVIEW_MAX_LENGTH}
         />
         <Button
           type='submit'
           size='lg'
           isLoading={isPending}
-          disabled={!content.trim() || content.length > 100 || rating === 0}
+          disabled={!content.trim() || content.length > REVIEW_MAX_LENGTH || rating === 0}
           full
           onClick={handleSubmit}>
           작성하기

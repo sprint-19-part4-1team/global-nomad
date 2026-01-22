@@ -127,7 +127,7 @@ export default function ReviewModal({
           type='submit'
           size='lg'
           isLoading={isPending}
-          disabled={!content.trim() || rating === 0}
+          disabled={!content.trim() || content.length > 100 || rating === 0}
           full
           onClick={handleSubmit}>
           작성하기

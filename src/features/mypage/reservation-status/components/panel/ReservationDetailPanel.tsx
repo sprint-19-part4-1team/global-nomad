@@ -20,9 +20,9 @@ import ReservationTimeDropdown from './ReservationTimeDropdown';
 /**
  * 예약 상세 패널 컴포넌트의 Props 타입
  *
- * @property {string} activityId - 액티비티 ID
- * @property {Date} date - 선택된 날짜
- * @property {() => void} onClose - 패널 닫기 콜백 함수
+ * @property activityId - 액티비티 ID
+ * @property date - 선택된 날짜
+ * @property onClose - 패널 닫기 콜백 함수
  */
 interface ReservationDetailPanelProps {
   activityId: string;
@@ -42,7 +42,7 @@ interface ReservationDetailPanelProps {
  * - 각 시간대별 예약 상태(신청/승인/거절) 개수 표시
  * - 패널이 열릴 때마다 신청 탭으로 초기화
  *
- * @param {ReservationDetailPanelProps} props - 컴포넌트 Props
+ * @param props - 컴포넌트 Props
  * @returns 예약 상세 패널 컴포넌트
  *
  * @example

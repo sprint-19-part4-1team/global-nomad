@@ -6,8 +6,8 @@
  * - 소수점이 있는 경우 내림 처리됩니다.
  * - 페이지네이션 컴포넌트에서 URL 쿼리 파라미터를 안전하게 파싱하기 위해 사용됩니다.
  *
- * @param {string} value - URL에서 가져온 쿼리 파라미터 값
- * @returns {number} 파싱된 페이지 번호 (최소값: 1)
+ * @param value - URL에서 가져온 쿼리 파라미터 값
+ * @returns 파싱된 페이지 번호 (최소값: 1)
  *
  * @example
  * ```typescript

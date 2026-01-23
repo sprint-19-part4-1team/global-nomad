@@ -14,7 +14,7 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
  * - 가로 스크롤 지원 (스크롤바 숨김 처리)
  * - 접근성을 위한 ARIA 속성 포함
  *
- * @returns {JSX.Element} PopularActivitySkeleton 컴포넌트
+ * @returns PopularActivitySkeleton 컴포넌트
  *
  * @example
  * ```tsx
@@ -31,7 +31,6 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
  */
 export default function PopularActivitySkeleton() {
   return (
-    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <section
       className='scrollbar-hidden overflow-x-auto'
       aria-busy='true'

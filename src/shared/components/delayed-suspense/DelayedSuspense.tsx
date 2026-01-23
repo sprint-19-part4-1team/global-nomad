@@ -5,9 +5,9 @@ import { Suspense, ReactNode, useState, useEffect, useRef } from 'react';
 /**
  * DelayedSuspense 컴포넌트의 Props
  *
- * @property {ReactNode} fallback - 로딩 중 표시할 스켈레톤 컴포넌트
- * @property {number} [minDuration=1000] - 최소 표시 시간 (밀리초)
- * @property {ReactNode} children - 실제 콘텐츠
+ * @property fallback - 로딩 중 표시할 스켈레톤 컴포넌트
+ * @property [minDuration=1000] - 최소 표시 시간 (밀리초)
+ * @property children - 실제 콘텐츠
  */
 interface DelayedSuspenseProps {
   /** 로딩 중 표시할 스켈레톤 컴포넌트 */
@@ -26,8 +26,8 @@ interface DelayedSuspenseProps {
  * 깜빡임 현상을 방지하고, 콘텐츠 전환 시 부드러운 fade-in 효과를 제공합니다.
  * children은 즉시 렌더링되어 데이터 fetching이 지연되지 않습니다.
  *
- * @param {DelayedSuspenseProps} props - 컴포넌트 props
- * @returns {JSX.Element} DelayedSuspense 컴포넌트
+ * @param props - 컴포넌트 props
+ * @returns DelayedSuspense 컴포넌트
  *
  * @example
  * ```tsx

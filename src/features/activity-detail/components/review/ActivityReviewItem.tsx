@@ -4,7 +4,7 @@ import { ReviewServiceResponseDto } from '@/shared/types/activities';
 
 /**
  * 체험 리뷰 컴포넌트의 Props
- * @property {ReviewServiceResponseDto} review - 리뷰 데이터 객체
+ * @property review - 리뷰 데이터 객체
  */
 interface ActivityReviewItemProps {
   review: ReviewServiceResponseDto;
@@ -23,8 +23,8 @@ interface ActivityReviewItemProps {
  * - 별점: 노란색 별 아이콘으로 시각화
  * - 리뷰 내용: 본문 텍스트로 표시
  *
- * @param {ActivityReviewItemProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 리뷰 카드
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 리뷰 카드
  *
  * @example
  * ```tsx

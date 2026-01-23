@@ -8,7 +8,7 @@ import Skeleton from '@/shared/components/skeleton/Skeleton';
  * - 달력 형태의 스켈레톤으로 구성
  * - 실제 컴포넌트의 레이아웃과 동일한 높이로 설정하여 레이아웃 시프트 방지
  *
- * @returns {JSX.Element} ReservationCalendarSkeleton 컴포넌트
+ * @returns ReservationCalendarSkeleton 컴포넌트
  *
  * @example
  * ```tsx

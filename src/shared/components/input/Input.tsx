@@ -19,39 +19,39 @@ import { formatValue } from '@/shared/utils/formatValue';
  * Input 컴포넌트의 Props 인터페이스
  *
  * @interface InputProps
- * @extends {Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'>}
+ * @typeParam T - Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'>
  *
- * @property {('authForm' | 'form')} variant - Input의 스타일 변형
+ * @property variant - Input의 스타일 변형
  *   - `authForm`: 로그인/회원가입 등 인증 관련 폼에서 사용
  *   - `form`: 체험 등록/수정 등 일반 폼에서 사용
- * @property {string} [divClassName] - Input 컨테이너 div에 적용될 추가 CSS 클래스
- * @property {ReactNode} label - Input 위에 표시될 label 텍스트
- * @property {string} [labelClassName] - label 요소에 적용될 추가 CSS 클래스
- * @property {string} [inputClassName] - Input 요소에 적용될 추가 CSS 클래스
- * @property {string} name - form 제출 시 사용될 Input의 name 속성
+ * @property [divClassName] - Input 컨테이너 div에 적용될 추가 CSS 클래스
+ * @property label - Input 위에 표시될 label 텍스트
+ * @property [labelClassName] - label 요소에 적용될 추가 CSS 클래스
+ * @property [inputClassName] - Input 요소에 적용될 추가 CSS 클래스
+ * @property name - form 제출 시 사용될 Input의 name 속성
  *   - `address` 포함 시: 검색 아이콘이 자동으로 표시됨
- * @property {HTMLInputTypeAttribute} type - Input의 타입
+ * @property type - Input의 타입
  *   - `text`: 일반 텍스트 입력
  *   - `email`: 이메일 입력
  *   - `password`: 비밀번호 입력 (표시/숨기기 토글 버튼 자동 추가)
  *   - `number`: 숫자 입력 (천단위 콤마 포맷팅 자동 적용, 내부적으로 text 타입으로 처리)
  *   - 기타 HTML input type 지원
- * @property {('email' | 'nickname' | 'current-password' | 'new-password' | 'street-address' | 'transaction-amount' | 'off')} [autoComplete='off']
+ * @property [autoComplete='off']
  *   - 브라우저 자동완성 동작 제어
  *   - `address` 포함 시: 검색 아이콘이 자동으로 표시됨
  *   - 기본값: `'off'`
- * @property {boolean} [disabled] - Input 비활성화 여부
+ * @property [disabled] - Input 비활성화 여부
  *   - `true`: 입력 불가 상태 (회색 배경 처리)
  *   - 기본값: `false`
- * @property {string | number} value - Input의 현재 값 (제어 컴포넌트로 동작)
- * @property {ChangeEventHandler<HTMLInputElement>} [onChange] - 값 변경 시 호출되는 이벤트 핸들러
+ * @property value - Input의 현재 값 (제어 컴포넌트로 동작)
+ * @property [onChange] - 값 변경 시 호출되는 이벤트 핸들러
  *   - `type='number'`인 경우: 콤마가 제거된 순수 숫자 문자열이 전달됨
- * @property {FocusEventHandler<HTMLInputElement>} [onBlur] - Input에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
+ * @property [onBlur] - Input에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
  *   - 유효성 검증을 수행하는 용도로 주로 사용
- * @property {string} [placeholder] - Input의 placeholder 텍스트 (입력 전 표시되는 안내 문구)
- * @property {MouseEventHandler<HTMLElement>} [onClick] - Input 컨테이너 클릭 시 호출되는 이벤트 핸들러
+ * @property [placeholder] - Input의 placeholder 텍스트 (입력 전 표시되는 안내 문구)
+ * @property [onClick] - Input 컨테이너 클릭 시 호출되는 이벤트 핸들러
  *   - 주소 검색 모달 열기 등의 용도로 사용
- * @property {string} [errorMessage] - 유효성 검증 실패 시 표시될 에러 메시지
+ * @property [errorMessage] - 유효성 검증 실패 시 표시될 에러 메시지
  *   - 값이 존재하면 Input 하단에 빨간색 텍스트로 표시
  *   - Input 테두리가 빨간색으로 변경됨
  */
@@ -116,8 +116,8 @@ interface InputProps extends Omit<
  *    - 비밀번호 토글 버튼에 적절한 `aria-label`이 자동으로 설정됩니다.
  *    - 아이콘에 `aria-hidden` 또는 `aria-label` 속성이 적용됩니다.
  *
- * @param {InputProps} props - 컴포넌트 props
- * @returns {JSX.Element} Input 컴포넌트
+ * @param props - 컴포넌트 props
+ * @returns Input 컴포넌트
  *
  * @example
  * // 이메일 입력 예시
@@ -225,7 +225,7 @@ export default function Input({
    *   (HTML `input[type=number]`는 콤마를 지원하지 않고 숫자만 입력 가능)
    * - 그 외 타입: props로 받은 원본 type 그대로 반환
    *
-   * @returns {string} 실제 input 요소에 적용될 type ('text', 'password', 'email' 등)
+   * @returns 실제 input 요소에 적용될 type ('text', 'password', 'email' 등)
    */
   const getInputType = () => {
     if (type === 'password') {
@@ -252,8 +252,7 @@ export default function Input({
    * ### 그 외 타입인 경우:
    * - props로 받은 `onChange` 핸들러를 그대로 호출하여 입력값을 전달합니다.
    *
-   * @param {React.ChangeEvent<HTMLInputElement>} e - 변경 이벤트 객체
-   * @returns {void}
+   * @param e - 변경 이벤트 객체
    */
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     // number 타입이 아니면 props의 onChange를 그대로 전달

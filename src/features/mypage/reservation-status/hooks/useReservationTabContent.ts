@@ -5,9 +5,9 @@ import { ActivityReservationStatus } from '@/shared/types/myActivities';
 /**
  * 예약 탭 컨텐츠 훅의 매개변수 타입
  *
- * @property {string} activityId - 조회할 활동의 ID
- * @property {string} scheduleId - 조회할 스케줄의 ID
- * @property {ActivityReservationStatus} currentTab - 현재 활성화된 탭 상태 (신청/승인/거절)
+ * @property activityId - 조회할 활동의 ID
+ * @property scheduleId - 조회할 스케줄의 ID
+ * @property currentTab - 현재 활성화된 탭 상태 (신청/승인/거절)
  */
 interface UseReservationTabContentProps {
   activityId: string;
@@ -21,14 +21,14 @@ interface UseReservationTabContentProps {
  * 현재 선택된 탭에 해당하는 예약 데이터를 조회하고,
  * 무한 스크롤 기능을 제공합니다.
  *
- * @param {UseReservationTabContentProps} props - 훅 설정 객체
+ * @param props - 훅 설정 객체
  *
  * @returns 예약 데이터와 무한 스크롤 관련 상태 및 ref
- * @returns {Array} reservations - 현재 탭의 예약 목록
- * @returns {boolean} isPending - 초기 로딩 상태
- * @returns {boolean} hasNextPage - 다음 페이지 존재 여부
- * @returns {boolean} isFetchingNextPage - 다음 페이지 로딩 상태
- * @returns {React.RefObject<HTMLDivElement>} observerRef - 무한 스크롤 옵저버를 연결할 ref
+ * @returns reservations - 현재 탭의 예약 목록
+ * @returns isPending - 초기 로딩 상태
+ * @returns hasNextPage - 다음 페이지 존재 여부
+ * @returns isFetchingNextPage - 다음 페이지 로딩 상태
+ * @returns observerRef - 무한 스크롤 옵저버를 연결할 ref
  *
  * @example
  * ```tsx

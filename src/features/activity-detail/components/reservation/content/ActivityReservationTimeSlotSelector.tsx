@@ -3,10 +3,10 @@ import { ScheduleTimeType } from '@/shared/types/activities';
 
 /**
  * 체험 예약 시간대 선택 컴포넌트의 Props
- * @property {Date | undefined} selectedDate - 선택된 날짜
- * @property {ScheduleTimeType[]} availableTimes - 예약 가능한 시간대 목록
- * @property {number | null} selectedScheduleId - 선택된 스케줄 ID
- * @property {(scheduleId: number) => void} onSelectSchedule - 스케줄 선택 핸들러
+ * @property selectedDate - 선택된 날짜
+ * @property availableTimes - 예약 가능한 시간대 목록
+ * @property selectedScheduleId - 선택된 스케줄 ID
+ * @property onSelectSchedule - 스케줄 선택 핸들러
  */
 interface ActivityReservationTimeSlotSelectorProps {
   selectedDate: Date | undefined;
@@ -28,8 +28,8 @@ interface ActivityReservationTimeSlotSelectorProps {
  * - 예약 가능 시간 존재: 시간대 목록을 버튼으로 표시
  * - 선택된 시간대: primary 색상으로 강조 표시
  *
- * @param {ActivityReservationTimeSlotSelectorProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 시간대 선택 UI
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 시간대 선택 UI
  *
  * @example
  * ```tsx

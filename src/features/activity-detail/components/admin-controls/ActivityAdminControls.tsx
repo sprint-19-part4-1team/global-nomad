@@ -12,8 +12,8 @@ import { useUserStore } from '@/shared/stores/userStore';
 
 /**
  * 체험 작성자 전용 영역 컴포넌트의 Props
- * @property {number} activityId - 체험ID
- * @property {number} userId - 체험을 작성한 유저ID
+ * @property activityId - 체험ID
+ * @property userId - 체험을 작성한 유저ID
  */
 interface ActivityAdminControlsProps {
   activityId: number;
@@ -28,8 +28,8 @@ interface ActivityAdminControlsProps {
  * - 체험 예약 현황 확인 링크와 체험 수정/삭제 버튼을 제공합니다.
  * - 체험 승인/대기 상태에서의 제한 사항 안내 문구를 함께 표시합니다.
  *
- * @param {ActivityAdminControlsProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 체험 작성자 전용 영역
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 체험 작성자 전용 영역
  *
  * @example
  * ```tsx

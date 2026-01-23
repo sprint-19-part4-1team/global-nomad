@@ -4,8 +4,8 @@ import { cn } from '@/shared/utils/cn';
 
 /**
  * AvatarImage 컴포넌트의 Props
- * @property {'lazy' | 'eager'} [loading='eager'] - 이미지 로딩 방식 (lazy: 지연 로딩, eager: 즉시 로딩)
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property [loading='eager'] - 이미지 로딩 방식 (lazy: 지연 로딩, eager: 즉시 로딩)
+ * @property [className] - 추가 CSS 클래스명
  */
 interface AvatarImageProps {
   loading?: 'lazy' | 'eager';
@@ -28,8 +28,8 @@ const SIZE_MAP = {
  * - 이미지 로딩 실패 시 자동으로 Fallback으로 전환됩니다
  * - profileImageUrl이 없으면 null을 반환하여 Fallback이 표시되도록 합니다
  *
- * @param {AvatarImageProps} props - AvatarImage 컴포넌트 props
- * @returns {JSX.Element | null}
+ * @param props - AvatarImage 컴포넌트 props
+ * @returns AvatarImage 컴포넌트
  *
  * @example
  * <Avatar user={user} size="md">

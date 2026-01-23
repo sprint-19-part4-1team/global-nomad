@@ -15,9 +15,9 @@ import { formatValue } from '@/shared/utils/formatValue';
 /**
  * 체험 예약 컴포넌트의 Props
  *
- * @property {number} activityId - 체험 ID
- * @property {number} userId - 체험을 작성한 유저 ID
- * @property {number} price - 1인당 체험 가격
+ * @property activityId - 체험 ID
+ * @property userId - 체험을 작성한 유저 ID
+ * @property price - 1인당 체험 가격
  */
 interface ActivityReservationProps {
   activityId: number;
@@ -50,8 +50,8 @@ interface ActivityReservationProps {
  * - 로그인하지 않은 사용자: 예약 UI 미표시
  * - 체험 작성자 본인: 예약 UI 미표시 (자신의 체험은 예약 불가)
  *
- * @param {ActivityReservationProps} props - 컴포넌트 props
- * @returns {JSX.Element | null} 렌더링된 체험 예약 UI 또는 null
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 체험 예약 UI 또는 null
  *
  * @example
  * ```tsx

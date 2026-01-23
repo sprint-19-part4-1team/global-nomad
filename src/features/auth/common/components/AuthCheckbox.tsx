@@ -6,11 +6,11 @@ import Label from '@/shared/components/label/Label';
 /**
  * 인증 폼에서 사용되는 체크박스 컴포넌트의 Props
  *
- * @property {string} id - 체크박스 input 요소의 고유 ID
- * @property {string} name - 체크박스 input 요소의 name 속성
- * @property {boolean | undefined} termsAgreed - 체크박스의 체크 상태
- * @property {ChangeEventHandler<HTMLInputElement>} [onChange] - 체크박스 값 변경 시 호출되는 핸들러
- * @property {FocusEventHandler<HTMLInputElement>} [onBlur] - 체크박스가 포커스를 잃을 때 호출되는 핸들러
+ * @property id - 체크박스 input 요소의 고유 ID
+ * @property name - 체크박스 input 요소의 name 속성
+ * @property termsAgreed - 체크박스의 체크 상태
+ * @property [onChange] - 체크박스 값 변경 시 호출되는 핸들러
+ * @property [onBlur] - 체크박스가 포커스를 잃을 때 호출되는 핸들러
  */
 interface AuthCheckboxProps {
   id: string;
@@ -26,14 +26,14 @@ interface AuthCheckboxProps {
  * 체크 상태에 따라 스타일이 변경되며, 체크 아이콘과 레이블을 포함합니다.
  * peer 상태를 활용하여 체크 시 아이콘이 표시되고 배경색이 변경됩니다.
  *
- * @param {AuthCheckboxProps} props - 컴포넌트 props
- * @param {string} props.id - 체크박스의 고유 ID (label의 htmlFor와 연결)
- * @param {string} props.name - 폼 제출 시 사용될 input의 name
- * @param {boolean} props.termsAgreed - 현재 체크박스의 체크 여부
- * @param {ChangeEventHandler<HTMLInputElement>} [props.onChange] - 체크 상태 변경 핸들러
- * @param {FocusEventHandler<HTMLInputElement>} [props.onBlur] - 포커스 아웃 핸들러
+ * @param props - 컴포넌트 props
+ * @param props.id - 체크박스의 고유 ID (label의 htmlFor와 연결)
+ * @param props.name - 폼 제출 시 사용될 input의 name
+ * @param props.termsAgreed - 현재 체크박스의 체크 여부
+ * @param [props.onChange] - 체크 상태 변경 핸들러
+ * @param [props.onBlur] - 포커스 아웃 핸들러
  *
- * @returns {JSX.Element} 이용약관 동의 체크박스 컴포넌트
+ * @returns 이용약관 동의 체크박스 컴포넌트
  *
  * @example
  * ```tsx

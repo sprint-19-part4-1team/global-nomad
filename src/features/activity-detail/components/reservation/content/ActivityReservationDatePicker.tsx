@@ -7,11 +7,11 @@ import '@/shared/styles/customDayPicker.css';
 
 /**
  * 체험 예약 날짜 선택 컴포넌트의 Props
- * @property {Date | undefined} selectedDate - 선택된 날짜
- * @property {(date: Date | undefined) => void} onSelectDate - 날짜 선택 핸들러
- * @property {Date[]} availableDates - 예약 가능한 날짜 목록
- * @property {Date} currentMonth - 현재 표시 중인 월
- * @property {(month: Date) => void} onMonthChange - 월 변경 핸들러
+ * @property selectedDate - 선택된 날짜
+ * @property onSelectDate - 날짜 선택 핸들러
+ * @property availableDates - 예약 가능한 날짜 목록
+ * @property currentMonth - 현재 표시 중인 월
+ * @property onMonthChange - 월 변경 핸들러
  */
 interface ActivityReservationDatePickerProps {
   selectedDate: Date | undefined;
@@ -34,8 +34,8 @@ interface ActivityReservationDatePickerProps {
  * - 현재 월부터 3개월까지 이동 가능 (등록 폼의 60일 제한에 맞춤)
  * - 커스텀 스타일 적용 (customDayPicker.css)
  *
- * @param {ActivityReservationDatePickerProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 날짜 선택 캘린더
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 날짜 선택 캘린더
  *
  * @example
  * ```tsx

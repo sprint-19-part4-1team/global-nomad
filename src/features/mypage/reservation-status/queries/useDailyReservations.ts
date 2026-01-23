@@ -7,8 +7,8 @@ import { GetMyActivityReservedSchedulesParams } from '@/shared/types/myActivitie
 /**
  * useDailyReservations 훅의 매개변수 타입
  *
- * @property {number} activityId - 조회할 체험의 ID
- * @property {GetMyActivityReservedSchedulesParams} params - 날짜별 예약 스케줄 조회를 위한 쿼리 파라미터
+ * @property activityId - 조회할 체험의 ID
+ * @property params - 날짜별 예약 스케줄 조회를 위한 쿼리 파라미터
  */
 type useDailyReservationsParams = {
   activityId: number;

@@ -6,10 +6,10 @@ import { ActivityReservationStatus } from '@/shared/types/myActivities';
 /**
  * 예약 탭 컨텐츠 컴포넌트의 Props 타입
  *
- * @property {string} activityId - 체험 ID
- * @property {string} scheduleId - 스케줄 ID
- * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
- * @property {ActivityReservationStatus} currentTab - 현재 선택된 탭 상태
+ * @property activityId - 체험 ID
+ * @property scheduleId - 스케줄 ID
+ * @property date - 예약 날짜 (yyyy-MM-dd 형식)
+ * @property currentTab - 현재 선택된 탭 상태
  */
 interface ReservationTabContentProps {
   activityId: string;
@@ -24,7 +24,7 @@ interface ReservationTabContentProps {
  * 단일 탭의 예약 내역을 표시합니다.
  * 무한 스크롤을 지원하며, 데이터 로딩 중에는 스켈레톤을 표시합니다.
  *
- * @param {ReservationTabContentProps} props - 컴포넌트 Props
+ * @param props - 컴포넌트 Props
  * @returns 예약 상태별 탭 컨텐츠 컴포넌트
  *
  * @example

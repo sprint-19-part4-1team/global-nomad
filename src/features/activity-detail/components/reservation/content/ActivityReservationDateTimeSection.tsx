@@ -12,14 +12,14 @@ import { formatDateToString } from '@/shared/utils/dateUtil';
 
 /**
  * 체험 예약 날짜/시간 선택 섹션 컴포넌트의 Props
- * @property {Date | undefined} selectedDate - 선택된 날짜
- * @property {(date: Date | undefined) => void} onDateSelect - 날짜 선택 핸들러
- * @property {number | null} selectedScheduleId - 선택된 스케줄 ID
- * @property {(id: number) => void} onScheduleSelect - 스케줄 선택 핸들러
- * @property {ScheduleResponseDto[]} schedules - 예약 가능한 스케줄 목록
- * @property {Date} currentMonth - 현재 표시 중인 월
- * @property {(month: Date) => void} onMonthChange - 월 변경 핸들러
- * @property {boolean} [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
+ * @property selectedDate - 선택된 날짜
+ * @property onDateSelect - 날짜 선택 핸들러
+ * @property selectedScheduleId - 선택된 스케줄 ID
+ * @property onScheduleSelect - 스케줄 선택 핸들러
+ * @property schedules - 예약 가능한 스케줄 목록
+ * @property currentMonth - 현재 표시 중인 월
+ * @property onMonthChange - 월 변경 핸들러
+ * @property [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
  */
 interface ActivityReservationDateTimeSectionProps {
   selectedDate: Date | undefined;
@@ -46,8 +46,8 @@ interface ActivityReservationDateTimeSectionProps {
  * - 바텀시트 모드: isBottomSheet가 true일 경우 날짜 타이틀 숨김
  * - 스크롤 영역: 모바일에서 최대 높이 530px로 제한하여 스크롤 가능
  *
- * @param {ActivityReservationDateTimeSectionProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 날짜/시간 선택 섹션
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 날짜/시간 선택 섹션
  *
  * @example
  * ```tsx

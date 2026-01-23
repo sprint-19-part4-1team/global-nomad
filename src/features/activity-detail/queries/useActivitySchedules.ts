@@ -7,8 +7,8 @@ import { ScheduleResponseDto } from '@/shared/types/activities';
 /**
  * 체험 예약 가능일 조회 훅의 Props
  *
- * @property {number} activityId - 체험 ID
- * @property {Date} currentMonth - 조회할 월 (Date 객체)
+ * @property activityId - 체험 ID
+ * @property currentMonth - 조회할 월 (Date 객체)
  */
 type useActivitySchedulesProps = {
   activityId: number;

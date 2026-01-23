@@ -56,7 +56,6 @@ const activityCardVariants = cva(
  */
 export default function ActivityCardSkeleton({ variant, className }: ActivityCardSkeletonProps) {
   return (
-    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <div className={cn(activityCardVariants({ variant }), className)}>
       {/* 이미지 */}
       <Skeleton className='h-4/5 w-full rounded-t-18 sm:rounded-t-32' />

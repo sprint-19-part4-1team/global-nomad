@@ -120,7 +120,6 @@ export default function MypageCardSkeleton({ variant, className }: MypageCardSke
   const isReservation = variant === 'reservation';
 
   return (
-    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <div className={cn('relative h-full w-full', className)}>
       <div className={cn(mypageCardVariants({ variant }))}>
         {isReservation ? <ReservationSkeleton /> : <ActivitySkeleton />}

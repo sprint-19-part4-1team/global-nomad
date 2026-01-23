@@ -40,7 +40,7 @@ export const usePreventNavigation = ({
       return;
     }
 
-    if (history.state.blocked !== 'true') {
+    if (history.state?.blocked !== true) {
       history.pushState({ blocked: true }, '', location.href);
     }
   }, [isDirty]);

@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useNavigationStore } from '@/shared/stores/navigationStore';
@@ -44,6 +44,7 @@ const NAVIGATION_UI_CONFIG = {
  */
 export const useActivityFormNavigation = (isDirty: boolean) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { getPreviousUrl } = useNavigationStore();
 
   usePreventNavigation({
@@ -70,7 +71,7 @@ export const useActivityFormNavigation = (isDirty: boolean) => {
           onCancel={() => {
             overlayStore.pop();
             if (type === 'POPSTATE') {
-              history.pushState({ blocked: true }, '', window.location.href);
+              history.pushState({ blocked: true }, '', pathname);
             }
           }}
         />

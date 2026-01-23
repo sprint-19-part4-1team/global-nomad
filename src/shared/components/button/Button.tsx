@@ -19,10 +19,10 @@ const buttonVariants = cva(
        * Button의 스타일을 정의합니다.
        */
       variant: {
-        primary: 'bg-primary-500 text-white hover:bg-primary-600',
+        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-600',
         secondary:
-          'bg-white text-gray-800 border border-gray-300 hover:bg-primary-100 hover:border-primary-500 hover:text-primary-500',
-        negative: 'bg-white border border-red-400 text-red-500 hover:bg-red-100',
+          'bg-white text-gray-800 border border-gray-300 hover:bg-primary-100 hover:border-primary-500 hover:text-primary-500 active:bg-primary-100 active:border-primary-500 active:text-primary-500',
+        negative: 'bg-white border border-red-400 text-red-500 hover:bg-red-100 active:bg-red-100',
       },
       /**
        * ### size

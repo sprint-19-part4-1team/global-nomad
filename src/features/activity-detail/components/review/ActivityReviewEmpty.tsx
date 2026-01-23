@@ -6,8 +6,8 @@ import { cn } from '@/shared/utils/cn';
 /**
  * 리뷰 상태 컴포넌트의 Props
  *
- * @property {ReviewStateType} [state='empty'] - 표시할 상태 ('empty' | 'pending' | 'error')
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property [state='empty'] - 표시할 상태 ('empty' | 'pending' | 'error')
+ * @property [className] - 추가 CSS 클래스명
  */
 interface ActivityReviewEmptyProps {
   state?: 'empty' | 'pending' | 'error';
@@ -18,8 +18,8 @@ interface ActivityReviewEmptyProps {
  * 리뷰가 없거나 로딩 중이거나 에러일 때 표시하는 컴포넌트
  *
  * @component
- * @param {ActivityReviewEmptyProps} props - 컴포넌트 props
- * @returns {JSX.Element} 빈 상태 섹션
+ * @param props - 컴포넌트 props
+ * @returns 빈 상태 섹션
  *
  * @example
  * ```tsx

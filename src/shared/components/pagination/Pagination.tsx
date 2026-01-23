@@ -7,10 +7,10 @@ import { getPaginationRange } from '@/shared/utils/getPaginationRange';
 /**
  * Pagination 컴포넌트의 Props
  *
- * @property {number} totalCount - 전체 아이템 개수
- * @property {number} itemsPerPage - 한 페이지에 표시할 아이템 개수
- * @property {number} currentPage - 현재 페이지 번호 (1부터 시작)
- * @property {(page: number) => void} onPageChange - 페이지 변경 시 호출되는 콜백 함수
+ * @property totalCount - 전체 아이템 개수
+ * @property itemsPerPage - 한 페이지에 표시할 아이템 개수
+ * @property currentPage - 현재 페이지 번호 (1부터 시작)
+ * @property onPageChange - 페이지 변경 시 호출되는 콜백 함수
  */
 interface PaginationProps {
   totalCount: number;
@@ -42,8 +42,8 @@ const PAGINATION_STYLES = {
  * - Controlled Component 패턴을 사용하여 재사용성과 유연성을 높였습니다.
  * - 여러 페이지네이션이 필요한 경우 각각 다른 쿼리 키로 관리할 수 있습니다.
  *
- * @param {PaginationProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 페이지네이션 UI
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 페이지네이션 UI
  *
  * @example
  * ```tsx

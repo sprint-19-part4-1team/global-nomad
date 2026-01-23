@@ -11,7 +11,7 @@ export type AuthToken = (typeof AUTH_COOKIE_KEYS)[keyof typeof AUTH_COOKIE_KEYS]
  * @description
  * next cookies를 사용해서 쿠키에 저장된 토큰을 가져오는 함수
  *
- * @returns {Promise<string | undefined>} - 토큰 문자열 / undefined
+ * @returns토큰 문자열 / undefined
  */
 export const getAuthCookies = async (token: AuthToken): Promise<string | undefined> => {
   const cookieStore = await cookies();

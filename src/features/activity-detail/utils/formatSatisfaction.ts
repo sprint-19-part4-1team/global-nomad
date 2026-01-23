@@ -1,8 +1,8 @@
 /**
  * 평균 평점을 기반으로 만족도 문구를 반환
  *
- * @param {number} averageRating - 평균 평점 (0~5)
- * @returns {string} 만족도 문구
+ * @param averageRating - 평균 평점 (0~5)
+ * @returns 만족도 문구
  *
  * @example
  * getSatisfactionLabel(5);    // "매우 만족"

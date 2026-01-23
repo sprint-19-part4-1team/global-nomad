@@ -9,7 +9,7 @@ import ReservationDropdownSkeleton from '@/features/mypage/reservation-status/co
  * - 반응형 간격(gap)을 적용하여 다양한 화면 크기에 대응합니다.
  * - 실제 컴포넌트와 동일한 구조로 레이아웃 시프트를 방지합니다.
  *
- * @returns {JSX.Element} 드롭다운과 달력 스켈레톤을 포함한 컨테이너
+ * @returns 드롭다운과 달력 스켈레톤을 포함한 컨테이너
  *
  * @example
  * ```tsx

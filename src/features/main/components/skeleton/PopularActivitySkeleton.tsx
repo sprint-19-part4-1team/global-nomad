@@ -14,7 +14,7 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
  * - 가로 스크롤 지원 (스크롤바 숨김 처리)
  * - 접근성을 위한 ARIA 속성 포함
  *
- * @returns {JSX.Element} PopularActivitySkeleton 컴포넌트
+ * @returns PopularActivitySkeleton 컴포넌트
  *
  * @example
  * ```tsx

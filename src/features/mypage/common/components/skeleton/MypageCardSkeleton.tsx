@@ -5,8 +5,8 @@ import { cn } from '@/shared/utils/cn';
 /**
  * MypageCardSkeleton 컴포넌트의 Props
  *
- * @property {'reservation' | 'activity'} variant - 카드 스타일 변형 ('reservation': 이미지가 카드 밖, 'activity': 이미지가 카드 안)
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property variant - 카드 스타일 변형 ('reservation': 이미지가 카드 밖, 'activity': 이미지가 카드 안)
+ * @property [className] - 추가 CSS 클래스명
  */
 interface MypageCardSkeletonProps {
   /** 카드 스타일 변형 ('reservation': 예약 카드, 'activity': 내 체험 카드) */
@@ -34,7 +34,7 @@ const mypageCardVariants = cva('flex h-full rounded-24 bg-white', {
  *
  * 예약 카드의 로딩 상태를 표시하며, 뱃지, 제목, 시간, 가격, 액션 버튼을 포함합니다.
  *
- * @returns {JSX.Element} 예약 카드 스켈레톤 레이아웃
+ * @returns 예약 카드 스켈레톤 레이아웃
  */
 const ReservationSkeleton = () => (
   <div className='flex w-full flex-col justify-between gap-8'>
@@ -62,7 +62,7 @@ const ReservationSkeleton = () => (
  *
  * 체험 카드의 로딩 상태를 표시하며, 제목, 별점, 가격, 액션 버튼, 썸네일 이미지를 포함합니다.
  *
- * @returns {JSX.Element} 체험 카드 스켈레톤 레이아웃
+ * @returns 체험 카드 스켈레톤 레이아웃
  */
 const ActivitySkeleton = () => (
   <>
@@ -102,7 +102,7 @@ const ActivitySkeleton = () => (
  * @param props.variant - 카드 스타일 변형 ('reservation' 또는 'activity')
  * @param props.className - 추가 CSS 클래스명 (선택)
  *
- * @returns {JSX.Element} MypageCardSkeleton 컴포넌트
+ * @returns MypageCardSkeleton 컴포넌트
  *
  * @example
  * ```tsx

@@ -13,9 +13,9 @@ const LIST_GAP = {
 /**
  * MypageListSkeleton 컴포넌트의 Props
  *
- * @property {'reservation' | 'activity'} variant - 리스트 스타일 변형 ('reservation': 예약 내역, 'activity': 내 체험 관리)
- * @property {number} [count=4] - 표시할 스켈레톤 카드의 개수
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property variant - 리스트 스타일 변형 ('reservation': 예약 내역, 'activity': 내 체험 관리)
+ * @property [count=4] - 표시할 스켈레톤 카드의 개수
+ * @property [className] - 추가 CSS 클래스명
  */
 interface MypageListSkeletonProps {
   /** 리스트 스타일 변형 ('reservation': 예약 내역, 'activity': 내 체험 관리) */
@@ -37,7 +37,7 @@ interface MypageListSkeletonProps {
  * @param props.count - 표시할 스켈레톤 카드의 개수 (기본값: 4)
  * @param props.className - 추가 CSS 클래스명 (선택)
  *
- * @returns {JSX.Element} MypageListSkeleton 컴포넌트
+ * @returns MypageListSkeleton 컴포넌트
  *
  * @example
  * ```tsx

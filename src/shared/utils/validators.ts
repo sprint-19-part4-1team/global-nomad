@@ -9,9 +9,9 @@ import {
 /**
  * 필수 입력 검사
  *
- * @param {string} value - 검사할 값
- * @param {string} message - 에러 메시지
- * @returns {string} 에러 메시지 또는 빈 문자열
+ * @param value - 검사할 값
+ * @param message - 에러 메시지
+ * @returns 에러 메시지 또는 빈 문자열
  */
 export const isRequired = (value: string, message: string): string => {
   return !value || value.trim().length === 0 ? message : '';
@@ -20,8 +20,8 @@ export const isRequired = (value: string, message: string): string => {
 /**
  * 이메일 형식 검사
  *
- * @param {string} value - 검사할 이메일
- * @returns {string} 에러 메시지 또는 빈 문자열
+ * @param value - 검사할 이메일
+ * @returns 에러 메시지 또는 빈 문자열
  */
 const validateEmailFormat = (value: string): string => {
   return VALIDATION_PATTERNS.EMAIL.test(value) ? '' : VALIDATION_MESSAGES.EMAIL.INVALID;
@@ -32,8 +32,8 @@ const validateEmailFormat = (value: string): string => {
  * - 최소 8자 이상
  * - 영문 대소문자 조합 (숫자 선택)
  *
- * @param {string} value - 검사할 비밀번호
- * @returns {string} 에러 메시지 또는 빈 문자열
+ * @param value - 검사할 비밀번호
+ * @returns 에러 메시지 또는 빈 문자열
  */
 const validatePasswordFormat = (value: string): string => {
   if (value.length < PASSWORD_MIN_LENGTH) {
@@ -47,8 +47,8 @@ const validatePasswordFormat = (value: string): string => {
  * - 완성된 한글, 영문, 숫자 허용 (공백 제외)
  * - 10자 이하
  *
- * @param {string} value - 검사할 닉네임
- * @returns {string} 에러 메시지 또는 빈 문자열
+ * @param value - 검사할 닉네임
+ * @returns 에러 메시지 또는 빈 문자열
  */
 const validateNicknameFormat = (value: string): string => {
   if (value.length > NICKNAME_MAX_LENGTH) {
@@ -84,8 +84,8 @@ export const validateMaxPrice = (value: number | string) => {
 /**
  * 유효성 검사 타입
  *
- * @property {'login'} login - 로그인 페이지용 검사 (필수 입력만 확인)
- * @property {'signup'} signup - 회원가입 페이지용 검사 (필수 입력 + 형식 검사)
+ * @property login - 로그인 페이지용 검사 (필수 입력만 확인)
+ * @property signup - 회원가입 페이지용 검사 (필수 입력 + 형식 검사)
  */
 type ValidationType = 'login' | 'signup' | 'changePassword';
 
@@ -97,9 +97,9 @@ export const validators = {
   /**
    * 이메일 유효성 검사
    *
-   * @param {string} value - 검사할 이메일
-   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
-   * @returns {string} 에러 메시지 또는 빈 문자열
+   * @param value - 검사할 이메일
+   * @param type - 검사 타입 ('login' | 'signup')
+   * @returns 에러 메시지 또는 빈 문자열
    *
    * @description
    * - login: 필수 입력만 확인
@@ -127,9 +127,9 @@ export const validators = {
   /**
    * 비밀번호 유효성 검사
    *
-   * @param {string} value - 검사할 비밀번호
-   * @param {ValidationType} type - 검사 타입 ('login' | 'signup')
-   * @returns {string} 에러 메시지 또는 빈 문자열
+   * @param value - 검사할 비밀번호
+   * @param type - 검사 타입 ('login' | 'signup')
+   * @returns 에러 메시지 또는 빈 문자열
    *
    * @description
    * - login: 필수 입력만 확인
@@ -162,10 +162,10 @@ export const validators = {
    * - 원본 비밀번호와 일치 여부 확인
    * - 회원가입 전용 필드
    *
-   * @param {string} value - 검사할 비밀번호 확인 값
-   * @param {Object} values - 전체 폼 값 객체
-   * @param {string} values.password - 원본 비밀번호
-   * @returns {string} 에러 메시지 또는 빈 문자열
+   * @param value - 검사할 비밀번호 확인 값
+   * @param values - 전체 폼 값 객체
+   * @param values.password - 원본 비밀번호
+   * @returns 에러 메시지 또는 빈 문자열
    *
    * @example
    * validators.confirmPassword('Password123', { password: 'Password123' }) // ''
@@ -186,8 +186,8 @@ export const validators = {
    * - 완성된 한글, 영문, 숫자만 허용 (공백, 특수문자, 자음/모음 제외)
    * - 회원가입 전용 필드
    *
-   * @param {string} value - 검사할 닉네임
-   * @returns {string} 에러 메시지 또는 빈 문자열
+   * @param value - 검사할 닉네임
+   * @returns 에러 메시지 또는 빈 문자열
    *
    * @example
    * validators.nickname('홍길동') // ''

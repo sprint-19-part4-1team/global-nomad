@@ -3,7 +3,7 @@ import { useAvatarContext } from '@/shared/components/avatar/hooks/useAvatarCont
 
 /**
  * AvatarFallback 컴포넌트의 Props
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property [className] - 추가 CSS 클래스명
  */
 interface AvatarFallbackProps {
   className?: string;
@@ -17,8 +17,8 @@ interface AvatarFallbackProps {
  * - 프로필 이미지가 없거나 로딩에 실패한 경우 기본 아바타 아이콘을 표시합니다
  * - 스크린 리더를 위해 사용자 닉네임이 포함된 aria-label을 제공합니다
  *
- * @param {AvatarFallbackProps} props - AvatarFallback 컴포넌트 props
- * @returns {JSX.Element}
+ * @param props - AvatarFallback 컴포넌트 props
+ * @returns AvatarFallback 컴포넌트
  *
  * @example
  * <Avatar user={user} size="md">

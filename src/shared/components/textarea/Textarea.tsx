@@ -7,15 +7,15 @@ import { cn } from '@/shared/utils/cn';
 /**
  * Textarea 컴포넌트의 Props
  *
- * @property {('form' | 'review')} variant - 텍스트 영역의 스타일 변형 (form: 체험 등록/수정용, review: 리뷰 작성용)
- * @property {string} label - 텍스트 영역의 label 텍스트
- * @property {string} name - form 제출 시 사용될 텍스트 영역의 name
- * @property {string} placeholder - 텍스트 영역의 placeholder 텍스트
- * @property {string} value - 텍스트 영역의 현재 값
- * @property {ChangeEventHandler<HTMLTextAreaElement>} onChange - 텍스트 변경 이벤트 핸들러
- * @property {FocusEventHandler<HTMLTextAreaElement>} [onBlur] - 텍스트 영역에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
- * @property {number} maxLength - 텍스트 영역에 입력 가능한 최대 글자 수
- * @property {string} [errorMessage] - 에러 발생 시 표시될 메시지
+ * @property variant - 텍스트 영역의 스타일 변형 (form: 체험 등록/수정용, review: 리뷰 작성용)
+ * @property label - 텍스트 영역의 label 텍스트
+ * @property name - form 제출 시 사용될 텍스트 영역의 name
+ * @property placeholder - 텍스트 영역의 placeholder 텍스트
+ * @property value - 텍스트 영역의 현재 값
+ * @property onChange - 텍스트 변경 이벤트 핸들러
+ * @property [onBlur] - 텍스트 영역에서 포커스가 벗어날 때 호출되는 이벤트 핸들러
+ * @property maxLength - 텍스트 영역에 입력 가능한 최대 글자 수
+ * @property [errorMessage] - 에러 발생 시 표시될 메시지
  */
 interface TextareaProps {
   variant: 'form' | 'review';
@@ -51,8 +51,8 @@ const TEXTAREA_VARIANTS = {
  * 최대 글자 수 제한과 글자 수 카운터가 포함된 텍스트 입력 영역 컴포넌트입니다.
  * variant prop에 따라 'form'와 'review' 두 가지 스타일을 제공합니다.
  *
- * @param {TextareaProps} props - 컴포넌트 props
- * @returns {JSX.Element} Textarea 컴포넌트
+ * @param props - 컴포넌트 props
+ * @returns Textarea 컴포넌트
  *
  * @example
  * ```tsx

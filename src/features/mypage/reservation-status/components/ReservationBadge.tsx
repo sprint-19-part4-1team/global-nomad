@@ -7,7 +7,7 @@ import { FindReservationsByMonthResponseDto } from '@/shared/types/myActivities'
 /**
  * ReservationBadge 컴포넌트의 Props
  *
- * @property {FindReservationsByMonthResponseDto} reservation - 날짜별 예약 상태 및 건수를 포함한 예약 데이터
+ * @property reservation - 날짜별 예약 상태 및 건수를 포함한 예약 데이터
  */
 interface ReservationBadgeProps {
   reservation: FindReservationsByMonthResponseDto;

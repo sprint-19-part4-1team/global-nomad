@@ -5,10 +5,10 @@ import ReservationItem from './ReservationItem';
 /**
  * 예약 내역 리스트 컴포넌트의 Props 타입
  *
- * @property {number} activityId - 체험 ID
- * @property {number} scheduleId - 스케줄 ID
- * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
- * @property {ReservationWithUserResponseDto[]} reservations - 표시할 예약 목록
+ * @property activityId - 체험 ID
+ * @property scheduleId - 스케줄 ID
+ * @property date - 예약 날짜 (yyyy-MM-dd 형식)
+ * @property reservations - 표시할 예약 목록
  */
 interface ReservationListProps {
   activityId: number;
@@ -23,7 +23,7 @@ interface ReservationListProps {
  * 예약 목록을 순회하며 각 예약을 ReservationItem 컴포넌트로 렌더링합니다.
  * 승인 처리 중에는 모든 예약의 버튼을 비활성화하여 동시 승인을 방지합니다.
  *
- * @param {ReservationListProps} props - 컴포넌트 Props
+ * @param props - 컴포넌트 Props
  * @returns 예약 내역 리스트 컴포넌트
  *
  * @example

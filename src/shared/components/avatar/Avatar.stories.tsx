@@ -8,11 +8,11 @@ import { UserServiceResponseDto } from '@/shared/types/user';
  *
  * Avatar와 하위 컴포넌트(AvatarImage, AvatarFallback)의 props를 결합한 형태
  *
- * @property {User} user - 사용자 정보
- * @property {'sm' | 'md' | 'lg'} [size] - 아바타 크기
- * @property {string} [className] - Avatar 컨테이너 추가 스타일
- * @property {string} [imageClassName] - AvatarImage 추가 스타일
- * @property {string} [fallbackClassName] - AvatarFallback 추가 스타일
+ * @property user - 사용자 정보
+ * @property [size] - 아바타 크기
+ * @property [className] - Avatar 컨테이너 추가 스타일
+ * @property [imageClassName] - AvatarImage 추가 스타일
+ * @property [fallbackClassName] - AvatarFallback 추가 스타일
  */
 interface AvatarStoryProps {
   user: UserServiceResponseDto;

@@ -2,10 +2,9 @@
  * 로그인/회원가입 폼 입력값 검증에 사용되는 정규표현식 패턴
  *
  * @constant
- * @type {Object}
- * @property {RegExp} EMAIL - 이메일 형식 검증 정규식
- * @property {RegExp} PASSWORD - 비밀번호 형식 검증 정규식 (영문 대소문자 조합, 숫자 선택)
- * @property {RegExp} NICKNAME - 닉네임 형식 검증 정규식 (완성된 한글/영문/숫자, 공백 제외)
+ * @property EMAIL - 이메일 형식 검증 정규식
+ * @property PASSWORD - 비밀번호 형식 검증 정규식 (영문 대소문자 조합, 숫자 선택)
+ * @property NICKNAME - 닉네임 형식 검증 정규식 (완성된 한글/영문/숫자, 공백 제외)
  */
 export const VALIDATION_PATTERNS = {
   /** 이메일 형식 검증 정규식 */
@@ -19,7 +18,6 @@ export const VALIDATION_PATTERNS = {
 /**
  * 비밀번호 최소 길이
  * @constant
- * @type {number}
  * @default 8
  */
 export const PASSWORD_MIN_LENGTH = 8 as const;
@@ -27,7 +25,6 @@ export const PASSWORD_MIN_LENGTH = 8 as const;
 /**
  * 닉네임 최대 길이
  * @constant
- * @type {number}
  * @default 10
  */
 export const NICKNAME_MAX_LENGTH = 10 as const;

@@ -6,8 +6,8 @@ import { GetActivityReviewsParams, GetActivityReviewsResponse } from '@/shared/t
 /**
  * 체험 리뷰 목록 조회 훅의 Props
  *
- * @property {number} activityId - 조회할 체험 ID
- * @property {GetActivityReviewsParams} params - 리뷰 조회 파라미터 (페이지, 사이즈 등)
+ * @property activityId - 조회할 체험 ID
+ * @property params - 리뷰 조회 파라미터 (페이지, 사이즈 등)
  */
 type useActivityReviewsProps = {
   activityId: number;

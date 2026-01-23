@@ -8,16 +8,16 @@ import { ReservationStatus } from '@/shared/types/myReservations';
 /**
  * 예약 내역 컴포넌트의 Props 타입
  *
- * @property {number} activityId - 체험 ID
- * @property {number} reservationId - 예약 ID
- * @property {string} nickname - 예약자 닉네임
- * @property {number} headCount - 예약 인원 수
- * @property {ActivityReservationStatus} status - 예약 상태
- * @property {number} scheduleId - 스케줄 ID
- * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
- * @property {Array<{ id: number; status: ReservationStatus }>} [allReservationsInSchedule] - 동일 스케줄의 모든 예약 목록
- * @property {boolean} [isAnyApproving] - 다른 예약이 승인 처리 중인지 여부
- * @property {(id: number | null) => void} [onApprovingChange] - 승인 처리 상태 변경 콜백
+ * @property activityId - 체험 ID
+ * @property reservationId - 예약 ID
+ * @property nickname - 예약자 닉네임
+ * @property headCount - 예약 인원 수
+ * @property status - 예약 상태
+ * @property scheduleId - 스케줄 ID
+ * @property date - 예약 날짜 (yyyy-MM-dd 형식)
+ * @property [allReservationsInSchedule] - 동일 스케줄의 모든 예약 목록
+ * @property [isAnyApproving] - 다른 예약이 승인 처리 중인지 여부
+ * @property [onApprovingChange] - 승인 처리 상태 변경 콜백
  */
 interface ReservationItemProps {
   activityId: number;
@@ -57,7 +57,7 @@ const infoFieldStyles = {
  * - 거절 처리 중에는 해당 예약의 승인/거절 버튼만 비활성화 (다른 예약은 활성화 유지)
  * - Promise.allSettled를 사용하여 Race Condition 안전하게 처리
  *
- * @param {ReservationItemProps} props - 컴포넌트 Props
+ * @param props - 컴포넌트 Props
  * @returns 예약 내역 컴포넌트
  *
  * @example

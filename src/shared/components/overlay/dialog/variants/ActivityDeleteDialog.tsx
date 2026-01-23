@@ -7,7 +7,7 @@ import { useDeleteActivity } from '@/shared/mutations/useDeleteActivityMutation'
 
 /**
  * 체험 삭제 확인 다이얼로그 컴포넌트의 Props
- * @property {number} activityId - 체험ID
+ * @property activityId - 체험ID
  */
 interface ActivityDeleteDialogProps {
   activityId: number;

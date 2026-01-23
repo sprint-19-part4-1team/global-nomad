@@ -10,9 +10,9 @@ import { CreateReservationBodyDto } from '@/shared/types/activities';
 /**
  * 체험 예약 바텀시트 컴포넌트의 Props
  *
- * @property {number} activityId - 체험 ID
- * @property {number} price - 1인당 체험 가격
- * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} onConfirm - 예약 확인 핸들러
+ * @property activityId - 체험 ID
+ * @property price - 1인당 체험 가격
+ * @property onConfirm - 예약 확인 핸들러
  */
 interface ActivityReservationBottomSheetProps {
   activityId: number;
@@ -36,8 +36,8 @@ interface ActivityReservationBottomSheetProps {
  * - 포털 렌더링: OverlayPortal을 통해 DOM 트리의 최상위에 렌더링
  * - 자체 데이터 조회: 내부에서 독립적으로 스케줄 데이터를 조회하여 월 변경 시 즉시 반영
  *
- * @param {ActivityReservationBottomSheetProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 바텀시트 오버레이
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 바텀시트 오버레이
  *
  * @example
  * ```tsx

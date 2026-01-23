@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
-import { usePreventNavigation } from '@/features/activity-form/common/hooks/usePreventNavigation';
+import { useActivityFormNavigation } from '@/features/activity-form/common/hooks/useActivityFormNavigation';
 import { useCreateActivityMutation } from '@/features/activity-form/new/mutations/useCreateActivityMutation';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
@@ -24,7 +24,7 @@ export default function CreateActivityForm() {
   const formState = useActivityForm();
   const { currentFormData, isAllValid, isDirty } = formState;
 
-  usePreventNavigation(isDirty);
+  useActivityFormNavigation(isDirty);
 
   const { mutate, isPending } = useCreateActivityMutation();
 

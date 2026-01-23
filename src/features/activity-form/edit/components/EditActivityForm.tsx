@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
-import { usePreventNavigation } from '@/features/activity-form/common/hooks/usePreventNavigation';
+import { useActivityFormNavigation } from '@/features/activity-form/common/hooks/useActivityFormNavigation';
 import { useUpdateActivityMutation } from '@/features/activity-form/edit/mutations/useUpdateActivityMutation';
 import { useActivityDetailQuery } from '@/features/activity-form/edit/queries/useActivityDetailQuery';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
@@ -33,7 +33,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
   const formState = useActivityForm(activity);
   const { changedValues, isDirty, isAllValid } = formState;
 
-  usePreventNavigation(isDirty);
+  useActivityFormNavigation(isDirty);
 
   const { mutate, isPending } = useUpdateActivityMutation(activityId);
 

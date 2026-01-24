@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AuthCheckbox from '@/features/auth/common/components/AuthCheckbox';
 import AuthForm from '@/features/auth/common/components/AuthForm';
 import KakaoButton from '@/features/auth/common/components/KakaoButton';
@@ -12,6 +13,7 @@ import Input from '@/shared/components/input/Input';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { COMMON_MESSAGE } from '@/shared/constants';
+import { useUserStore } from '@/shared/stores/userStore';
 import { isApiError } from '@/shared/utils/errorGuards';
 
 const SIGNUP_MESSAGE = {
@@ -21,6 +23,8 @@ const SIGNUP_MESSAGE = {
 
 export default function Signup() {
   const router = useRouter();
+  const oauthError = useUserStore((state) => state.oauthError);
+  const clearOAuthError = useUserStore((state) => state.clearOAuthError);
   const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'signup',
@@ -32,6 +36,13 @@ export default function Signup() {
       termsAgreed: false,
     },
   });
+
+  useEffect(() => {
+    if (oauthError) {
+      toast.error(oauthError);
+      clearOAuthError();
+    }
+  }, [oauthError, clearOAuthError]);
 
   const handleSubmit = async () => {
     if (!values.nickname || isSubmitting) {

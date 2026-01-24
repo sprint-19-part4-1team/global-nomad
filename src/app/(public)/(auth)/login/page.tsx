@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AuthForm from '@/features/auth/common/components/AuthForm';
 import KakaoButton from '@/features/auth/common/components/KakaoButton';
 import useAuthForm from '@/features/auth/common/hooks/useAuthForm';
@@ -18,6 +19,8 @@ export default function Login() {
   const router = useRouter();
   const setSession = useUserStore((state) => state.setSession);
   const setIsAuthInProgress = useUserStore((state) => state.setIsAuthInProgress);
+  const oauthError = useUserStore((state) => state.oauthError);
+  const clearOAuthError = useUserStore((state) => state.clearOAuthError);
   const [isSubmitting, setSubmitting] = useState(false);
   const { values, errors, isValid, handleChange, handleBlur } = useAuthForm({
     validationType: 'login',
@@ -26,6 +29,13 @@ export default function Login() {
       password: '',
     },
   });
+
+  useEffect(() => {
+    if (oauthError) {
+      toast.error(oauthError);
+      clearOAuthError();
+    }
+  }, [oauthError, clearOAuthError]);
 
   const handleSubmit = async () => {
     if (isSubmitting) {

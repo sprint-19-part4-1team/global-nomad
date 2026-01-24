@@ -36,6 +36,8 @@ type UserStore = {
   hasHydrated: boolean;
   /** 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환이 진행 중인지 여부 */
   isAuthInProgress: boolean;
+  /** OAuth 인증 실패 시 표시할 에러 메시지 */
+  oauthError: string | null;
   /** 인증 상태 변경(로그인/로그아웃)에 따른 페이지 전환 설정 */
   setIsAuthInProgress: (isAuthTransitioning: boolean) => void;
   /** 사용자 정보 설정 */
@@ -44,6 +46,10 @@ type UserStore = {
   setSession: (params: { user: UserServiceResponseDto; accessTokenExpiresAt: number }) => void;
   /** 인증 세션을 종료하고 사용자 정보를 초기화 */
   clearSession: (reason: LogoutReason) => void;
+  /** OAuth 에러 메시지 설정 */
+  setOAuthError: (message: string) => void;
+  /** OAuth 에러 메시지 초기화 */
+  clearOAuthError: () => void;
 };
 
 /**
@@ -68,9 +74,12 @@ export const useUserStore = create<UserStore>()(
         logoutReason: undefined,
         hasHydrated: false,
         isAuthInProgress: false,
+        oauthError: null,
         setIsAuthInProgress: (value: boolean) =>
           set({ isAuthInProgress: value }, false, 'user/setIsAuthInProgress'),
         setUser: (user) => set({ user }, false, 'user/setUser'),
+        setOAuthError: (message) => set({ oauthError: message }, false, 'user/setOAuthError'),
+        clearOAuthError: () => set({ oauthError: null }, false, 'user/clearOAuthError'),
         setSession: ({ user, accessTokenExpiresAt }) =>
           set(
             {

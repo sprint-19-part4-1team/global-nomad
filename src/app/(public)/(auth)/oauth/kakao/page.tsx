@@ -53,12 +53,14 @@ function KakaoOauthCallbackInner() {
 
     const error = searchParams.get('error');
     if (error) {
-      router.replace('/login?oauth=failed');
+      useUserStore.getState().setOAuthError('로그인에 실패했습니다.');
+      router.replace('/login');
       return;
     }
 
     if (!code) {
-      router.replace('/login?oauth=missing_code');
+      useUserStore.getState().setOAuthError('로그인에 실패했습니다.');
+      router.replace('/login');
       return;
     }
 
@@ -67,9 +69,6 @@ function KakaoOauthCallbackInner() {
     };
 
     const isSignup = state === 'signup';
-    const failureRedirectUrl = isSignup
-      ? '/signup?oauth=signup_failed'
-      : '/login?oauth=signin_failed';
     (async () => {
       try {
         const res = isSignup
@@ -93,7 +92,10 @@ function KakaoOauthCallbackInner() {
           return;
         }
 
-        router.replace(failureRedirectUrl);
+        const errorMessage = isSignup ? '회원가입에 실패했습니다.' : '로그인에 실패했습니다.';
+        const redirectUrl = isSignup ? '/signup' : '/login';
+        useUserStore.getState().setOAuthError(errorMessage);
+        router.replace(redirectUrl);
       }
     })();
   }, [router, searchParams, setSession]);

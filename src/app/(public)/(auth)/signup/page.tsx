@@ -6,6 +6,7 @@ import AuthCheckbox from '@/features/auth/common/components/AuthCheckbox';
 import AuthForm from '@/features/auth/common/components/AuthForm';
 import KakaoButton from '@/features/auth/common/components/KakaoButton';
 import useAuthForm from '@/features/auth/common/hooks/useAuthForm';
+import useOauthErrorToast from '@/features/auth/common/hooks/useOauthErrorToast';
 import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
@@ -32,6 +33,8 @@ export default function Signup() {
       termsAgreed: false,
     },
   });
+
+  useOauthErrorToast();
 
   const handleSubmit = async () => {
     if (!values.nickname || isSubmitting) {

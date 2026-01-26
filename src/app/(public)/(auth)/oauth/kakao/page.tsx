@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
 import { signInWithOauth, signUpWithOauth } from '@/shared/apis/feature/oauth';
 import Spinner from '@/shared/components/spinner/Spinner';
-import type { OAuthMode } from '@/shared/constants';
+import { AUTH_API_MESSAGE, type OAuthMode } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isRecord } from '@/shared/utils/errorGuards';
 
@@ -53,13 +53,13 @@ function KakaoOauthCallbackInner() {
 
     const error = searchParams.get('error');
     if (error) {
-      useUserStore.getState().setOAuthError('로그인에 실패했습니다.');
+      useUserStore.getState().setOAuthError(AUTH_API_MESSAGE.LOGIN.FAILED);
       router.replace('/login');
       return;
     }
 
     if (!code) {
-      useUserStore.getState().setOAuthError('로그인에 실패했습니다.');
+      useUserStore.getState().setOAuthError(AUTH_API_MESSAGE.LOGIN.FAILED);
       router.replace('/login');
       return;
     }
@@ -92,7 +92,9 @@ function KakaoOauthCallbackInner() {
           return;
         }
 
-        const errorMessage = isSignup ? '회원가입에 실패했습니다.' : '로그인에 실패했습니다.';
+        const errorMessage = isSignup
+          ? AUTH_API_MESSAGE.SIGNUP.FAILED
+          : AUTH_API_MESSAGE.LOGIN.FAILED;
         const redirectUrl = isSignup ? '/signup' : '/login';
         useUserStore.getState().setOAuthError(errorMessage);
         router.replace(redirectUrl);

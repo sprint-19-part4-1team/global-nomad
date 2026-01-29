@@ -1,10 +1,9 @@
 import { render } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import SessionWatcher from '@/shared/providers/session-watcher/SessionWatcher';
+import { useUserStore } from '@/shared/stores/userStore';
 
-jest.mock('@/shared/stores/userStore', () => ({
-  useUserStore: jest.fn(),
-}));
+jest.mock('@/shared/stores/userStore');
 
 jest.mock('react-toastify', () => ({
   toast: {
@@ -12,7 +11,7 @@ jest.mock('react-toastify', () => ({
   },
 }));
 
-const mockUseUserStore = require('@/shared/stores/userStore').useUserStore as jest.Mock;
+const mockUseUserStore = useUserStore as jest.MockedFunction<typeof useUserStore>;
 
 describe('SessionWatcher 테스트', () => {
   it('로그인 상태에서 세션 만료로 로그아웃되면 toast를 띄운다', () => {

@@ -15,7 +15,9 @@
     "format:check": "prettier --check src",
     "prepare": "husky",
     "storybook": "pnpm generate:tokens && storybook dev -p 6006",
-    "build-storybook": "pnpm generate:tokens && storybook build"
+    "build-storybook": "pnpm generate:tokens && storybook build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

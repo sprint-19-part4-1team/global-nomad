@@ -6,7 +6,7 @@ import ToastProvider from '@/shared/components/toast/ToastProvider';
 import NavigationTracker from '@/shared/providers/NavigationTracker';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import RefreshProvider from '@/shared/providers/RefreshProvider';
-import SessionWatcher from '@/shared/providers/SessionWatcher';
+import SessionWatcher from '@/shared/providers/session-watcher/SessionWatcher';
 import { WithChildren } from '@/shared/types/common';
 
 export const metadata: Metadata = {

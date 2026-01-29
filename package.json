@@ -79,7 +79,6 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "storybook": "^10.1.10",
     "tailwindcss": "^4",
-    "ts-jest": "^29.4.6",
     "typescript": "^5"
   }
 }

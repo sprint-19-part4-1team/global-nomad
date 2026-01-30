@@ -22,11 +22,11 @@ const getAllActivities = async (): Promise<ActivityBasicDto[]> => {
   }
 };
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const activities = await getAllActivities();
 
   // 동적 URL 생성
-  const activityUrls: MetadataRoute.Sitemap = activities.map((activity: any) => ({
+  const activityUrls: MetadataRoute.Sitemap = activities.map((activity: ActivityBasicDto) => ({
     url: `${SITE_URL}/activity/${activity.id}`,
     lastModified: new Date(activity.updatedAt),
     changeFrequency: 'weekly',
@@ -68,4 +68,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   return [...staticRoutes, ...activityUrls];
-}
+};
+
+export default sitemap;

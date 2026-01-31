@@ -12,15 +12,15 @@ import { useEffect } from 'react';
  */
 export const useManualScrollRestoration = () => {
   useEffect(() => {
-    if (!('scrollRestoration' in history)) {
+    if (typeof window === 'undefined' || !('scrollRestoration' in window.history)) {
       return;
     }
 
-    const prev = history.scrollRestoration;
-    history.scrollRestoration = 'manual';
+    const prev = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
 
     return () => {
-      history.scrollRestoration = prev;
+      window.history.scrollRestoration = prev;
     };
   }, []);
 };

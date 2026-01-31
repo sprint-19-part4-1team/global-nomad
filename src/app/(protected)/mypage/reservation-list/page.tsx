@@ -12,7 +12,7 @@ import { useCancelReservationMutation } from '@/features/mypage/reservation-list
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
 import Dialog from '@/shared/components/overlay/dialog/Dialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
-import { useScrollToTopOnUnload } from '@/shared/hooks/useScrollToTopOnUnload';
+import { useManualScrollRestoration } from '@/shared/hooks/useManualScrollRestoration';
 import { useUserStore } from '@/shared/stores/userStore';
 import type {
   ReservationStatus,
@@ -20,7 +20,7 @@ import type {
 } from '@/shared/types/myReservations';
 
 export default function MypageReservationList() {
-  useScrollToTopOnUnload();
+  useManualScrollRestoration();
 
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | null>(null);
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =

@@ -5,12 +5,12 @@ import { useMyActivitiesInfiniteQuery } from '@/features/mypage/activity/queries
 import MypageSectionHeader from '@/features/mypage/common/components/mypage-section-header/MypageSectionHeader';
 import Button from '@/shared/components/button/Button';
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll';
-import { useScrollToTopOnUnload } from '@/shared/hooks/useScrollToTopOnUnload';
+import { useManualScrollRestoration } from '@/shared/hooks/useManualScrollRestoration';
 
 const PAGE_SIZE = 5;
 
 export default function MypageActivity() {
-  useScrollToTopOnUnload();
+  useManualScrollRestoration();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch, isPending, isError } =
     useMyActivitiesInfiniteQuery(PAGE_SIZE);

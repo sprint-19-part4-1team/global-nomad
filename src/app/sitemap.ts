@@ -30,7 +30,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     url: `${SITE_URL}/activity/${activity.id}`,
     lastModified: new Date(activity.updatedAt),
     changeFrequency: 'weekly',
-    priority: 0.8,
+    priority: 0.9,
   }));
 
   // 정적 URL
@@ -45,7 +45,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
       url: `${SITE_URL}/search`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.9,
+      priority: 0.8,
     },
     {
       url: `${SITE_URL}/terms`,

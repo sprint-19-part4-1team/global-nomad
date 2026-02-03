@@ -2,6 +2,8 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
+    // Vercel Image Optimization 사용량 제한으로 이미지 최적화를 비활성화 처리해두었습니다.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

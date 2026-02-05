@@ -1,4 +1,4 @@
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import Dialog, { DialogBaseProps } from '@/shared/components/overlay/dialog/Dialog';
 import { DialogAlertProps } from '@/shared/components/overlay/dialog/DialogAlert';
 import { DialogConfirmProps } from '@/shared/components/overlay/dialog/DialogConfirm';
 import { overlayStore } from './overlayStore';
@@ -8,7 +8,7 @@ export type OpenAlertOptions = Omit<DialogAlertProps, 'onClose'> & {
   id?: string;
   /** alert 닫힘 시 실행할 콜백 */
   onClose?: () => void;
-};
+} & DialogBaseProps;
 
 /**
  * ## openAlert
@@ -33,7 +33,13 @@ export type OpenAlertOptions = Omit<DialogAlertProps, 'onClose'> & {
  * });
  * ```
  */
-export const openAlert = ({ message, closeLabel, onClose, id }: OpenAlertOptions) => {
+export const openAlert = ({
+  message,
+  closeLabel,
+  autoCloseAfterMs,
+  onClose,
+  id,
+}: OpenAlertOptions) => {
   const overlayId = id ?? crypto.randomUUID();
 
   const handleClose = () => {
@@ -42,7 +48,13 @@ export const openAlert = ({ message, closeLabel, onClose, id }: OpenAlertOptions
   };
 
   overlayStore.push(
-    <Dialog variant='alert' message={message} closeLabel={closeLabel} onClose={handleClose} />,
+    <Dialog
+      variant='alert'
+      autoCloseAfterMs={autoCloseAfterMs}
+      message={message}
+      closeLabel={closeLabel}
+      onClose={handleClose}
+    />,
     overlayId
   );
 

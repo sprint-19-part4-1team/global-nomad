@@ -95,7 +95,7 @@ export const openConfirm = ({
   confirmLabel,
   isConfirm,
   onConfirm,
-}: DialogConfirmProps) => {
+}: OpenConfirmOptions) => {
   const id = crypto.randomUUID();
 
   const handleConfirm = () => {

@@ -30,7 +30,7 @@ export default function SearchBar() {
         return;
       }
 
-      openAlert({ id: 'empty-search-alert', message: '검색어를 입력해주세요.' });
+      openAlert({ id: EMPTY_SEARCH_DIALOG_ID, message: '검색어를 입력해주세요.' });
       return;
     }
 

@@ -8,8 +8,7 @@ import { useActivityForm } from '@/features/activity-form/common/hooks/useActivi
 import { useActivityFormNavigation } from '@/features/activity-form/common/hooks/useActivityFormNavigation';
 import { useUpdateActivityMutation } from '@/features/activity-form/edit/mutations/useUpdateActivityMutation';
 import { useActivityDetailQuery } from '@/features/activity-form/edit/queries/useActivityDetailQuery';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 
 interface EditActivityFormProps {
   /** 수정할 체험(Activity)의 ID */
@@ -43,16 +42,12 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
     mutate(payload, {
       onSuccess: () => {
         setIsRedirecting(true);
-        overlayStore.push(
-          <Dialog
-            variant='alert'
-            message='체험 수정이 완료되었습니다.'
-            onClose={() => {
-              overlayStore.pop();
-              router.push(`/activity/${activityId}`);
-            }}
-          />
-        );
+        openAlert({
+          message: '체험 수정이 완료되었습니다.',
+          onClose: () => {
+            router.push(`/activity/${activityId}`);
+          },
+        });
       },
       onError: (error) => {
         setIsRedirecting(false);

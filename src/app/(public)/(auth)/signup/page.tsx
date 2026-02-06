@@ -10,8 +10,7 @@ import useOauthErrorToast from '@/features/auth/common/hooks/useOauthErrorToast'
 import { signUp } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import { COMMON_MESSAGE } from '@/shared/constants';
 import { isApiError } from '@/shared/utils/errorGuards';
 
@@ -45,15 +44,12 @@ export default function Signup() {
 
     try {
       await signUp({ email: values.email, password: values.password, nickname: values.nickname });
-      overlayStore.push(
-        <Dialog
-          message={SIGNUP_MESSAGE.SUCCESS}
-          onClose={() => {
-            overlayStore.pop();
-            router.replace('/login');
-          }}
-        />
-      );
+      openAlert({
+        message: SIGNUP_MESSAGE.SUCCESS,
+        onClose: () => {
+          router.replace('/login');
+        },
+      });
     } catch (err: unknown) {
       let message: string = COMMON_MESSAGE.NETWORK_ERROR;
 
@@ -61,7 +57,7 @@ export default function Signup() {
         message = err.status === 409 ? SIGNUP_MESSAGE.DUPLICATE_EMAIL : err.message;
       }
 
-      overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+      openAlert({ message });
     } finally {
       setSubmitting(false);
     }

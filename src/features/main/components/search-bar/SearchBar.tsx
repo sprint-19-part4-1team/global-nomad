@@ -5,8 +5,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import Icons from '@/assets/icons';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
 import Button from '@/shared/components/button/Button';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import useOverlayState from '@/shared/components/overlay/store/useOverlayState';
 
 export default function SearchBar() {
@@ -31,15 +30,7 @@ export default function SearchBar() {
         return;
       }
 
-      overlayStore.push(
-        <Dialog
-          message='검색어를 입력해주세요.'
-          onClose={() => {
-            overlayStore.popById(EMPTY_SEARCH_DIALOG_ID);
-          }}
-        />,
-        EMPTY_SEARCH_DIALOG_ID
-      );
+      openAlert({ id: 'empty-search-alert', message: '검색어를 입력해주세요.' });
       return;
     }
 

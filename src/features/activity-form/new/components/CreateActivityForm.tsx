@@ -7,8 +7,7 @@ import ActivityForm from '@/features/activity-form/common/components/activity-fo
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
 import { useActivityFormNavigation } from '@/features/activity-form/common/hooks/useActivityFormNavigation';
 import { useCreateActivityMutation } from '@/features/activity-form/new/mutations/useCreateActivityMutation';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 
 /**
  * ## CreateActivityForm
@@ -34,16 +33,12 @@ export default function CreateActivityForm() {
     mutate(reqbody, {
       onSuccess: (data) => {
         setIsRedirecting(true);
-        overlayStore.push(
-          <Dialog
-            variant='alert'
-            message='체험 등록이 완료되었습니다.'
-            onClose={() => {
-              overlayStore.pop();
-              router.push(`/activity/${data.id}`);
-            }}
-          />
-        );
+        openAlert({
+          message: '체험 등록이 완료되었습니다.',
+          onClose: () => {
+            router.push(`/activity/${data.id}`);
+          },
+        });
       },
       onError: (error) => {
         setIsRedirecting(false);

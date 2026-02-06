@@ -9,8 +9,7 @@ import useOauthErrorToast from '@/features/auth/common/hooks/useOauthErrorToast'
 import { login } from '@/shared/apis/feature/auth';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import { COMMON_MESSAGE } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isApiError } from '@/shared/utils/errorGuards';
@@ -49,7 +48,7 @@ export default function Login() {
         message = err.message;
       }
 
-      overlayStore.push(<Dialog message={message} onClose={() => overlayStore.pop()} />);
+      openAlert({ message });
     } finally {
       setSubmitting(false);
     }

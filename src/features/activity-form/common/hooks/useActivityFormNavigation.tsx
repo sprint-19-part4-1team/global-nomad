@@ -1,6 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openConfirm } from '@/shared/components/overlay/store/overlayActions';
 import { useNavigationStore } from '@/shared/stores/navigationStore';
 import { usePreventNavigation, NavigationType } from './usePreventNavigation';
 
@@ -59,23 +58,18 @@ export const useActivityFormNavigation = (isDirty: boolean) => {
       const { message, confirmLabel } = NAVIGATION_UI_CONFIG[type];
       const finalUrl = targetUrl || getPreviousUrl();
 
-      overlayStore.push(
-        <Dialog
-          variant='confirm'
-          message={message}
-          confirmLabel={confirmLabel}
-          onConfirm={() => {
-            overlayStore.pop();
-            router.push(finalUrl);
-          }}
-          onCancel={() => {
-            overlayStore.pop();
-            if (type === 'POPSTATE') {
-              history.pushState({ blocked: true }, '', pathname);
-            }
-          }}
-        />
-      );
+      openConfirm({
+        message,
+        confirmLabel,
+        onConfirm: () => {
+          router.push(finalUrl);
+        },
+        onCancel: () => {
+          if (type === 'POPSTATE') {
+            history.pushState({ blocked: true }, '', pathname);
+          }
+        },
+      });
     },
   });
 };

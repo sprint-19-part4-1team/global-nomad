@@ -6,8 +6,9 @@
   "scripts": {
     "typegen": "next typegen",
     "generate:tokens": "node scripts/generateTokens.js",
+    "optimize:svg": "svgo src/assets --recursive",
     "dev": "pnpm generate:tokens && next dev --turbopack",
-    "build": "pnpm generate:tokens && next build",
+    "build": "pnpm optimize:svg && pnpm generate:tokens && next build",
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",

@@ -6,6 +6,7 @@
   "scripts": {
     "typegen": "next typegen",
     "generate:tokens": "node scripts/generateTokens.js",
+    "optimize:svg": "svgo src/assets --recursive",
     "dev": "pnpm generate:tokens && next dev --turbopack",
     "build": "pnpm generate:tokens && next build",
     "start": "next start",
@@ -20,6 +21,9 @@
     "test:watch": "jest --watch"
   },
   "lint-staged": {
+    "src/assets/**/*.svg": [
+      "svgo"
+    ],
     "**/*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write"
@@ -78,6 +82,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "storybook": "^10.1.10",
+    "svgo": "^4.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

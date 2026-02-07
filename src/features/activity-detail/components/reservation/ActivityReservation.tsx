@@ -6,7 +6,7 @@ import ActivityReservationBottomSheet from '@/features/activity-detail/component
 import ActivityReservationContent from '@/features/activity-detail/components/reservation/content/ActivityReservationContent';
 import { createActivityReservation } from '@/shared/apis/feature/activities';
 import Button from '@/shared/components/button/Button';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 import { CreateReservationBodyDto } from '@/shared/types/activities';
@@ -81,19 +81,16 @@ export default function ActivityReservation({
     async (data: CreateReservationBodyDto) => {
       try {
         await createActivityReservation(activityId, data);
-        overlayStore.push(
-          <Dialog
-            message={
-              <div className='flex flex-col items-center gap-6'>
-                <span>체험 신청이 완료되었습니다.</span>
-                <span className='body-13 font-normal text-gray-500 sm:body-14'>
-                  (승인 후 예약 확정 됩니다)
-                </span>
-              </div>
-            }
-            onClose={() => overlayStore.pop()}
-          />
-        );
+        openAlert({
+          message: (
+            <div className='flex flex-col items-center gap-6'>
+              <span>체험 신청이 완료되었습니다.</span>
+              <span className='body-13 font-normal text-gray-500 sm:body-14'>
+                (승인 후 예약 확정 됩니다)
+              </span>
+            </div>
+          ),
+        });
 
         // 예약 성공 시 상태 초기화
         setReservationInfo(null);

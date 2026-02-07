@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useUserStore } from '@/shared/stores/userStore';
 import { WithChildren } from '@/shared/types/common';
@@ -71,23 +71,14 @@ export default function AuthGuard({ children }: WithChildren) {
       return;
     }
 
-    overlayStore.push(
-      <Dialog
-        message='이미 로그인된 계정입니다.'
-        autoCloseAfterMs={AUTH_GUARD_REDIRECT_DELAY_MS}
-        onClose={() => {
-          overlayStore.popById(OVERLAY_ID);
-          router.replace('/');
-        }}
-      />,
-      OVERLAY_ID
-    );
-
-    return () => {
-      if (overlayStore.has(OVERLAY_ID)) {
-        overlayStore.popById(OVERLAY_ID);
-      }
-    };
+    openAlert({
+      id: OVERLAY_ID,
+      message: '이미 로그인된 계정입니다.',
+      autoCloseAfterMs: AUTH_GUARD_REDIRECT_DELAY_MS,
+      onClose: () => {
+        router.replace('/');
+      },
+    });
   }, [shouldBlockAuthPage, router]);
 
   return <>{children}</>;

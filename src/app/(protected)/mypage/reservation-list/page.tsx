@@ -10,7 +10,7 @@ import ReviewModal from '@/features/mypage/reservation-list/components/ReviewMod
 import { RESERVATION_EMPTY_TEXT } from '@/features/mypage/reservation-list/constants/reservationEmptyText';
 import { useCancelReservationMutation } from '@/features/mypage/reservation-list/mutations/useCancelReservationMutation';
 import { useMyReservationsQuery } from '@/features/mypage/reservation-list/queries/useMyReservationsQuery';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
+import { openConfirm } from '@/shared/components/overlay/store/overlayActions';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import { useManualScrollRestoration } from '@/shared/hooks/useManualScrollRestoration';
 import { useUserStore } from '@/shared/stores/userStore';
@@ -38,7 +38,6 @@ export default function MypageReservationList() {
     userId,
     status: selectedStatus ?? undefined,
     size: 4,
-    onClose: () => overlayStore.pop(),
   });
 
   const handleCancelReservation = (reservationId: number) => {
@@ -47,23 +46,18 @@ export default function MypageReservationList() {
     }
 
     cancelReservationMutation.mutate(reservationId, {
-      onSuccess: () => overlayStore.pop(),
       onError: () => toast.error('예약 취소에 실패했습니다.'),
     });
   };
 
   const showCancelConfirm = (reservationId: number) => {
-    overlayStore.push(
-      <Dialog
-        variant='confirm'
-        message='정말 예약을 취소하시겠습니까?'
-        cancelLabel='취소'
-        confirmLabel='예약 취소'
-        onCancel={() => overlayStore.pop()}
-        isConfirm={cancelReservationMutation.isPending}
-        onConfirm={() => handleCancelReservation(reservationId)}
-      />
-    );
+    openConfirm({
+      message: '정말 예약을 취소하시겠습니까?',
+      cancelLabel: '취소',
+      confirmLabel: '예약 취소',
+      isConfirm: cancelReservationMutation.isPending,
+      onConfirm: () => handleCancelReservation(reservationId),
+    });
   };
 
   const showReviewModal = (reservation: ReservationWithActivityResponseDto) => {

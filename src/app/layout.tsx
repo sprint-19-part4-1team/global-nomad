@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '@/shared/styles/globals.css';
 import AuthGuard from '@/features/auth/common/components/AuthGuard';
+import NavigationTracker from '@/shared/components/navigation/NavigationTracker';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';
 import ToastProvider from '@/shared/components/toast/ToastProvider';
 import { SITE_URL } from '@/shared/constants';

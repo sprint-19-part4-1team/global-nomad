@@ -5,7 +5,7 @@ import { useAddressForm } from '@/features/activity-form/common/hooks/useAddress
 import Input from '@/shared/components/input/Input';
 
 /** 다음 주소 검색 API 스크립트 URL */
-const SCRIPT_URL = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+const SCRIPT_URL = '//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 interface AddressSectionProps {
   /**

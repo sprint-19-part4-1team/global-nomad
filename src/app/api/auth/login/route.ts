@@ -17,8 +17,8 @@ type LoginResponseBody = BffLoginResponse | MessageResponse;
  * - 백엔드로부터 전달받은 access / refresh token을 HttpOnly Cookie로 저장합니다.
  * - 클라이언트에는 토큰을 노출하지 않고, 필요한 정보만 반환합니다.
  *
- *  @param request - 이메일과 비밀번호를 포함한 Request 객체
- *  @returns
+ * @param request - 이메일과 비밀번호를 포함한 Request 객체
+ * @returns
  *  - 로그인 성공 시: 유저 정보, 엑세스 토큰 만료시간이 포함된 JSON 응답
  *  - 로그인 실패 시: 에러 메시지와 상태 코드 반환
  */

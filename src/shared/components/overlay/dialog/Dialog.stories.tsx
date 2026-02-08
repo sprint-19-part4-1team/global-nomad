@@ -23,7 +23,9 @@ import useBodyScrollLock from '@/shared/components/overlay/hooks/useBodyScrollLo
  *
  * ### **Story 구성**
  * - 각 Story는 Dialog를 여는 버튼을 포함한 Wrapper 형태로 구성되어 있습니다.
- * - ⚠️ 실제 서비스에서는 Dialog를 직접 렌더링하지 않고 `overlayStore.push(<Dialog />)` 형태로 사용합니다.
+ * - ⚠️ 실제 서비스 코드에서는 `Dialog` 컴포넌트를 직접 렌더링하지 않습니다.
+ * - 단순 안내용 다이얼로그는 `openAlert`를 사용합니다.
+ * - 사용자 선택이 필요한 경우 `openConfirm`를 사용합니다.
  * - 본 스토리는 Dialog UI와 props 동작을 확인하기 위한 예시입니다.
  */
 const meta: Meta<typeof Dialog> = {

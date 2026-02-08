@@ -7,8 +7,8 @@ import { useUserStore } from '@/shared/stores/userStore';
 
 /**
  * 예약 통계 타입
- * @property {number} confirmedCount - 확정된 예약 수
- * @property {number} pendingCount - 대기 중인 예약 수
+ * @property confirmedCount - 확정된 예약 수
+ * @property pendingCount - 대기 중인 예약 수
  */
 type ReservationStats = {
   confirmedCount: number;
@@ -17,8 +17,8 @@ type ReservationStats = {
 
 /**
  * useReservationStats 훅의 매개변수 타입
- * @property {number} activityId - 조회할 체험의 ID
- * @property {boolean} enabled - 쿼리 활성화 여부 (기본값: true)
+ * @property activityId - 조회할 체험의 ID
+ * @property enabled - 쿼리 활성화 여부 (기본값: true)
  */
 type UseReservationStatsParams = {
   activityId: number;

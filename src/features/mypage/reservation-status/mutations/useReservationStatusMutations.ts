@@ -8,13 +8,13 @@ import { UpdatableReservationStatus } from '@/shared/types/myActivities';
 /**
  * 예약 상태 업데이트 파라미터 타입
  *
- * @property {number} activityId - 액티비티 ID
- * @property {number} reservationId - 예약 ID
- * @property {UpdatableReservationStatus} status - 변경할 예약 상태 (승인 또는 거절)
- * @property {number} scheduleId - 스케줄 ID
- * @property {string} date - 예약 날짜 (yyyy-MM-dd 형식)
- * @property {string} year - 예약 연도
- * @property {string} month - 예약 월
+ * @property activityId - 액티비티 ID
+ * @property reservationId - 예약 ID
+ * @property status - 변경할 예약 상태 (승인 또는 거절)
+ * @property scheduleId - 스케줄 ID
+ * @property date - 예약 날짜 (yyyy-MM-dd 형식)
+ * @property year - 예약 연도
+ * @property month - 예약 월
  */
 interface UpdateReservationParams {
   activityId: number;
@@ -40,7 +40,7 @@ interface UpdateReservationParams {
  *   2. 날짜별 스케줄 쿼리 (count 정보 갱신)
  *   3. 월별 예약 현황 쿼리 (달력 갱신)
  *
- * @returns {UseMutationResult} 예약 상태 업데이트 mutation 객체
+ * @returns 예약 상태 업데이트 mutation 객체
  *
  * @example
  * ```tsx

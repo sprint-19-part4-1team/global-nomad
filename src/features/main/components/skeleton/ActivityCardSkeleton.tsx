@@ -5,8 +5,8 @@ import { cn } from '@/shared/utils/cn';
 /**
  * ActivityCardSkeleton 컴포넌트의 Props
  *
- * @property {'default' | 'popular'} variant - 카드 스타일 변형 ('default': 328x243px, 'popular': 131x243px)
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property variant - 카드 스타일 변형 ('default': 328x243px, 'popular': 131x243px)
+ * @property [className] - 추가 CSS 클래스명
  */
 interface ActivityCardSkeletonProps {
   /** 카드 스타일 변형 ('default': 기본 크기, 'popular': 작은 크기) */
@@ -40,7 +40,7 @@ const activityCardVariants = cva(
  * @param props.variant - 카드 스타일 변형 ('default' 또는 'popular')
  * @param props.className - 추가 CSS 클래스명 (선택)
  *
- * @returns {JSX.Element} ActivityCardSkeleton 컴포넌트
+ * @returns ActivityCardSkeleton 컴포넌트
  *
  * @example
  * ```tsx
@@ -56,7 +56,6 @@ const activityCardVariants = cva(
  */
 export default function ActivityCardSkeleton({ variant, className }: ActivityCardSkeletonProps) {
   return (
-    // TODO: 실제 디자인에 맞춰 스켈레톤 스타일(크기·레이아웃) 조정 필요
     <div className={cn(activityCardVariants({ variant }), className)}>
       {/* 이미지 */}
       <Skeleton className='h-4/5 w-full rounded-t-18 sm:rounded-t-32' />

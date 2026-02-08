@@ -12,8 +12,8 @@ import type { FindReservationsByMonthResponseDto } from '@/shared/types/myActivi
 /**
  * useReservationCalendar 훅의 매개변수 타입
  *
- * @property {readonly FindReservationsByMonthResponseDto[]} reservations - 표시할 예약 데이터 배열
- * @property {Date} currentMonth - 현재 표시 중인 월
+ * @property reservations - 표시할 예약 데이터 배열
+ * @property currentMonth - 현재 표시 중인 월
  */
 interface UseReservationCalendarParams {
   reservations: readonly FindReservationsByMonthResponseDto[];
@@ -23,16 +23,16 @@ interface UseReservationCalendarParams {
 /**
  * useReservationCalendar 훅의 반환 타입
  *
- * @property {Map<string, FindReservationsByMonthResponseDto>} reservationMap - 날짜를 key로 하는 예약 데이터 Map
- * @property {Date} today - 오늘 날짜
- * @property {Date} minDate - 선택 가능한 최소 월
- * @property {Date} maxDate - 선택 가능한 최대 월
- * @property {Date} monthStart - 현재 표시 중인 월의 시작 날짜
- * @property {Date} startDate - 캘린더에 표시될 시작 날짜
- * @property {boolean} canGoPrevMonth - 이전 달로 이동 가능 여부
- * @property {boolean} canGoNextMonth - 다음 달로 이동 가능 여부
- * @property {Date[]} calendarDays - 달력에 표시할 날짜 배열
- * @property {(date: Date) => FindReservationsByMonthResponseDto | undefined} getReservationForDateMemo - 특정 날짜의 예약 데이터를 조회하는 함수
+ * @property reservationMap - 날짜를 key로 하는 예약 데이터 Map
+ * @property today - 오늘 날짜
+ * @property minDate - 선택 가능한 최소 월
+ * @property maxDate - 선택 가능한 최대 월
+ * @property monthStart - 현재 표시 중인 월의 시작 날짜
+ * @property startDate - 캘린더에 표시될 시작 날짜
+ * @property canGoPrevMonth - 이전 달로 이동 가능 여부
+ * @property canGoNextMonth - 다음 달로 이동 가능 여부
+ * @property calendarDays - 달력에 표시할 날짜 배열
+ * @property getReservationForDateMemo - 특정 날짜의 예약 데이터를 조회하는 함수
  */
 interface UseReservationCalendarReturn {
   reservationMap: Map<string, FindReservationsByMonthResponseDto>;

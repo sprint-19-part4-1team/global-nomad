@@ -4,11 +4,11 @@ import { validators } from '@/shared/utils/validators';
 /**
  * 인증 폼의 값 타입
  *
- * @property {string} email - 이메일 주소
- * @property {string} password - 비밀번호
- * @property {string} [confirmPassword] - 비밀번호 확인 (회원가입 시)
- * @property {string} [nickname] - 닉네임 (회원가입 시)
- * @property {boolean} [termsAgreed] - 약관 동의 여부 (회원가입 시)
+ * @property email - 이메일 주소
+ * @property password - 비밀번호
+ * @property [confirmPassword] - 비밀번호 확인 (회원가입 시)
+ * @property [nickname] - 닉네임 (회원가입 시)
+ * @property [termsAgreed] - 약관 동의 여부 (회원가입 시)
  */
 type AuthFormValues = {
   email: string;
@@ -22,16 +22,16 @@ type AuthFormValues = {
 /**
  * 유효성 검사 타입
  *
- * @property {'login'} login - 로그인 페이지용 검사
- * @property {'signup'} signup - 회원가입 페이지용 검사
+ * @property login - 로그인 페이지용 검사
+ * @property signup - 회원가입 페이지용 검사
  */
 type ValidationType = 'login' | 'signup';
 
 /**
  * 인증 폼 Props 타입
  *
- * @property {ValidationType} validationType - 유효성 검사 타입
- * @property {AuthFormValues} initialValues - 폼의 초기값 객체
+ * @property validationType - 유효성 검사 타입
+ * @property initialValues - 폼의 초기값 객체
  */
 type AuthFormProps = {
   validationType: ValidationType;
@@ -42,21 +42,21 @@ type AuthFormProps = {
  * 인증 폼(로그인/회원가입) 관리를 위한 커스텀 훅
  * 폼 상태 관리, 유효성 검사, 에러 메시지 관리 기능 제공
  *
- * @param {AuthFormProps} props - 훅 설정 객체
- * @param {ValidationType} props.validationType - 유효성 검사 타입 ('login' | 'signup')
- * @param {AuthFormValues} props.initialValues - 폼의 초기값 객체
- * @param {string} props.initialValues.email - 이메일 초기값
- * @param {string} props.initialValues.password - 비밀번호 초기값
- * @param {string} [props.initialValues.confirmPassword] - 비밀번호 확인 초기값 (회원가입 시)
- * @param {string} [props.initialValues.nickname] - 닉네임 초기값 (회원가입 시)
- * @param {boolean} [props.initialValues.termsAgreed] - 약관 동의 초기값 (회원가입 시)
+ * @param props - 훅 설정 객체
+ * @param props.validationType - 유효성 검사 타입 ('login' | 'signup')
+ * @param props.initialValues - 폼의 초기값 객체
+ * @param props.initialValues.email - 이메일 초기값
+ * @param props.initialValues.password - 비밀번호 초기값
+ * @param [props.initialValues.confirmPassword] - 비밀번호 확인 초기값 (회원가입 시)
+ * @param [props.initialValues.nickname] - 닉네임 초기값 (회원가입 시)
+ * @param [props.initialValues.termsAgreed] - 약관 동의 초기값 (회원가입 시)
  *
- * @returns {Object} 폼 관리 객체
- * @returns {AuthFormValues} return.values - 현재 폼 입력값들
- * @returns {Partial<Record<keyof AuthFormValues, string>>} return.errors - 각 필드의 에러 메시지 객체
- * @returns {boolean} return.isValid - 폼 전체 유효성 여부 (모든 필드가 유효하고 필수값이 입력되었을 때 true)
- * @returns {(e: ChangeEvent<HTMLInputElement>) => void} return.handleChange - input 변경 핸들러 (값 업데이트 및 에러 초기화)
- * @returns {(e: FocusEvent<HTMLInputElement>) => void} return.handleBlur - input blur 핸들러 (유효성 검사 수행 및 에러 설정)
+ * @returns 폼 관리 객체
+ * @returns return.values - 현재 폼 입력값들
+ * @returns return.errors - 각 필드의 에러 메시지 객체
+ * @returns return.isValid - 폼 전체 유효성 여부 (모든 필드가 유효하고 필수값이 입력되었을 때 true)
+ * @returns return.handleChange - input 변경 핸들러 (값 업데이트 및 에러 초기화)
+ * @returns return.handleBlur - input blur 핸들러 (유효성 검사 수행 및 에러 설정)
  *
  * @example
  * // 로그인 폼
@@ -94,10 +94,10 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
   /**
    * 개별 필드의 유효성을 검사
    *
-   * @param {string} name - 검사할 필드명
-   * @param {string | boolean | undefined} value - 검사할 필드값
-   * @param {AuthFormValues} allValues - 전체 폼 값 (confirmPassword 검사 시 password와 비교용)
-   * @returns {string} 에러 메시지 (유효하면 빈 문자열)
+   * @param name - 검사할 필드명
+   * @param value - 검사할 필드값
+   * @param allValues - 전체 폼 값 (confirmPassword 검사 시 password와 비교용)
+   * @returns 에러 메시지 (유효하면 빈 문자열)
    */
   const validateField = useCallback(
     (name: string, value: string | boolean | undefined, allValues: AuthFormValues): string => {
@@ -127,8 +127,8 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
    * - validators에 등록된 필드는 유효성 검사를 통과해야 함
    * - termsAgreed는 true여야 함 (회원가입 시)
    *
-   * @param {AuthFormValues} valuesToCheck - 검사할 폼 값 객체
-   * @returns {boolean} 폼이 유효하면 true, 아니면 false
+   * @param valuesToCheck - 검사할 폼 값 객체
+   * @returns 폼이 유효하면 true, 아니면 false
    */
   const checkFormValid = useCallback(
     (valuesToCheck: AuthFormValues): boolean => {
@@ -157,7 +157,7 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
    * - 입력된 값을 상태에 업데이트
    * - 해당 필드의 에러 메시지 초기화 (사용자가 수정 중일 때)
    *
-   * @param {ChangeEvent<HTMLInputElement>} e - input 변경 이벤트
+   * @param e - input 변경 이벤트
    *
    * @example
    * <input
@@ -190,7 +190,7 @@ const useAuthForm = ({ validationType, initialValues }: AuthFormProps) => {
    * - 필드가 validators에 등록되어 있으면 유효성 검사 수행
    * - 에러 메시지를 업데이트
    *
-   * @param {FocusEvent<HTMLInputElement>} e - input blur 이벤트
+   * @param e - input blur 이벤트
    *
    * @example
    * <input

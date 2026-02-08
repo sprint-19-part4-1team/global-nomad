@@ -5,13 +5,12 @@
  * 로그인/회원가입, 체험 등록/수정 폼 유효성 검사에 사용되는 오류 메시지 상수
  *
  * @constant
- * @type {Object}
  */
 export const VALIDATION_MESSAGES = {
   /**
    * 이메일 관련 검증 메시지
-   * @property {string} REQUIRED - 이메일 미입력 시 메시지
-   * @property {string} INVALID - 이메일 형식 오류 시 메시지
+   * @property REQUIRED - 이메일 미입력 시 메시지
+   * @property INVALID - 이메일 형식 오류 시 메시지
    */
   EMAIL: {
     REQUIRED: '이메일을 입력해 주세요.',
@@ -19,10 +18,10 @@ export const VALIDATION_MESSAGES = {
   },
   /**
    * 비밀번호 관련 검증 메시지
-   * @property {string} REQUIRED - 비밀번호 미입력 시 메시지
-   * @property {string} SHORT - 비밀번호 길이 부족 시 메시지
-   * @property {string} INVALID - 비밀번호 형식 오류 시 메시지
-   * @property {string} MISMATCH - 비밀번호 불일치 시 메시지
+   * @property REQUIRED - 비밀번호 미입력 시 메시지
+   * @property SHORT - 비밀번호 길이 부족 시 메시지
+   * @property INVALID - 비밀번호 형식 오류 시 메시지
+   * @property MISMATCH - 비밀번호 불일치 시 메시지
    */
   PASSWORD: {
     REQUIRED: '비밀번호를 입력해 주세요.',
@@ -33,9 +32,9 @@ export const VALIDATION_MESSAGES = {
   },
   /**
    * 닉네임 관련 검증 메시지
-   * @property {string} REQUIRED - 닉네임 미입력 시 메시지
-   * @property {string} LONG - 닉네임 길이 초과 시 메시지
-   * @property {string} INVALID - 닉네임 형식 오류 시 메시지
+   * @property REQUIRED - 닉네임 미입력 시 메시지
+   * @property LONG - 닉네임 길이 초과 시 메시지
+   * @property INVALID - 닉네임 형식 오류 시 메시지
    */
   NICKNAME: {
     REQUIRED: '닉네임을 입력해주세요.',

@@ -12,10 +12,10 @@ import { ReservedScheduleResponseDto } from '@/shared/types/myActivities';
 /**
  * 예약 시간 드롭다운 컴포넌트의 Props 타입
  *
- * @property {ReservedScheduleResponseDto[]} schedules - 선택 가능한 스케줄 목록
- * @property {string} selectedScheduleId - 현재 선택된 스케줄 ID
- * @property {(scheduleId: string) => void} onChangeSchedule - 스케줄 변경 핸들러
- * @property {boolean} isPending - 스케줄 로딩 상태
+ * @property schedules - 선택 가능한 스케줄 목록
+ * @property selectedScheduleId - 현재 선택된 스케줄 ID
+ * @property onChangeSchedule - 스케줄 변경 핸들러
+ * @property isPending - 스케줄 로딩 상태
  */
 interface ReservationTimeDropdownProps {
   schedules: ReservedScheduleResponseDto[];
@@ -31,7 +31,7 @@ interface ReservationTimeDropdownProps {
  * 사용자가 특정 시간대를 선택할 수 있도록 합니다.
  * 로딩 중에는 스켈레톤 UI를 표시합니다.
  *
- * @param {ReservationTimeDropdownProps} props - 컴포넌트 Props
+ * @param props - 컴포넌트 Props
  * @returns 예약 시간 선택 드롭다운 컴포넌트
  *
  * @example

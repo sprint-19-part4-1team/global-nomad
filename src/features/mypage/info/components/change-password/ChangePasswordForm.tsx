@@ -8,8 +8,7 @@ import { logout } from '@/shared/apis/feature/auth';
 import { updateMyInfo } from '@/shared/apis/feature/users';
 import Button from '@/shared/components/button/Button';
 import Input from '@/shared/components/input/Input';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 import { useUserStore } from '@/shared/stores/userStore';
 
 interface ChangePasswordFormProps {
@@ -32,7 +31,6 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
 
   const handleLogout = async () => {
     try {
-      overlayStore.pop();
       await logout();
       clearSession('user');
       router.replace('/login');
@@ -47,18 +45,16 @@ export default function ChangePasswordForm({ userEmail }: ChangePasswordFormProp
     try {
       setIsSubmitting(true);
       await updateMyInfo({ newPassword: values.newPassword });
-      overlayStore.push(
-        <Dialog
-          message={
-            <div className='text-center'>
-              성공적으로 변경되었습니다!
-              <br />
-              다시 로그인 해주세요.
-            </div>
-          }
-          onClose={handleLogout}
-        />
-      );
+      openAlert({
+        message: (
+          <div className='text-center'>
+            성공적으로 변경되었습니다!
+            <br />
+            다시 로그인 해주세요.
+          </div>
+        ),
+        onClose: handleLogout,
+      });
     } catch (error) {
       console.error('비밀번호 변경 실패: ', error);
       toast.error('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');

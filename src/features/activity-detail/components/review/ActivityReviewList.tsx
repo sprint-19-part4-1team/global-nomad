@@ -18,8 +18,8 @@ import { parsePageQueryParam } from '@/shared/utils/parsePageQueryParam';
 /**
  * 체험 리뷰 목록 컴포넌트의 Props
  *
- * @property {number} activityId - 체험 ID
- * @property {string} [className] - 추가 CSS 클래스명
+ * @property activityId - 체험 ID
+ * @property [className] - 추가 CSS 클래스명
  */
 interface ActivityReviewListProps {
   activityId: number;
@@ -33,8 +33,8 @@ interface ActivityReviewListProps {
  * URL 쿼리 파라미터를 통해 페이지 상태를 관리합니다.
  *
  * @component
- * @param {ActivityReviewListProps} props - 컴포넌트 props
- * @returns {JSX.Element} 리뷰 목록 섹션
+ * @param props - 컴포넌트 props
+ * @returns 리뷰 목록 섹션
  *
  * @example
  * ```tsx

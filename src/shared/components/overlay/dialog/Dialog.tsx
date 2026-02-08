@@ -14,7 +14,7 @@ type NeverProps<T> = {
 
 type DialogPropsMap = { alert: DialogAlertProps; confirm: DialogConfirmProps };
 
-type DialogBaseProps = {
+export type DialogBaseProps = {
   autoCloseAfterMs?: number;
 };
 

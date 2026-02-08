@@ -5,11 +5,10 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import ActivityForm from '@/features/activity-form/common/components/activity-form/ActivityForm';
 import { useActivityForm } from '@/features/activity-form/common/hooks/useActivityForm';
-import { usePreventNavigation } from '@/features/activity-form/common/hooks/usePreventNavigation';
+import { useActivityFormNavigation } from '@/features/activity-form/common/hooks/useActivityFormNavigation';
 import { useUpdateActivityMutation } from '@/features/activity-form/edit/mutations/useUpdateActivityMutation';
 import { useActivityDetailQuery } from '@/features/activity-form/edit/queries/useActivityDetailQuery';
-import Dialog from '@/shared/components/overlay/dialog/Dialog';
-import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { openAlert } from '@/shared/components/overlay/store/overlayActions';
 
 interface EditActivityFormProps {
   /** 수정할 체험(Activity)의 ID */
@@ -33,7 +32,7 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
   const formState = useActivityForm(activity);
   const { changedValues, isDirty, isAllValid } = formState;
 
-  usePreventNavigation(isDirty);
+  useActivityFormNavigation(isDirty);
 
   const { mutate, isPending } = useUpdateActivityMutation(activityId);
 
@@ -43,16 +42,12 @@ export default function EditActivityForm({ activityId }: EditActivityFormProps) 
     mutate(payload, {
       onSuccess: () => {
         setIsRedirecting(true);
-        overlayStore.push(
-          <Dialog
-            variant='alert'
-            message='체험 수정이 완료되었습니다.'
-            onClose={() => {
-              overlayStore.pop();
-              router.push(`/activity/${activityId}`);
-            }}
-          />
-        );
+        openAlert({
+          message: '체험 수정이 완료되었습니다.',
+          onClose: () => {
+            router.push(`/activity/${activityId}`);
+          },
+        });
       },
       onError: (error) => {
         setIsRedirecting(false);

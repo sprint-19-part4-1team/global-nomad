@@ -7,8 +7,8 @@ import { GetMyActivityReservationDashboardParams } from '@/shared/types/myActivi
 /**
  * useMonthlyReservations 훅의 매개변수 타입
  *
- * @property {number} activityId - 조회할 체험의 ID
- * @property {GetMyActivityReservationDashboardParams} params - 월별 예약 현황을 조회하는 데 필요한 파라미터들
+ * @property activityId - 조회할 체험의 ID
+ * @property params - 월별 예약 현황을 조회하는 데 필요한 파라미터들
  */
 type UseMonthlyReservationsParams = {
   activityId: number;

@@ -27,7 +27,7 @@ const KAKAO_SHARE_SDK_INTEGRITY =
 /**
  * 카카오 공유 SDK를 초기화하고 공유 기능을 제공하는 커스텀 훅
  *
- * @returns {Object} - isReady: SDK 준비 완료 여부, shareKakao: 카카오톡 공유 함수
+ * @returns isReady: SDK 준비 완료 여부, shareKakao: 카카오톡 공유 함수
  *
  * @example
  * ```tsx

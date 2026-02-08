@@ -3,10 +3,10 @@ import ActivityReservationContentTitle from '@/features/activity-detail/componen
 
 /**
  * 체험 예약 인원 카운터 컴포넌트의 Props
- * @property {number} count - 현재 선택된 인원 수
- * @property {(count: number) => void} onCountChange - 인원 수 변경 핸들러
- * @property {number} [minCount] - 최소 인원 수 (기본값: 1)
- * @property {number} [maxCount] - 최대 인원 수 (기본값: 30)
+ * @property count - 현재 선택된 인원 수
+ * @property onCountChange - 인원 수 변경 핸들러
+ * @property [minCount] - 최소 인원 수 (기본값: 1)
+ * @property [maxCount] - 최대 인원 수 (기본값: 30)
  */
 interface ActivityReservationHeadCounterProps {
   count: number;
@@ -30,8 +30,8 @@ interface ActivityReservationHeadCounterProps {
  * - 접근성: aria-label을 통한 스크린 리더 지원
  * - 타이틀: "참여 인원 수" 레이블 표시
  *
- * @param {ActivityReservationHeadCounterProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 인원 카운터
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 인원 카운터
  *
  * @example
  * ```tsx

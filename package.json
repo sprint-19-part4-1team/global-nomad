@@ -6,6 +6,7 @@
   "scripts": {
     "typegen": "next typegen",
     "generate:tokens": "node scripts/generateTokens.js",
+    "optimize:svg": "svgo src/assets --recursive",
     "dev": "pnpm generate:tokens && next dev --turbopack",
     "build": "pnpm generate:tokens && next build",
     "start": "next start",
@@ -15,9 +16,14 @@
     "format:check": "prettier --check src",
     "prepare": "husky",
     "storybook": "pnpm generate:tokens && storybook dev -p 6006",
-    "build-storybook": "pnpm generate:tokens && storybook build"
+    "build-storybook": "pnpm generate:tokens && storybook build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "lint-staged": {
+    "src/assets/**/*.svg": [
+      "svgo"
+    ],
     "**/*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write"
@@ -53,6 +59,10 @@
     "@tailwindcss/postcss": "^4",
     "@tanstack/eslint-plugin-query": "^5.91.2",
     "@tanstack/react-query-devtools": "^5.91.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -66,10 +76,13 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-storybook": "^10.1.10",
     "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "storybook": "^10.1.10",
+    "svgo": "^4.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

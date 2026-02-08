@@ -3,7 +3,7 @@ import { cn } from '@/shared/utils/cn';
 /**
  * Skeleton 컴포넌트의 Props
  *
- * @property {string} className - Skeleton 컴포넌트의 CSS 클래스 (width, height, border-radius, 배경색 등)
+ * @property className - Skeleton 컴포넌트의 CSS 클래스 (width, height, border-radius, 배경색 등)
  */
 interface SkeletonProps {
   className: string;
@@ -15,8 +15,8 @@ interface SkeletonProps {
  * 콘텐츠 로딩 중 표시되는 애니메이션 플레이스홀더 컴포넌트입니다.
  * className을 통해 크기와 스타일을 지정하여 다양한 형태의 스켈레톤을 생성할 수 있습니다.
  *
- * @param {SkeletonProps} props - 컴포넌트 props
- * @returns {JSX.Element} Skeleton 컴포넌트
+ * @param props - 컴포넌트 props
+ * @returns Skeleton 컴포넌트
  *
  * @example
  * ```tsx

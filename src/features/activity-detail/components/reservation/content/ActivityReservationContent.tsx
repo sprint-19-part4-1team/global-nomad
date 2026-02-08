@@ -21,12 +21,12 @@ import { formatValue } from '@/shared/utils/formatValue';
 /**
  * 체험 예약 콘텐츠 컴포넌트의 Props
  *
- * @property {number} activityId - 체험 ID
- * @property {number} price - 1인당 체험 가격
- * @property {() => void} [onClose] - 바텀시트 닫기 핸들러 (바텀시트 모드에서만 사용)
- * @property {(info: CreateReservationBodyDto & { dateTime: string }) => void} [onConfirm] - 바텀시트 확인 핸들러 (바텀시트 모드에서만 사용)
- * @property {(info: CreateReservationBodyDto) => void | Promise<void>} [onReservation] - 데스크톱 예약 버튼 핸들러 (데스크톱 모드에서만 사용)
- * @property {boolean} [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
+ * @property activityId - 체험 ID
+ * @property price - 1인당 체험 가격
+ * @property [onClose] - 바텀시트 닫기 핸들러 (바텀시트 모드에서만 사용)
+ * @property [onConfirm] - 바텀시트 확인 핸들러 (바텀시트 모드에서만 사용)
+ * @property [onReservation] - 데스크톱 예약 버튼 핸들러 (데스크톱 모드에서만 사용)
+ * @property [isBottomSheet] - 바텀시트 모드 여부 (기본값: false)
  */
 interface ActivityReservationContentProps {
   activityId: number;
@@ -60,8 +60,8 @@ interface ActivityReservationContentProps {
  * 데스크톱 모드에서는 모든 옵션이 한 화면에 표시되며,
  * 바텀시트 모드에서는 날짜/시간 선택과 인원 선택이 단계별로 표시됩니다.
  *
- * @param {ActivityReservationContentProps} props - 컴포넌트 props
- * @returns {JSX.Element} 렌더링된 예약 콘텐츠
+ * @param props - 컴포넌트 props
+ * @returns 렌더링된 예약 콘텐츠
  *
  * @example
  * ```tsx

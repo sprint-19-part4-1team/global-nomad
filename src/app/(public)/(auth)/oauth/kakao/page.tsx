@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef } from 'react';
 import { signInWithOauth, signUpWithOauth } from '@/shared/apis/feature/oauth';
 import Spinner from '@/shared/components/spinner/Spinner';
-import type { OAuthMode } from '@/shared/constants';
+import { AUTH_API_MESSAGE, type OAuthMode } from '@/shared/constants';
 import { useUserStore } from '@/shared/stores/userStore';
 import { isRecord } from '@/shared/utils/errorGuards';
 
@@ -53,12 +53,14 @@ function KakaoOauthCallbackInner() {
 
     const error = searchParams.get('error');
     if (error) {
-      router.replace('/login?oauth=failed');
+      useUserStore.getState().setOAuthError(AUTH_API_MESSAGE.LOGIN.FAILED);
+      router.replace('/login');
       return;
     }
 
     if (!code) {
-      router.replace('/login?oauth=missing_code');
+      useUserStore.getState().setOAuthError(AUTH_API_MESSAGE.LOGIN.FAILED);
+      router.replace('/login');
       return;
     }
 
@@ -67,9 +69,6 @@ function KakaoOauthCallbackInner() {
     };
 
     const isSignup = state === 'signup';
-    const failureRedirectUrl = isSignup
-      ? '/signup?oauth=signup_failed'
-      : '/login?oauth=signin_failed';
     (async () => {
       try {
         const res = isSignup
@@ -93,7 +92,12 @@ function KakaoOauthCallbackInner() {
           return;
         }
 
-        router.replace(failureRedirectUrl);
+        const errorMessage = isSignup
+          ? AUTH_API_MESSAGE.SIGNUP.FAILED
+          : AUTH_API_MESSAGE.LOGIN.FAILED;
+        const redirectUrl = isSignup ? '/signup' : '/login';
+        useUserStore.getState().setOAuthError(errorMessage);
+        router.replace(redirectUrl);
       }
     })();
   }, [router, searchParams, setSession]);

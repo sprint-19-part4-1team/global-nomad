@@ -3,10 +3,10 @@ import { useEffect, useRef } from 'react';
 /**
  * 무한 스크롤 훅의 매개변수 타입
  *
- * @property {boolean} hasNextPage - 다음 페이지 존재 여부
- * @property {boolean} isFetchingNextPage - 다음 페이지 로딩 중 여부
- * @property {() => void} fetchNextPage - 다음 페이지를 가져오는 함수
- * @property {number} [threshold=0.1] - Intersection Observer의 임계값 (0~1 사이의 값)
+ * @property hasNextPage - 다음 페이지 존재 여부
+ * @property isFetchingNextPage - 다음 페이지 로딩 중 여부
+ * @property fetchNextPage - 다음 페이지를 가져오는 함수
+ * @property [threshold=0.1] - Intersection Observer의 임계값 (0~1 사이의 값)
  */
 interface UseInfiniteScrollProps {
   hasNextPage: boolean;
@@ -21,13 +21,13 @@ interface UseInfiniteScrollProps {
  * 스크롤이 특정 요소에 도달했을 때 자동으로 다음 페이지를 로드합니다.
  * 반환된 ref를 관찰하고 싶은 요소에 연결하면 됩니다.
  *
- * @param {UseInfiniteScrollProps} props - 훅 설정 객체
- * @param {boolean} props.hasNextPage - 다음 페이지 존재 여부
- * @param {boolean} props.isFetchingNextPage - 다음 페이지 로딩 중 여부
- * @param {() => void} props.fetchNextPage - 다음 페이지를 가져오는 함수
- * @param {number} [props.threshold=0.1] - 요소가 뷰포트에 얼마나 보여야 트리거될지 설정 (0~1)
+ * @param props - 훅 설정 객체
+ * @param props.hasNextPage - 다음 페이지 존재 여부
+ * @param props.isFetchingNextPage - 다음 페이지 로딩 중 여부
+ * @param props.fetchNextPage - 다음 페이지를 가져오는 함수
+ * @param [props.threshold=0.1] - 요소가 뷰포트에 얼마나 보여야 트리거될지 설정 (0~1)
  *
- * @returns {React.RefObject<HTMLDivElement>} observerRef - Intersection Observer를 연결할 ref
+ * @returns observerRef - Intersection Observer를 연결할 ref
  *
  * @example
  * ```tsx

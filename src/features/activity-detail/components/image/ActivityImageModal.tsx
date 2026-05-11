@@ -53,26 +53,29 @@ export default function ActivityImageModal({
 
   const currentImage = images[currentIndex];
 
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
-
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+  const moveIndex = useCallback(
+    (direction: 'prev' | 'next') => {
+      setCurrentIndex((prev) =>
+        direction === 'prev'
+          ? (prev - 1 + images.length) % images.length
+          : (prev + 1) % images.length
+      );
+    },
+    [images.length]
+  );
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        handlePrev();
+        moveIndex('prev');
       }
       if (e.key === 'ArrowRight') {
-        handleNext();
+        moveIndex('next');
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [handlePrev, handleNext]);
+  }, [moveIndex]);
 
   return (
     <OverlayPortal>
@@ -105,7 +108,7 @@ export default function ActivityImageModal({
               aria-label='이전 이미지'
               onClick={(e) => {
                 e.stopPropagation();
-                handlePrev();
+                moveIndex('prev');
               }}
               className='absolute top-1/2 -left-32 h-32 w-32 text-gray-100'>
               <Icons.ChevronLeft aria-hidden='true' focusable='false' />
@@ -114,7 +117,7 @@ export default function ActivityImageModal({
               aria-label='다음 이미지'
               onClick={(e) => {
                 e.stopPropagation();
-                handleNext();
+                moveIndex('next');
               }}
               className='absolute top-1/2 -right-32 h-32 w-32 text-gray-100'>
               <Icons.ChevronRight aria-hidden='true' focusable='false' />

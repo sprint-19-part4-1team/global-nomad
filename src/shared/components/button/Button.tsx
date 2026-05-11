@@ -1,5 +1,5 @@
-import { cva, VariantProps } from 'class-variance-authority';
 import { LinkProps } from 'next/link';
+import { cva, VariantProps } from 'class-variance-authority';
 import { ComponentProps } from 'react';
 import ButtonBase from '@/shared/components/button/ButtonBase';
 import LinkBase from '@/shared/components/button/LinkBase';

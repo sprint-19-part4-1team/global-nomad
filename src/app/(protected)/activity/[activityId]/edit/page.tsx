@@ -1,6 +1,6 @@
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import EditActivityForm from '@/features/activity-form/edit/components/EditActivityForm';
 import { prefetchActivityDetail } from '@/features/activity-form/edit/queries/prefetchActivityDetail';
 import { validateActivityOwner } from '@/features/activity-form/edit/utils/validateActivityOwner';

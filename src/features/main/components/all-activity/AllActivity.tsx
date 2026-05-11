@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Card from '@/features/main/components/card/Card';
 import FilterButton from '@/features/main/components/filter-button/FilterButton';
 import AllActivitiesSkeleton from '@/features/main/components/skeleton/AllActivitiesSkeleton';
+import { ACTIVITY_PAGE_SIZE } from '@/features/main/constants';
 import { useActivityFilters } from '@/features/main/hooks/useActivityFilters';
 import { useMediaQuery } from '@/features/main/hooks/useMediaQuery';
 import {
@@ -49,7 +50,7 @@ export default function AllActivity({
   const isMdOrLarger = useMediaQuery('(min-width: 768px)');
 
   useEffect(() => {
-    setSize(isMdOrLarger ? 8 : 4);
+    setSize(isMdOrLarger ? ACTIVITY_PAGE_SIZE.desktop : ACTIVITY_PAGE_SIZE.mobile);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMdOrLarger]);
 
@@ -161,7 +162,7 @@ export default function AllActivity({
           <div className='mt-24 flex justify-center sm:mt-30'>
             <Pagination
               totalCount={totalCount ?? 0}
-              itemsPerPage={size ?? 8}
+              itemsPerPage={size ?? ACTIVITY_PAGE_SIZE.desktop}
               currentPage={currentPage}
               onPageChange={setCurrentPage}
             />

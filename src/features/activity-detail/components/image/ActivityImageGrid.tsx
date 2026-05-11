@@ -86,10 +86,9 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
 
   /**
    * 이미지 클릭 시 확대 모달을 오버레이로 표시
-   * @param imageUrl - 확대할 이미지 URL
    * @param index - 이미지 인덱스 (접근성을 위한 라벨링에 사용)
    */
-  const handleImageClick = (imageUrl: string, index: number) => {
+  const handleImageClick = (index: number) => {
     overlayStore.push(
       <ActivityImageModal
         images={subImages}
@@ -109,9 +108,9 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
           return (
             <button
               key={image.id}
-              onPointerDown={(e) => {
+              onClick={(e) => {
                 e.stopPropagation();
-                handleImageClick(image.imageUrl, index);
+                handleImageClick(index);
               }}
               className={cn('relative', isFirstInThreeLayout && 'row-span-2')}>
               <Image

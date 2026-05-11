@@ -93,7 +93,7 @@ export default function ActivityImageModal({
         />
         <button
           aria-label={`체험 상세 이미지 ${currentIndex + 1} 확대 닫기`}
-          onPointerDown={(e) => {
+          onClick={(e) => {
             e.stopPropagation();
             onClose();
           }}
@@ -103,7 +103,7 @@ export default function ActivityImageModal({
           <>
             <button
               aria-label='이전 이미지'
-              onPointerDown={(e) => {
+              onClick={(e) => {
                 e.stopPropagation();
                 handlePrev();
               }}
@@ -112,7 +112,7 @@ export default function ActivityImageModal({
             </button>
             <button
               aria-label='다음 이미지'
-              onPointerDown={(e) => {
+              onClick={(e) => {
                 e.stopPropagation();
                 handleNext();
               }}

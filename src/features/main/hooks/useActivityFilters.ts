@@ -36,6 +36,7 @@ export const useActivityFilters = () => {
   const [currentPage, setCurrentPage] = useQueryParamState('page', {
     defaultValue: 1,
     parse: parsePageQueryParam,
+    removeParam: (v) => v === 1,
   });
 
   const [sort, setSort] = useQueryParamState<GetActivitiesParams['sort']>('sort', {
@@ -51,6 +52,7 @@ export const useActivityFilters = () => {
   const [size, setSize] = useQueryParamState<GetActivitiesParams['size']>('size', {
     defaultValue: 8,
     parse: (v) => Number(v),
+    removeParam: (v) => v === 8 || v === 4,
   });
 
   const { data, isPending } = useActivities({

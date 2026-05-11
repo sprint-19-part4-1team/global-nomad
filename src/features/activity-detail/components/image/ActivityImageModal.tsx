@@ -1,22 +1,24 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Icons from '@/assets/icons';
 import { LAYER } from '@/shared/components/overlay/constants/layer';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
+import { SubImagesType } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
 
 /**
  * 체험 상세 이미지 확대 모달 컴포넌트의 Props
- * @property imageUrl - 확대할 이미지 URL
- * @property index - 이미지 인덱스 (접근성을 위한 라벨링에 사용)
+ * @property images - 전체 이미지 배열
+ * @property initialIndex - 처음 표시할 이미지 인덱스
  * @property onClose - 모달 닫기 콜백 함수
  */
 interface ActivityImageModalProps {
-  imageUrl: string;
-  index: number;
+  images: SubImagesType[];
+  initialIndex: number;
   onClose: () => void;
 }
 
@@ -24,6 +26,8 @@ interface ActivityImageModalProps {
  * 체험 상세 이미지 확대 모달 컴포넌트
  *
  * 이미지를 전체 화면 오버레이로 확대하여 표시합니다.
+ * 이전/다음 버튼 및 키보드 방향키(←/→)로 이미지 간 이동이 가능하며,
+ * 마지막 이미지에서 다음으로 이동 시 첫 번째 이미지로 순환합니다.
  * 모달 외부 클릭 또는 이미지 영역 클릭 시 닫힙니다.
  *
  * @param props - ActivityImageModalProps
@@ -32,15 +36,43 @@ interface ActivityImageModalProps {
  * @example
  * ```tsx
  * <ActivityImageModal
- *   imageUrl="https://example.com/image.jpg"
- *   index={1}
+ *   images={activity.subImages}
+ *   initialIndex={0}
  *   onClose={() => overlayStore.pop()}
  * />
  * ```
  */
-export default function ActivityImageModal({ imageUrl, index, onClose }: ActivityImageModalProps) {
+export default function ActivityImageModal({
+  images,
+  initialIndex,
+  onClose,
+}: ActivityImageModalProps) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const modalRef = useRef<HTMLDivElement>(null);
   useOutsideClick(modalRef, onClose);
+
+  const currentImage = images[currentIndex];
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrev();
+      }
+      if (e.key === 'ArrowRight') {
+        handleNext();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [handlePrev, handleNext]);
 
   return (
     <OverlayPortal>
@@ -52,21 +84,47 @@ export default function ActivityImageModal({ imageUrl, index, onClose }: Activit
           LAYER.OVERLAY_SURFACE
         )}>
         <Image
-          src={imageUrl}
-          alt={`체험 상세 이미지 ${index} 확대 보기`}
+          src={currentImage.imageUrl}
+          alt={`체험 상세 이미지 ${currentIndex + 1} 확대 보기`}
           width={0}
           height={0}
           className='h-auto max-h-[70vh] w-full object-contain'
           sizes='(max-width: 640px) 340px, 700px'
         />
         <button
-          aria-label={`체험 상세 이미지 ${index} 확대 닫기`}
+          aria-label={`체험 상세 이미지 ${currentIndex + 1} 확대 닫기`}
           onPointerDown={(e) => {
             e.stopPropagation();
             onClose();
           }}
           className='absolute inset-0'
         />
+        {images.length > 1 && (
+          <>
+            <button
+              aria-label='이전 이미지'
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+              className='absolute top-1/2 -left-32 h-32 w-32 text-gray-100'>
+              <Icons.ChevronLeft aria-hidden='true' focusable='false' />
+            </button>
+            <button
+              aria-label='다음 이미지'
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+              className='absolute top-1/2 -right-32 h-32 w-32 text-gray-100'>
+              <Icons.ChevronRight aria-hidden='true' focusable='false' />
+            </button>
+            <span className='absolute left-1/2 mt-8 -translate-x-1/2 rounded-full bg-primary-100 px-8 py-2 body-14 text-gray-600'>
+              <span className='font-bold text-primary-600'>{currentIndex + 1}</span> /{' '}
+              {images.length}
+            </span>
+          </>
+        )}
       </div>
     </OverlayPortal>
   );

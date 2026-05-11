@@ -91,7 +91,11 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
    */
   const handleImageClick = (imageUrl: string, index: number) => {
     overlayStore.push(
-      <ActivityImageModal imageUrl={imageUrl} index={index} onClose={() => overlayStore.pop()} />
+      <ActivityImageModal
+        images={subImages}
+        initialIndex={index}
+        onClose={() => overlayStore.pop()}
+      />
     );
   };
 

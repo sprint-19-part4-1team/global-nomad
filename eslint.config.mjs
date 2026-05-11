@@ -53,10 +53,21 @@ const eslintConfig = [
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             {
+              pattern: 'next',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: 'next/**',
+              group: 'external',
+              position: 'before',
+            },
+            {
               pattern: '@/**',
               group: 'internal',
             },
           ],
+          pathGroupsExcludedImportTypes: ['builtin', 'type'],
           'newlines-between': 'never',
           alphabetize: { order: 'asc', caseInsensitive: true },
         },

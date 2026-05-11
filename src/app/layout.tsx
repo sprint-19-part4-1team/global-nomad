@@ -1,5 +1,5 @@
-import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import '@/shared/styles/globals.css';
 import AuthGuard from '@/features/auth/common/components/AuthGuard';
 import OverlayRoot from '@/shared/components/overlay/root/OverlayRoot';

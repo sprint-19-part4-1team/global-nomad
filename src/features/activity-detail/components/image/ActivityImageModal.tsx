@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icons from '@/assets/icons';
 import { LAYER } from '@/shared/components/overlay/constants/layer';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
@@ -53,26 +53,26 @@ export default function ActivityImageModal({
 
   const currentImage = images[currentIndex];
 
-  const handlePrev = useCallback(() => {
+  const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
+  };
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        handlePrev();
+        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
       }
       if (e.key === 'ArrowRight') {
-        handleNext();
+        setCurrentIndex((prev) => (prev + 1) % images.length);
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [handlePrev, handleNext]);
+  }, [images.length]);
 
   return (
     <OverlayPortal>

@@ -8,6 +8,7 @@ interface LogoProps {
 
 const desktopLogoBaseClass = cn(
   'hidden sm:block',
+  'text-gray-800',
   'transition transition-color duration-500',
   'hover:text-primary-600'
 );
@@ -48,7 +49,7 @@ const LOGO_VARIANTS = {
   },
   header: {
     DesktopComponent: Logos.LogoNav,
-    desktopClassName: `${desktopLogoBaseClass} w-174`,
+    desktopClassName: `${desktopLogoBaseClass} w-202`,
     MobileComponent: Logos.Logo,
     mobileClassName: 'block w-28 sm:hidden',
   },

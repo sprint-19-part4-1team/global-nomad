@@ -40,7 +40,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "import-in-the-middle": "^3.0.1",
     "next": "15.5.16",
     "react": "19.2.6",
     "react-daum-postcode": "^3.2.0",
@@ -48,7 +47,6 @@
     "react-dom": "19.2.6",
     "react-slick": "^0.31.0",
     "react-toastify": "^11.0.5",
-    "require-in-the-middle": "^8.0.1",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.9"

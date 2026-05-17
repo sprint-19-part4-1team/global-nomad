@@ -29,9 +29,6 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      import-in-the-middle:
-        specifier: ^3.0.1
-        version: 3.0.1
       next:
         specifier: 15.5.16
         version: 15.5.16(@babel/core@7.28.5)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -53,9 +50,6 @@ importers:
       react-toastify:
         specifier: ^11.0.5
         version: 11.0.5(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      require-in-the-middle:
-        specifier: ^8.0.1
-        version: 8.0.1
       slick-carousel:
         specifier: ^1.8.1
         version: 1.8.1(jquery@3.7.1)

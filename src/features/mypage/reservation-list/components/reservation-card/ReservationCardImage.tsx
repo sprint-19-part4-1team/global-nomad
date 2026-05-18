@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Icons from '@/assets/icons';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 interface ReservationCardImageProps {
@@ -28,7 +29,15 @@ export default function ReservationCardImage({
   return (
     <div className='absolute inset-y-0 right-0 w-[40%] overflow-hidden bg-primary-200'>
       <div className='relative h-full w-full'>
-        <Image src={imageUrl} alt='썸네일 이미지' fill sizes='40vw' className='object-cover' />
+        <Image
+          src={imageUrl}
+          alt='썸네일 이미지'
+          fill
+          sizes='40vw'
+          className='object-cover'
+          placeholder='blur'
+          blurDataURL={BLUR_DATA_URL}
+        />
 
         {isReviewCompleted && (
           <>

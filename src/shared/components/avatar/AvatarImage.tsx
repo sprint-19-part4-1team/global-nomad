@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useAvatarContext } from '@/shared/components/avatar/hooks/useAvatarContext';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -53,6 +54,8 @@ export default function AvatarImage({ loading = 'eager', className }: AvatarImag
       loading={loading}
       className={cn('object-cover', className)}
       onError={() => setImageError(true)}
+      placeholder='blur'
+      blurDataURL={BLUR_DATA_URL}
     />
   );
 }

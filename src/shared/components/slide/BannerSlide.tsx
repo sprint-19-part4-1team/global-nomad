@@ -45,6 +45,8 @@ export default function BannerSlide() {
                 priority
                 sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                 className='object-cover brightness-50 transition hover:brightness-100'
+                placeholder='blur'
+                blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
               />
               <strong className='absolute bottom-48 block w-full text-center heading-18 font-bold text-white sm:bottom-60 sm:heading-24 md:bottom-80 md:heading-32'>
                 {activity.title}

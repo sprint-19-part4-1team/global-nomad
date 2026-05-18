@@ -60,6 +60,8 @@ export default function Card({
           alt={title}
           className='h-3/4! object-cover transition-transform duration-300 group-hover:scale-150'
           sizes='(min-width: 1024px) 262px, (min-width: 768px) 331px, 328px '
+          placeholder='blur'
+          blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
         />
       </div>
       <div className='absolute bottom-0 w-full rounded-18 bg-white px-17 py-16 sm:rounded-32 sm:px-30 sm:py-20'>

@@ -124,6 +124,8 @@ export default function ExperienceCard({
           fill
           sizes='(min-width: 768px) 152px, (min-width: 640px) 140px, 72px'
           className='object-cover'
+          placeholder='blur'
+          blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
         />
       </div>
     </RoundBox>

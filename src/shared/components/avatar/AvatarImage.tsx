@@ -53,6 +53,8 @@ export default function AvatarImage({ loading = 'eager', className }: AvatarImag
       loading={loading}
       className={cn('object-cover', className)}
       onError={() => setImageError(true)}
+      placeholder='blur'
+      blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
     />
   );
 }

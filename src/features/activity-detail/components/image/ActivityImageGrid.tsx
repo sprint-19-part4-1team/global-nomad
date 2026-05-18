@@ -120,6 +120,8 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
                 sizes={config.sizes}
                 className='cursor-pointer object-cover'
                 priority={index === 0 && (count === 1 || count === 3)}
+                placeholder='blur'
+                blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
               />
             </button>
           );

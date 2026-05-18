@@ -51,6 +51,11 @@
     "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.9"
   },
+  "pnpm": {
+    "overrides": {
+      "@opentelemetry/instrumentation": "0.214.0"
+    }
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",
     "@eslint/eslintrc": "^3",

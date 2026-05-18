@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_VERCEL_ENV: process.env.VERCEL_ENV,
+  },
   images: {
     // Vercel Image Optimization 사용량 제한으로 이미지 최적화를 비활성화 처리해두었습니다.
     unoptimized: true,
@@ -13,14 +17,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Turbopack 설정
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
   },
@@ -49,4 +50,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: 'ahreum',
+  project: 'javascript-nextjs',
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+  webpack: {
+    automaticVercelMonitors: true,
+    treeshake: {
+      removeDebugLogging: true,
+    },
+  },
+});

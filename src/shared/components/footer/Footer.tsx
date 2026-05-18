@@ -1,5 +1,5 @@
-import { cva } from 'class-variance-authority';
 import Link from 'next/link';
+import { cva } from 'class-variance-authority';
 import Icons from '@/assets/icons';
 import { FooterPageSpacer } from '@/shared/components/footer/FooterPageSpacer';
 import { cn } from '@/shared/utils/cn';

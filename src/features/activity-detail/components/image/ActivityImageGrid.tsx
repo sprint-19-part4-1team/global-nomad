@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ActivityImageModal from '@/features/activity-detail/components/image/ActivityImageModal';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
@@ -69,6 +69,7 @@ const layoutConfig = {
  * ```
  */
 export default function ActivityImageGrid({ subImages }: ActivityImageGridProps) {
+  const [failedIds, setFailedIds] = useState<Set<number>>(new Set());
   const surfaceRef = useRef<HTMLDivElement>(null);
 
   // 확대 모달 외부 클릭 시 모달 닫기
@@ -110,18 +111,25 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
               key={image.id}
               onClick={(e) => {
                 e.stopPropagation();
-                handleImageClick(index);
+                if (!failedIds.has(image.id)) {
+                  handleImageClick(index);
+                }
               }}
-              className={cn('relative', isFirstInThreeLayout && 'row-span-2')}>
+              className={cn(
+                'relative',
+                isFirstInThreeLayout && 'row-span-2',
+                failedIds.has(image.id) ? 'cursor-default!' : 'cursor-pointer'
+              )}>
               <Image
-                src={image.imageUrl}
+                src={failedIds.has(image.id) ? '/fallback.png' : image.imageUrl}
                 alt={`체험 상세 이미지 ${index}`}
                 fill
                 sizes={config.sizes}
-                className='cursor-pointer object-cover'
+                className='object-cover'
                 priority={index === 0 && (count === 1 || count === 3)}
                 placeholder='blur'
                 blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+                onError={() => setFailedIds((prev) => new Set(prev).add(image.id))}
               />
             </button>
           );

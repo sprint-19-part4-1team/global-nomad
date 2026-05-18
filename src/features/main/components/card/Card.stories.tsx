@@ -55,7 +55,7 @@ const meta: Meta<typeof Card> = {
   },
   decorators: [
     (Story) => (
-      <div className='w-[320px] overflow-hidden rounded-18 sm:rounded-32'>
+      <div className='w-320 overflow-hidden rounded-18 sm:rounded-32'>
         <Story />
       </div>
     ),

@@ -6,6 +6,7 @@ import Icons from '@/assets/icons';
 import { LAYER } from '@/shared/components/overlay/constants/layer';
 import Backdrop from '@/shared/components/overlay/primitives/backdrop/Backdrop';
 import OverlayPortal from '@/shared/components/overlay/primitives/overlay-portal/OverlayPortal';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { SubImagesType } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
@@ -94,7 +95,7 @@ export default function ActivityImageModal({
           className='h-auto max-h-[70vh] w-full object-contain'
           sizes='(max-width: 640px) 340px, 700px'
           placeholder='blur'
-          blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+          blurDataURL={BLUR_DATA_URL}
         />
         <button
           aria-label={`체험 상세 이미지 ${currentIndex + 1} 확대 닫기`}

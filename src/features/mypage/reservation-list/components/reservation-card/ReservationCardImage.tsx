@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Icons from '@/assets/icons';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import { ReservationStatus } from '@/shared/types/myReservations';
 
 interface ReservationCardImageProps {
@@ -35,7 +36,7 @@ export default function ReservationCardImage({
           sizes='40vw'
           className='object-cover'
           placeholder='blur'
-          blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+          blurDataURL={BLUR_DATA_URL}
         />
 
         {isReviewCompleted && (

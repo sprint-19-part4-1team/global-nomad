@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import ActivityImageModal from '@/features/activity-detail/components/image/ActivityImageModal';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { SubImagesType } from '@/shared/types/activities';
 import { cn } from '@/shared/utils/cn';
@@ -128,7 +129,7 @@ export default function ActivityImageGrid({ subImages }: ActivityImageGridProps)
                 className='object-cover'
                 priority={index === 0 && (count === 1 || count === 3)}
                 placeholder='blur'
-                blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+                blurDataURL={BLUR_DATA_URL}
                 onError={() => setFailedIds((prev) => new Set(prev).add(image.id))}
               />
             </button>

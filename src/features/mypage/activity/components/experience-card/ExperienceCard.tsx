@@ -6,6 +6,7 @@ import Button from '@/shared/components/button/Button';
 import ActivityDeleteDialog from '@/shared/components/overlay/dialog/variants/ActivityDeleteDialog';
 import { overlayStore } from '@/shared/components/overlay/store/overlayStore';
 import RoundBox from '@/shared/components/round-box/RoundBox';
+import { BLUR_DATA_URL } from '@/shared/constants';
 import { ActivityBasicDto } from '@/shared/types/activities';
 import { formatValue } from '@/shared/utils/formatValue';
 
@@ -125,7 +126,7 @@ export default function ExperienceCard({
           sizes='(min-width: 768px) 152px, (min-width: 640px) 140px, 72px'
           className='object-cover'
           placeholder='blur'
-          blurDataURL='data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+          blurDataURL={BLUR_DATA_URL}
         />
       </div>
     </RoundBox>

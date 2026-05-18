@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_VERCEL_ENV: process.env.VERCEL_ENV,
   },
   images: {
-    // Vercel Image Optimization 사용량 제한으로 이미지 최적화를 비활성화 처리해두었습니다. -> 활성화로 수정했습니다.
+    // Vercel Image Optimization 사용량 제한으로 이미지 최적화를 비활성화 처리해두었으나, 성능 향상을 위해 활성화합니다.
     unoptimized: false,
     remotePatterns: [
       {

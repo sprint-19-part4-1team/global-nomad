@@ -34,7 +34,7 @@ export default function BannerSlide() {
   }
 
   return (
-    <div className='mx-auto w-full'>
+    <div className='mx-auto w-full overflow-hidden rounded-12 sm:rounded-18 md:rounded-24'>
       <Slider {...settings}>
         {activities?.map((activity) => (
           <div key={activity.id}>

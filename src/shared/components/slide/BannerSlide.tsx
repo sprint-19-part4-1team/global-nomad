@@ -36,6 +36,20 @@ export default function BannerSlide() {
   return (
     <div className='mx-auto w-full overflow-hidden rounded-12 sm:rounded-18 md:rounded-24'>
       <Slider {...settings}>
+        <div>
+          <div className='relative block h-181 overflow-hidden rounded-12 sm:h-375 sm:rounded-18 md:h-500 md:rounded-24'>
+            <Image
+              src='/banner-main.png'
+              alt='메인 배너'
+              fill
+              priority
+              sizes='100vw'
+              className='object-cover'
+              placeholder='blur'
+              blurDataURL={BLUR_DATA_URL}
+            />
+          </div>
+        </div>
         {activities?.map((activity) => (
           <div key={activity.id}>
             <Link

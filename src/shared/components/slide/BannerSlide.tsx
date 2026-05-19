@@ -42,6 +42,14 @@ const NextArrow = ({ onClick }: { onClick?: () => void }) => (
   </button>
 );
 
+/**
+ * 메인 페이지 상단 배너 슬라이드 컴포넌트.
+ *
+ * @description
+ * - 첫 번째 슬라이드는 `/banner-main.png` 고정 이미지로 표시된다.
+ * - 이후 슬라이드는 {@link useRandomActivities}로 가져온 랜덤 체험 5개를 표시한다.
+ * - 이미지 로드 실패 시 `/fallback.png`로 폴백한다.
+ */
 export default function BannerSlide() {
   const [failedIds, setFailedIds] = useState<Set<number>>(new Set());
   const { data: activities, isPending } = useRandomActivities();

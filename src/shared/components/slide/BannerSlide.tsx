@@ -52,12 +52,12 @@ export default function BannerSlide() {
 
   const settings = {
     infinite: true,
-    speed: 500,
+    speed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
+    autoplaySpeed: 8000,
+    pauseOnHover: false,
     dots: true,
     arrows: true,
     prevArrow: <PrevArrow />,

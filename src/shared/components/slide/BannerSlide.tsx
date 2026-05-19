@@ -10,6 +10,42 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { BLUR_DATA_URL } from '@/shared/constants';
 
+function PrevArrow({ onClick }: { onClick?: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className='absolute top-1/2 left-20! z-6 -translate-y-1/2 rounded-full bg-black/40 p-6 text-white transition hover:bg-black/70'
+      aria-label='이전 슬라이드'>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-18 w-18'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
+      </svg>
+    </button>
+  );
+}
+
+function NextArrow({ onClick }: { onClick?: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className='absolute top-1/2 right-20! z-6 -translate-y-1/2 rounded-full bg-black/40 p-6 text-white transition hover:bg-black/70'
+      aria-label='다음 슬라이드'>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-18 w-18'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+      </svg>
+    </button>
+  );
+}
+
 export default function BannerSlide() {
   const [failedIds, setFailedIds] = useState<Set<number>>(new Set());
   const { data: activities, isPending } = useRandomActivities();
@@ -22,7 +58,10 @@ export default function BannerSlide() {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
-    arrows: false,
+    dots: true,
+    arrows: true,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     swipe: false,
     draggable: false,
   };
@@ -34,7 +73,7 @@ export default function BannerSlide() {
   }
 
   return (
-    <div className='mx-auto w-full overflow-hidden rounded-12 sm:rounded-18 md:rounded-24'>
+    <div className='mx-auto w-full'>
       <Slider {...settings}>
         <div>
           <div className='relative block h-181 overflow-hidden rounded-12 sm:h-375 sm:rounded-18 md:h-500 md:rounded-24'>

@@ -46,6 +46,19 @@ button[data-loading='true'] {
   cursor: wait;
 }
 
+/* 메인 - 배너 슬라이드 dots */
+.banner .slick-dots {
+  bottom: 20px;
+}
+
+.banner-dots-wrapper {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
 /* 메인 - 인기 체험 슬라이드 */
 @media screen and (max-width: 640px) {
   .popular .slick-track {

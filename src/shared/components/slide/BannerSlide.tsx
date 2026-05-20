@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import Slider from 'react-slick';
 import { useRandomActivities } from '@/features/main/queries/useRandomActivities';
 import Skeleton from '@/shared/components/skeleton/Skeleton';
@@ -32,6 +32,11 @@ export default function BannerSlide() {
     autoplaySpeed: 8000,
     pauseOnHover: false,
     dots: true,
+    appendDots: (dots: ReactNode) => (
+      <ul>
+        <div className='banner-dots-wrapper'>{dots}</div>
+      </ul>
+    ),
     arrows: true,
     prevArrow: <CarouselButton direction='prev' />,
     nextArrow: <CarouselButton direction='next' />,
@@ -46,7 +51,7 @@ export default function BannerSlide() {
   }
 
   return (
-    <div className='mx-auto w-full'>
+    <div className='banner mx-auto w-full'>
       <Slider {...settings}>
         <div>
           <div className='relative block h-181 overflow-hidden rounded-12 sm:h-375 sm:rounded-18 md:h-500 md:rounded-24'>

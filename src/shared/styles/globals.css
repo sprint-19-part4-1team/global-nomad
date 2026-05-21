@@ -51,6 +51,10 @@ button[data-loading='true'] {
   bottom: 20px;
 }
 
+.banner .slick-dots li {
+  margin: 0 2px;
+}
+
 .banner-dots-wrapper {
   display: inline-flex;
   padding: 3px 10px;

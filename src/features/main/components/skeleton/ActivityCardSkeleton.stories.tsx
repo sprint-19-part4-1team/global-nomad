@@ -20,7 +20,15 @@ import ActivityCardSkeleton from '@/features/main/components/skeleton/ActivityCa
 const meta: Meta<typeof ActivityCardSkeleton> = {
   title: 'Features/Main/ActivityCardSkeleton',
   component: ActivityCardSkeleton,
+  tags: ['autodocs'],
   render: (args) => <ActivityCardSkeleton {...args} />,
+  decorators: [
+    (Story) => (
+      <div className='w-328'>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     variant: {
       control: 'select',
@@ -40,7 +48,7 @@ type Story = StoryObj<typeof ActivityCardSkeleton>;
 /**
  * 기본
  *
- * 메인 화면의 일반 체험 카드 로딩 상태를 표시하는 기본 크기(328x243px) Skeleton입니다. </br>
+ * 메인 화면의 일반 체험 카드 로딩 상태를 표시하는 기본 크기(328x243px) Skeleton입니다. <br>
  * 모든 섹션의 체험 카드 리스트에 사용됩니다.
  */
 export const Default: Story = {
@@ -52,7 +60,7 @@ export const Default: Story = {
 /**
  * 인기 체험
  *
- * 메인 화면의 인기 체험 섹션의 카드 로딩 상태를 표시하는 작은 크기(131x243px) Skeleton입니다. </br>
+ * 메인 화면의 인기 체험 섹션의 카드 로딩 상태를 표시하는 작은 크기(131x243px) Skeleton입니다. <br>
  * 인기 체험 섹션의 체험 카드 리스트에 사용됩니다.
  */
 export const Popular: Story = {

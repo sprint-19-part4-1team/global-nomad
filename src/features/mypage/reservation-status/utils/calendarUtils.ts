@@ -75,17 +75,18 @@ export const canNavigateToNextMonth = (currentMonth: Date, maxDate: Date): boole
  * 현재 월의 달력에 표시할 모든 날짜 생성
  *
  * @description
- * 달력을 5행 7열(35개 셀)로 고정하여 표시
+ * 달력을 항상 6행 7열(42개 셀)로 고정하여 레이아웃 시프트 방지
  *
  * @param startDate - 캘린더에 표시될 시작 날짜
- * @returns 달력에 표시할 날짜 배열 (항상 35개)
+ * @returns 달력에 표시할 날짜 배열 (항상 42개)
  */
+const TOTAL_CALENDAR_DAYS = 42;
+
 export const generateCalendarDays = (startDate: Date): Date[] => {
   const days: Date[] = [];
   let day = startDate;
 
-  // 5주(35일)만 표시
-  for (let i = 0; i < 35; i++) {
+  for (let i = 0; i < TOTAL_CALENDAR_DAYS; i++) {
     days.push(day);
     day = addDays(day, 1);
   }

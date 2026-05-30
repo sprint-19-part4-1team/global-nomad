@@ -21,6 +21,6 @@ import Skeleton from '@/shared/components/skeleton/Skeleton';
  */
 export default function ReservationCalendarSkeleton() {
   return (
-    <Skeleton className='-mx-24 h-605 w-screen sm:mx-auto sm:h-770 sm:w-full sm:rounded-24 lg:h-776' />
+    <Skeleton className='-mx-24 h-709 w-screen sm:mx-auto sm:h-888 sm:w-full sm:rounded-24 lg:h-888' />
   );
 }
